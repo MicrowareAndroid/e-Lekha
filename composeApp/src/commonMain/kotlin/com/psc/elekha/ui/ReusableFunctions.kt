@@ -37,11 +37,12 @@ import androidx.compose.ui.unit.sp
 import e_lekha.composeapp.generated.resources.Res
 import e_lekha.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 
 
 @Composable
 fun UsernameField(
-    label: String = "Enter Username",
+    label: String = stringResource(Res.string.username),
     value: String,
     onValueChange: (String) -> Unit
 ) {
@@ -51,7 +52,7 @@ fun UsernameField(
         OutlinedTextField(
             value = value,
             onValueChange = onValueChange,
-            placeholder = { Text("Enter here") },
+            placeholder = { Text(stringResource(Res.string.enter_here)) },
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(16.dp),
             colors = OutlinedTextFieldDefaults.colors(
@@ -69,7 +70,7 @@ fun UsernameField(
 fun PasswordField(
     password: String,
     onPasswordChange: (String) -> Unit,
-    label: String = "Enter Password",
+    label: String = stringResource(Res.string.password),
 ) {
     var passwordVisible by remember { mutableStateOf(false) }
     Column(modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp)) {
@@ -78,7 +79,7 @@ fun PasswordField(
         OutlinedTextField(
             value = password,
             onValueChange = onPasswordChange,
-            placeholder = { Text("Enter here") },
+            placeholder = { Text(stringResource(Res.string.enter_here)) },
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(16.dp),
             colors = OutlinedTextFieldDefaults.colors(
@@ -114,7 +115,7 @@ fun SimpleOtp(
     }
 
     Text(
-        text = "Enter OTP",
+        text = stringResource(Res.string.enter_otp),
         style = MaterialTheme.typography.headlineLarge.copy(
             fontWeight = FontWeight.Bold,
             color = Color.White
@@ -126,9 +127,6 @@ fun SimpleOtp(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
-
-
-
 
         (0 until 4).forEach { index ->
             val char = otp.getOrNull(index)?.toString() ?: ""
@@ -157,6 +155,13 @@ fun SimpleOtp(
                         }
                     }
                 },
+                colors = OutlinedTextFieldDefaults.colors(
+                    unfocusedContainerColor = Color.White,
+                    focusedContainerColor = Color.White,
+                    unfocusedBorderColor = Color.Gray,
+                    focusedBorderColor = Color.Gray,
+                    cursorColor = Color.Black
+                ),
                 singleLine = true,
                 modifier = Modifier
                     .width(55.dp)

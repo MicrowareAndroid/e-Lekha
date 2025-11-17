@@ -3,12 +3,9 @@ package com.psc.elekha.ui.login
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -19,16 +16,12 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -39,21 +32,21 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.psc.elekha.getAppVersion
 import com.psc.elekha.ui.PasswordField
 import com.psc.elekha.ui.SimpleOtp
 import com.psc.elekha.ui.UsernameField
+import com.psc.elekha.ui.theme.*
 import e_lekha.composeapp.generated.resources.Res
-import org.jetbrains.compose.resources.painterResource
 import e_lekha.composeapp.generated.resources.*
+import org.jetbrains.compose.resources.StringResource
+import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 
@@ -72,7 +65,7 @@ fun LoginScreen() {
     val versionName = getAppVersion()
 
     Box(
-        modifier = Modifier.fillMaxSize().background(Color(0xFFE3F1FA))
+        modifier = Modifier.fillMaxSize().background(PrimaryColor)
     ) {
 
         Column(
@@ -84,7 +77,7 @@ fun LoginScreen() {
         ) {
             Image(
                 painter = painterResource(Res.drawable.logo_psc),
-                contentDescription = "Livelihood illustration",
+                contentDescription = "Logo",
                 modifier = Modifier
                     .size(200.dp)
             )
@@ -104,12 +97,13 @@ fun LoginScreen() {
                 ) {
 
                 Text(
-                    text = "Planned Social Concern",
+                    text =  stringResource(Res.string.planned_social_concern),
                     style = MaterialTheme.typography.headlineMedium.copy(
                         fontWeight = FontWeight.Bold,
-                        color =  Color(0xFF285684)
+                        color =  PrimaryDark
                     ),
                     modifier = Modifier.padding(vertical = 16.dp)
+                        .align(Alignment.CenterHorizontally)
                 )
 
 
@@ -124,7 +118,7 @@ fun LoginScreen() {
                             .wrapContentHeight(),
                         elevation = CardDefaults.cardElevation(defaultElevation = 12.dp),
                         shape = RoundedCornerShape(20.dp),
-                        colors = CardDefaults.cardColors(containerColor = Color(0xFF55B3CC))
+                        colors = CardDefaults.cardColors(containerColor = MediumLightBlue)
                     ) {
                         Column(
                             modifier = Modifier
@@ -134,7 +128,7 @@ fun LoginScreen() {
                         ) {
 
                             Text(
-                                text = "Log In",
+                                text = stringResource(Res.string.log_in),
                                 style = MaterialTheme.typography.headlineMedium.copy(
                                     fontWeight = FontWeight.Bold,
                                     color = Color.White
@@ -177,7 +171,6 @@ fun LoginScreen() {
 
                                     }
                             )*/
-
                                 Spacer(modifier = Modifier.height(8.dp))
 
                                 Button(
@@ -195,7 +188,7 @@ fun LoginScreen() {
                                         .height(56.dp),
                                     shape = RoundedCornerShape(32.dp),
                                     colors = ButtonDefaults.buttonColors(
-                                        containerColor = Color(0xfff6ca48)
+                                        containerColor = YellowButton
                                     )
                                 ) {
                                     Text(
