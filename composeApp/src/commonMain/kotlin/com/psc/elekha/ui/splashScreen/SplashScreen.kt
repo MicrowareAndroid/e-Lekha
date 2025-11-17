@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.dp
 import com.psc.elekha.ui.theme.PrimaryColor
 import com.psc.elekha.viewModels.SplashViewModel
 import e_lekha.composeapp.generated.resources.Res
+import e_lekha.composeapp.generated.resources.logo
 import e_lekha.composeapp.generated.resources.logo_psc
 import org.jetbrains.compose.resources.painterResource
 
@@ -28,11 +29,11 @@ fun SplashScreen(onFinished: () -> Unit, viewModel: SplashViewModel = SplashView
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(PrimaryColor),
+            .background(Color.White),
         contentAlignment = Alignment.Center
     ) {
         Image(
-            painter = painterResource(Res.drawable.logo_psc),
+            painter = painterResource(Res.drawable.logo),
             contentDescription = "Logo",
             modifier = Modifier
                 .size(250.dp)

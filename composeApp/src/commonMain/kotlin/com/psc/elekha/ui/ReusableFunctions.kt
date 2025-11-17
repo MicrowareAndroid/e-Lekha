@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalTextStyle
@@ -27,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -34,33 +37,61 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.psc.elekha.ui.theme.LoginTextBox
 import e_lekha.composeapp.generated.resources.Res
 import e_lekha.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
+val ALLOWED_USERNAME_CHARS: Set<Char> =
+    ('a'..'z').toSet() +
+            ('A'..'Z').toSet() +
+            ('0'..'9').toSet() +
+            setOf('@', '.')
+val ALLOWED_PASSWORD_CHARS: Set<Char> =
+    ('a'..'z').toSet() +
+            ('A'..'Z').toSet() +
+            ('0'..'9').toSet() +
+            setOf('@', '.', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')')
+
+fun filterAllowed(input: String, allowed: Set<Char>): String {
+    return input.filter { it in allowed }
+}
 
 @Composable
 fun UsernameField(
     label: String = stringResource(Res.string.username),
     value: String,
-    onValueChange: (String) -> Unit
+    onValueChange: (String) -> Unit,
+    maxLength: Int = 50
 ) {
     Column(modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp)) {
         Text(text = label, fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Color.White)
         Spacer(modifier = Modifier.height(8.dp))
         OutlinedTextField(
             value = value,
-            onValueChange = onValueChange,
-            placeholder = { Text(stringResource(Res.string.enter_here)) },
+            onValueChange = { newValue ->
+                val updated = updateFilteredInput(
+                    oldValue = value,
+                    newValue = newValue,
+                    allowed = ALLOWED_USERNAME_CHARS,
+                    maxLength = maxLength
+                )
+                onValueChange(updated)
+            },
+            placeholder = { Text(stringResource(Res.string.enter_here), color = Color.White) },
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(16.dp),
             colors = OutlinedTextFieldDefaults.colors(
-                unfocusedContainerColor = Color.White,
-                focusedContainerColor = Color.White,
-                unfocusedBorderColor = Color.Gray,
-                focusedBorderColor = Color.Gray,
-                cursorColor = Color.Black
+                unfocusedContainerColor = LoginTextBox,
+                focusedContainerColor = LoginTextBox,
+                unfocusedBorderColor = LoginTextBox,
+                focusedBorderColor = LoginTextBox,
+                cursorColor = Color.White
+            ),
+            textStyle = TextStyle(color = Color.White),
+            keyboardOptions = KeyboardOptions.Default.copy(
+                keyboardType = KeyboardType.Text
             )
         )
     }
@@ -71,6 +102,7 @@ fun PasswordField(
     password: String,
     onPasswordChange: (String) -> Unit,
     label: String = stringResource(Res.string.password),
+    maxLength: Int = 50
 ) {
     var passwordVisible by remember { mutableStateOf(false) }
     Column(modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp)) {
@@ -78,27 +110,41 @@ fun PasswordField(
         Spacer(modifier = Modifier.height(8.dp))
         OutlinedTextField(
             value = password,
-            onValueChange = onPasswordChange,
-            placeholder = { Text(stringResource(Res.string.enter_here)) },
+            onValueChange = { newValue ->
+//                onPasswordChange(filterAllowed(newValue, ALLOWED_PASSWORD_CHARS))
+                val filtered = filterAllowed(newValue, ALLOWED_PASSWORD_CHARS)
+                val limited = filtered.take(maxLength)
+                onPasswordChange(limited)
+
+            },
+            placeholder = { Text(stringResource(Res.string.enter_here), color = Color.White) },
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(16.dp),
             colors = OutlinedTextFieldDefaults.colors(
-                unfocusedContainerColor = Color.White,
-                focusedContainerColor = Color.White,
-                unfocusedBorderColor = Color.Gray,
-                focusedBorderColor = Color.Gray,
-                cursorColor = Color.Black
+                unfocusedContainerColor = LoginTextBox,
+                focusedContainerColor = LoginTextBox,
+                unfocusedBorderColor = LoginTextBox,
+                focusedBorderColor = LoginTextBox,
+                cursorColor = Color.White
             ),
             visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
             trailingIcon = {
                 IconButton(onClick = { passwordVisible = !passwordVisible }) {
                     Icon(
-                        painter = painterResource(Res.drawable.eye_icon),
-                        contentDescription = if (passwordVisible) "Hide password" else "Show password"
+                        imageVector = if (passwordVisible)
+                            Icons.Default.Visibility
+                        else
+                            Icons.Default.VisibilityOff,
+                        contentDescription = if (passwordVisible) "Hide password" else "Show password",
+                        tint = Color.White
                     )
                 }
             },
-            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Password)
+//            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Password)
+            textStyle = TextStyle(color = Color.White),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Password
+            )
         )
     }
 }
@@ -177,3 +223,21 @@ fun SimpleOtp(
     }
 }
 
+fun updateFilteredInput(
+    oldValue: String,
+    newValue: String,
+    allowed: Set<Char>,
+    maxLength: Int
+): String {
+    return if (newValue.length > oldValue.length) {
+        val added = newValue.last()
+
+        if (added in allowed && oldValue.length < maxLength) {
+            oldValue + added
+        } else {
+            oldValue
+        }
+    } else {
+        newValue
+    }
+}

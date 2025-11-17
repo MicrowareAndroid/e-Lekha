@@ -3,13 +3,16 @@ package com.psc.elekha.ui.login
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -32,8 +35,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -65,23 +70,30 @@ fun LoginScreen() {
     val versionName = getAppVersion()
 
     Box(
-        modifier = Modifier.fillMaxSize().background(PrimaryColor)
+        modifier = Modifier
+            .fillMaxSize()
     ) {
+        Image(
+            painter = painterResource(Res.drawable.background),
+            contentDescription = null,
+            modifier = Modifier.matchParentSize(),
+            contentScale = ContentScale.FillBounds
+        )
 
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .align(Alignment.TopCenter)
-                .padding(top = 32.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+                .padding(top = 32.dp, start = 8.dp),
+            horizontalAlignment = Alignment.Start
         ) {
             Image(
-                painter = painterResource(Res.drawable.logo_psc),
+                painter = painterResource(Res.drawable.logo),
                 contentDescription = "Logo",
-                modifier = Modifier
-                    .size(200.dp)
+                modifier = Modifier.size(250.dp)
             )
         }
+        Spacer(modifier = Modifier.height(16.dp))
+
             Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -90,21 +102,21 @@ fun LoginScreen() {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ){
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center,
-
-                ) {
 
                 Text(
                     text =  stringResource(Res.string.planned_social_concern),
                     style = MaterialTheme.typography.headlineMedium.copy(
                         fontWeight = FontWeight.Bold,
-                        color =  PrimaryDark
+                        color =  PrimaryDark,
+                        fontSize = 45.sp
                     ),
-                    modifier = Modifier.padding(vertical = 16.dp)
-                        .align(Alignment.CenterHorizontally)
+                    modifier = Modifier.padding(vertical = 24.dp, horizontal = 16.dp)
                 )
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center,
+
+                ) {
 
 
                 Box(
@@ -115,7 +127,13 @@ fun LoginScreen() {
                     Card(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .wrapContentHeight(),
+                            .wrapContentHeight()
+                            .padding(16.dp)
+                            .border(
+                                width = 2.dp,
+                                color = LightBlue,
+                                shape = RoundedCornerShape(20.dp)
+                            ),
                         elevation = CardDefaults.cardElevation(defaultElevation = 12.dp),
                         shape = RoundedCornerShape(20.dp),
                         colors = CardDefaults.cardColors(containerColor = MediumLightBlue)
@@ -183,16 +201,30 @@ fun LoginScreen() {
                                             // onProceedClick()
                                         }
                                     },
-                                    modifier = Modifier
+                                    /*modifier = Modifier
                                         .width(200.dp)
                                         .height(56.dp),
-                                    shape = RoundedCornerShape(32.dp),
+                                    shape = RoundedCornerShape(16.dp),
                                     colors = ButtonDefaults.buttonColors(
-                                        containerColor = YellowButton
-                                    )
+                                        containerColor = MixedYellow
+                                    )*/
+                                    modifier = Modifier
+                                        .width(200.dp)
+                                        .height(56.dp)
+                                        .background(
+                                            brush = Brush.horizontalGradient(
+                                                colors = listOf(WhitishYellow, BrightYellow)
+                                            ),
+                                            shape = RoundedCornerShape(12.dp)
+                                        ),
+                                    colors = ButtonDefaults.buttonColors(
+                                        containerColor = Color.Transparent
+                                    ),
+                                    contentPadding = PaddingValues()
+
                                 ) {
                                     Text(
-                                        text = if (showOtpField) "Proceed" else "Send OTP",
+                                        text = if (showOtpField) stringResource(Res.string.proceed) else stringResource(Res.string.send_otp),
                                         color = Color.White,
                                         fontSize = 20.sp
                                     )
@@ -213,15 +245,15 @@ fun LoginScreen() {
         ) {
 
             Text(
-                text = "Registered Office Address:",
+                text = stringResource(Res.string.registered_office_address),
                 style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold,color = Color.Black)
             )
             Text(
-                text = "S15, Krishi Vihar, S Block, Badarwas",
+                text = stringResource(Res.string.address_two_login),
                 style = MaterialTheme.typography.bodySmall.copy(color = Color.Black)
             )
             Text(
-                text = "Jaipur, Rajasthan 302019",
+                text = stringResource(Res.string.address_three_login),
                 style = MaterialTheme.typography.bodySmall.copy(color = Color.Black)
             )
             Spacer(modifier = Modifier.height(8.dp))
