@@ -1,0 +1,61 @@
+<resources>
+    <string name="app_name">e-Lekha</string>
+    <string name="splash_title">Gender Based Violence</string>
+    <string name="splash_subtitle">Recognizing the problem \nand demanding justice</string>
+    <string name="splash_subtitle_new">Recognizing the problem and demanding justice</string>
+
+    //Login Page
+    <string name="login_title">Please Login to your account</string>
+    <string name="login_subtitle">Enter your email and password to login in</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="userloginsuccessfully">User Login Successfully</string>
+    <string name="incorrect_username_password">Incorrect username or password.Please check your credentials and try again.</string>
+    <string name="something_wentwrong">Oops! Something went wrong. Please contact the administrator or try again later.</string>
+
+    //Home Page
+    <string name="home_menu">Menu</string>
+    <string name="home_recognizing">Recognizing the problem and demanding justice</string>
+    <string name="home_features">Features</string>
+    <string name="home_complaint">State your problem</string>
+    <string name="home_list">Complaint List</string>
+    <string name="home_status">Follow-Up Status</string>
+
+    <string name="synchronisation">Sync</string>
+
+    <string name="synchronization">Synchronization</string>
+
+
+    <string name="case_number">Case Number</string>
+    <string name="date_reporting">Date of Reporting</string>
+    <string name="state_case">State of Case Reporting</string>
+    <string name="name_gender">Name of the Gender Resource Center</string>
+    <string name="new_repeat">New/Repeat</string>
+    <string name="search">Search</string>
+    <string name="save">Save</string>
+    <string name="close">Close</string>
+    <string name="search_mobile_no">Search Mobile No.</string>
+    <string name="list">List</string>
+    <string name="district">District</string>
+    <string name="block">Block</string>
+    <string name="village">Village</string>
+    <string name="date_of_birth">Date of Birth</string>
+    <string name="type_of_case">Type of Case</string>
+    <string name="state">State</string>
+    <string name="type_here">Type here</string>
+    <string name="dd_mm_yy">dd-mm-yy</string>
+    <string name="hh_mm">hh-mm</string>
+
+    <!--sync-->
+    <string name="name">Name</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="download">Download</string>
+    <string name="upload">Upload</string>
+    <string name="master_download">Master Data Download</string>
+    <string name ="are_you_sure_logout">Are you sure you want to logout?</string>
+    <string name="please_enter">Please enter</string>
+    <string name="please_select">Please select</string>
+    <string name="sign_in">Sign in</string>
+
+</resources>
