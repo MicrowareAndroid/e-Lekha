@@ -27,7 +27,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -46,12 +45,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.wise.astitva.ui.theme.accentOrange
-import com.wise.astitva.ui.theme.assureOrange
-import com.wise.astitva.ui.theme.bgColor
-import com.wise.astitva.ui.theme.darkBluishGrey
-import com.wise.astitva.ui.theme.desire_orange
-import com.wise.astitva.ui.theme.white
+import com.psc.elekha.ui.theme.accentOrange
+import com.psc.elekha.ui.theme.assureOrange
+import com.psc.elekha.ui.theme.bgColor
+import com.psc.elekha.ui.theme.darkBluishGrey
+import com.psc.elekha.ui.theme.desire_orange
+import com.psc.elekha.ui.theme.white
 import com.psc.elekha.utils.CustomAlertDialog
 import com.psc.elekha.utils.ProgressDialog
 import com.psc.elekha.utils.ReusableImageView

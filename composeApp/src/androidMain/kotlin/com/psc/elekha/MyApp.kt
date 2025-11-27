@@ -20,10 +20,10 @@ class MyApp : Application(), KoinComponent {
 
     override fun onCreate() {
         super.onCreate()
-        instance=this
+        instance = this
 
         VersionInfo.init(applicationContext)
-        appPreferences = AppPreferences(this )
+        appPreferences = AppPreferences(this)
 
         initKoin {
             androidLogger()
