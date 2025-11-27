@@ -8,8 +8,6 @@
     <string name="login_title">Please Login to your account</string>
     <string name="login_subtitle">Enter your email and password to login in</string>
     <string name="email">Email</string>
-    <string name="password">Password</string>
-    <string name="forgot_password">Forgot Password?</string>
     <string name="userloginsuccessfully">User Login Successfully</string>
     <string name="incorrect_username_password">Incorrect username or password.Please check your credentials and try again.</string>
     <string name="something_wentwrong">Oops! Something went wrong. Please contact the administrator or try again later.</string>
@@ -57,5 +55,18 @@
     <string name="please_enter">Please enter</string>
     <string name="please_select">Please select</string>
     <string name="sign_in">Sign in</string>
+
+    <string name="planned_social_concern">Planned Social Concern</string>
+    <string name="username">Enter Username</string>
+    <string name="password">Enter Password</string>
+    <string name="enter_here">Enter here</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="log_in">Log In</string>
+    <string name="proceed">Proceed</string>
+    <string name="send_otp">Send OTP</string>
+    <string name="registered_office_address">Registered Office Address:</string>
+    <string name="address_two_login">S15, Krishi Vihar, S Block, Badarwas</string>
+    <string name="address_three_login">Jaipur, Rajasthan 302019</string>
+    <string name= "enter_otp">Enter OTP</string>
 
 </resources>

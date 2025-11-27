@@ -8,7 +8,9 @@ import androidx.navigation.compose.composable
 import com.psc.elekha.utils.AppPreferences
 import com.psc.elekha.utils.RouteName
 import com.psc.elekha.ui.screen.login.LoginScreen
+import com.psc.elekha.ui.screen.login.LoginScreenNew
 import com.psc.elekha.ui.screen.splash.SplashScreen
+import com.psc.elekha.ui.screen.splash.SplashScreenNew
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -19,11 +21,13 @@ fun AppNavGraph(navController: NavHostController, appPreferences: AppPreferences
         startDestination = RouteName.splash
     ) {
         composable(RouteName.splash){
-            SplashScreen(navController)
+//            SplashScreen(navController)
+            SplashScreenNew(navController)
         }
 
         composable(RouteName.login){
-            LoginScreen(navController)
+//            LoginScreen(navController)
+            LoginScreenNew(navController)
         }
 
         /*composable(RouteName.home){

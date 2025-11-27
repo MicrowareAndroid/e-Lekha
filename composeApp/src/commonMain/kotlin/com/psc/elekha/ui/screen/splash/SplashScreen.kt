@@ -21,7 +21,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.wise.astitva.ui.theme.desire_orange
+import com.psc.elekha.ui.theme.desire_orange
 import com.psc.elekha.utils.ReusableImageView
 import com.psc.elekha.utils.ReusableTextView
 import com.psc.elekha.utils.RouteName
