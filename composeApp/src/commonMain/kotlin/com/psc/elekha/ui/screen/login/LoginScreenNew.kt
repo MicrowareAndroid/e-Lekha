@@ -47,6 +47,7 @@ import com.psc.elekha.ui.PasswordField
 import com.psc.elekha.ui.SimpleOtp
 import com.psc.elekha.ui.UsernameField
 import com.psc.elekha.ui.theme.*
+import com.psc.elekha.utils.RouteName
 import e_lekha.composeapp.generated.resources.Res
 import e_lekha.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.painterResource
@@ -198,6 +199,7 @@ fun LoginScreenNew(navController: NavController) {
                                         } else {
                                             // Proceed logic after OTP entered
                                             // onProceedClick()
+                                            navController.navigate(RouteName.registration_tabs)
                                         }
                                     },
                                     /*modifier = Modifier

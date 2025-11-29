@@ -69,4 +69,28 @@
     <string name="address_three_login">Jaipur, Rajasthan 302019</string>
     <string name= "enter_otp">Enter OTP</string>
 
+    <string name="personal_details">Personal Details</string>
+    <string name="kyc">KYC</string>
+    <string name="bank_details">Bank Details</string>
+
+    <string name= "enter_your_personal_details">Enter Your Personal Details</string>
+    <string name= "customer_name">Customer name</string>
+    <string name= "marital_status">Marital status</string>
+    <string name= "education">Education</string>
+    <string name= "religion">Religion</string>
+    <string name= "purpose">Purpose</string>
+    <string name= "mobile_number">Mobile number</string>
+    <string name= "husband_name">Husband name</string>
+    <string name= "same_as_husband">Same as husband</string>
+    <string name= "guarantor_name">Guarantor name</string>
+    <string name= "relation">Relation</string>
+    <string name= "guarantor_mobile_number">Guarantor mobile no.</string>
+    <string name= "not_same_as_customer_mobile_number">Not same as customer mobile number</string>
+    <string name= "your_full_address">Your full address</string>
+    <string name= "village_name">Village name</string>
+    <string name= "tehsil">Tehsil</string>
+    <string name= "landmark">Landmark</string>
+    <string name= "pin_code">Pin code</string>
+    <string name= "next">Next</string>
+
 </resources>
