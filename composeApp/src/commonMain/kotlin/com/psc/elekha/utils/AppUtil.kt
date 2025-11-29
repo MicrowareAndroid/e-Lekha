@@ -10,8 +10,10 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -75,14 +77,20 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import com.psc.elekha.ui.theme.BrightYellow
 import com.psc.elekha.ui.theme.accentOrange
 import com.psc.elekha.ui.theme.assureOrange
 import com.psc.elekha.ui.theme.bgColor
 import com.psc.elekha.ui.theme.black
 import com.psc.elekha.ui.theme.boderColor
+import com.psc.elekha.ui.theme.btn_color
 import com.psc.elekha.ui.theme.desire_orange
+import com.psc.elekha.ui.theme.editext_bg_color
+import com.psc.elekha.ui.theme.formborder
 import com.psc.elekha.ui.theme.lightGrey
 import com.psc.elekha.ui.theme.teal700
+import com.psc.elekha.ui.theme.textview_color
+import com.psc.elekha.ui.theme.toolbar_color
 import com.psc.elekha.ui.theme.white
 import e_lekha.composeapp.generated.resources.Res
 import e_lekha.composeapp.generated.resources.app_name
@@ -113,7 +121,7 @@ fun ReusableTextView(
     padding: Dp = 0.dp,
     style: TextStyle = TextStyle.Default,
     textAlignment: TextAlign = TextAlign.Start,
-    isMandatory:Int = 0,
+    isMandatory: Int = 0,
     asteriskColor: Color = Color.Red
 ) {
     val displayText = if (isMandatory == 1) {
@@ -238,7 +246,7 @@ fun ReusableOutlinedTextField(
 @Composable
 fun ReusableTopBar(
     title: String,
-    backgroundColor: Color = desire_orange,
+    backgroundColor: Color = toolbar_color,
     titleColor: Color = Color.White,
     navigationIcon: Painter? = null,
     onNavigationClick: (() -> Unit)? = null,
@@ -262,7 +270,8 @@ fun ReusableTopBar(
             )
         },
         navigationIcon = {
-            if (navigationIcon != null && onNavigationClick != null) {11
+            if (navigationIcon != null && onNavigationClick != null) {
+                11
                 IconButton(onClick = onNavigationClick) {
                     Icon(
                         painter = navigationIcon,
@@ -364,9 +373,9 @@ fun HomeScreenCardItem(
 
 @Composable
 fun CommonActionButtons(
-    onSaveClick:  () -> Unit,
+    onSaveClick: () -> Unit,
     onCloseClick: () -> Unit,
-    accentColor: Color = accentOrange,
+    accentColor: Color = btn_color,
     saveText: String = stringResource(Res.string.save),
     closeText: String = stringResource(Res.string.close),
 ) {
@@ -375,15 +384,15 @@ fun CommonActionButtons(
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         Button(
-            onClick = onSaveClick ,
+            onClick = onSaveClick,
             modifier = Modifier
                 .weight(1f)
                 .height(48.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = accentOrange,
-                contentColor = Color.White
+                containerColor = btn_color,
+                contentColor = Color.Black
             ),
-            shape = RoundedCornerShape(8.dp)
+            shape = RoundedCornerShape(15.dp)
         ) {
             Text(saveText)
         }
@@ -393,17 +402,42 @@ fun CommonActionButtons(
             modifier = Modifier
                 .weight(1f)
                 .height(48.dp),
-            border = BorderStroke(1.dp, accentOrange),
+            border = BorderStroke(1.dp, btn_color),
             colors = ButtonDefaults.outlinedButtonColors(
                 contentColor = accentColor
             ),
-            shape = RoundedCornerShape(8.dp)
+            shape = RoundedCornerShape(15.dp)
         ) {
             Text(closeText)
         }
     }
 }
 
+
+@Composable
+fun CommonSaveButton(
+    onSaveClick: () -> Unit,
+    saveText: String = stringResource(Res.string.save)
+) {
+    Row(
+        modifier = Modifier.fillMaxWidth().padding(top = 10.dp, bottom = 10.dp),
+        horizontalArrangement = Arrangement.spacedBy(20.dp)
+    ) {
+        Button(
+            onClick = onSaveClick,
+            modifier = Modifier
+                .weight(1f)
+                .height(48.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = btn_color,
+                contentColor = Color.Black
+            ),
+            shape = RoundedCornerShape(15.dp)
+        ) {
+            Text(saveText)
+        }
+    }
+}
 
 @Composable
 fun CommonSingleButtons(
@@ -420,14 +454,45 @@ fun CommonSingleButtons(
                 .width(150.dp)
                 .height(48.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = accentOrange,
-                contentColor = Color.White
+                containerColor = btn_color,
+                contentColor = Color.Black
             ),
             shape = RoundedCornerShape(8.dp)
         ) {
             Text(stringResource(Res.string.save))
         }
 
+    }
+}
+
+@Composable
+fun CommonSingleButtonsBottomString(
+    onOkClick: () -> Unit,
+    text: String,
+    modifier: Modifier = Modifier,
+    textSize: Int = 14
+) {
+    Box(
+        modifier = modifier,
+        contentAlignment = Alignment.Center   // 👈 aligns to EditText center
+    ) {
+        Button(
+            onClick = onOkClick,
+            modifier = Modifier
+                .height(48.dp)
+                .fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = btn_color,
+                contentColor = Color.Black
+            ),
+            shape = RoundedCornerShape(15.dp)
+        ) {
+            Text(
+                text = text,
+                fontSize = textSize.sp,
+                fontFamily = FontFamily(Font(Res.font.roboto_medium))
+            )
+        }
     }
 }
 
@@ -446,21 +511,27 @@ fun FormField(
     placeholder: String = stringResource(Res.string.type_here),
     isEnable: Boolean = true,
     isReadable: Boolean = false,
-    labelColor: Color = desire_orange,
+    labelColor: Color = textview_color,
     placeholderColor: Color = Color(0xFF212121),
-    backgroundColor: Color = bgColor,
+    backgroundColor: Color = editext_bg_color,
     borderColor: Color = boderColor,
     maxLines: Int = 1,
-    disabledBackgroundColor: Color = Color(0xFFE0E0E0)
+//    disabledBackgroundColor: Color = Color(0xFFE0E0E0),
+    disabledBackgroundColor: Color = formborder,
+    modifier: Modifier = Modifier, // ✅ ADDED THIS
+    placeholderTextSize: Int = 15
 ) {
-    ReusableTextView(
-        text = label,
-        fontSize = 14,
-        textColor = labelColor
-    )
-    Spacer(modifier = Modifier.height(5.dp))
 
-    Column {
+    Column(modifier = modifier) {            // ✅ APPLY modifier HERE
+
+        ReusableTextView(
+            text = label,
+            fontSize = 14,
+            textColor = labelColor
+        )
+
+        Spacer(modifier = Modifier.height(5.dp))
+
         OutlinedTextField(
             enabled = isEnable,
             readOnly = isReadable,
@@ -470,7 +541,6 @@ fun FormField(
                     KeyboardType.Number, KeyboardType.Phone -> newValue.filter { it.isDigit() }
                     else -> newValue
                 }
-
                 if (filteredValue.length <= maxLength) {
                     onValueChange(filteredValue)
                 }
@@ -479,7 +549,7 @@ fun FormField(
             placeholder = {
                 ReusableTextView(
                     text = placeholder,
-                    fontSize = 15,
+                    fontSize = placeholderTextSize,
                     textColor = placeholderColor,
                     textAlignment = TextAlign.Start
                 )
@@ -487,8 +557,8 @@ fun FormField(
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
-                .heightIn(min = 45.dp),
-            shape = RoundedCornerShape(8.dp),
+                .height(48.dp),
+            shape = RoundedCornerShape(15.dp),
             textStyle = TextStyle(
                 fontSize = 15.sp,
                 fontFamily = FontFamily(Font(Res.font.roboto_medium)),
@@ -509,6 +579,7 @@ fun FormField(
         )
     }
 }
+
 
 @Composable
 fun DynamicCheckBox(
@@ -666,57 +737,56 @@ fun FormDatePicker(
     placeholder: String = stringResource(Res.string.dd_mm_yy),
     isEnable: Boolean = true,
     isReadable: Boolean = false,
-    labelColor: Color = desire_orange,
+    labelColor: Color = textview_color,
     placeholderColor: Color = Color(0xFF212121),
-    backgroundColor: Color = bgColor,
-    borderColor: Color = boderColor
+    backgroundColor: Color = editext_bg_color,
+    borderColor: Color = boderColor,
+    modifier: Modifier = Modifier
 ) {
-    ReusableTextView(
-        text = label,
-        fontSize = 14,
-        textColor = labelColor
-    )
-    Spacer(modifier = Modifier.height(5.dp))
 
-    OutlinedTextField(
-        enabled = isEnable,
-        readOnly = isReadable,
-        value = value,
-        onValueChange = onValueChange,
-        trailingIcon = trailingIcon,
-        placeholder = {
-            ReusableTextView(
-                text = placeholder,
-                fontSize = 15,
-                textColor = placeholderColor,
-                textAlignment = TextAlign.Start
-            )
-        },
-        modifier = Modifier
-            .fillMaxWidth()
-            .wrapContentHeight()
-            .heightIn(min = 45.dp)
-            .clickable { onClick() },
-        shape = RoundedCornerShape(8.dp),
-        textStyle = TextStyle(
-            fontSize = 15.sp,
-            fontFamily = FontFamily(Font(Res.font.roboto_medium)),
-            textAlign = TextAlign.Start,
-            color = Color.Black
-        ),
-        colors = OutlinedTextFieldDefaults.colors(
-            focusedContainerColor = backgroundColor,
-            unfocusedContainerColor = backgroundColor,
-            disabledContainerColor = backgroundColor,
-            focusedBorderColor = borderColor,
-            unfocusedBorderColor = borderColor,
-            cursorColor = Color.Black
-        ),
-        keyboardOptions = KeyboardOptions(
-            keyboardType = inputType
+    Column(modifier = modifier) {   // 👈 IMPORTANT
+        ReusableTextView(
+            text = label,
+            fontSize = 14,
+            textColor = labelColor
         )
-    )
+        Spacer(modifier = Modifier.height(5.dp))
+
+        OutlinedTextField(
+            enabled = isEnable,
+            readOnly = true,
+            value = value,
+            onValueChange = onValueChange,
+            trailingIcon = trailingIcon,
+            placeholder = {
+                ReusableTextView(
+                    text = placeholder,
+                    fontSize = 15,
+                    textColor = placeholderColor
+                )
+            },
+            modifier = Modifier
+                .fillMaxWidth()   // 👈 Ensures equal width inside Row weight
+                .height(48.dp)
+                .clickable { onClick() },
+            shape = RoundedCornerShape(15.dp),
+            textStyle = TextStyle(
+                fontSize = 15.sp,
+                fontFamily = FontFamily(Font(Res.font.roboto_medium)),
+                color = Color.Black
+            ),
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedContainerColor = backgroundColor,
+                unfocusedContainerColor = backgroundColor,
+                disabledContainerColor = backgroundColor,
+                focusedBorderColor = borderColor,
+                unfocusedBorderColor = borderColor,
+                cursorColor = Color.Black
+            )
+        )
+    }
 }
+
 
 @Composable
 fun timePicker(
@@ -813,8 +883,9 @@ fun CustomAlertDialog(
     onConfirm: () -> Unit = {}
 ) {
     if (showDialog) {
-       Dialog(onDismissRequest = { onConfirm() },
-           ) {
+        Dialog(
+            onDismissRequest = { onConfirm() },
+        ) {
             Box(
                 modifier = Modifier
                     .wrapContentHeight()
@@ -1305,15 +1376,15 @@ fun FormSpinner(
     selectedOption: String,
     onOptionSelected: (String) -> Unit,
     modifier: Modifier = Modifier,
-    labelColor: Color = desire_orange,
-    backgroundColor: Color = bgColor,
+    labelColor: Color = textview_color,
+    backgroundColor: Color = editext_bg_color,
     textColor: Color = Color.Black,
     fontFamily: FontFamily = FontFamily(Font(Res.font.roboto_medium)),
     borderColor: Color = boderColor
 ) {
     var expanded by remember { mutableStateOf(false) }
 
-    val options = remember(options) {
+    val optionsList = remember(options) {
         val list = mutableListOf("Select")
         options?.forEach { list.add(it) }
         list
@@ -1326,15 +1397,18 @@ fun FormSpinner(
             textColor = labelColor,
             fontFamily = fontFamily
         )
+
         Spacer(modifier = Modifier.height(5.dp))
+
+        // ❗ FIX 1: REMOVE fillMaxWidth() here
         Box(
             modifier = Modifier
-                .fillMaxWidth()
+                .fillMaxWidth()   // this is OK because Column has weighed width
                 .wrapContentHeight()
-                .heightIn(min = 52.dp)
-                .border(1.dp, borderColor, RoundedCornerShape(8.dp))
+                .height(48.dp)
+                .border(1.dp, borderColor, RoundedCornerShape(15.dp))
                 .clickable { expanded = true }
-                .background(backgroundColor, RoundedCornerShape(8.dp)),
+                .background(backgroundColor, RoundedCornerShape(15.dp)),
             contentAlignment = Alignment.CenterStart
         ) {
             Row(
@@ -1348,19 +1422,24 @@ fun FormSpinner(
                     textColor = textColor,
                     fontFamily = fontFamily
                 )
+
                 Spacer(modifier = Modifier.weight(1f))
+
                 Icon(
                     vectorResource(Res.drawable.ic_arrow_drop_down),
                     contentDescription = "Dropdown"
                 )
             }
 
+            // ❗ FIX 2: MATCH PARENT WIDTH by using width(Intrinsic)
             DropdownMenu(
                 expanded = expanded,
                 onDismissRequest = { expanded = false },
-                modifier = Modifier.background(Color.White).fillMaxWidth()
+                modifier = Modifier
+                    .background(Color.White)
+                    .width(IntrinsicSize.Max)   // IMPORTANT FIX
             ) {
-                options.forEach { option ->
+                optionsList.forEach { option ->
                     DropdownMenuItem(
                         text = {
                             ReusableTextView(
@@ -1371,15 +1450,13 @@ fun FormSpinner(
                         onClick = {
                             onOptionSelected(option)
                             expanded = false
-                        },
-                        modifier = Modifier.fillMaxWidth()
+                        }
                     )
                 }
             }
         }
     }
 }
-
 
 
 /*@OptIn(ExperimentalLayoutApi::class, ExperimentalResourceApi::class)

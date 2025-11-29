@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.rememberNavController
 import com.psc.elekha.utils.AppPreferences
 import com.psc.elekha.ui.screen.navgraph.AppNavGraph
-import com.wise.astitva.ui.theme.GBVTheme
+import com.psc.elekha.ui.theme.GBVTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
