@@ -199,7 +199,7 @@ fun LoginScreenNew(navController: NavController) {
                                         } else {
                                             // Proceed logic after OTP entered
                                             // onProceedClick()
-                                            navController.navigate(RouteName.registration_tabs)
+                                            navController.navigate(RouteName.registration_list)
                                         }
                                     },
                                     /*modifier = Modifier

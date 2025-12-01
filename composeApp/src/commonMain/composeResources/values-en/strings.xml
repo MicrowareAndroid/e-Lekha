@@ -72,6 +72,7 @@
     <string name="personal_details">Personal Details</string>
     <string name="kyc">KYC</string>
     <string name="bank_details">Bank Details</string>
+    <string name="family_details">Family Details</string>
 
     <string name= "enter_your_personal_details">Enter Your Personal Details</string>
     <string name= "customer_name">Customer name</string>
@@ -92,5 +93,6 @@
     <string name= "landmark">Landmark</string>
     <string name= "pin_code">Pin code</string>
     <string name= "next">Next</string>
+    <string name= "add">Add</string>
 
 </resources>
