@@ -12,11 +12,19 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.tooling.preview.Preview
 import com.psc.elekha.ui.login.LoginScreen
 import com.psc.elekha.ui.splashScreen.SplashScreen
+import com.psc.elekha.MyApp.Companion.appPreferences
+import com.psc.elekha.application.ELekhaApplication
+import com.psc.elekha.utils.AppPreferences
+import com.psc.elekha.utils.setActivityProvider
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
+        val appPreferences = AppPreferences(applicationContext)
+
+
+        setActivityProvider { this }
 
         setContent {
 //            App()
@@ -29,6 +37,7 @@ class MainActivity : ComponentActivity() {
             } else {
                 LoginScreen()
             }
+            ELekhaApplication(appPreferences)
         }
     }
 }
@@ -38,4 +47,5 @@ class MainActivity : ComponentActivity() {
 fun AppAndroidPreview() {
 //    App()
     LoginScreen()
+    ELekhaApplication(appPreferences)
 }

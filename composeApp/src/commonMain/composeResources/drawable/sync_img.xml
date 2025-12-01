@@ -1,0 +1,40 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="70dp"
+    android:height="70dp"
+    android:viewportWidth="70"
+    android:viewportHeight="70">
+
+  <!-- Rounded square background (light blue tone) -->
+  <path
+      android:fillColor="#A5C9FF"
+      android:pathData="M6,0h58a6,6 0,0 1,6 6v58a6,6 0,0 1,-6 6h-58a6,6 0,0 1,-6 -6v-58a6,6 0,0 1,6 -6z" />
+
+  <!-- Cloud body -->
+  <path
+      android:fillColor="#FFFFFF"
+      android:pathData="M50,45H24a7.5,7.5 0,0 1,-1.1,-15 10,10 0,0 1,19.7,-2.4 6.5,6.5 0,0 1,1.4,12.9z" />
+
+  <!-- Cloud outline -->
+  <path
+      android:strokeColor="#002E4D"
+      android:strokeWidth="0.8"
+      android:fillColor="#00000000"
+      android:pathData="M50,45H24a7.5,7.5 0,0 1,-1.1,-15 10,10 0,0 1,19.7,-2.4 6.5,6.5 0,0 1,1.4,12.9z" />
+
+  <!-- Sync arrows -->
+  <group
+      android:name="rotationGroup"
+      android:pivotX="37"
+      android:pivotY="38">
+
+    <!-- Upward (upload) arrow -->
+    <path
+        android:fillColor="#E40000"
+        android:pathData="M38,30a8,8 0,0 0,-5,3l1.5,1a6,6 0,0 1,6,0l-1.5,1 4,3 1,-5z" />
+
+    <!-- Downward (download) arrow -->
+    <path
+        android:fillColor="#002E4D"
+        android:pathData="M36,46a8,8 0,0 0,5,-3l-1.5,-1a6,6 0,0 1,-6,0l1.5,-1 -4,-3 -1,5z" />
+  </group>
+</vector>
