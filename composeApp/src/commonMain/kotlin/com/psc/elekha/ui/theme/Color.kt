@@ -15,7 +15,8 @@ val black = Color(0xFF000000)
 val white = Color(0xFFFFFFFF)
 val accentOrange = Color(0xFFAF2D2D)
 val assureOrange = Color(0xFFAA1615)
-val lightOrange = Color(0xFFFFE4CE)
+val lightgreen = Color(0xFFC8F5C8)
+val lightgreens = Color(0xFF5FCC9A)
 val lightGrey = Color(0xFFF7F7F7)
 val tealOrange = Color(0xFF8C0C04)
 val tealOranges = Color(0xFFFFEFF4)
@@ -36,6 +37,17 @@ val TextGray = Color(0xFF888888)
 
 val WhitishYellow = Color(0xfff3eb6b)   // soft pale yellow
 val BrightYellow  = Color(0xffedda19)
+val lightblue = Color(0xFF88E7D1)
+val lightdeep =Color(0xFFB6F4E7)
+val lighttheme = Color(0xFFFFE28A)
+val repaymentColor = Color(0xFFC8EEA0)
+val LightBlueBackground = Color(0xFFE3F2F9)
+val LightSkyBlue = Color(0xFFC3E7F4)
+val LightMint = Color(0xFF8DE9CB)
+val LightTeal = Color(0xFFB5F4E5)
+val LightYellow = Color(0xFFFFE48A)
+
+
 
 val textview_color = Color(0xFF658889)
 val editext_bg_color = Color(0xFFC4E2EA)
