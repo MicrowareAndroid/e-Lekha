@@ -65,3 +65,4 @@ fun blendColors(color1: Color, color2: Color, ratio: Float): Color {
 }
 
 val MixedYellow = blendColors(WhitishYellow, BrightYellow, 0.5f)
+
