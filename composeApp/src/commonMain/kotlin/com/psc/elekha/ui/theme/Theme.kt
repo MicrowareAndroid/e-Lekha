@@ -1,16 +1,11 @@
-package com.wise.astitva.ui.theme
+package com.psc.elekha.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
-import com.psc.elekha.ui.theme.Pink40
-import com.psc.elekha.ui.theme.Pink80
-import com.psc.elekha.ui.theme.Purple40
-import com.psc.elekha.ui.theme.Purple80
-import com.psc.elekha.ui.theme.PurpleGrey40
-import com.psc.elekha.ui.theme.PurpleGrey80
+import com.wise.astitva.ui.theme.Typography
 
 private val DarkColorScheme = darkColorScheme(
     primary = Purple80,

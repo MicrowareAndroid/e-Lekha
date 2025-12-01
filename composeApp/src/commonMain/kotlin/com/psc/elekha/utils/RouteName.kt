@@ -13,5 +13,5 @@ object RouteName {
     const val sync = "sync"
     const val gtr_list_screen = "gtr_list_screen"
     const val gtr_list_data_screen = "gtr_list_data_screen"
-
+    const val registration_tabs = "registration_tabs"
 }

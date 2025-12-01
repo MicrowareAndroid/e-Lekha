@@ -26,6 +26,7 @@ import com.psc.elekha.utils.PasswordField
 import com.psc.elekha.utils.RouteName
 import com.psc.elekha.utils.SimpleOtp
 import com.psc.elekha.utils.UsernameField
+
 import e_lekha.composeapp.generated.resources.Res
 import e_lekha.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.painterResource
@@ -200,7 +201,7 @@ fun LoginScreenNew(navController: NavController) {
                                     .height(56.dp)
                                     .background(
                                         brush = Brush.horizontalGradient(
-                                            listOf(WhitishYellow, BrightYellow)
+                                            listOf(WhitishYellow, BrightYellow)                               
                                         ),
                                         shape = RoundedCornerShape(12.dp)
                                     ),

@@ -13,6 +13,8 @@ import com.psc.elekha.utils.AppPreferences
 import com.psc.elekha.utils.RouteName
 import com.psc.elekha.ui.screen.login.LoginScreen
 import com.psc.elekha.ui.screen.login.LoginScreenNew
+import com.psc.elekha.ui.screen.personaldetails.PersonalDetailsScreen
+import com.psc.elekha.ui.screen.registrationtab.RegistartionTabScreen
 import com.psc.elekha.ui.screen.splash.SplashScreen
 import com.psc.elekha.ui.screen.splash.SplashScreenNew
 
@@ -37,11 +39,21 @@ fun AppNavGraph(navController: NavHostController, appPreferences: AppPreferences
         composable(RouteName.home){
             MainDrawerScreen(navController)
         }
+        
         composable(RouteName.gtr_list_screen){
             GtrListScreen(navController)
         }
+        
         composable(RouteName.gtr_list_data_screen){
             GtrListDataScreen(navController)
+        }
+        
+        composable(RouteName.registration_tabs) {
+            RegistartionTabScreen(navController,appPreferences)
+        }
+
+        /*composable(RouteName.home){
+            MainDrawerScreen( navController,appPreferences)
         }
 
 /*

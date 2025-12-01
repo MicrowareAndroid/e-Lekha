@@ -49,6 +49,11 @@ val LightYellow = Color(0xFFFFE48A)
 
 
 
+val textview_color = Color(0xFF658889)
+val editext_bg_color = Color(0xFFC4E2EA)
+val btn_color = Color(0xFFFCC739)
+val toolbar_color = Color(0xFF104A51)
+
 fun blendColors(color1: Color, color2: Color, ratio: Float): Color {
     val inverseRatio = 1 - ratio
     return Color(
