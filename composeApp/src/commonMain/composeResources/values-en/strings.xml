@@ -13,18 +13,31 @@
     <string name="something_wentwrong">Oops! Something went wrong. Please contact the administrator or try again later.</string>
 
     //Home Page
-    <string name="home_menu">Menu</string>
-    <string name="home_recognizing">Recognizing the problem and demanding justice</string>
-    <string name="home_features">Features</string>
-    <string name="home_complaint">State your problem</string>
-    <string name="home_list">Complaint List</string>
-    <string name="home_status">Follow-Up Status</string>
-
+    <string name="home_user">User name</string>
+    <string name="home_time">Time</string>
+    <string name="home_date">Date and Day</string>
+    <string name="home_active_customer">Active Customer</string>
+    <string name="home_default">Default</string>
+    <string name="home_registration">REGISTRATION</string>
+    <string name="home_credit">Credit Enquiry</string>
+    <string name="home_arrear">Arrear/Par</string>
+    <string name="home_closed">Loan Closed</string>
+    <string name="home_gtr">GTR Done</string>
+    <string name="home_case">Case Load</string>
+    <string name="home_gtr_home">GTR</string>
+    <string name="home_repayment">REPAYMENT</string>
+    <string name="home_data">DATA/REPORTS</string>
+    <string name="home_drawer_scan">Scan this QR Code \nTo make payment!</string>
+    <string name="home_drawer_or">OR</string>
+    <string name="home_drawer_upi">UPI ID</string>
+    <string name="home_drawer_contact">Contact us</string>
+    <string name="home_drawer_number">+918876054631</string>
+    <string name="home_drawer_web">www.pscindia.org</string>
+    <string name="home_drawer_logout">LOG OUT</string>
+    <string name="gtr_group">Groups for GTR</string>
+    <string name="gtr_save">Save and Upload</string>
     <string name="synchronisation">Sync</string>
-
     <string name="synchronization">Synchronization</string>
-
-
     <string name="case_number">Case Number</string>
     <string name="date_reporting">Date of Reporting</string>
     <string name="state_case">State of Case Reporting</string>
@@ -44,8 +57,6 @@
     <string name="type_here">Type here</string>
     <string name="dd_mm_yy">dd-mm-yy</string>
     <string name="hh_mm">hh-mm</string>
-
-    <!--sync-->
     <string name="name">Name</string>
     <string name="edit_profile">Edit Profile</string>
     <string name="download">Download</string>
@@ -55,7 +66,6 @@
     <string name="please_enter">Please enter</string>
     <string name="please_select">Please select</string>
     <string name="sign_in">Sign in</string>
-
     <string name="planned_social_concern">Planned Social Concern</string>
     <string name="username">Enter Username</string>
     <string name="password">Enter Password</string>
@@ -68,12 +78,11 @@
     <string name="address_two_login">S15, Krishi Vihar, S Block, Badarwas</string>
     <string name="address_three_login">Jaipur, Rajasthan 302019</string>
     <string name= "enter_otp">Enter OTP</string>
-
+    <string name= "spinner_select">Select</string>
     <string name="personal_details">Personal Details</string>
     <string name="kyc">KYC</string>
     <string name="bank_details">Bank Details</string>
     <string name="family_details">Family Details</string>
-
     <string name= "enter_your_personal_details">Enter Your Personal Details</string>
     <string name= "customer_name">Customer name</string>
     <string name= "marital_status">Marital status</string>

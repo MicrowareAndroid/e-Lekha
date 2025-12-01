@@ -34,7 +34,6 @@ import androidx.navigation.NavController
 import com.psc.elekha.ui.screen.personaldetails.PersonalDetailsScreen
 import com.psc.elekha.ui.theme.btn_color
 import com.psc.elekha.ui.theme.lightGrey
-import com.psc.elekha.ui.theme.lightOrange
 import com.psc.elekha.ui.theme.toolbar_color
 import com.psc.elekha.ui.theme.white
 import com.psc.elekha.utils.AppPreferences

@@ -1,36 +1,14 @@
 package com.psc.elekha.ui.screen.login
 
-
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
@@ -42,88 +20,126 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.psc.elekha.getAppVersion
-import com.psc.elekha.getPlatform
-import com.psc.elekha.ui.PasswordField
-import com.psc.elekha.ui.SimpleOtp
-import com.psc.elekha.ui.UsernameField
+
 import com.psc.elekha.ui.theme.*
+import com.psc.elekha.utils.PasswordField
 import com.psc.elekha.utils.RouteName
+import com.psc.elekha.utils.SimpleOtp
+import com.psc.elekha.utils.UsernameField
+
 import e_lekha.composeapp.generated.resources.Res
 import e_lekha.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
-
 
 @Composable
-@Preview
 fun LoginScreenNew(navController: NavController) {
+
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
-    var result by remember { mutableStateOf("") }
-
-    var showOtpField by remember { mutableStateOf(false) }
     var otp by remember { mutableStateOf("") }
-
-    var otpDigits = remember { mutableStateListOf("", "", "", "") }
-    val focusRequesters = List(4) { FocusRequester() }
+    var showOtpField by remember { mutableStateOf(false) }
     val versionName = getAppVersion()
 
     Box(
         modifier = Modifier
             .fillMaxSize()
     ) {
+
+
         Image(
             painter = painterResource(Res.drawable.background),
             contentDescription = null,
-            modifier = Modifier.matchParentSize(),
+            modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.FillBounds
         )
 
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 32.dp, start = 8.dp),
-            horizontalAlignment = Alignment.Start
-        ) {
-            Image(
-                painter = painterResource(Res.drawable.logo),
-                contentDescription = "Logo",
-                modifier = Modifier.size(250.dp)
-            )
-        }
-        Spacer(modifier = Modifier.height(16.dp))
-
-            Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-                .padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ){
-
-                Text(
-                    text =  stringResource(Res.string.planned_social_concern),
-                    style = MaterialTheme.typography.headlineMedium.copy(
-                        fontWeight = FontWeight.Bold,
-                        color =  PrimaryDark,
-                        fontSize = 45.sp
-                    ),
-                    modifier = Modifier.padding(vertical = 24.dp, horizontal = 16.dp)
-                )
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center,
-
-                ) {
+        Scaffold(
+            modifier = Modifier.fillMaxSize(),
+            containerColor = Color.Transparent,
+            bottomBar = {
 
 
                 Box(
                     modifier = Modifier
-                        .fillMaxSize(),
+                        .fillMaxWidth()
+                        .navigationBarsPadding()
+                        .padding(bottom = 10.dp),
                     contentAlignment = Alignment.Center
                 ) {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+
+                    ) {
+                        Text(
+                            text = stringResource(Res.string.registered_office_address),
+                            style = MaterialTheme.typography.bodyMedium.copy(
+                                fontWeight = FontWeight.Bold,
+                                color = Color.Black
+                            )
+                        )
+                        Text(
+                            text = stringResource(Res.string.address_two_login),
+                            style = MaterialTheme.typography.bodySmall.copy(color = Color.Black)
+                        )
+                        Text(
+                            text = stringResource(Res.string.address_three_login),
+                            style = MaterialTheme.typography.bodySmall.copy(color = Color.Black)
+                        )
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text(
+                            text = "Version: $versionName",
+                            style = MaterialTheme.typography.bodySmall.copy(color = Color.Black)
+                        )
+                    }
+                }
+            }
+        ) { innerPadding ->
+
+
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding)
+                    .padding(horizontal = 16.dp),
+            ) {
+
+                Spacer(modifier = Modifier.height(30.dp))
+
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Image(
+                        painter = painterResource(Res.drawable.logo),
+                        contentDescription = "Logo",
+                        modifier = Modifier
+                            .size(140.dp)
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(13.dp))
+
+
+                Text(
+                    text = stringResource(Res.string.planned_social_concern),
+                    style = MaterialTheme.typography.headlineMedium.copy(
+                        fontWeight = FontWeight.Bold,
+                        color = PrimaryDark,
+                        fontSize = 36.sp
+                    ),
+                    modifier = Modifier.padding(start = 4.dp)
+                )
+
+                Spacer(modifier = Modifier.height(7.dp))
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .verticalScroll(rememberScrollState())
+                        .padding(bottom = 30.dp)
+                ) {
+
                     Card(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -134,14 +150,15 @@ fun LoginScreenNew(navController: NavController) {
                                 color = LightBlue,
                                 shape = RoundedCornerShape(20.dp)
                             ),
-                        elevation = CardDefaults.cardElevation(defaultElevation = 12.dp),
+                        elevation = CardDefaults.cardElevation(defaultElevation = 10.dp),
                         shape = RoundedCornerShape(20.dp),
                         colors = CardDefaults.cardColors(containerColor = MediumLightBlue)
                     ) {
+
                         Column(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(top = 16.dp, bottom = 16.dp, start = 8.dp, end = 8.dp),
+                                .padding(16.dp),
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
 
@@ -150,118 +167,60 @@ fun LoginScreenNew(navController: NavController) {
                                 style = MaterialTheme.typography.headlineMedium.copy(
                                     fontWeight = FontWeight.Bold,
                                     color = Color.White
-                                ),
-//                            modifier = Modifier.padding(vertical = 16.dp)
+                                )
                             )
-                            Column(
+
+                            Spacer(modifier = Modifier.height(8.dp))
+
+                            UsernameField(
+                                value = username,
+                                onValueChange = { username = it }
+                            )
+
+                            PasswordField(
+                                password = password,
+                                onPasswordChange = { password = it }
+                            )
+
+                            if (showOtpField) {
+                                Spacer(modifier = Modifier.height(12.dp))
+                                SimpleOtp(otp = otp, onOtpChange = { otp = it })
+                            }
+
+                            Spacer(modifier = Modifier.height(12.dp))
+
+                            Button(
+                                onClick = {
+                                    if (!showOtpField) {
+                                        showOtpField = true
+                                    }else
+                                        navController.navigate(RouteName.home)
+                                },
                                 modifier = Modifier
-                                    .padding(top = 8.dp, bottom = 0.dp, start = 16.dp, end = 16.dp)
-                                    .fillMaxWidth(),
-                                horizontalAlignment = Alignment.CenterHorizontally
-                            ) {
-                                UsernameField(
-                                    value = username,
-                                    onValueChange = { username = it },
-                                )
-
-//                            Spacer(modifier = Modifier.height(12.dp))
-
-                                PasswordField(
-                                    password = password,
-                                    onPasswordChange = { password = it },
-                                )
-
-                                if (showOtpField) {
-                                    Spacer(modifier = Modifier.height(12.dp))
-                                    SimpleOtp(otp = otp, onOtpChange = { otp = it })
-                                }
-
-
-                                /*  Text(
-                                text = "Forgot Password?",
-                                color = Color.Blue,
-                                fontSize = 12.sp,
-                                textDecoration = TextDecoration.Underline,
-                                modifier = Modifier
-                                    .align(Alignment.End)
-                                    .padding(bottom = 16.dp)
-                                    .clickable {
-
-                                    }
-                            )*/
-                                Spacer(modifier = Modifier.height(8.dp))
-
-                                Button(
-                                    onClick = {
-                                        if (!showOtpField) {
-                                            // OTP requested
-                                            showOtpField = true
-                                        } else {
-                                            // Proceed logic after OTP entered
-                                            // onProceedClick()
-                                            navController.navigate(RouteName.registration_list)
-                                        }
-                                    },
-                                    /*modifier = Modifier
-                                        .width(200.dp)
-                                        .height(56.dp),
-                                    shape = RoundedCornerShape(16.dp),
-                                    colors = ButtonDefaults.buttonColors(
-                                        containerColor = MixedYellow
-                                    )*/
-                                    modifier = Modifier
-                                        .width(200.dp)
-                                        .height(56.dp)
-                                        .background(
-                                            brush = Brush.horizontalGradient(
-                                                colors = listOf(WhitishYellow, BrightYellow)
-                                            ),
-                                            shape = RoundedCornerShape(12.dp)
+                                    .width(200.dp)
+                                    .height(56.dp)
+                                    .background(
+                                        brush = Brush.horizontalGradient(
+                                            listOf(WhitishYellow, BrightYellow)                               
                                         ),
-                                    colors = ButtonDefaults.buttonColors(
-                                        containerColor = Color.Transparent
+                                        shape = RoundedCornerShape(12.dp)
                                     ),
-                                    contentPadding = PaddingValues()
-
-                                ) {
-                                    Text(
-                                        text = if (showOtpField) stringResource(Res.string.proceed) else stringResource(Res.string.send_otp),
-                                        color = Color.White,
-                                        fontSize = 20.sp
-                                    )
-                                }
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = Color.Transparent
+                                )
+                            ) {
+                                Text(
+                                    text = if (showOtpField) stringResource(Res.string.proceed)
+                                    else stringResource(Res.string.send_otp),
+                                    color = Color.White,
+                                    fontSize = 20.sp
+                                )
                             }
                         }
                     }
                 }
-
+                Spacer(modifier = Modifier.height(60.dp))
             }
-
-        }
-        Column(
-            modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                .padding(bottom = 16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-
-            Text(
-                text = stringResource(Res.string.registered_office_address),
-                style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold,color = Color.Black)
-            )
-            Text(
-                text = stringResource(Res.string.address_two_login),
-                style = MaterialTheme.typography.bodySmall.copy(color = Color.Black)
-            )
-            Text(
-                text = stringResource(Res.string.address_three_login),
-                style = MaterialTheme.typography.bodySmall.copy(color = Color.Black)
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(
-                text = "Version: $versionName",
-                style = MaterialTheme.typography.bodySmall.copy(color = Color.Black)
-            )
         }
     }
 }

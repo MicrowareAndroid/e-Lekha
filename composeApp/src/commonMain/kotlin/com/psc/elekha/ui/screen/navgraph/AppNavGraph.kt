@@ -5,6 +5,10 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.psc.elekha.ui.screen.gtrlist.GtrListDataScreen
+import com.psc.elekha.ui.screen.gtrlist.GtrListScreen
+import com.psc.elekha.ui.screen.home.HomeScreen
+import com.psc.elekha.ui.screen.home.MainDrawerScreen
 import com.psc.elekha.utils.AppPreferences
 import com.psc.elekha.utils.RouteName
 import com.psc.elekha.ui.screen.login.LoginScreen
@@ -23,48 +27,35 @@ fun AppNavGraph(navController: NavHostController, appPreferences: AppPreferences
         navController = navController,
         startDestination = RouteName.splash
     ) {
-        composable(RouteName.splash){
+        composable(RouteName.splash) {
 //            SplashScreen(navController)
             SplashScreenNew(navController)
         }
 
-        composable(RouteName.login){
+        composable(RouteName.login) {
 //            LoginScreen(navController)
             LoginScreenNew(navController)
         }
 
-        composable(RouteName.registration_tabs) {
-            RegistartionTabScreen(navController,appPreferences)
+        composable(RouteName.home) {
+            MainDrawerScreen(navController)
         }
 
-        composable(RouteName.registration_list){
+        composable(RouteName.gtr_list_screen) {
+            GtrListScreen(navController)
+        }
+
+        composable(RouteName.gtr_list_data_screen) {
+            GtrListDataScreen(navController)
+        }
+
+        composable(RouteName.registration_tabs) {
+            RegistartionTabScreen(navController, appPreferences)
+        }
+
+        composable(RouteName.registration_list) {
             RegistrationListScreen(navController)
         }
-
-        /*composable(RouteName.home){
-            MainDrawerScreen( navController,appPreferences)
-        }
-
-        composable(RouteName.make_list_complaint) {
-            ComplaintListScreen(navController)
-        }
-
-        composable(RouteName.follow_status_complaint) {
-            FollowupScreen(navController)
-        }
-
-        composable(RouteName.case_tabs) {
-            CaseTabScreen(navController,appPreferences)
-        }
-
-        composable(RouteName.sync) {
-            SyncScreen(navController)
-        }*/
-
-
-
-
-
 
     }
 }
