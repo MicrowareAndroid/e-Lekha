@@ -1,12 +1,9 @@
 package com.psc.elekha.ui.screen.home
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import e_lekha.composeapp.generated.resources.background_drawer
 import kotlinx.coroutines.launch
-import org.jetbrains.compose.resources.painterResource
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp

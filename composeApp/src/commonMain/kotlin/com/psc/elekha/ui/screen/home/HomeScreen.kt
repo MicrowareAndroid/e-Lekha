@@ -149,9 +149,8 @@ fun HomeScreen(
 
                     Spacer(Modifier.height(20.dp))
 
-
                     CommonSingleButtons(
-                        onOkClick = {  navController.navigate(RouteName.gtr_list_screen)},
+                        onOkClick = {  navController.navigate(RouteName.registration_list)},
                         backgroundColor = LightMint,
                         text = stringResource(Res.string.home_registration),
                         textColor = black
@@ -160,7 +159,7 @@ fun HomeScreen(
                     Spacer(Modifier.height(15.dp))
 
                     CommonSingleButtons(
-                        onOkClick = {},
+                        onOkClick = {navController.navigate(RouteName.gtr_list_screen)},
                         backgroundColor = LightTeal,
                         text = stringResource(Res.string.home_gtr_home),
                         textColor = black

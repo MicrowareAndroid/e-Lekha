@@ -77,9 +77,6 @@ import org.jetbrains.compose.resources.stringResource
 @Composable
 fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = {}) {
     val context = LocalPlatformContext.current
-    val robotoMedium = FontFamily(Font(Res.font.roboto_medium))
-    val robotoRegular = FontFamily(Font(Res.font.roboto_regular))
-    val robotoSemiBold = FontFamily(Font(Res.font.roboto_semibold))
     var showDialog by remember { mutableStateOf(false) }
 //    val stateViewModel = koinViewModel<StateViewModel>()
 //    val stateList by stateViewModel.stateValue.collectAsState()
