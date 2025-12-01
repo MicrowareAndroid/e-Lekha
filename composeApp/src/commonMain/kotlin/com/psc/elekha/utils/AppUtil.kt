@@ -5,28 +5,37 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.relocation.BringIntoViewRequester
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -40,6 +49,7 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
@@ -51,16 +61,24 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusProperties
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.focusTarget
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
@@ -68,6 +86,8 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.Dp
@@ -75,6 +95,11 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import com.psc.elekha.ui.screen.gtrlist.CustomerData
+import com.psc.elekha.ui.screen.gtrlist.GroupCardData
+import com.psc.elekha.ui.theme.LightBlueBackground
+import com.psc.elekha.ui.theme.LightSkyBlue
+import com.psc.elekha.ui.theme.LoginTextBox
 import com.psc.elekha.ui.theme.accentOrange
 import com.psc.elekha.ui.theme.assureOrange
 import com.psc.elekha.ui.theme.bgColor
@@ -82,23 +107,32 @@ import com.psc.elekha.ui.theme.black
 import com.psc.elekha.ui.theme.boderColor
 import com.psc.elekha.ui.theme.desire_orange
 import com.psc.elekha.ui.theme.lightGrey
+import com.psc.elekha.ui.theme.lightgreens
 import com.psc.elekha.ui.theme.teal700
 import com.psc.elekha.ui.theme.white
 import e_lekha.composeapp.generated.resources.Res
 import e_lekha.composeapp.generated.resources.app_name
 import e_lekha.composeapp.generated.resources.close
 import e_lekha.composeapp.generated.resources.dd_mm_yy
+import e_lekha.composeapp.generated.resources.enter_here
+import e_lekha.composeapp.generated.resources.enter_otp
 import e_lekha.composeapp.generated.resources.hh_mm
 import e_lekha.composeapp.generated.resources.ic_arrow_drop_down
 import e_lekha.composeapp.generated.resources.ic_close
+import e_lekha.composeapp.generated.resources.ic_menu
+import e_lekha.composeapp.generated.resources.password
 import e_lekha.composeapp.generated.resources.roboto_medium
 import e_lekha.composeapp.generated.resources.save
+import e_lekha.composeapp.generated.resources.spinner_select
 import e_lekha.composeapp.generated.resources.type_here
+import e_lekha.composeapp.generated.resources.username
+import kotlinx.coroutines.delay
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.resources.vectorResource
+import kotlin.String
 
 @Composable
 fun ReusableTextView(
@@ -178,15 +212,15 @@ fun ReusableOutlinedTextField(
     value: String,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
-    hint: String = "",
+    hint: String = "psc.augp@aubank",
     textColor: Color = Color.Black,
     hintColor: Color = Color.Gray,
-    fontSize: TextUnit = 16.sp,
+    fontSize: TextUnit = 10.sp,
     fontFamily: FontFamily = FontFamily.Default,
     backgroundColor: Color = Color.White,
-    focusedBorderColor: Color = Color.Blue,
-    unfocusedBorderColor: Color = Color.Gray,
-    cornerRadius: Dp = 12.dp,
+    focusedBorderColor: Color = lightgreens,
+    unfocusedBorderColor: Color = lightgreens,
+
     singleLine: Boolean = true,
     maxLines: Int = 1,
     leadingIcon: @Composable (() -> Unit)? = null,
@@ -199,7 +233,7 @@ fun ReusableOutlinedTextField(
         onValueChange = onValueChange,
         modifier = modifier
             .fillMaxWidth()
-            .background(backgroundColor, RoundedCornerShape(cornerRadius)),
+            .background(backgroundColor, ),
         placeholder = {
             Text(
                 text = hint,
@@ -219,7 +253,7 @@ fun ReusableOutlinedTextField(
         trailingIcon = trailingIcon,
         keyboardOptions = keyboardOptions,
         keyboardActions = keyboardActions,
-        shape = RoundedCornerShape(cornerRadius),
+
         colors = OutlinedTextFieldDefaults.colors(
             focusedBorderColor = focusedBorderColor,
             unfocusedBorderColor = unfocusedBorderColor,
@@ -1509,6 +1543,600 @@ fun MultiSelectDropdownWithChips1(
 
 
 
+val ALLOWED_USERNAME_CHARS: Set<Char> =
+    ('a'..'z').toSet() +
+            ('A'..'Z').toSet() +
+            ('0'..'9').toSet() +
+            setOf('@', '.')
+val ALLOWED_PASSWORD_CHARS: Set<Char> =
+    ('a'..'z').toSet() +
+            ('A'..'Z').toSet() +
+            ('0'..'9').toSet() +
+            setOf('@', '.', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')')
 
+fun filterAllowed(input: String, allowed: Set<Char>): String {
+    return input.filter { it in allowed }
+}
+
+@Composable
+fun UsernameField(
+    label: String = stringResource(Res.string.username),
+    value: String,
+    onValueChange: (String) -> Unit,
+    maxLength: Int = 50
+) {
+    Column(modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp)) {
+        Text(text = label, fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Color.White)
+        Spacer(modifier = Modifier.height(8.dp))
+        OutlinedTextField(
+            value = value,
+            onValueChange = { newValue ->
+                val updated = updateFilteredInput(
+                    oldValue = value,
+                    newValue = newValue,
+                    allowed = ALLOWED_USERNAME_CHARS,
+                    maxLength = maxLength
+                )
+                onValueChange(updated)
+            },
+            placeholder = { Text(stringResource(Res.string.enter_here), color = Color.White) },
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(16.dp),
+            colors = OutlinedTextFieldDefaults.colors(
+                unfocusedContainerColor = LoginTextBox,
+                focusedContainerColor = LoginTextBox,
+                unfocusedBorderColor = LoginTextBox,
+                focusedBorderColor = LoginTextBox,
+                cursorColor = Color.White
+            ),
+            textStyle = TextStyle(color = Color.White),
+            keyboardOptions = KeyboardOptions.Default.copy(
+                keyboardType = KeyboardType.Text
+            )
+        )
+    }
+}
+
+@Composable
+fun PasswordField(
+    password: String,
+    onPasswordChange: (String) -> Unit,
+    label: String = stringResource(Res.string.password),
+    maxLength: Int = 50
+) {
+    var passwordVisible by remember { mutableStateOf(false) }
+    Column(modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp)) {
+        Text(text = label, fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Color.White)
+        Spacer(modifier = Modifier.height(8.dp))
+        OutlinedTextField(
+            value = password,
+            onValueChange = { newValue ->
+//                onPasswordChange(filterAllowed(newValue, ALLOWED_PASSWORD_CHARS))
+                val filtered = filterAllowed(newValue, ALLOWED_PASSWORD_CHARS)
+                val limited = filtered.take(maxLength)
+                onPasswordChange(limited)
+
+            },
+            placeholder = { Text(stringResource(Res.string.enter_here), color = Color.White) },
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(16.dp),
+            colors = OutlinedTextFieldDefaults.colors(
+                unfocusedContainerColor = LoginTextBox,
+                focusedContainerColor = LoginTextBox,
+                unfocusedBorderColor = LoginTextBox,
+                focusedBorderColor = LoginTextBox,
+                cursorColor = Color.White
+            ),
+            visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+            trailingIcon = {
+                IconButton(onClick = { passwordVisible = !passwordVisible }) {
+                    Icon(
+                        imageVector = if (passwordVisible)
+                            Icons.Default.Visibility
+                        else
+                            Icons.Default.VisibilityOff,
+                        contentDescription = if (passwordVisible) "Hide password" else "Show password",
+                        tint = Color.White
+                    )
+                }
+            },
+//            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Password)
+            textStyle = TextStyle(color = Color.White),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Password
+            )
+        )
+    }
+}
+
+@Composable
+fun SimpleOtp(
+    otp: String,
+    onOtpChange: (String) -> Unit
+) {
+    val focusRequesters = remember { List(4) { FocusRequester() } }
+
+    LaunchedEffect(Unit) {
+        focusRequesters[0].requestFocus()   // Auto focus first box
+    }
+
+    Text(
+        text = stringResource(Res.string.enter_otp),
+        style = MaterialTheme.typography.headlineLarge.copy(
+            fontWeight = FontWeight.Bold,
+            color = Color.White,
+            fontSize = 18.sp
+        ),
+    )
+
+    Spacer(modifier = Modifier.height(8.dp))
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceEvenly
+    ) {
+
+        (0 until 4).forEach { index ->
+            val char = otp.getOrNull(index)?.toString() ?: ""
+
+            OutlinedTextField(
+                value = char,
+                onValueChange = { newValue ->
+                    // allow only digits
+                    if (newValue.length <= 1 && (newValue.isEmpty() || newValue[0].isDigit())) {
+
+                        val newOtp = otp.padEnd(4, ' ').toCharArray()
+
+                        // Update value
+                        newOtp[index] = if (newValue.isEmpty()) ' ' else newValue[0]
+
+                        onOtpChange(newOtp.concatToString().trimEnd())
+
+                        // Move to next box automatically
+                        if (newValue.isNotEmpty() && index < 3) {
+                            focusRequesters[index + 1].requestFocus()
+                        }
+
+                        // Move to previous on delete
+                        if (newValue.isEmpty() && index > 0) {
+                            focusRequesters[index - 1].requestFocus()
+                        }
+                    }
+                },
+                colors = OutlinedTextFieldDefaults.colors(
+                    unfocusedContainerColor = Color.White,
+                    focusedContainerColor = Color.White,
+                    unfocusedBorderColor = Color.Gray,
+                    focusedBorderColor = Color.Gray,
+                    cursorColor = Color.Black
+                ),
+                singleLine = true,
+                modifier = Modifier
+                    .width(55.dp)
+                    .height(60.dp)
+                    .focusRequester(focusRequesters[index]),
+                textStyle = LocalTextStyle.current.copy(
+                    textAlign = TextAlign.Center,
+                    fontSize = 20.sp
+                ),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+            )
+        }
+    }
+}
+
+fun updateFilteredInput(
+    oldValue: String,
+    newValue: String,
+    allowed: Set<Char>,
+    maxLength: Int
+): String {
+    return if (newValue.length > oldValue.length) {
+        val added = newValue.last()
+
+        if (added in allowed && oldValue.length < maxLength) {
+            oldValue + added
+        } else {
+            oldValue
+        }
+    } else {
+        newValue
+    }
+}
+
+@Composable
+fun DashboardCardItem(
+    number: String,
+    label: String,
+    icon: Painter,
+    modifier: Modifier = Modifier,
+    backgroundColor: Color = Color(0xFFB8EEDC),
+    onClick: () -> Unit = {}
+) {
+
+    Column(
+        modifier = modifier,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+
+        // CARD + ICON Group
+        Box(
+            modifier = Modifier.size(75.dp),
+            contentAlignment = Alignment.TopCenter
+        ) {
+
+            Card(
+                shape = RoundedCornerShape(16.dp),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .offset(y = 10.dp)        // Same offset
+                    .clickable { onClick() },
+                colors = CardDefaults.cardColors(containerColor = backgroundColor),
+                elevation = CardDefaults.cardElevation(3.dp)
+            ) {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = number,
+                        fontSize = 20.sp,
+                        color = Color(0xFF0A6B78),
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+            }
+
+            // ICON on Top Left
+            Box(
+                modifier = Modifier
+                    .size(32.dp)
+                    .background(lightgreens.copy(alpha = 0.6f), CircleShape)
+                    .align(Alignment.TopStart)
+                    .border(1.dp, Color.White, CircleShape),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    painter = icon,
+                    contentDescription = null,
+                    tint = Color(0xFF0A6B78),
+                    modifier = Modifier.size(16.dp)
+                )
+            }
+        }
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        // FIXED LABEL
+        Text(
+            text = label,
+            fontSize = 8.sp,
+            fontWeight = FontWeight.Medium,
+            color =lightgreens,
+            textAlign = TextAlign.Start,
+            maxLines = 1,
+        )
+    }
+}
+
+@Composable
+fun CommonSingleButtons(
+    onOkClick: () -> Unit,
+    backgroundColor: Color,
+    text: String = "",
+    textColor: Color
+) {
+    Row(
+        modifier = Modifier.fillMaxWidth().padding(end = 25.dp, start = 20.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        Button(
+            onClick = onOkClick,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(55.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = backgroundColor,
+                contentColor = lightgreens
+            ),
+            shape = RoundedCornerShape(18.dp)
+        ) {
+            ReusableTextView(
+                text = text,
+                textColor =textColor ,
+                fontWeight = FontWeight.Bold
+            )
+        }
+    }
+}
+
+@Composable
+fun TripleIconSlider(
+    items: List<Triple<Painter, Painter, Painter>>,
+    modifier: Modifier = Modifier,
+    bgColor: Color = Color(0xFFDDEFFF)
+) {
+    LazyRow(
+        modifier = modifier.height(170.dp),
+        horizontalArrangement = Arrangement.spacedBy(20.dp)
+    ) {
+
+        items(items.size) { index ->
+
+            val (leftIcon, centerIcon, rightIcon) = items[index]
+
+            Box(
+                modifier = Modifier
+                    .width(260.dp)
+                    .height(160.dp)
+                    .background(bgColor, RoundedCornerShape(25.dp)),
+                contentAlignment = Alignment.Center
+            ) {
+
+
+                Box(
+                    modifier = Modifier
+                        .size(50.dp)
+                        .align(Alignment.Center),
+                ) {
+
+
+                    Icon(
+                        painter = centerIcon,
+                        contentDescription = null,
+                        tint = Color(0xFF32567A),
+                        modifier = Modifier
+                            .size(22.dp)
+                            .align(Alignment.TopCenter)
+                    )
+
+
+                    Icon(
+                        painter = leftIcon,
+                        contentDescription = null,
+                        tint = Color(0xFF32567A),
+                        modifier = Modifier
+                            .size(25.dp)
+                            .align(Alignment.BottomStart)
+                    )
+
+
+                    Icon(
+                        painter = rightIcon,
+                        contentDescription = null,
+                        tint = Color(0xFF32567A),
+                        modifier = Modifier
+                            .size(28.dp)
+                            .align(Alignment.BottomEnd)
+                    )
+                }
+
+
+                Text(
+                    text = "INFORMATION",
+                    color = Color.White,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier
+                        .align(Alignment.BottomCenter)
+                        .padding(bottom = 8.dp)
+                )
+            }
+        }
+    }
+}
+@Composable
+fun ReusableCard(
+    modifier: Modifier = Modifier,
+    backgroundColor:Color,
+    cornerRadius: Int = 12,
+    content: @Composable ColumnScope.() -> Unit
+) {
+    Card(
+        modifier = modifier.fillMaxWidth().fillMaxHeight(),
+        colors = CardDefaults.cardColors(backgroundColor),
+        shape = RoundedCornerShape(cornerRadius.dp),
+        elevation = CardDefaults.cardElevation(3.dp)
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        ) {
+            content()
+        }
+    }
+}
+
+@Composable
+fun GroupCardUI(
+    item: GroupCardData,
+    onCardClick: (GroupCardData) -> Unit
+) {
+    ReusableCard(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(6.dp)
+            .clickable { onCardClick(item) },
+        backgroundColor = LightSkyBlue
+    ) {
+
+        Column(modifier = Modifier.fillMaxWidth()) {
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.Top
+            ) {
+
+                Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                    ReusableTextView(text = "Group Name : ${item.groupName}", fontSize = 12)
+                    ReusableTextView(text = "No. of Customers : ${item.customers}", fontSize = 12)
+                    ReusableTextView(text = "Village Name : ${item.village}", fontSize = 12)
+                    ReusableTextView(text = "Loan Officer : ${item.officer}", fontSize = 12)
+                    ReusableTextView(text = "Group formation date : ${item.formation}", fontSize = 12)
+                }
+
+                Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                    ReusableTextView(text = "Disbursement date : ${item.disbursement}", fontSize = 12)
+                    ReusableTextView(text = "Center : ${item.center}", fontSize = 12)
+                    ReusableTextView(text = "Meeting day : ${item.meetingDay}", fontSize = 12)
+                    ReusableTextView(text = "Next meeting Date : ${item.nextMeeting}", fontSize = 12)
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun <T : Any> FillDynamicSpinner(
+    label: String = "",
+    options: List<T>?,
+    selectedOption: Int?,
+    onOptionSelected: (Int) -> Unit,
+    getOptionId: (T) -> Int,
+    getOptionLabel: (T) -> String,
+    modifier: Modifier = Modifier,
+    backgroundColor: Color = LightBlueBackground,
+    textColor: Color = Color.Black,
+    focusRequester: FocusRequester? = null,
+    bringIntoViewRequester: BringIntoViewRequester? = null,
+    placeholder:   String = stringResource(Res.string.spinner_select)
+) {
+    var expanded by remember { mutableStateOf(false) }
+    var hasFocus by remember { mutableStateOf(false) }
+    var spinnerWidth by remember { mutableStateOf(0) }
+
+    LaunchedEffect(hasFocus) {
+        if (hasFocus) {
+            delay(120)
+            bringIntoViewRequester?.bringIntoView()
+            expanded = true
+        }
+    }
+
+    val displayText = if (selectedOption == null || selectedOption == 0) {
+        placeholder
+    } else {
+        options?.find { getOptionId(it) == selectedOption }?.let { getOptionLabel(it) } ?: placeholder
+    }
+
+    Column(modifier = modifier.fillMaxWidth()) {
+
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .onGloballyPositioned { coordinates ->
+                    spinnerWidth = coordinates.size.width
+                }
+        ) {
+
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(52.dp)
+                    .background(backgroundColor, RoundedCornerShape(8.dp))
+                    .focusTarget()
+                    .focusable()
+                    .clickable { expanded = true }
+                    .then(if (focusRequester != null) Modifier.focusRequester(focusRequester) else Modifier)
+                    .onFocusChanged { state -> hasFocus = state.isFocused }
+                    .padding(horizontal = 12.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+
+                ReusableTextView(text = displayText, textColor = textColor)
+
+                Icon(
+                  painter  = painterResource(Res.drawable.ic_arrow_drop_down),
+                    contentDescription = "Dropdown",
+                    tint = textColor
+                )
+            }
+
+
+            DropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { expanded = false },
+                modifier = Modifier
+                    .width(with(LocalDensity.current) { spinnerWidth.toDp() })
+                    .background(backgroundColor)
+            ) {
+
+                DropdownMenuItem(
+                    text = { Text(placeholder) },
+                    onClick = {
+                        onOptionSelected(0)
+                        expanded = false
+                    }
+                )
+
+                options?.forEach { item ->
+                    DropdownMenuItem(
+                        text = { Text(getOptionLabel(item)) },
+                        onClick = {
+                            onOptionSelected(getOptionId(item))
+                            expanded = false
+                        }
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun CustomerItemCard(customer: CustomerData) {
+
+    var checked by remember { mutableStateOf(false) }
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 8.dp)
+    ) {
+
+        Checkbox(checked = checked, onCheckedChange = { checked = it })
+
+        Spacer(Modifier.width(10.dp))
+
+        ReusableCard(
+            modifier = Modifier.weight(1f),
+            backgroundColor = Color(0xFFFFCC66),
+            cornerRadius = 12
+        ) {
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(10.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+
+                Column(modifier = Modifier.weight(1f)) {
+                    ReusableTextView("Customer ID : New Customer")
+                    ReusableTextView("Name : ${customer.name}")
+                    ReusableTextView("Mobile number : ${customer.mobile}")
+                    ReusableTextView("Loan Amount : Rs ${customer.amount}")
+                }
+
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+
+                    Box(
+                        modifier = Modifier
+                            .size(55.dp)
+                            .background(Color.DarkGray, RoundedCornerShape(6.dp))
+                    )
+
+                    Box(
+                        modifier = Modifier
+                            .size(55.dp)
+                            .background(Color.DarkGray, RoundedCornerShape(6.dp))
+                    )
+                }
+            }
+        }
+    }
+}
 
 
