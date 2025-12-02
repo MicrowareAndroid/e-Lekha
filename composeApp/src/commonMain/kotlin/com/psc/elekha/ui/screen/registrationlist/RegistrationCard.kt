@@ -1,5 +1,6 @@
 package com.psc.elekha.ui.screen.registrationlist
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -7,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -39,7 +41,7 @@ fun RegistrationCard(
     onEdit: () -> Unit,
     onDelete: () -> Unit
 ) {
-    Card(
+    /*Card(
         shape = RoundedCornerShape(12.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         colors = CardDefaults.cardColors(containerColor = editext_bg_color),
@@ -91,6 +93,111 @@ fun RegistrationCard(
                 }
             }
         }
+    }*/
+
+    Card(
+        shape = RoundedCornerShape(12.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        colors = CardDefaults.cardColors(containerColor = editext_bg_color),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(4.dp)
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(10.dp),
+            verticalAlignment = Alignment.Top
+        ) {
+            // LEFT SIDE CONTENT
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+            ) {
+
+                // ---------- FIRST ROW ----------
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        ReusableTextView(
+                            stringResource(Res.string.name),
+                            textColor = Color.Gray,
+                            fontWeight = FontWeight.W500
+                        )
+                        Spacer(Modifier.height(4.dp))
+                        ReusableTextView(registrationModel.name, fontWeight = FontWeight.SemiBold)
+                    }
+
+                    Spacer(modifier = Modifier.width(20.dp))
+
+                    Column(modifier = Modifier.weight(1f)) {
+                        ReusableTextView(
+                            stringResource(Res.string.mobile_number),
+                            textColor = Color.Gray,
+                            fontWeight = FontWeight.W500
+                        )
+                        Spacer(Modifier.height(4.dp))
+                        ReusableTextView(registrationModel.phone, fontWeight = FontWeight.SemiBold)
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(10.dp))
+
+                // ---------- SECOND ROW ----------
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        ReusableTextView(
+                            stringResource(Res.string.marital_status),
+                            textColor = Color.Gray,
+                            fontWeight = FontWeight.W500
+                        )
+                        Spacer(Modifier.height(4.dp))
+                        ReusableTextView(registrationModel.details, fontWeight = FontWeight.SemiBold)
+                    }
+
+                    Spacer(modifier = Modifier.width(20.dp))
+
+                    Column(modifier = Modifier.weight(1f)) {
+                        ReusableTextView(
+                            "Description",
+                            textColor = Color.Gray,
+                            fontWeight = FontWeight.W500
+                        )
+                        Spacer(Modifier.height(4.dp))
+                        ReusableTextView("Some description here", fontWeight = FontWeight.SemiBold)
+                    }
+                }
+            }
+
+            // RIGHT SIDE BUTTON COLUMN
+            Column(
+                verticalArrangement = Arrangement.spacedBy(5.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                IconButton(onClick = onEdit) {
+                    Icon(
+                        painter = painterResource(Res.drawable.edit),
+                        contentDescription = "Edit",
+                        modifier = Modifier.size(30.dp),
+                        tint = black
+                    )
+                }
+                IconButton(onClick = onDelete) {
+                    Icon(
+                        painter = painterResource(Res.drawable.delete),
+                        contentDescription = "Delete",
+                        modifier = Modifier.size(30.dp),
+                        tint = black
+                    )
+                }
+            }
+        }
     }
+
 
 }
