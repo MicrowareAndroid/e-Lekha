@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -2374,6 +2375,74 @@ fun ReusableTextViewBlackCard(
         ),
         textAlign = textAlignment
     )
+}
+@Composable
+fun ReusablePaymentDropdown(
+    selectedValue: String,
+    options: List<String>,
+    onValueSelected: (String) -> Unit,
+    modifier: Modifier = Modifier,
+    height: Dp = 32.dp,
+    backgroundColor: Color = Color(0xFFBBDEFB),
+    cornerRadius: Dp = 4.dp,
+    fontFamily: FontFamily = FontFamily(Font(Res.font.roboto_medium))
+) {
+    var expanded by remember { mutableStateOf(false) }
+
+    Box(modifier = modifier) {
+
+        // SAME BUTTON AS YOUR OLD CODE
+        Button(
+            onClick = { expanded = true },
+            colors = ButtonDefaults.buttonColors(
+                containerColor = backgroundColor
+            ),
+            shape = RoundedCornerShape(cornerRadius),
+            contentPadding = PaddingValues(horizontal = 2.dp, vertical = 4.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(height)
+        ) {
+
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+
+                Text(
+                    text = selectedValue,
+                    fontSize = 12.sp,
+                    color = Color.Black,
+                    fontFamily = fontFamily
+                )
+
+                Text("▼", fontSize = 10.sp, color = Color.Black)
+            }
+        }
+
+        // DROPDOWN MENU
+        DropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false }
+        ) {
+            options.forEach { option ->
+                DropdownMenuItem(
+                    text = {
+                        Text(
+                            option,
+                            fontSize = 12.sp,
+                            color = Color.Black
+                        )
+                    },
+                    onClick = {
+                        onValueSelected(option)
+                        expanded = false
+                    }
+                )
+            }
+        }
+    }
 }
 
 
