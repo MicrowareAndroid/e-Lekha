@@ -38,6 +38,13 @@
 //Gtr List
     <string name="gtr_group">Groups for GTR</string>
     <string name="gtr_save">Save and Upload</string>
+    <string name="gtr_add">Add</string>
+    <string name="gtr_select">Select Branch</string>
+    <string name="gtr_customer">No of Customers : 7</string>
+    <string name="gtr_center">Center : 11(17)</string>
+    <string name="gtr_meeting">Meeting day :</string>
+    <string name="gtr_next_meeting">Next meeting date :</string>
+    <string name="gtr_remaining_days">Remaining day(s) for GTR</string>
 
 
 

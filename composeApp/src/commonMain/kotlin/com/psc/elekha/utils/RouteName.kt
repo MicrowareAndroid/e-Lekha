@@ -12,6 +12,7 @@ object RouteName {
     const val sub_categories = "sub_categories"
     const val sync = "sync"
     const val gtr_list_screen = "gtr_list_screen"
+    const val customer_detail_screen = "customer_detail_screen"
     const val gtr_list_data_screen = "gtr_list_data_screen"
     const val registration_tabs = "registration_tabs"
 }

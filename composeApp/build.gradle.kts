@@ -56,7 +56,7 @@ kotlin {
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodelCompose)
-            implementation(libs.androidx.lifecycle.runtimeCompose
+            implementation(libs.androidx.lifecycle.runtimeCompose)
 
             implementation(compose.materialIconsExtended)
 
@@ -95,6 +95,7 @@ kotlin {
             implementation(libs.kotlinx.datetime)
             implementation(libs.remember.settings)
         }
+
 
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)

@@ -37,13 +37,13 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -70,7 +70,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.focusTarget
 import androidx.compose.ui.focus.onFocusChanged
@@ -98,11 +97,11 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.psc.elekha.ui.screen.gtrlist.CustomerData
 import com.psc.elekha.ui.screen.gtrlist.GroupCardData
+import com.psc.elekha.ui.theme.CardColor
 import com.psc.elekha.ui.theme.LightBlueBackground
 import com.psc.elekha.ui.theme.LightSkyBlue
 import com.psc.elekha.ui.theme.LoginTextBox
-import com.psc.elekha.ui.theme.BrightYellow
-import com.psc.elekha.ui.theme.accentOrange
+import com.psc.elekha.ui.theme.PrimaryDark
 import com.psc.elekha.ui.theme.assureOrange
 import com.psc.elekha.ui.theme.bgColor
 import com.psc.elekha.ui.theme.black
@@ -123,10 +122,11 @@ import e_lekha.composeapp.generated.resources.close
 import e_lekha.composeapp.generated.resources.dd_mm_yy
 import e_lekha.composeapp.generated.resources.enter_here
 import e_lekha.composeapp.generated.resources.enter_otp
+import e_lekha.composeapp.generated.resources.gtr_add
+import e_lekha.composeapp.generated.resources.gtr_save
 import e_lekha.composeapp.generated.resources.hh_mm
 import e_lekha.composeapp.generated.resources.ic_arrow_drop_down
 import e_lekha.composeapp.generated.resources.ic_close
-import e_lekha.composeapp.generated.resources.ic_menu
 import e_lekha.composeapp.generated.resources.password
 import e_lekha.composeapp.generated.resources.roboto_medium
 import e_lekha.composeapp.generated.resources.save
@@ -145,7 +145,7 @@ import kotlin.String
 fun ReusableTextView(
     text: String,
     modifier: Modifier = Modifier,
-    textColor: Color = Color.Black,
+    textColor: Color ,
     fontSize: Int = 16,
     fontWeight: FontWeight = FontWeight.Normal,
     fontFamily: FontFamily = FontFamily(Font(Res.font.roboto_medium)),
@@ -409,13 +409,15 @@ fun CommonActionButtons(
     onSaveClick: () -> Unit,
     onCloseClick: () -> Unit,
     accentColor: Color = btn_color,
-    saveText: String = stringResource(Res.string.save),
-    closeText: String = stringResource(Res.string.close),
+    saveText: String = stringResource(Res.string.gtr_save),
+    closeText: String = stringResource(Res.string.gtr_add),
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
+
+
         Button(
             onClick = onSaveClick,
             modifier = Modifier
@@ -430,14 +432,16 @@ fun CommonActionButtons(
             Text(saveText)
         }
 
-        OutlinedButton(
+
+
+        Button(
             onClick = onCloseClick,
             modifier = Modifier
                 .weight(1f)
                 .height(48.dp),
-            border = BorderStroke(1.dp, btn_color),
-            colors = ButtonDefaults.outlinedButtonColors(
-                contentColor = accentColor
+            colors = ButtonDefaults.buttonColors(
+                containerColor = btn_color,
+                contentColor = Color.Black
             ),
             shape = RoundedCornerShape(15.dp)
         ) {
@@ -445,7 +449,6 @@ fun CommonActionButtons(
         }
     }
 }
-
 
 @Composable
 fun CommonSaveButton(
@@ -634,7 +637,8 @@ fun DynamicCheckBox(
         ReusableTextView(
             text = label,
             fontSize = 13,
-            fontFamily = fontFamily
+            fontFamily = fontFamily,
+                    textColor = black,
         )
     }
 }
@@ -777,7 +781,7 @@ fun FormDatePicker(
     modifier: Modifier = Modifier
 ) {
 
-    Column(modifier = modifier) {   // 👈 IMPORTANT
+    Column(modifier = modifier) {
         ReusableTextView(
             text = label,
             fontSize = 14,
@@ -799,7 +803,7 @@ fun FormDatePicker(
                 )
             },
             modifier = Modifier
-                .fillMaxWidth()   // 👈 Ensures equal width inside Row weight
+                .fillMaxWidth()
                 .height(48.dp)
                 .clickable { onClick() },
             shape = RoundedCornerShape(15.dp),
@@ -876,6 +880,7 @@ fun timePicker(
     )
 }
 
+/*
 @Composable
 fun DynamicAlertDialog(
     showDialog: Boolean,
@@ -893,7 +898,7 @@ fun DynamicAlertDialog(
             text = { ReusableTextView(message) },
             confirmButton = {
                 TextButton(onClick = onConfirm) {
-                    ReusableTextView(confirmText)
+                    ReusableTextView(confirmText, textColor = black,)
                 }
             },
             dismissButton = dismissText?.let {
@@ -906,6 +911,7 @@ fun DynamicAlertDialog(
         )
     }
 }
+*/
 
 @Composable
 fun CustomAlertDialog(
@@ -1080,6 +1086,7 @@ fun DynamicRadioButton(
                     ReusableTextView(
                         text = option,
                         fontSize = 14,
+                        textColor = black,
                         modifier = Modifier.padding(start = 4.dp)
                     )
                 }
@@ -1173,6 +1180,7 @@ fun FormSpinner1(
                         text = {
                             ReusableTextView(
                                 text = option,
+                                textColor = black,
                                 modifier = Modifier.fillMaxWidth()
                             )
                         },
@@ -1477,6 +1485,7 @@ fun FormSpinner(
                         text = {
                             ReusableTextView(
                                 text = option,
+                                textColor = black,
                                 modifier = Modifier.fillMaxWidth()
                             )
                         },
@@ -2002,12 +2011,12 @@ fun TripleIconSlider(
 @Composable
 fun ReusableCard(
     modifier: Modifier = Modifier,
-    backgroundColor:Color,
+    backgroundColor: Color,
     cornerRadius: Int = 12,
     content: @Composable ColumnScope.() -> Unit
 ) {
     Card(
-        modifier = modifier.fillMaxWidth().fillMaxHeight(),
+        modifier = modifier,
         colors = CardDefaults.cardColors(backgroundColor),
         shape = RoundedCornerShape(cornerRadius.dp),
         elevation = CardDefaults.cardElevation(3.dp)
@@ -2015,12 +2024,13 @@ fun ReusableCard(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp)
+                .padding(horizontal = 8.dp, vertical = 15.dp)
         ) {
             content()
         }
     }
 }
+
 
 @Composable
 fun GroupCardUI(
@@ -2032,7 +2042,7 @@ fun GroupCardUI(
             .fillMaxWidth()
             .padding(6.dp)
             .clickable { onCardClick(item) },
-        backgroundColor = LightSkyBlue
+        backgroundColor = CardColor
     ) {
 
         Column(modifier = Modifier.fillMaxWidth()) {
@@ -2044,18 +2054,18 @@ fun GroupCardUI(
             ) {
 
                 Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                    ReusableTextView(text = "Group Name : ${item.groupName}", fontSize = 12)
-                    ReusableTextView(text = "No. of Customers : ${item.customers}", fontSize = 12)
-                    ReusableTextView(text = "Village Name : ${item.village}", fontSize = 12)
-                    ReusableTextView(text = "Loan Officer : ${item.officer}", fontSize = 12)
-                    ReusableTextView(text = "Group formation date : ${item.formation}", fontSize = 12)
+                    ReusableTextView(text = "Group Name : ${item.groupName}", fontSize = 14 ,textColor = Color.Gray,)
+                    ReusableTextView(text = "No. of Customers : ${item.customers}", fontSize = 14 ,textColor = black,)
+                    ReusableTextView(text = "Village Name : ${item.village}", fontSize = 14, textColor = Color.Gray,)
+                    ReusableTextView(text = "Loan Officer : ${item.officer}", fontSize = 14 ,textColor = black,)
+                    ReusableTextView(text = "Group formation date : ${item.formation}", fontSize = 14 ,textColor = Color.Gray,)
                 }
 
                 Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                    ReusableTextView(text = "Disbursement date : ${item.disbursement}", fontSize = 12)
-                    ReusableTextView(text = "Center : ${item.center}", fontSize = 12)
-                    ReusableTextView(text = "Meeting day : ${item.meetingDay}", fontSize = 12)
-                    ReusableTextView(text = "Next meeting Date : ${item.nextMeeting}", fontSize = 12)
+                    ReusableTextView(text = "Disbursement date : ${item.disbursement}", fontSize = 14, textColor = black,)
+                    ReusableTextView(text = "Center : ${item.center}", fontSize = 14 ,textColor = Color.Gray,)
+                    ReusableTextView(text = "Meeting day : ${item.meetingDay}", fontSize = 14 ,textColor = black,)
+                    ReusableTextView(text = "Next meeting Date : ${item.nextMeeting}", fontSize = 14 ,textColor = Color.Gray,)
                 }
             }
         }
@@ -2071,7 +2081,7 @@ fun <T : Any> FillDynamicSpinner(
     getOptionId: (T) -> Int,
     getOptionLabel: (T) -> String,
     modifier: Modifier = Modifier,
-    backgroundColor: Color = LightBlueBackground,
+    backgroundColor: Color = CardColor,
     textColor: Color = Color.Black,
     focusRequester: FocusRequester? = null,
     bringIntoViewRequester: BringIntoViewRequester? = null,
@@ -2136,7 +2146,7 @@ fun <T : Any> FillDynamicSpinner(
                 onDismissRequest = { expanded = false },
                 modifier = Modifier
                     .width(with(LocalDensity.current) { spinnerWidth.toDp() })
-                    .background(backgroundColor)
+                    .background(CardColor)
             ) {
 
                 DropdownMenuItem(
@@ -2161,55 +2171,76 @@ fun <T : Any> FillDynamicSpinner(
     }
 }
 
+
 @Composable
-fun CustomerItemCard(customer: CustomerData) {
+fun LabelValueText(label: String, value: String) {
+    Row {
+        ReusableTextView(
+            text = label,
+            fontSize = 13,
+            textColor = Color.Black
+        )
+        Spacer(modifier = Modifier.width(4.dp))
+        ReusableTextView(
+            text = value,
+            fontSize = 13,
+            textColor = Color.Gray
+        )
+    }
+}
+@Composable
+fun CustomerItemCard(customer: CustomerData,) {
 
     var checked by remember { mutableStateOf(false) }
 
-    Row(
+    ReusableCard(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 8.dp)
+            .padding(vertical = 8.dp),
+        backgroundColor = CardColor,
+        cornerRadius = 12
     ) {
 
-        Checkbox(checked = checked, onCheckedChange = { checked = it })
-
-        Spacer(Modifier.width(10.dp))
-
-        ReusableCard(
-            modifier = Modifier.weight(1f),
-            backgroundColor = Color(0xFFFFCC66),
-            cornerRadius = 12
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
         ) {
 
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(10.dp),
-                verticalAlignment = Alignment.CenterVertically
+
+            Checkbox(
+                checked = checked,
+                onCheckedChange = { checked = it },
+                colors = CheckboxDefaults.colors(
+                    checkedColor = PrimaryDark,
+                    uncheckedColor = Color.Gray,
+                    checkmarkColor = Color.White
+                ),
+            )
+
+            Column(
+                modifier = Modifier.weight(1f)
             ) {
+                LabelValueText("Customer ID :", "New Customer")
+                LabelValueText("Name :", customer.name)
+                LabelValueText("Mobile number :", customer.mobile)
+                LabelValueText("Loan Amount :", "Rs ${customer.amount}")
+            }
 
-                Column(modifier = Modifier.weight(1f)) {
-                    ReusableTextView("Customer ID : New Customer")
-                    ReusableTextView("Name : ${customer.name}")
-                    ReusableTextView("Mobile number : ${customer.mobile}")
-                    ReusableTextView("Loan Amount : Rs ${customer.amount}")
-                }
+            Spacer(modifier = Modifier.width(10.dp))
 
-                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-
-                    Box(
-                        modifier = Modifier
-                            .size(55.dp)
-                            .background(Color.DarkGray, RoundedCornerShape(6.dp))
-                    )
-
-                    Box(
-                        modifier = Modifier
-                            .size(55.dp)
-                            .background(Color.DarkGray, RoundedCornerShape(6.dp))
-                    )
-                }
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                Box(
+                    modifier = Modifier
+                        .size(55.dp)
+                        .background(Color.Gray, RoundedCornerShape(6.dp))
+                )
+                Box(
+                    modifier = Modifier
+                        .size(55.dp)
+                        .background(Color.Gray, RoundedCornerShape(6.dp))
+                )
             }
         }
     }

@@ -23,8 +23,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.psc.elekha.ui.screen.personaldetails.PersonalDetailsScreen
-import com.psc.elekha.ui.theme.lightGrey
-import com.psc.elekha.ui.theme.lightOrange
+
 import com.psc.elekha.ui.theme.white
 import com.psc.elekha.utils.AppPreferences
 import com.psc.elekha.utils.ReusableTextView
@@ -88,12 +87,12 @@ fun RegistartionTabScreen(navController: NavController,pref: AppPreferences) {
                             .padding(horizontal = 6.dp, vertical = 6.dp)
                             .height(50.dp)
                             .clip(RoundedCornerShape(50))
-                            .background(
+                            /*.background(
                                 if (selectedTabIndex == index)
-                                    lightOrange
+                                  light
                                 else
                                     lightGrey
-                            ),
+                            )*/,
                             //.clickable { selectedTabIndex = index },
                         contentAlignment = Alignment.Center
                     ) {
