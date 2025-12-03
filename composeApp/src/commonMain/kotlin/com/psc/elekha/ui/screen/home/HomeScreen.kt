@@ -168,7 +168,7 @@ fun HomeScreen(
                     Spacer(Modifier.height(15.dp))
 
                     CommonSingleButtons(
-                        onOkClick = {},
+                        onOkClick = {navController.navigate(RouteName.replayment_list)},
                         backgroundColor =LightYellow,
                         text = stringResource(Res.string.home_repayment),
                         textColor = black
