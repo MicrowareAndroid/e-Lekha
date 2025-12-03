@@ -124,5 +124,8 @@
     <string name= "front_image">Front image</string>
     <string name= "back_image">Back image</string>
     <string name= "image">Image</string>
+    <string name= "customer_details">Customer Details</string>
+    <string name= "customer_image">Customer image</string>
+    <string name= "guarantor_image">Guarantor image</string>
 
 </resources>
