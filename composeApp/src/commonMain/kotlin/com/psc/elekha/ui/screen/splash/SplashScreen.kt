@@ -21,6 +21,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.psc.elekha.ui.theme.black
 import com.psc.elekha.ui.theme.desire_orange
 import com.psc.elekha.utils.ReusableImageView
 import com.psc.elekha.utils.ReusableTextView
@@ -106,6 +107,7 @@ fun SplashScreen(navController: NavController) {
                 text = stringResource(Res.string.splash_subtitle),
                 textAlignment = TextAlign.Center,
                 fontWeight = FontWeight.Medium,
+                textColor = black,
                 fontFamily = FontFamily(Font(Res.font.inter_medium))
             )
         }
@@ -114,6 +116,7 @@ fun SplashScreen(navController: NavController) {
             text = version,
             modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 50.dp),
             fontWeight = FontWeight.W700,
+            textColor = black,
             fontFamily = FontFamily(Font(Res.font.roboto_regular))
         )
     }

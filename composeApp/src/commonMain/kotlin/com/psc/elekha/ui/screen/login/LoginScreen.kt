@@ -48,6 +48,7 @@ import androidx.navigation.NavController
 import com.psc.elekha.ui.theme.accentOrange
 import com.psc.elekha.ui.theme.assureOrange
 import com.psc.elekha.ui.theme.bgColor
+import com.psc.elekha.ui.theme.black
 import com.psc.elekha.ui.theme.darkBluishGrey
 import com.psc.elekha.ui.theme.desire_orange
 import com.psc.elekha.ui.theme.white
@@ -179,6 +180,7 @@ fun LoginScreen(navController: NavController) {
                     text = stringResource(Res.string.splash_subtitle),
                     textAlignment = TextAlign.Center,
                     fontWeight = FontWeight.Medium,
+                    textColor = black,
                     fontFamily = FontFamily(Font(Res.font.inter_medium))
                 )
             }
@@ -187,7 +189,8 @@ fun LoginScreen(navController: NavController) {
                     text = stringResource(Res.string.login_title),
                     fontSize = 20,
                     fontWeight = FontWeight.SemiBold,
-                    fontFamily = robotoSemiBold
+                    fontFamily = robotoSemiBold,
+                    textColor = black
                 )
                 Spacer(modifier = Modifier.height(2.dp))
                 ReusableTextView(
@@ -195,7 +198,8 @@ fun LoginScreen(navController: NavController) {
                     textAlignment = TextAlign.Center,
                     fontSize = 14,
                     fontWeight = FontWeight.Normal,
-                    fontFamily = robotoRegular
+                    fontFamily = robotoRegular,
+                    textColor = black
                 )
             }
             ReusableTextView(
@@ -203,7 +207,8 @@ fun LoginScreen(navController: NavController) {
                 textColor = desire_orange,
                 modifier = Modifier.padding(start = 4.dp, bottom = 4.dp),
                 fontWeight = FontWeight.SemiBold,
-                fontFamily = robotoSemiBold
+                fontFamily = robotoSemiBold,
+
             )
             OutlinedTextField(
                 value = email,
