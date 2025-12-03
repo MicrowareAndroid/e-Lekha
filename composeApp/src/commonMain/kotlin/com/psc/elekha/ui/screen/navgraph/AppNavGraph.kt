@@ -5,19 +5,16 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.psc.elekha.ui.screen.repayment.RepaymentList
 import com.psc.elekha.ui.screen.customer.CustomerDetailScreen
 import com.psc.elekha.ui.screen.gtrlist.GtrListDataScreen
 import com.psc.elekha.ui.screen.gtrlist.GtrListScreen
-import com.psc.elekha.ui.screen.home.HomeScreen
 import com.psc.elekha.ui.screen.home.MainDrawerScreen
 import com.psc.elekha.utils.AppPreferences
 import com.psc.elekha.utils.RouteName
-import com.psc.elekha.ui.screen.login.LoginScreen
 import com.psc.elekha.ui.screen.login.LoginScreenNew
-import com.psc.elekha.ui.screen.personaldetails.PersonalDetailsScreen
 import com.psc.elekha.ui.screen.registrationlist.RegistrationListScreen
 import com.psc.elekha.ui.screen.registrationtab.RegistartionTabScreen
-import com.psc.elekha.ui.screen.splash.SplashScreen
 import com.psc.elekha.ui.screen.splash.SplashScreenNew
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -101,6 +98,10 @@ fun AppNavGraph(
 
         composable(RouteName.registration_list) {
             RegistrationListScreen(navController)
+        }
+
+        composable(RouteName.replayment_list) {
+            RepaymentList(navController)
         }
 
     }

@@ -9,4 +9,6 @@ object RouteName {
     const val gtr_list_data_screen = "gtr_list_data_screen"
     const val registration_tabs = "registration_tabs"
     const val registration_list = "registration_list"
+
+    const val replayment_list = "repayment_list"
 }
