@@ -34,8 +34,6 @@
     <string name="home_drawer_number">+918876054631</string>
     <string name="home_drawer_web">www.pscindia.org</string>
     <string name="home_drawer_logout">LOG OUT</string>
-
-//Gtr List
     <string name="gtr_group">Groups for GTR</string>
     <string name="gtr_save">Save and Upload</string>
     <string name="gtr_add">Add</string>
@@ -45,14 +43,8 @@
     <string name="gtr_meeting">Meeting day :</string>
     <string name="gtr_next_meeting">Next meeting date :</string>
     <string name="gtr_remaining_days">Remaining day(s) for GTR</string>
-
-
-
-
     <string name="synchronisation">Sync</string>
     <string name="synchronization">Synchronization</string>
-
-
     <string name="case_number">Case Number</string>
     <string name="date_reporting">Date of Reporting</string>
     <string name="state_case">State of Case Reporting</string>
@@ -72,8 +64,6 @@
     <string name="type_here">Type here</string>
     <string name="dd_mm_yy">dd-mm-yy</string>
     <string name="hh_mm">hh-mm</string>
-
-    <!--sync-->
     <string name="name">Name</string>
     <string name="edit_profile">Edit Profile</string>
     <string name="download">Download</string>
@@ -83,7 +73,6 @@
     <string name="please_enter">Please enter</string>
     <string name="please_select">Please select</string>
     <string name="sign_in">Sign in</string>
-
     <string name="planned_social_concern">Planned Social Concern</string>
     <string name="username">Enter Username</string>
     <string name="password">Enter Password</string>
@@ -96,13 +85,11 @@
     <string name="address_two_login">S15, Krishi Vihar, S Block, Badarwas</string>
     <string name="address_three_login">Jaipur, Rajasthan 302019</string>
     <string name= "enter_otp">Enter OTP</string>
-
-    // common use
     <string name= "spinner_select">Select</string>
     <string name="personal_details">Personal Details</string>
     <string name="kyc">KYC</string>
     <string name="bank_details">Bank Details</string>
-
+    <string name="family_details">Family Details</string>
     <string name= "enter_your_personal_details">Enter Your Personal Details</string>
     <string name= "customer_name">Customer name</string>
     <string name= "marital_status">Marital status</string>
@@ -122,5 +109,20 @@
     <string name= "landmark">Landmark</string>
     <string name= "pin_code">Pin code</string>
     <string name= "next">Next</string>
+    <string name= "add">Add</string>
+
+    <string name= "enter_your_kyc_details">Enter Your KYC Details</string>
+    <string name= "aadhaar_card">Aadhaar card</string>
+    <string name= "voter_id_card">Voter Id card</string>
+    <string name= "ration_card_4_digit">Ration card (Last 4 digits only)</string>
+    <string name= "guarantor_details">Guarantor Details</string>
+    <string name= "guarantor_aadhaar_card">Guarantor aadhaar card</string>
+    <string name= "electricity_bill">Electricity bill</string>
+    <string name= "k_no">K no.</string>
+    <string name= "electricity_account_no">Electricity account no.</string>
+    <string name= "electricity_bill_two">Electricity bill 2</string>
+    <string name= "front_image">Front image</string>
+    <string name= "back_image">Back image</string>
+    <string name= "image">Image</string>
 
 </resources>

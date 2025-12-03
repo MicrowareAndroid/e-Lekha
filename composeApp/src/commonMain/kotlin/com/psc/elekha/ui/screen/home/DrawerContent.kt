@@ -293,12 +293,6 @@ fun DrawerContent() {
                             .width(130.dp),
                     ) {
 
-
-
-
-
-
-
                         Text(
                             text = stringResource(Res.string.home_drawer_logout),
                             fontWeight = FontWeight.Bold,

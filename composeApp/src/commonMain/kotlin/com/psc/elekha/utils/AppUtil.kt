@@ -35,6 +35,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
+import androidx.compose.material.icons.filled.CameraAlt
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
@@ -95,6 +96,8 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import coil3.Uri
+import coil3.compose.rememberAsyncImagePainter
 import com.psc.elekha.ui.screen.gtrlist.CustomerData
 import com.psc.elekha.ui.screen.gtrlist.GroupCardData
 import com.psc.elekha.ui.theme.CardColor
@@ -118,8 +121,10 @@ import com.psc.elekha.ui.theme.toolbar_color
 import com.psc.elekha.ui.theme.white
 import e_lekha.composeapp.generated.resources.Res
 import e_lekha.composeapp.generated.resources.app_name
+import e_lekha.composeapp.generated.resources.camera
 import e_lekha.composeapp.generated.resources.close
 import e_lekha.composeapp.generated.resources.dd_mm_yy
+import e_lekha.composeapp.generated.resources.document_icon
 import e_lekha.composeapp.generated.resources.enter_here
 import e_lekha.composeapp.generated.resources.enter_otp
 import e_lekha.composeapp.generated.resources.gtr_add
@@ -132,10 +137,13 @@ import e_lekha.composeapp.generated.resources.roboto_medium
 import e_lekha.composeapp.generated.resources.save
 import e_lekha.composeapp.generated.resources.spinner_select
 import e_lekha.composeapp.generated.resources.type_here
+import e_lekha.composeapp.generated.resources.user_default
 import e_lekha.composeapp.generated.resources.username
 import kotlinx.coroutines.delay
+import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.Font
+import org.jetbrains.compose.resources.imageResource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.resources.vectorResource
@@ -2245,5 +2253,46 @@ fun CustomerItemCard(customer: CustomerData,) {
         }
     }
 }
+
+@Composable
+fun CameraPreviewField(
+    image: Uri?,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    placeholderRes: DrawableResource = Res.drawable.document_icon
+) {
+    Row(
+        modifier = modifier,
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(10.dp)
+    ) {
+
+        // Pure Image Button with NO rounded background
+        Icon(
+            painter = painterResource(Res.drawable.camera),
+            contentDescription = "Camera Button",
+            modifier = Modifier
+                .size(25.dp)
+                .clickable { onClick() },
+            tint = Color.Unspecified   // remove tint if needed
+        )
+
+        // Preview Image
+        Image(
+            painter = if (image != null)
+                rememberAsyncImagePainter(model = image)
+            else
+                painterResource(placeholderRes),
+            contentDescription = "Image Preview",
+            modifier = Modifier
+                .size(100.dp)
+                .border(2.dp, Color.White),
+            contentScale = ContentScale.Fit
+        )
+    }
+}
+
+
+
 
 
