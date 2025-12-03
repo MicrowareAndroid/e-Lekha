@@ -114,25 +114,6 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
                     .padding(bottom = 15.dp)
             ) {
 
-                /*// ---------------- Form Start ----------------
-                FormField(
-                    label = stringResource(Res.string.customer_name),
-                    value = "",
-                    placeholder = stringResource(Res.string.type_here),
-                    onValueChange = { "" },
-                    maxLength = 20
-                )
-                Spacer(modifier = Modifier.height(8.dp))
-
-                FormField(
-                    label = stringResource(Res.string.purpose),
-                    value = "",
-                    placeholder = stringResource(Res.string.type_here),
-                    onValueChange = { "" },
-                    maxLength = 20
-                )
-                Spacer(modifier = Modifier.height(8.dp))*/
-
                 ReusableTextView(
                     text = stringResource(Res.string.enter_your_personal_details),
                     fontSize = 16,
@@ -152,7 +133,8 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
                         value = "",
                         onValueChange = { "" },
                         placeholder = stringResource(Res.string.type_here),
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier.weight(1f),
+                        maxLength = 30
                     )
 
                     FormDatePicker(
@@ -270,7 +252,7 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
                     maxLength = 20
                 )
 
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(3.dp))
 
                 DynamicCheckBox(
                     label = stringResource(Res.string.same_as_husband),

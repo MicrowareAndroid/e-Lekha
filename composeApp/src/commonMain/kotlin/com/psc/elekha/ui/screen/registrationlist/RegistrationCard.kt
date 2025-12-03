@@ -41,59 +41,6 @@ fun RegistrationCard(
     onEdit: () -> Unit,
     onDelete: () -> Unit
 ) {
-    /*Card(
-        shape = RoundedCornerShape(12.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-        colors = CardDefaults.cardColors(containerColor = editext_bg_color),
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(4.dp)
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(10.dp),
-            verticalAlignment = Alignment.CenterVertically
-        )
-        {
-            Column(modifier = Modifier.weight(1f)) {
-                ReusableTextView(stringResource(Res.string.name), textColor = Color.Gray,fontWeight = FontWeight.W500)
-                Spacer(modifier = Modifier.height(4.dp))
-                ReusableTextView(registrationModel.name, fontWeight = FontWeight.SemiBold)
-
-                Spacer(modifier = Modifier.height(5.dp))
-
-                ReusableTextView(stringResource(Res.string.mobile_number), textColor = Color.Gray,fontWeight = FontWeight.W500)
-                Spacer(modifier = Modifier.height(4.dp))
-                ReusableTextView(registrationModel.phone, fontWeight = FontWeight.SemiBold)
-
-                Spacer(modifier = Modifier.height(5.dp))
-
-                ReusableTextView(stringResource(Res.string.marital_status), textColor = Color.Gray,fontWeight = FontWeight.W500)
-                Spacer(modifier = Modifier.height(4.dp))
-                ReusableTextView(registrationModel.details, fontWeight = FontWeight.SemiBold)
-            }
-
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                IconButton(onClick = onEdit) {
-                    Icon(
-                        painter = painterResource(Res.drawable.edit),
-                        contentDescription = "Edit",
-                        modifier = Modifier.size(30.dp),
-                        tint = black
-                    )
-                }
-                IconButton(onClick = onDelete) {
-                    Icon(
-                        painter = painterResource(Res.drawable.delete),
-                        contentDescription = "Delete",
-                        modifier = Modifier.size(30.dp),
-                        tint = black
-                    )
-                }
-            }
-        }
-    }*/
 
     Card(
         shape = RoundedCornerShape(12.dp),
