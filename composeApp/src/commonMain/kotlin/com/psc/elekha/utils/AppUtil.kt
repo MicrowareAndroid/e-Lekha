@@ -2278,7 +2278,7 @@ fun CameraPreviewField(
         )
 
         // Preview Image
-        Image(
+        ReusableImageView(
             painter = if (image != null)
                 rememberAsyncImagePainter(model = image)
             else
@@ -2373,6 +2373,22 @@ fun ReusableTextViewBlackCard(
             fontFamily = fontFamily
         ),
         textAlign = textAlignment
+    )
+}
+
+@Composable
+fun CommonDivider(
+    modifier: Modifier = Modifier,
+    color: Color = Color.Black,
+    thickness: Dp = 2.dp,
+    startPadding: Dp = 5.dp,
+    endPadding: Dp = 5.dp
+) {
+    Box(
+        modifier = modifier
+            .padding(startPadding, 0.dp, endPadding, 0.dp)
+            .height(thickness)
+            .background(color)
     )
 }
 

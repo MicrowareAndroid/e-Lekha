@@ -32,6 +32,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -41,21 +42,25 @@ import coil3.compose.rememberAsyncImagePainter
 import com.psc.elekha.ui.theme.textview_color
 import com.psc.elekha.ui.theme.white
 import com.psc.elekha.utils.CameraPreviewField
+import com.psc.elekha.utils.CommonDivider
 import com.psc.elekha.utils.CommonSaveButton
 import com.psc.elekha.utils.CommonSingleButtonsBottomString
 import com.psc.elekha.utils.DynamicCheckBox
 import com.psc.elekha.utils.FormDatePicker
 import com.psc.elekha.utils.FormField
 import com.psc.elekha.utils.FormSpinner
+import com.psc.elekha.utils.ReusableImageView
 import com.psc.elekha.utils.ReusableTextView
 import com.psc.elekha.utils.pickDate
 import e_lekha.composeapp.generated.resources.Res
 import e_lekha.composeapp.generated.resources.aadhaar_card
 import e_lekha.composeapp.generated.resources.back_image
+import e_lekha.composeapp.generated.resources.customer_details
 import e_lekha.composeapp.generated.resources.customer_name
 import e_lekha.composeapp.generated.resources.date
 import e_lekha.composeapp.generated.resources.date_of_birth
 import e_lekha.composeapp.generated.resources.district
+import e_lekha.composeapp.generated.resources.document_icon
 import e_lekha.composeapp.generated.resources.education
 import e_lekha.composeapp.generated.resources.electricity_account_no
 import e_lekha.composeapp.generated.resources.electricity_bill
@@ -87,6 +92,7 @@ import e_lekha.composeapp.generated.resources.send_otp
 import e_lekha.composeapp.generated.resources.state
 import e_lekha.composeapp.generated.resources.tehsil
 import e_lekha.composeapp.generated.resources.type_here
+import e_lekha.composeapp.generated.resources.user_default
 import e_lekha.composeapp.generated.resources.village_name
 import e_lekha.composeapp.generated.resources.voter_id
 import e_lekha.composeapp.generated.resources.voter_id_card
@@ -135,21 +141,83 @@ fun KycDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = {}) {
             ) {
 
                 ReusableTextView(
-                    text = stringResource(Res.string.enter_your_kyc_details),
-                    fontSize = 16,
-                    textColor = Color.Black
+                    text = stringResource(Res.string.enter_your_kyc_details)
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                // ---------------- Form Start ----------------
-                FormField(
+                /*ReusableTextView(
+                    text = stringResource(Res.string.customer_details),
+                    fontSize = 14
+                )*/
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+
+                    ReusableTextView(
+                        text = stringResource(Res.string.customer_details),
+                        fontSize = 14
+                    )
+
+                    CommonDivider(
+                        modifier = Modifier.weight(1f)
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                /*FormField(
                     label = stringResource(Res.string.customer_name),
                     value = "",
                     placeholder = "",
                     onValueChange = { "" },
                     isEnable = false
-                )
+                )*/
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
+                    FormField(
+                        label = stringResource(Res.string.customer_name),
+                        value = "",
+                        onValueChange = { "" },
+                        placeholder = "",
+                        modifier = Modifier.weight(1f),
+                        isEnable = false
+                    )
+
+                    ReusableImageView(
+                        painterResource(Res.drawable.user_default),
+                        contentDescription = "Image Preview",
+                        modifier = Modifier
+                            .size(100.dp)
+                            .border(2.dp, Color.White),
+                        contentScale = ContentScale.Fit,
+
+                    )
+
+                    /*// Apply weight OUTSIDE the reusable function
+                    Box(
+                        modifier = Modifier
+                            .weight(1f)         // <-- Weight applied here
+                            .height(100.dp),    // <-- required to show image properly
+                        contentAlignment = Alignment.Center
+                    ) {
+                        ReusableImageView(
+                            painterResource(Res.drawable.user_default),
+                            contentDescription = "Image Preview",
+                            modifier = Modifier
+                                .fillMaxSize()   // <-- This will now expand inside weighted Box
+                                .border(2.dp, Color.White),
+                            contentScale = ContentScale.Fit
+                        )
+                    }*/
+                }
 
                 Spacer(modifier = Modifier.height(8.dp))
 
@@ -306,20 +374,60 @@ fun KycDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = {}) {
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                ReusableTextView(
+                /*ReusableTextView(
                     text = stringResource(Res.string.guarantor_details),
-                    fontSize = 14,
-                    textColor = Color.Black
-                )
+                    fontSize = 14
+                )*/
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+
+                    ReusableTextView(
+                        text = stringResource(Res.string.guarantor_details),
+                        fontSize = 14
+                    )
+
+                    CommonDivider(
+                        modifier = Modifier.weight(1f)
+                    )
+                }
+
                 Spacer(modifier = Modifier.height(8.dp))
 
-                FormField(
+                /*FormField(
                     label = stringResource(Res.string.guarantor_name),
                     value = "",
                     placeholder = "",
                     onValueChange = { "" },
                     isEnable = false
-                )
+                )*/
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
+                    FormField(
+                        label = stringResource(Res.string.customer_name),
+                        value = "",
+                        onValueChange = { "" },
+                        placeholder = "",
+                        modifier = Modifier.weight(1f),
+                        isEnable = false
+                    )
+
+                    ReusableImageView(
+                        painterResource(Res.drawable.user_default),
+                        contentDescription = "Image Preview",
+                        modifier = Modifier
+                            .size(100.dp)
+                            .border(2.dp, Color.White),
+                        contentScale = ContentScale.Fit,
+
+                        )
+                }
 
                 Spacer(modifier = Modifier.height(8.dp))
 
@@ -373,11 +481,29 @@ fun KycDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = {}) {
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                ReusableTextView(
+                /*ReusableTextView(
                     text = stringResource(Res.string.electricity_bill),
-                    fontSize = 14,
-                    textColor = Color.Black
-                )
+                    fontSize = 14
+                )*/
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+
+                    ReusableTextView(
+                        text = stringResource(Res.string.electricity_bill),
+                        fontSize = 14
+                    )
+
+                    CommonDivider(
+                        modifier = Modifier.weight(1f)
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(8.dp))
 
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -461,11 +587,57 @@ fun KycDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = {}) {
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                ReusableTextView(
+                /*ReusableTextView(
                     text = stringResource(Res.string.electricity_bill_two),
-                    fontSize = 14,
-                    textColor = Color.Black
-                )
+                    fontSize = 14
+                )*/
+
+
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+
+                    ReusableTextView(
+                        text = stringResource(Res.string.electricity_bill_two),
+                        fontSize = 14
+                    )
+
+                    CommonDivider(
+                        modifier = Modifier.weight(1f)
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxHeight(),      // Make text area match the height of right side
+                        contentAlignment = Alignment.CenterStart        // Center vertically
+                    ) {
+                        ReusableTextView(
+                            text = stringResource(Res.string.image),
+                            fontSize = 14,
+                            textColor = textview_color
+                        )
+                    }
+
+                    CameraPreviewField(
+                        image = electricityBillImage2,
+                        onClick = { },
+                        placeholderRes = Res.drawable.voter_id,
+                        modifier = Modifier.weight(1f)
+                    )
+                }
 
                 Spacer(modifier = Modifier.height(8.dp))
 

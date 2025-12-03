@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -26,8 +27,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
+import coil3.Uri
 import coil3.compose.LocalPlatformContext
+import com.psc.elekha.ui.theme.textview_color
 import com.psc.elekha.ui.theme.white
+import com.psc.elekha.utils.CameraPreviewField
 import com.psc.elekha.utils.CommonActionButtons
 import com.psc.elekha.utils.CommonSaveButton
 import com.psc.elekha.utils.CommonSingleButtons
@@ -39,6 +43,7 @@ import com.psc.elekha.utils.FormSpinner
 import com.psc.elekha.utils.ReusableTextView
 import com.psc.elekha.utils.pickDate
 import e_lekha.composeapp.generated.resources.Res
+import e_lekha.composeapp.generated.resources.customer_image
 import e_lekha.composeapp.generated.resources.customer_name
 import e_lekha.composeapp.generated.resources.date
 import e_lekha.composeapp.generated.resources.date_of_birth
@@ -46,9 +51,11 @@ import e_lekha.composeapp.generated.resources.district
 import e_lekha.composeapp.generated.resources.education
 import e_lekha.composeapp.generated.resources.enter_otp
 import e_lekha.composeapp.generated.resources.enter_your_personal_details
+import e_lekha.composeapp.generated.resources.guarantor_image
 import e_lekha.composeapp.generated.resources.guarantor_mobile_number
 import e_lekha.composeapp.generated.resources.guarantor_name
 import e_lekha.composeapp.generated.resources.husband_name
+import e_lekha.composeapp.generated.resources.image
 import e_lekha.composeapp.generated.resources.landmark
 import e_lekha.composeapp.generated.resources.marital_status
 import e_lekha.composeapp.generated.resources.mobile_number
@@ -66,7 +73,9 @@ import e_lekha.composeapp.generated.resources.send_otp
 import e_lekha.composeapp.generated.resources.state
 import e_lekha.composeapp.generated.resources.tehsil
 import e_lekha.composeapp.generated.resources.type_here
+import e_lekha.composeapp.generated.resources.user_default
 import e_lekha.composeapp.generated.resources.village_name
+import e_lekha.composeapp.generated.resources.voter_id
 import e_lekha.composeapp.generated.resources.your_full_address
 import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.painterResource
@@ -89,6 +98,8 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
 //
 //    var showAlert = viewModel.showSaveAlert
 //    var message = viewModel.saveMessage
+    var customerImage by remember { mutableStateOf<Uri?>(null) }
+    var guarantorImage by remember { mutableStateOf<Uri?>(null) }
 
     LaunchedEffect(Unit) {
 //        stateViewModel.loadUsers()
@@ -115,9 +126,7 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
             ) {
 
                 ReusableTextView(
-                    text = stringResource(Res.string.enter_your_personal_details),
-                    fontSize = 16,
-                    textColor = Color.Black
+                    text = stringResource(Res.string.enter_your_personal_details)
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -156,6 +165,34 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
                         },
                         isEnable = false,
                         isReadable = true,
+                        modifier = Modifier.weight(1f)
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxHeight(),      // Make text area match the height of right side
+                        contentAlignment = Alignment.CenterStart        // Center vertically
+                    ) {
+                        ReusableTextView(
+                            text = stringResource(Res.string.customer_image),
+                            fontSize = 14,
+                            textColor = textview_color
+                        )
+                    }
+
+                    CameraPreviewField(
+                        image = customerImage,
+                        onClick = { },
+                        placeholderRes = Res.drawable.user_default,
                         modifier = Modifier.weight(1f)
                     )
                 }
@@ -275,6 +312,34 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
 
                 Row(
                     modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxHeight(),      // Make text area match the height of right side
+                        contentAlignment = Alignment.CenterStart        // Center vertically
+                    ) {
+                        ReusableTextView(
+                            text = stringResource(Res.string.guarantor_image),
+                            fontSize = 14,
+                            textColor = textview_color
+                        )
+                    }
+
+                    CameraPreviewField(
+                        image = guarantorImage,
+                        onClick = { },
+                        placeholderRes = Res.drawable.user_default,
+                        modifier = Modifier.weight(1f)
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(10.dp)
                 ) {
                     FormSpinner(
@@ -324,7 +389,7 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(10.dp),
-                    verticalAlignment = Alignment.Bottom   // 👈 THIS aligns button with EditText
+                    verticalAlignment = Alignment.Bottom   // THIS aligns button with EditText
                 ) {
                     FormField(
                         label = stringResource(Res.string.enter_otp),
