@@ -25,6 +25,8 @@ import com.psc.elekha.ui.theme.black
 import com.psc.elekha.ui.theme.btn_color
 import com.psc.elekha.ui.theme.editext_bg_color
 import com.psc.elekha.utils.ReusableTextView
+import com.psc.elekha.utils.ReusableTextViewBlackCard
+import com.psc.elekha.utils.ReusableTextViewGrayCard
 import e_lekha.composeapp.generated.resources.Res
 import e_lekha.composeapp.generated.resources.delete
 import e_lekha.composeapp.generated.resources.edit
@@ -68,25 +70,21 @@ fun RegistrationCard(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Column(modifier = Modifier.weight(1f)) {
-                        ReusableTextView(
-                            stringResource(Res.string.name),
-                            textColor = Color.Gray,
-                            fontWeight = FontWeight.W500
+                        ReusableTextViewGrayCard(
+                            stringResource(Res.string.name)
                         )
                         Spacer(Modifier.height(4.dp))
-                        ReusableTextView(registrationModel.name, fontWeight = FontWeight.SemiBold)
+                        ReusableTextViewBlackCard(registrationModel.name)
                     }
 
                     Spacer(modifier = Modifier.width(20.dp))
 
                     Column(modifier = Modifier.weight(1f)) {
-                        ReusableTextView(
-                            stringResource(Res.string.mobile_number),
-                            textColor = Color.Gray,
-                            fontWeight = FontWeight.W500
+                        ReusableTextViewGrayCard(
+                            stringResource(Res.string.mobile_number)
                         )
                         Spacer(Modifier.height(4.dp))
-                        ReusableTextView(registrationModel.phone, fontWeight = FontWeight.SemiBold)
+                        ReusableTextViewBlackCard(registrationModel.phone)
                     }
                 }
 
@@ -98,25 +96,21 @@ fun RegistrationCard(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Column(modifier = Modifier.weight(1f)) {
-                        ReusableTextView(
-                            stringResource(Res.string.marital_status),
-                            textColor = Color.Gray,
-                            fontWeight = FontWeight.W500
+                        ReusableTextViewGrayCard(
+                            stringResource(Res.string.marital_status)
                         )
                         Spacer(Modifier.height(4.dp))
-                        ReusableTextView(registrationModel.details, fontWeight = FontWeight.SemiBold)
+                        ReusableTextViewBlackCard(registrationModel.details)
                     }
 
                     Spacer(modifier = Modifier.width(20.dp))
 
                     Column(modifier = Modifier.weight(1f)) {
-                        ReusableTextView(
-                            "Description",
-                            textColor = Color.Gray,
-                            fontWeight = FontWeight.W500
+                        ReusableTextViewGrayCard(
+                            "Description"
                         )
                         Spacer(Modifier.height(4.dp))
-                        ReusableTextView("Some description here", fontWeight = FontWeight.SemiBold)
+                        ReusableTextViewBlackCard("Some description here")
                     }
                 }
             }

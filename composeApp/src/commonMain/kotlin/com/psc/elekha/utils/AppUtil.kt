@@ -153,7 +153,7 @@ import kotlin.String
 fun ReusableTextView(
     text: String,
     modifier: Modifier = Modifier,
-    textColor: Color ,
+    textColor: Color = Color.Black,
     fontSize: Int = 16,
     fontWeight: FontWeight = FontWeight.Normal,
     fontFamily: FontFamily = FontFamily(Font(Res.font.roboto_medium)),
@@ -2292,6 +2292,89 @@ fun CameraPreviewField(
     }
 }
 
+@Composable
+fun ReusableTextViewGrayCard(
+    text: String,
+    modifier: Modifier = Modifier,
+    textColor: Color = Color.Gray,
+    fontSize: Int = 15,
+    fontWeight: FontWeight = FontWeight.W500,
+    fontFamily: FontFamily = FontFamily(Font(Res.font.roboto_medium)),
+    backgroundColor: Color = Color.Transparent,
+    cornerRadius: Dp = 0.dp,
+    padding: Dp = 0.dp,
+    style: TextStyle = TextStyle.Default,
+    textAlignment: TextAlign = TextAlign.Start,
+    isMandatory: Int = 0,
+    asteriskColor: Color = Color.Red
+) {
+    val displayText = if (isMandatory == 1) {
+        buildAnnotatedString {
+            append(text)
+            withStyle(style = SpanStyle(color = asteriskColor)) {
+                append(" *")
+            }
+        }
+    } else {
+        AnnotatedString(text)
+    }
+
+    Text(
+        text = displayText,
+        modifier = modifier
+            .background(color = backgroundColor, shape = RoundedCornerShape(cornerRadius))
+            .padding(padding),
+        style = style.copy(
+            color = textColor,
+            fontSize = fontSize.sp,
+            fontWeight = fontWeight,
+            fontFamily = fontFamily
+        ),
+        textAlign = textAlignment
+    )
+}
+
+@Composable
+fun ReusableTextViewBlackCard(
+    text: String,
+    modifier: Modifier = Modifier,
+    textColor: Color = Color.Black,
+    fontSize: Int = 14,
+    fontWeight: FontWeight = FontWeight.SemiBold,
+    fontFamily: FontFamily = FontFamily(Font(Res.font.roboto_medium)),
+    backgroundColor: Color = Color.Transparent,
+    cornerRadius: Dp = 0.dp,
+    padding: Dp = 0.dp,
+    style: TextStyle = TextStyle.Default,
+    textAlignment: TextAlign = TextAlign.Start,
+    isMandatory: Int = 0,
+    asteriskColor: Color = Color.Red
+) {
+    val displayText = if (isMandatory == 1) {
+        buildAnnotatedString {
+            append(text)
+            withStyle(style = SpanStyle(color = asteriskColor)) {
+                append(" *")
+            }
+        }
+    } else {
+        AnnotatedString(text)
+    }
+
+    Text(
+        text = displayText,
+        modifier = modifier
+            .background(color = backgroundColor, shape = RoundedCornerShape(cornerRadius))
+            .padding(padding),
+        style = style.copy(
+            color = textColor,
+            fontSize = fontSize.sp,
+            fontWeight = fontWeight,
+            fontFamily = fontFamily
+        ),
+        textAlign = textAlignment
+    )
+}
 
 
 
