@@ -96,6 +96,7 @@ kotlin {
             implementation(libs.remember.settings)
         }
 
+
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
         }

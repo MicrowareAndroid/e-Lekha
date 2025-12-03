@@ -37,7 +37,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.psc.elekha.ui.theme.black
 import com.psc.elekha.ui.theme.lightgreens
+import com.psc.elekha.ui.theme.white
 import com.psc.elekha.utils.ReusableOutlinedTextField
 import com.psc.elekha.utils.ReusableTextView
 import e_lekha.composeapp.generated.resources.Res
@@ -117,17 +119,18 @@ fun DrawerContent() {
 
                     ReusableTextView(
                         text = "Mr. Xyz Singh",
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        textColor = black
                     )
 
                     Column(horizontalAlignment = Alignment.End) {
                         ReusableTextView(
-                            text = stringResource(Res.string.home_user,)
+                            text = stringResource(Res.string.home_user),textColor = black
                         )
 
-                        ReusableTextView(text = stringResource(Res.string.home_time))
+                        ReusableTextView(text = stringResource(Res.string.home_time),textColor =black)
 
-                        ReusableTextView(text = stringResource(Res.string.home_date))
+                        ReusableTextView(text = stringResource(Res.string.home_date),textColor = black)
                     }
                 }
             }
@@ -160,7 +163,7 @@ fun DrawerContent() {
 
 
                 ReusableTextView(
-                    text = stringResource(Res.string.home_drawer_scan)
+                    text = stringResource(Res.string.home_drawer_scan),textColor = black
                 )
 
                 Spacer(Modifier.height(5.dp))
@@ -170,7 +173,7 @@ fun DrawerContent() {
                     text = stringResource(Res.string.home_drawer_or),
                     fontWeight = FontWeight.Bold,
                     textAlignment = TextAlign.Center,
-                    modifier = Modifier.fillMaxWidth(0.4f)
+                    modifier = Modifier.fillMaxWidth(0.4f),textColor = black
                 )
 
                 Spacer(Modifier.height(5.dp))
@@ -180,7 +183,7 @@ fun DrawerContent() {
                     text = stringResource(Res.string.home_drawer_upi),
                     fontWeight = FontWeight.Bold,
                     textAlignment = TextAlign.Center,
-                    modifier = Modifier.fillMaxWidth(0.4f)
+                    modifier = Modifier.fillMaxWidth(0.4f),textColor = black
                 )
 
 
@@ -249,7 +252,7 @@ fun DrawerContent() {
 
                     ReusableTextView(
                         text =stringResource(Res.string.home_drawer_number),
-                        fontWeight = FontWeight.Medium
+                        fontWeight = FontWeight.Medium,textColor = black
                     )
                 }
 
@@ -268,7 +271,7 @@ fun DrawerContent() {
                     Spacer(modifier = Modifier.width(6.dp))
 
                     ReusableTextView(text = stringResource(Res.string.home_drawer_web),
-                        fontWeight = FontWeight.Medium
+                        fontWeight = FontWeight.Medium,textColor = black
                     )
                 }
 

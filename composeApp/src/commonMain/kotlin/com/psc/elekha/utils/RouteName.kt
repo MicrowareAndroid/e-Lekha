@@ -5,6 +5,7 @@ object RouteName {
     const val login = "login"
     const val home = "home"
     const val gtr_list_screen = "gtr_list_screen"
+    const val customer_detail_screen = "customer_detail_screen"
     const val gtr_list_data_screen = "gtr_list_data_screen"
     const val registration_tabs = "registration_tabs"
     const val registration_list = "registration_list"

@@ -46,7 +46,8 @@ val LightSkyBlue = Color(0xFFC3E7F4)
 val LightMint = Color(0xFF8DE9CB)
 val LightTeal = Color(0xFFB5F4E5)
 val LightYellow = Color(0xFFFFE48A)
-
+val CardColor = Color(0xFFC4E2EA)
+val LightPink = Color(0xFFDBFAFA)
 
 
 val textview_color = Color(0xFF658889)

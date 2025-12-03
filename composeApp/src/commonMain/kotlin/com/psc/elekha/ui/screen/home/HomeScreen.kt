@@ -23,6 +23,7 @@ import com.psc.elekha.ui.theme.LightYellow
 import com.psc.elekha.ui.theme.black
 import com.psc.elekha.ui.theme.lightgreens
 import com.psc.elekha.ui.theme.repaymentColor
+import com.psc.elekha.ui.theme.white
 import com.psc.elekha.utils.CommonSingleButtons
 import com.psc.elekha.utils.DashboardCardItem
 import com.psc.elekha.utils.ReusableTextView
@@ -97,9 +98,9 @@ fun HomeScreen(
                     )
 
                     Column(horizontalAlignment = Alignment.Start) {
-                        ReusableTextView(text = stringResource(Res.string.home_user))
-                        ReusableTextView(text = stringResource(Res.string.home_time))
-                        ReusableTextView(text = stringResource(Res.string.home_date))
+                        ReusableTextView(text = stringResource(Res.string.home_user),textColor = black)
+                        ReusableTextView(text = stringResource(Res.string.home_time),textColor = black)
+                        ReusableTextView(text = stringResource(Res.string.home_date),textColor = black)
                     }
                 }
 
@@ -159,6 +160,7 @@ fun HomeScreen(
                     Spacer(Modifier.height(15.dp))
 
                     CommonSingleButtons(
+
                         onOkClick = {navController.navigate(RouteName.gtr_list_screen)},
                         backgroundColor = LightTeal,
                         text = stringResource(Res.string.home_gtr_home),

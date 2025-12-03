@@ -81,41 +81,6 @@ fun RegistartionTabScreen(navController: NavController, pref: AppPreferences) {
                 .padding(innerPadding)
                 .background(Color.White)
         ) {
-
-            /*ScrollableTabRow(
-                selectedTabIndex = selectedTabIndex,
-                edgePadding = 8.dp,
-                containerColor = Color.White,
-                indicator = {},
-                divider = {}
-            )
-            {
-                tabs.forEachIndexed { index, title ->
-                    Box(
-                        modifier = Modifier
-                            .padding(horizontal = 6.dp, vertical = 6.dp)
-                            .height(50.dp)
-                            .clip(RoundedCornerShape(50))
-                            .background(
-                                if (selectedTabIndex == index)
-                                    toolbar_color
-                                else
-                                    btn_color
-                            ),
-                            //.clickable { selectedTabIndex = index },
-                        contentAlignment = Alignment.Center
-                    ) {
-                        ReusableTextView(
-                            text = title.replace(" ", "\n"),
-                            textAlignment = TextAlign.Center,
-                            fontSize = if (selectedTabIndex == index) 13 else 12,
-                            textColor = if (selectedTabIndex == index) Color.White else Color.Black,
-                            fontWeight = if (selectedTabIndex == index) FontWeight.W500 else FontWeight.Normal
-                        )
-                    }
-                }
-            }*/
-
             val underlineWidth = 45.dp
             val underlineHeight = 5.dp
             val underlineShape = RoundedCornerShape(50)
