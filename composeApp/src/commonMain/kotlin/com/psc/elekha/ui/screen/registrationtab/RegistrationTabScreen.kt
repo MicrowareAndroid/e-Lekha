@@ -10,11 +10,9 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Divider
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.Tab
-import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,17 +25,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.psc.elekha.ui.screen.kycdetails.KycDetailsScreen
 import com.psc.elekha.ui.screen.personaldetails.PersonalDetailsScreen
-import com.psc.elekha.ui.theme.btn_color
-import com.psc.elekha.ui.theme.lightGrey
 import com.psc.elekha.ui.theme.toolbar_color
 import com.psc.elekha.ui.theme.white
 import com.psc.elekha.utils.AppPreferences
-import com.psc.elekha.utils.ReusableTextView
 import com.psc.elekha.utils.ReusableTopBar
 import e_lekha.composeapp.generated.resources.Res
 import e_lekha.composeapp.generated.resources.bank_details
@@ -50,7 +45,7 @@ import org.jetbrains.compose.resources.stringResource
 
 
 @Composable
-fun RegistartionTabScreen(navController: NavController,pref: AppPreferences) {
+fun RegistartionTabScreen(navController: NavController, pref: AppPreferences) {
 
     val tabs = listOf(
         stringResource(Res.string.personal_details),
@@ -204,13 +199,12 @@ fun RegistartionTabScreen(navController: NavController,pref: AppPreferences) {
                     0 -> PersonalDetailsScreen(
                         onNextTab = { selectedTabIndex++ },
                         onCancelTab = { navController.popBackStack() })
-                    /*1 -> {
-                        pref.putString(AppSP.profileComplainant,"")
-                        ProfileComplainantScreen(
-                            onNextTab = { selectedTabIndex++ },
-                            onCancelTab = { selectedTabIndex-- })
-                    }
-                    2 -> CaseCategoryScreen(onNextTab = {
+
+                    1 -> KycDetailsScreen(
+                        onNextTab = { selectedTabIndex++ },
+                        onCancelTab = { selectedTabIndex-- })
+
+                    /*2 -> CaseCategoryScreen(onNextTab = {
                         categoryFlag = it
                         selectedTabIndex++
                     }, onCancelTab = { selectedTabIndex-- })
