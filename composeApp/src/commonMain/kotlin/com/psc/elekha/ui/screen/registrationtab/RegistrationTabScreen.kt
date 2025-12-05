@@ -28,14 +28,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.psc.elekha.ui.screen.bankdetails.BankDetailsScreen
 import com.psc.elekha.ui.screen.kycdetails.KycDetailsScreen
 import com.psc.elekha.ui.screen.personaldetails.PersonalDetailsScreen
 import com.psc.elekha.ui.theme.toolbar_color
 import com.psc.elekha.ui.theme.white
 import com.psc.elekha.utils.AppPreferences
+import com.psc.elekha.utils.CustomAlertDialog
 import com.psc.elekha.utils.ReusableTopBar
 import e_lekha.composeapp.generated.resources.Res
 import e_lekha.composeapp.generated.resources.bank_details
+import e_lekha.composeapp.generated.resources.economic_details
 import e_lekha.composeapp.generated.resources.family_details
 import e_lekha.composeapp.generated.resources.ic_back
 import e_lekha.composeapp.generated.resources.kyc
@@ -51,7 +54,8 @@ fun RegistartionTabScreen(navController: NavController, pref: AppPreferences) {
         stringResource(Res.string.personal_details),
         stringResource(Res.string.kyc),
         stringResource(Res.string.bank_details),
-        stringResource(Res.string.family_details)
+        stringResource(Res.string.family_details),
+        stringResource(Res.string.economic_details)
     )
 
 
@@ -168,6 +172,15 @@ fun RegistartionTabScreen(navController: NavController, pref: AppPreferences) {
                     1 -> KycDetailsScreen(
                         onNextTab = { selectedTabIndex++ },
                         onCancelTab = { selectedTabIndex-- })
+
+                    2 -> BankDetailsScreen(
+                        onNextTab = { selectedTabIndex++ },
+                        onCancelTab = { selectedTabIndex-- })
+
+                    /*3 -> CustomAlertDialog(
+                        true,
+                        message = "Hello"
+                    )*/
 
                     /*2 -> CaseCategoryScreen(onNextTab = {
                         categoryFlag = it

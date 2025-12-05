@@ -144,5 +144,17 @@
     <string name= "customer_details">Customer Details</string>
     <string name= "customer_image">Customer image</string>
     <string name= "guarantor_image">Guarantor image</string>
+    <string name= "customer_bank_details">Enter Account Details</string>
+    <string name= "customer_name_in_bank_dairy">Name on account</string>
+    <string name= "bank_account_number">Account no.</string>
+    <string name= "bank_name">Bank name</string>
+    <string name= "branch_name">Branch name</string>
+    <string name= "ifsc_code">IFSC code</string>
+    <string name= "passbook_image">Front image of passbook</string>
+    <string name= "new_registration">New Registration</string>
+    <string name= "existing_customer">Existing customer</string>
+    <string name= "back">Back</string>
+    <string name= "ok">Ok</string>
+    <string name= "economic_details">Economic Details</string>
 
 </resources>
