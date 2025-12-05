@@ -2532,13 +2532,14 @@ fun ReusableTextViewBlackCard(
 
 
 }
+
 @Composable
 fun ReusablePaymentDropdown(
     selectedValue: String,
     options: List<String>,
     onValueSelected: (String) -> Unit,
     modifier: Modifier = Modifier,
-    height: Dp = 32.dp,
+    height: Dp = 50.dp,
     backgroundColor: Color = Color(0xFFBBDEFB),
     cornerRadius: Dp = 4.dp,
     fontFamily: FontFamily = FontFamily(Font(Res.font.roboto_medium))
@@ -2547,7 +2548,6 @@ fun ReusablePaymentDropdown(
 
     Box(modifier = modifier) {
 
-        // SAME BUTTON AS YOUR OLD CODE
         Button(
             onClick = { expanded = true },
             colors = ButtonDefaults.buttonColors(
