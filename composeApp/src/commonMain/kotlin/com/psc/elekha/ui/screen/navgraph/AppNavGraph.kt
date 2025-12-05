@@ -5,8 +5,9 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.psc.elekha.ui.screen.repayment.RepaymentList
 import com.psc.elekha.ui.screen.customer.CustomerDetailScreen
+import com.psc.elekha.ui.screen.repayment.RepaymentList
+
 import com.psc.elekha.ui.screen.gtrlist.GtrListDataScreen
 import com.psc.elekha.ui.screen.gtrlist.GtrListScreen
 import com.psc.elekha.ui.screen.home.MainDrawerScreen
@@ -56,6 +57,10 @@ fun AppNavGraph(
         // REGISTRATION TABS
         composable(RouteName.registration_tabs) {
             RegistartionTabScreen(navController, appPreferences)
+        }
+
+        composable(RouteName.customer_detail_screen) {
+            CustomerDetailScreen(navController,)
         }
 
 

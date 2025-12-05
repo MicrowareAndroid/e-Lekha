@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.psc.elekha.di.initKoin
 import com.psc.elekha.ui.theme.LightSkyBlue
+import com.psc.elekha.ui.theme.PrimaryDark
 import com.psc.elekha.ui.theme.black
 import com.psc.elekha.ui.theme.white
 import com.psc.elekha.utils.*
@@ -34,6 +35,7 @@ fun GtrListDataScreen(
 ) {
 
     var selectedScreen by remember { mutableStateOf("GTR List Data") }
+    val checkedMap = remember { mutableStateMapOf<CustomerData, Boolean>() }
 
     val customerList = listOf(
         CustomerData("Shanti Devi w/o Manohar Singh", "987654321", "50,000"),
@@ -62,9 +64,12 @@ fun GtrListDataScreen(
                     .padding(horizontal = 16.dp, vertical = 10.dp)
                     .navigationBarsPadding()
             ) {
-                CommonActionButtons(
-                    onSaveClick = {},
-                    onCloseClick = {}
+                CommonSingleButtonsBottomString(
+                    onOkClick = {
+
+                    },
+                    stringResource(Res.string.gtr_save),
+                    textSize = 16
                 )
             }
         }
@@ -92,37 +97,36 @@ fun GtrListDataScreen(
             ) {
 
 
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 6.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
+                Column(
+                    horizontalAlignment = Alignment.Start,
+                    verticalArrangement = Arrangement.spacedBy(4.dp)
+                )
+                {
 
-                    ReusableTextView(
-                        text = stringResource(Res.string.home_user),
-                        textColor = black
-                    )
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        ReusableTextView(
+                            text = stringResource(Res.string.home_user),
+                            textColor = PrimaryDark
+                        )
+                        Spacer(Modifier.width(6.dp))
+                        ReusableTextView(text = "Vikash", textColor =Color.Black)
+                    }
 
-                    Column(horizontalAlignment = Alignment.Start) {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            ReusableTextView(text = "Time :", textColor = black)
-                            Spacer(Modifier.width(6.dp))
-                            ReusableTextView(text = "10:45 AM", textColor = black)
-                        }
-                        Spacer(Modifier.height(4.dp))
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            ReusableTextView(text = "Date :", textColor = black)
-                            Spacer(Modifier.width(6.dp))
-                            ReusableTextView(text = "04/12/2025", textColor = black)
-                        }
+
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        ReusableTextView(text = stringResource(Res.string.home_time), textColor = PrimaryDark)
+                        Spacer(Modifier.width(6.dp))
+                        ReusableTextView(text = "10:45 AM", textColor =Color.Black)
+                    }
+
+
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        ReusableTextView(text =  stringResource(Res.string.home_date), textColor =PrimaryDark )
+                        Spacer(Modifier.width(6.dp))
+                        ReusableTextView(text = "04/12/2025", textColor =Color.Black)
                     }
                 }
-
                 Spacer(modifier = Modifier.height(18.dp))
-
-
 
                 Row(
                     modifier = Modifier
@@ -204,8 +208,19 @@ fun GtrListDataScreen(
                         .padding(bottom = 20.dp)
                 ) {
                     customerList.forEach { customer ->
-                        CustomerItemCard(customer)
+
+                        val isChecked = checkedMap[customer] ?: false
+
+                        CustomerItemCard(
+                            customer = customer,
+                            checked = isChecked,
+                            onCheckedChange = { checkedMap[customer] = it },
+                            onCardClick = {
+                                navController.navigate(RouteName.customer_detail_screen)
+                            }
+                        )
                     }
+
                 }
             }
         }

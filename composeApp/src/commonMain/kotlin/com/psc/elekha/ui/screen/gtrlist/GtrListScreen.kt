@@ -16,6 +16,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.psc.elekha.ui.theme.LightSkyBlue
+import com.psc.elekha.ui.theme.PrimaryDark
 import com.psc.elekha.ui.theme.black
 import com.psc.elekha.ui.theme.white
 import com.psc.elekha.utils.*
@@ -23,6 +24,8 @@ import e_lekha.composeapp.generated.resources.Res
 import e_lekha.composeapp.generated.resources.back
 import e_lekha.composeapp.generated.resources.background
 import e_lekha.composeapp.generated.resources.gtr_select
+import e_lekha.composeapp.generated.resources.home_date
+import e_lekha.composeapp.generated.resources.home_time
 import e_lekha.composeapp.generated.resources.home_user
 import e_lekha.composeapp.generated.resources.inter_medium
 import org.jetbrains.compose.resources.Font
@@ -77,42 +80,38 @@ fun GtrListScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(horizontal = 15.dp, vertical = 5.dp)
-            ) {
+            )
+            {
+
+                Column(
+                    horizontalAlignment = Alignment.Start,
+                    verticalArrangement = Arrangement.spacedBy(4.dp)
+                )
+                {
+
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        ReusableTextView(
+                            text = stringResource(Res.string.home_user),
+                            textColor = PrimaryDark
+                        )
+                        Spacer(Modifier.width(6.dp))
+                        ReusableTextView(text = "Vikash", textColor =Color.Black)
+                    }
 
 
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 10.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        ReusableTextView(text = stringResource(Res.string.home_time), textColor = PrimaryDark)
+                        Spacer(Modifier.width(6.dp))
+                        ReusableTextView(text = "10:45 AM", textColor =Color.Black)
+                    }
 
-                    ReusableTextView(
-                        text = stringResource(Res.string.home_user),
-                        textColor = black
-                    )
 
-                    Column(horizontalAlignment = Alignment.Start) {
-
-                        // Static Time
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            ReusableTextView(text = "Time :", textColor = black)
-                            Spacer(Modifier.width(6.dp))
-                            ReusableTextView(text = "10:45 AM", textColor = black)
-                        }
-
-                        Spacer(Modifier.height(2.dp))
-
-                        // Static Date
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            ReusableTextView(text = "Date :", textColor = black)
-                            Spacer(Modifier.width(6.dp))
-                            ReusableTextView(text = "04/12/2025 ", textColor = black)
-                        }
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        ReusableTextView(text =  stringResource(Res.string.home_date), textColor =PrimaryDark )
+                        Spacer(Modifier.width(6.dp))
+                        ReusableTextView(text = "04/12/2025", textColor =Color.Black)
                     }
                 }
-
                 Spacer(Modifier.height(12.dp))
 
 
