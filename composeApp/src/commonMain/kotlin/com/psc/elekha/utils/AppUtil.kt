@@ -1562,7 +1562,6 @@ fun FormSpinner(
 
     // FIX: Get density only once in Composable scope
     val density = LocalDensity.current
-    var spinnerWidth by remember { mutableStateOf(0) }
 
     val optionsList = remember(options) {
         val list = mutableListOf("Select")
@@ -1589,12 +1588,11 @@ fun FormSpinner(
                 .background(backgroundColor, RoundedCornerShape(15.dp))
                 .clickable { expanded = true }
                 .onGloballyPositioned { coords ->
-                    // ✔ SAFE: No composable call inside callback
+                    // SAFE: No composable call inside callback
                     spinnerWidth = with(density) { coords.size.width.toDp() }
                 },
             contentAlignment = Alignment.CenterStart
         ) {
-
             Row(
                 modifier = Modifier
                     .fillMaxSize()
@@ -1619,7 +1617,7 @@ fun FormSpinner(
                 expanded = expanded,
                 onDismissRequest = { expanded = false },
                 modifier = Modifier
-                    .width(spinnerWidth)        // 👈 FULL WIDTH MATCH
+                    .width(spinnerWidth)        // FULL WIDTH MATCH
                     .background(Color.White)
             ) {
                 optionsList.forEach { option ->
@@ -2411,7 +2409,6 @@ fun LabelValueText(label: String, value: String) {
 }
 
 @Composable
-var checked by remember { mutableStateOf(false) }
 fun CustomerItemCard(
     customer: CustomerData,
     checked: Boolean,
