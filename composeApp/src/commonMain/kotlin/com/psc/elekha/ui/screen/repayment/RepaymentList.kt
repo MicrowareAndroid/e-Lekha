@@ -1,7 +1,11 @@
 package com.psc.elekha.ui.screen.repayment
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -13,20 +17,18 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.psc.elekha.utils.ReusableTopBar
-import com.psc.elekha.utils.ReusableTextView
-import e_lekha.composeapp.generated.resources.Res
-import e_lekha.composeapp.generated.resources.background
-import e_lekha.composeapp.generated.resources.ic_back
-import e_lekha.composeapp.generated.resources.roboto_medium
+import com.psc.elekha.utils.*
+import e_lekha.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.painterResource
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.unit.sp
 import com.psc.elekha.ui.screen.repayment.model.sampleRepaymentList
 import com.psc.elekha.ui.screen.repayment.model.RepaymentItem
-import com.psc.elekha.utils.CommonSaveButton
+import com.psc.elekha.ui.theme.btn_color
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RepaymentList(
@@ -34,22 +36,12 @@ fun RepaymentList(
 ) {
     var select by remember { mutableStateOf("Repayment List") }
     var selectedItems by remember { mutableStateOf(setOf<Int>()) }
+    var showFilterDialog by remember { mutableStateOf(false) }
     val repaymentItems = sampleRepaymentList
 
 
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-    ) {
 
-        Image(
-            painter = painterResource(Res.drawable.background),
-            contentDescription = null,
-            modifier = Modifier.matchParentSize(),
-            contentScale = ContentScale.FillBounds
-        )
-        }
-        // Content
+
         Scaffold(
             modifier = Modifier.fillMaxSize(),
             containerColor = Color.Transparent,
@@ -60,12 +52,38 @@ fun RepaymentList(
                     onNavigationClick = { navController.popBackStack() }
                 )
             },
+            bottomBar = {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(color = Color.White)
+                        .padding(horizontal = 16.dp, vertical = 10.dp)
+                        .navigationBarsPadding()
+                ) {
+                    CommonSingleButtonsBottomString(
+                        onOkClick = {
 
-            ) { innerPadding ->
+                        },
+                        "Submit",
+                        textSize = 16
+                    )
+                    }
+              }
+        ) { innerPadding ->
+            Box(
+                modifier = Modifier.fillMaxSize().padding(innerPadding)
+            )
+            {
+                Image(
+                    painter = painterResource(Res.drawable.background),
+                    contentDescription = null,
+                    modifier = Modifier.matchParentSize(),
+                    contentScale = ContentScale.FillBounds
+                )
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(innerPadding)
+
             ) {
                 Column(
                     modifier = Modifier
@@ -130,7 +148,6 @@ fun RepaymentList(
                         }
                     }
 
-
                     CollectionDetailsCard(
                         items = repaymentItems,
                         selectedItems = selectedItems,
@@ -141,57 +158,67 @@ fun RepaymentList(
                                 selectedItems + index
                             }
                         },
+                        onFilterClick = { showFilterDialog = true },
                         modifier = Modifier
                             .weight(1f)
-                            .padding(bottom = 70.dp)
+
                     )
                 }
 
-                Box(
-                    modifier = Modifier
-                        .align(Alignment.BottomCenter)
 
-                ) {
-                    CommonSaveButton(
-                        onSaveClick = {},
-                        saveText = ("Submit")
-                    )
-                }
-
-                // Alternative: Use custom bottom bar if needed
-                // BottomCollectionBar(
-                //     selectedCount = selectedItems.size,
-                //     totalItems = repaymentItems.size,
-                //     onSubmit = {}
-                // )
             }
         }
+        if (showFilterDialog) {
+            FilterLoanDetailsDialog(
+                onDismiss = { showFilterDialog = false },
+                onApplyFilter = { village, center, customerId ->
+                    // Handle filter application here
+                    // Filter your repaymentItems based on these values
+                    showFilterDialog = false
+                }
+            )
+        }
     }
-
+}
 
 @Composable
 fun CollectionDetailsCard(
     items: List<RepaymentItem>,
     selectedItems: Set<Int>,
     onItemSelected: (Int) -> Unit,
+    onFilterClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(modifier = modifier) {
-        // Header
-        ReusableTextView(
-            text = "Collection Details :",
-            fontSize = 18,
-            fontWeight = FontWeight.SemiBold,
-            textColor = Color.Black,
-            fontFamily = FontFamily(Font(Res.font.roboto_medium))
-        )
+        // Header with Filter Icon
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            ReusableTextView(
+                text = "Collection Details :",
+                fontSize = 18,
+                fontWeight = FontWeight.SemiBold,
+                textColor = Color.Black,
+                fontFamily = FontFamily(Font(Res.font.roboto_medium))
+            )
+
+            IconButton(onClick = onFilterClick) {
+                Icon(
+                    imageVector = Icons.Default.FilterList,
+                    contentDescription = "Filter",
+                    tint = Color.Black
+                )
+            }
+        }
+
+        Spacer(Modifier.height(10.dp))
         HorizontalDivider(color = Color(0xFFE0E0E0), thickness = 1.dp)
         Spacer(Modifier.height(10.dp))
 
         // List Items
-        LazyColumn(
-
-        ) {
+        LazyColumn {
             items(items.size) { index ->
                 RepaymentItemCard(
                     item = items[index],
@@ -206,4 +233,140 @@ fun CollectionDetailsCard(
         }
     }
 }
+@Composable
+fun FilterLoanDetailsDialog(
+    onDismiss: () -> Unit,
+    onApplyFilter: (village: String?, center: String?, customerId: String?) -> Unit
+) {
+    var selectedVillage by remember { mutableStateOf("") }
+    var selectedCenter by remember { mutableStateOf("") }
+    var customerId by remember { mutableStateOf("") }
 
+    // Sample data - replace with actual data
+    val villages = listOf("Village 1", "Village 2", "Village 3", "Village 4")
+    val centers = listOf("Center A", "Center B", "Center C", "Center D")
+
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        containerColor = Color.White,
+        title = {
+            Column {
+                ReusableTextView(
+                    text = "Filter Loan Details",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 20,
+                    textColor = Color.Black
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                CommonDivider(
+                    color = Color(0xFFE0E0E0),
+                    thickness = 1.dp
+                )
+            }
+        },
+        text = {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 16.dp),
+                verticalArrangement = Arrangement.spacedBy(20.dp)
+            ) {
+                // Village Dropdown
+                FormSpinner(
+                    label = "Village:",
+                    options = villages,
+                    selectedOption = selectedVillage,
+                    onOptionSelected = { selectedVillage = it },
+                    modifier = Modifier.fillMaxWidth()
+                )
+
+                CommonDivider(
+                    color = Color(0xFFE0E0E0),
+                    thickness = 1.dp
+                )
+
+                // Center Dropdown
+                FormSpinner(
+                    label = "Center :",
+                    options = centers,
+                    selectedOption = selectedCenter,
+                    onOptionSelected = { selectedCenter = it },
+                    modifier = Modifier.fillMaxWidth()
+                )
+
+                // OR Text
+                ReusableTextView(
+                    text = "OR",
+                    fontSize = 16,
+                    fontWeight = FontWeight.Bold,
+                    textColor = Color.Black,
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlignment = androidx.compose.ui.text.style.TextAlign.Center
+                )
+
+                // Customer ID Field
+                FormField(
+                    label = "Customer ID :",
+                    value = customerId,
+                    onValueChange = { customerId = it },
+                    placeholder = "BHK.",
+                    modifier = Modifier.fillMaxWidth()
+                )
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                // Cancel and Filter Buttons Row
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    // Cancel Button
+                    Button(
+                        onClick = onDismiss,
+                        modifier = Modifier
+                            .weight(1f)
+                            .height(48.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color.LightGray
+                        ),
+                        shape = RoundedCornerShape(8.dp)
+                    ) {
+                        Text(
+                            text = "Cancel",
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Medium,
+                            color = Color.Black
+                        )
+                    }
+
+                    // Filter Button
+                    Button(
+                        onClick = {
+                            onApplyFilter(
+                                selectedVillage.takeIf { it.isNotEmpty() && it != "Select" },
+                                selectedCenter.takeIf { it.isNotEmpty() && it != "Select" },
+                                customerId.ifEmpty { null }
+                            )
+                        },
+                        modifier = Modifier
+                            .weight(1f)
+                            .height(48.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = btn_color
+                        ),
+                        shape = RoundedCornerShape(8.dp)
+                    ) {
+                        Text(
+                            text = "Filter",
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Medium,
+                            color = Color.Black
+                        )
+                    }
+                }
+            }
+        },
+        confirmButton = {},
+        dismissButton = {}
+    )
+}

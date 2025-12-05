@@ -1,33 +1,40 @@
 package com.psc.elekha.ui.screen.repayment
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CameraAlt
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil3.Uri
 import com.psc.elekha.ui.screen.repayment.model.RepaymentItem
 import com.psc.elekha.ui.theme.black
 import com.psc.elekha.ui.theme.editext_bg_color
+import com.psc.elekha.utils.CameraPreviewField
 import com.psc.elekha.utils.ReusableTextViewBlackCard
 import com.psc.elekha.utils.ReusableTextViewGrayCard
 import com.psc.elekha.utils.ReusablePaymentDropdown
+import e_lekha.composeapp.generated.resources.Res
+import e_lekha.composeapp.generated.resources.user_default
 
 @Composable
 fun RepaymentItemCard(
     item: RepaymentItem,
     isSelected: Boolean,
     onSelected: () -> Unit,
-    onCameraClick: () -> Unit = {}
+    onCameraClick: () -> Unit = {},
 ) {
     var showMenu by remember { mutableStateOf(false) }
     var selectedPaymentMode by remember { mutableStateOf("Select") }
     val paymentOptions = listOf("Cash", "Online", "UPI")
-
+    var repaymentAmount by remember { mutableStateOf("") }
     Card(
         shape = RoundedCornerShape(12.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
@@ -73,9 +80,6 @@ fun RepaymentItemCard(
                     ReusableTextViewBlackCard(item.customerName)
 
                     Spacer(modifier = Modifier.height(10.dp))
-
-
-
                 }
 
                 Spacer(modifier = Modifier.height(10.dp))
@@ -86,13 +90,9 @@ fun RepaymentItemCard(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     ReusableTextViewGrayCard("Loan Amount")
-//                    Spacer(Modifier.height(4.dp))
                     ReusableTextViewBlackCard(item.loanAmount)
                     ReusableTextViewGrayCard("EMI")
                     ReusableTextViewBlackCard(item.emiAmount)
-//                    Spacer(Modifier.height(4.dp))
-
-
                 }
 
                 Spacer(modifier = Modifier.height(10.dp))
@@ -131,31 +131,45 @@ fun RepaymentItemCard(
 
                     Spacer(modifier = Modifier.width(8.dp))
 
+
                     OutlinedTextField(
-                        value = "",
-                        onValueChange = {},
-                        placeholder = { Text("Repayment", fontSize = 12.sp) },
+                        value = repaymentAmount,
+                        onValueChange = { repaymentAmount = it },
+                        placeholder = { Text("Payment", fontSize = 10.sp) },
                         modifier = Modifier
                             .weight(1f)
-                            .height(32.dp),
+                            .height(50.dp),
                         colors = OutlinedTextFieldDefaults.colors(
-                            focusedBorderColor = Color.Gray,
-                            unfocusedBorderColor = Color.LightGray
+                            focusedBorderColor = Color.LightGray,
+                            unfocusedBorderColor = Color.Gray
                         ),
                         shape = RoundedCornerShape(4.dp),
-                        textStyle = LocalTextStyle.current.copy(fontSize = 12.sp)
+                        textStyle = LocalTextStyle.current.copy(fontSize = 10.sp)
                     )
+
                 }
             }
 
             Spacer(modifier = Modifier.width(8.dp))
 
-            // RIGHT SIDE BUTTON COLUMN
+            // RIGHT SIDE - IMAGE PREVIEW AND CAMERA BUTTON
             Column(
-                verticalArrangement = Arrangement.spacedBy(5.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.width(80.dp)
             ) {
-                IconButton(onClick = onCameraClick) {
+                // Image Preview
+                Box(
+                    modifier = Modifier
+                        .size(100.dp)
+                        .background(Color.LightGray)
+                )
+
+                // Camera Icon Button
+                IconButton(
+                    onClick = onCameraClick,
+                    modifier = Modifier.size(40.dp)
+                ) {
                     Icon(
                         imageVector = Icons.Default.CameraAlt,
                         contentDescription = "Camera",
