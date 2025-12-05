@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -179,6 +180,50 @@ fun ReusableTextView(
             withStyle(style = SpanStyle(color = asteriskColor)) {
                 append(" *")
             }
+        }
+    } else {
+        AnnotatedString(text)
+    }
+
+    Text(
+        text = displayText,
+        modifier = modifier
+            .background(color = backgroundColor, shape = RoundedCornerShape(cornerRadius))
+            .padding(padding),
+        style = style.copy(
+            color = textColor,
+            fontSize = fontSize.sp,
+            fontWeight = fontWeight,
+            fontFamily = fontFamily
+        ),
+        textAlign = textAlignment
+    )
+}
+
+@Composable
+fun ReusableTextViews(
+    text: String,
+    modifier: Modifier = Modifier,
+    textColor: Color = Color.Black,
+    fontSize: Int = 16,
+    fontWeight: FontWeight = FontWeight.Normal,
+    fontFamily: FontFamily = FontFamily(Font(Res.font.roboto_medium)),
+    backgroundColor: Color = Color.Transparent,
+    cornerRadius: Dp = 0.dp,
+    padding: Dp = 0.dp,
+    style: TextStyle = TextStyle.Default,
+    textAlignment: TextAlign = TextAlign.Start,
+    isMandatory: Int = 0,
+    asteriskColor: Color = Color.Red
+) {
+
+    val displayText = if (isMandatory == 1) {
+        buildAnnotatedString {
+            // 👈 Asterisk first
+            withStyle(style = SpanStyle(color = asteriskColor)) {
+                append("* ")
+            }
+            append(text)
         }
     } else {
         AnnotatedString(text)
@@ -632,6 +677,77 @@ fun FormField(
             )
         )
     }
+}
+
+@Composable
+fun FormFields(
+
+    value: String,
+    onValueChange: (String) -> Unit,
+    maxLength: Int = Int.MAX_VALUE,
+    trailingIcon: @Composable (() -> Unit)? = null,
+    inputType: KeyboardType = KeyboardType.Text,
+    placeholder: String = stringResource(Res.string.type_here),
+    isEnable: Boolean = true,
+    isReadable: Boolean = false,
+    labelColor: Color = textview_color,
+    placeholderColor: Color = Color(0xFF212121),
+    backgroundColor: Color = editext_bg_color,
+    borderColor: Color = boderColor,
+    maxLines: Int = 1,
+//    disabledBackgroundColor: Color = Color(0xFFE0E0E0),
+    disabledBackgroundColor: Color = formborder,
+    modifier: Modifier = Modifier,
+    placeholderTextSize: Int = 15
+) {
+
+
+        OutlinedTextField(
+            enabled = isEnable,
+            readOnly = isReadable,
+            value = value,
+            onValueChange = { newValue ->
+                val filteredValue = when (inputType) {
+                    KeyboardType.Number, KeyboardType.Phone -> newValue.filter { it.isDigit() }
+                    else -> newValue
+                }
+                if (filteredValue.length <= maxLength) {
+                    onValueChange(filteredValue)
+                }
+            },
+            trailingIcon = trailingIcon,
+            placeholder = {
+                ReusableTextView(
+                    text = placeholder,
+                    fontSize = placeholderTextSize,
+                    textColor = placeholderColor,
+                    textAlignment = TextAlign.Start
+                )
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
+                .height(48.dp),
+            shape = RoundedCornerShape(15.dp),
+            textStyle = TextStyle(
+                fontSize = 15.sp,
+                fontFamily = FontFamily(Font(Res.font.roboto_medium)),
+                textAlign = TextAlign.Start
+            ),
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedContainerColor = if (isEnable) backgroundColor else disabledBackgroundColor,
+                unfocusedContainerColor = if (isEnable) backgroundColor else disabledBackgroundColor,
+                disabledContainerColor = disabledBackgroundColor,
+                focusedBorderColor = borderColor,
+                unfocusedBorderColor = borderColor,
+                cursorColor = Color.Black
+            ),
+            maxLines = maxLines,
+            keyboardOptions = KeyboardOptions(
+                keyboardType = inputType
+            )
+        )
+
 }
 
 
@@ -1446,6 +1562,7 @@ fun FormSpinner(
 
     // FIX: Get density only once in Composable scope
     val density = LocalDensity.current
+    var spinnerWidth by remember { mutableStateOf(0) }
 
     val optionsList = remember(options) {
         val list = mutableListOf("Select")
@@ -1477,6 +1594,7 @@ fun FormSpinner(
                 },
             contentAlignment = Alignment.CenterStart
         ) {
+
             Row(
                 modifier = Modifier
                     .fillMaxSize()
@@ -1527,6 +1645,8 @@ fun FormSpinner(
 // Helper: px → dp
 @Composable
 fun Int.toDp() = (this / LocalDensity.current.density).dp
+
+
 
 
 /*@OptIn(ExperimentalLayoutApi::class, ExperimentalResourceApi::class)
@@ -2059,6 +2179,30 @@ fun ReusableCard(
     }
 }
 
+@Composable
+fun ReusableCards(
+    modifier: Modifier = Modifier,
+    backgroundColor: Color,
+    cornerRadius: Int = 12,
+    content: @Composable ColumnScope.() -> Unit
+) {
+    Card(
+        modifier = modifier,
+        colors = CardDefaults.cardColors(backgroundColor),
+        shape = RoundedCornerShape(cornerRadius.dp),
+        elevation = CardDefaults.cardElevation(3.dp)
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 5.dp, vertical = 15.dp)
+        ) {
+            content()
+        }
+    }
+}
+
+
 
 @Composable
 fun GroupCardUI(
@@ -2130,6 +2274,20 @@ fun GroupCardUI(
                         fontSize = 14,
                         textColor = Color.Gray,
                     )
+
+                    LabelValueText(label = "Group Name :", value = item.groupName)
+                    LabelValueText(label = "No. of Customers :", value = item.customers.toString())
+                    LabelValueText(label = "Village Name :", value = item.village)
+                    LabelValueText(label = "Loan Officer :", value = item.officer)
+                    LabelValueText(label = "Group formation date :", value = item.formation)
+                }
+
+                Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+
+                    LabelValueText(label = "Disbursement date :", value = item.disbursement)
+                    LabelValueText(label = "Center :", value = item.center)
+                    LabelValueText(label = "Meeting day :", value = item.meetingDay)
+                    LabelValueText(label = "Next meeting Date :", value = item.nextMeeting)
                 }
             }
         }
@@ -2240,29 +2398,35 @@ fun <T : Any> FillDynamicSpinner(
 @Composable
 fun LabelValueText(label: String, value: String) {
     Row {
-        ReusableTextView(
+        ReusableTextViewGrayCard (
             text = label,
-            fontSize = 13,
-            textColor = Color.Black
-        )
+            )
         Spacer(modifier = Modifier.width(4.dp))
-        ReusableTextView(
+        ReusableTextViewBlackCard(
             text = value,
-            fontSize = 13,
-            textColor = Color.Gray
+
+
         )
     }
 }
 
 @Composable
-fun CustomerItemCard(customer: CustomerData) {
-
-    var checked by remember { mutableStateOf(false) }
-
-    ReusableCard(
+var checked by remember { mutableStateOf(false) }
+fun CustomerItemCard(
+    customer: CustomerData,
+    checked: Boolean,
+    onCheckedChange: (Boolean) -> Unit,
+    onCardClick: (CustomerData) -> Unit
+) {
+    ReusableCards(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 8.dp),
+            .padding(vertical = 8.dp)
+            .clickable {
+                if (checked) {
+                    onCardClick(customer)
+                }
+            },
         backgroundColor = CardColor,
         cornerRadius = 12
     ) {
@@ -2274,16 +2438,17 @@ fun CustomerItemCard(customer: CustomerData) {
             verticalAlignment = Alignment.CenterVertically
         ) {
 
-
+            // ✔ Checkbox
             Checkbox(
                 checked = checked,
-                onCheckedChange = { checked = it },
+                onCheckedChange = { onCheckedChange(it) },
                 colors = CheckboxDefaults.colors(
                     checkedColor = PrimaryDark,
                     uncheckedColor = Color.Gray,
                     checkmarkColor = Color.White
-                ),
+                )
             )
+
 
             Column(
                 modifier = Modifier.weight(1f)
@@ -2296,6 +2461,7 @@ fun CustomerItemCard(customer: CustomerData) {
 
             Spacer(modifier = Modifier.width(10.dp))
 
+            // ✔ 2 Gray Boxes
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 Box(
                     modifier = Modifier
@@ -2432,6 +2598,76 @@ fun ReusableTextViewBlackCard(
         ),
         textAlign = textAlignment
     )
+
+
+}
+
+@Composable
+fun ReusablePaymentDropdown(
+    selectedValue: String,
+    options: List<String>,
+    onValueSelected: (String) -> Unit,
+    modifier: Modifier = Modifier,
+    height: Dp = 50.dp,
+    backgroundColor: Color = Color(0xFFBBDEFB),
+    cornerRadius: Dp = 4.dp,
+    fontFamily: FontFamily = FontFamily(Font(Res.font.roboto_medium))
+) {
+    var expanded by remember { mutableStateOf(false) }
+
+    Box(modifier = modifier) {
+
+        Button(
+            onClick = { expanded = true },
+            colors = ButtonDefaults.buttonColors(
+                containerColor = backgroundColor
+            ),
+            shape = RoundedCornerShape(cornerRadius),
+            contentPadding = PaddingValues(horizontal = 2.dp, vertical = 4.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(height)
+        ) {
+
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+
+                Text(
+                    text = selectedValue,
+                    fontSize = 12.sp,
+                    color = Color.Black,
+                    fontFamily = fontFamily
+                )
+
+                Text("▼", fontSize = 10.sp, color = Color.Black)
+            }
+        }
+
+        // DROPDOWN MENU
+        DropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false }
+        ) {
+            options.forEach { option ->
+                DropdownMenuItem(
+                    text = {
+                        Text(
+                            option,
+                            fontSize = 12.sp,
+                            color = Color.Black
+                        )
+                    },
+                    onClick = {
+                        onValueSelected(option)
+                        expanded = false
+                    }
+                )
+            }
+        }
+    }
 }
 
 @Composable
@@ -2573,6 +2809,7 @@ fun CustomAlertDialogRegistrationExisting(
         }
     }
 }
+
 
 
 
