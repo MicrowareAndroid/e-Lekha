@@ -21,6 +21,7 @@ import com.psc.elekha.model.RegistrationModel
 import com.psc.elekha.ui.theme.black
 import com.psc.elekha.ui.theme.btn_color
 import com.psc.elekha.ui.theme.white
+import com.psc.elekha.utils.CustomAlertDialogRegistrationExisting
 import com.psc.elekha.utils.ReusableTextView
 import com.psc.elekha.utils.ReusableTopBar
 import com.psc.elekha.utils.RouteName
@@ -36,6 +37,7 @@ import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun RegistrationListScreen(navController: NavController) {
+    var showDialog by remember { mutableStateOf(false) }
 
     var registrationModel by rememberSaveable {
         mutableStateOf(
@@ -144,7 +146,7 @@ fun RegistrationListScreen(navController: NavController) {
                 //just icon
                 FloatingActionButton(
                     onClick = {
-                        navController.navigate(RouteName.registration_tabs)
+                        showDialog = true
                     },
                     containerColor = btn_color,
                     shape = CircleShape,
@@ -164,7 +166,24 @@ fun RegistrationListScreen(navController: NavController) {
                     )
                 }
             }
-
+            if (showDialog) {
+                CustomAlertDialogRegistrationExisting(
+                    onRegistration = {
+                        navController.navigate(RouteName.registration_tabs)
+                        showDialog = false
+                    },
+                    onExitsing = {
+                        navController.navigate(RouteName.registration_tabs)
+                        showDialog = false
+                    },
+                    onBack = {
+                        showDialog = false
+                    },
+                    onDismiss = {
+                        showDialog = false
+                    }
+                )
+            }
         }
     }
 
