@@ -13,9 +13,9 @@
     <string name="something_wentwrong">Oops! Something went wrong. Please contact the administrator or try again later.</string>
 
     //Home Page
-    <string name="home_user">User name</string>
-    <string name="home_time">Time</string>
-    <string name="home_date">Date and Day</string>
+    <string name="home_user">User name :</string>
+    <string name="home_time">Time :</string>
+    <string name="home_date">Date  :</string>
     <string name="home_active_customer">Active Customer</string>
     <string name="home_default">Default</string>
     <string name="home_registration">REGISTRATION</string>
@@ -124,5 +124,24 @@
     <string name= "front_image">Front image</string>
     <string name= "back_image">Back image</string>
     <string name= "image">Image</string>
+    <string name= "user_last_loan">Last Loan from PSC:  </string>
+    <string name= "user_psc">PSC Outstaining: </string>
+    <string name="user_total">Total Outstanding\nOther MFI(s):</string>
+    <string name= "user_loan">Loan Purpose: </string>
+    <string name= "user_existing">Existing Income </string>
+    <string name= "user_ebill">E-Bill </string>
+    <string name= "user_remark">Remark During Registration </string>
+    <string name= "user_remarks">Remarks(if any) </string>
+    <string name= "user_remarks_any">Any Remarks... </string>
+    <string name= "user_electricity">Electricity Meter </string>
+    <string name= "user_house">House Verification </string>
+    <string name= "user_loan_any">Loan Recomodation \n(if any) </string>
+    <string name= "user_note">Note : </string>
+    <string name= "user_billno">K73676432776 </string>
+    <string name= "user_reduce">You Can Only reduce the loan amount here, not increase</string>
+    <string name= "user_proceed">Save And Proceed</string>
+    <string name= "user_name_details">User Name Details </string>
+
+
 
 </resources>

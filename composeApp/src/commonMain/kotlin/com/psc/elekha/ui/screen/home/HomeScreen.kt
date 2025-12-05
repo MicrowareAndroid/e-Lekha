@@ -19,6 +19,7 @@ import androidx.navigation.NavHostController
 import com.psc.elekha.ui.theme.LightMint
 import com.psc.elekha.ui.theme.LightTeal
 import com.psc.elekha.ui.theme.LightYellow
+import com.psc.elekha.ui.theme.PrimaryDark
 
 import com.psc.elekha.ui.theme.black
 import com.psc.elekha.ui.theme.lightgreens
@@ -88,6 +89,8 @@ fun HomeScreen(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.Top
                 ) {
+
+
                     Icon(
                         painter = painterResource(Res.drawable.ic_menu),
                         contentDescription = null,
@@ -97,12 +100,38 @@ fun HomeScreen(
                             .clickable { onMenuClick() }
                     )
 
-                    Column(horizontalAlignment = Alignment.Start) {
-                        ReusableTextView(text = stringResource(Res.string.home_user),textColor = black)
-                        ReusableTextView(text = stringResource(Res.string.home_time),textColor = black)
-                        ReusableTextView(text = stringResource(Res.string.home_date),textColor = black)
+
+                    Column(
+                        horizontalAlignment = Alignment.Start,
+                        verticalArrangement = Arrangement.spacedBy(4.dp)
+                    )
+                    {
+
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            ReusableTextView(
+                                text = stringResource(Res.string.home_user),
+                                textColor = PrimaryDark
+                            )
+                            Spacer(Modifier.width(6.dp))
+                            ReusableTextView(text = "Vikash", textColor =Color.Black)
+                        }
+
+
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            ReusableTextView(text = stringResource(Res.string.home_time), textColor = PrimaryDark)
+                            Spacer(Modifier.width(6.dp))
+                            ReusableTextView(text = "10:45 AM", textColor =Color.Black)
+                        }
+
+
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            ReusableTextView(text =  stringResource(Res.string.home_date), textColor =PrimaryDark )
+                            Spacer(Modifier.width(6.dp))
+                            ReusableTextView(text = "04/12/2025", textColor =Color.Black)
+                        }
                     }
                 }
+
 
                 Spacer(Modifier.height(15.dp))
 

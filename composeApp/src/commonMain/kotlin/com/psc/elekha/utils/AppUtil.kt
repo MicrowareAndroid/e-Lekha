@@ -192,6 +192,50 @@ fun ReusableTextView(
 }
 
 @Composable
+fun ReusableTextViews(
+    text: String,
+    modifier: Modifier = Modifier,
+    textColor: Color = Color.Black,
+    fontSize: Int = 16,
+    fontWeight: FontWeight = FontWeight.Normal,
+    fontFamily: FontFamily = FontFamily(Font(Res.font.roboto_medium)),
+    backgroundColor: Color = Color.Transparent,
+    cornerRadius: Dp = 0.dp,
+    padding: Dp = 0.dp,
+    style: TextStyle = TextStyle.Default,
+    textAlignment: TextAlign = TextAlign.Start,
+    isMandatory: Int = 0,
+    asteriskColor: Color = Color.Red
+) {
+
+    val displayText = if (isMandatory == 1) {
+        buildAnnotatedString {
+            // 👈 Asterisk first
+            withStyle(style = SpanStyle(color = asteriskColor)) {
+                append("* ")
+            }
+            append(text)
+        }
+    } else {
+        AnnotatedString(text)
+    }
+
+    Text(
+        text = displayText,
+        modifier = modifier
+            .background(color = backgroundColor, shape = RoundedCornerShape(cornerRadius))
+            .padding(padding),
+        style = style.copy(
+            color = textColor,
+            fontSize = fontSize.sp,
+            fontWeight = fontWeight,
+            fontFamily = fontFamily
+        ),
+        textAlign = textAlignment
+    )
+}
+
+@Composable
 fun ReusableImageView(
     painter: Painter,
     modifier: Modifier = Modifier,
@@ -622,6 +666,77 @@ fun FormField(
             )
         )
     }
+}
+
+@Composable
+fun FormFields(
+
+    value: String,
+    onValueChange: (String) -> Unit,
+    maxLength: Int = Int.MAX_VALUE,
+    trailingIcon: @Composable (() -> Unit)? = null,
+    inputType: KeyboardType = KeyboardType.Text,
+    placeholder: String = stringResource(Res.string.type_here),
+    isEnable: Boolean = true,
+    isReadable: Boolean = false,
+    labelColor: Color = textview_color,
+    placeholderColor: Color = Color(0xFF212121),
+    backgroundColor: Color = editext_bg_color,
+    borderColor: Color = boderColor,
+    maxLines: Int = 1,
+//    disabledBackgroundColor: Color = Color(0xFFE0E0E0),
+    disabledBackgroundColor: Color = formborder,
+    modifier: Modifier = Modifier,
+    placeholderTextSize: Int = 15
+) {
+
+
+        OutlinedTextField(
+            enabled = isEnable,
+            readOnly = isReadable,
+            value = value,
+            onValueChange = { newValue ->
+                val filteredValue = when (inputType) {
+                    KeyboardType.Number, KeyboardType.Phone -> newValue.filter { it.isDigit() }
+                    else -> newValue
+                }
+                if (filteredValue.length <= maxLength) {
+                    onValueChange(filteredValue)
+                }
+            },
+            trailingIcon = trailingIcon,
+            placeholder = {
+                ReusableTextView(
+                    text = placeholder,
+                    fontSize = placeholderTextSize,
+                    textColor = placeholderColor,
+                    textAlignment = TextAlign.Start
+                )
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
+                .height(48.dp),
+            shape = RoundedCornerShape(15.dp),
+            textStyle = TextStyle(
+                fontSize = 15.sp,
+                fontFamily = FontFamily(Font(Res.font.roboto_medium)),
+                textAlign = TextAlign.Start
+            ),
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedContainerColor = if (isEnable) backgroundColor else disabledBackgroundColor,
+                unfocusedContainerColor = if (isEnable) backgroundColor else disabledBackgroundColor,
+                disabledContainerColor = disabledBackgroundColor,
+                focusedBorderColor = borderColor,
+                unfocusedBorderColor = borderColor,
+                cursorColor = Color.Black
+            ),
+            maxLines = maxLines,
+            keyboardOptions = KeyboardOptions(
+                keyboardType = inputType
+            )
+        )
+
 }
 
 
@@ -1432,6 +1547,7 @@ fun FormSpinner(
     borderColor: Color = boderColor
 ) {
     var expanded by remember { mutableStateOf(false) }
+    var spinnerWidth by remember { mutableStateOf(0) }
 
     val optionsList = remember(options) {
         val list = mutableListOf("Select")
@@ -1440,6 +1556,7 @@ fun FormSpinner(
     }
 
     Column(modifier = modifier) {
+
         ReusableTextView(
             text = label,
             fontSize = 14,
@@ -1449,17 +1566,19 @@ fun FormSpinner(
 
         Spacer(modifier = Modifier.height(5.dp))
 
-        // ❗ FIX 1: REMOVE fillMaxWidth() here
         Box(
             modifier = Modifier
-                .fillMaxWidth()   // this is OK because Column has weighed width
-                .wrapContentHeight()
+                .fillMaxWidth()
                 .height(48.dp)
                 .border(1.dp, borderColor, RoundedCornerShape(15.dp))
+                .background(backgroundColor, RoundedCornerShape(15.dp))
                 .clickable { expanded = true }
-                .background(backgroundColor, RoundedCornerShape(15.dp)),
+                .onGloballyPositioned {
+                    spinnerWidth = it.size.width
+                },
             contentAlignment = Alignment.CenterStart
         ) {
+
             Row(
                 modifier = Modifier
                     .fillMaxSize()
@@ -1480,20 +1599,19 @@ fun FormSpinner(
                 )
             }
 
-            // ❗ FIX 2: MATCH PARENT WIDTH by using width(Intrinsic)
             DropdownMenu(
                 expanded = expanded,
                 onDismissRequest = { expanded = false },
                 modifier = Modifier
-                    .background(Color.White)
-                    .width(IntrinsicSize.Max)   // IMPORTANT FIX
+                    .width(with(LocalDensity.current) { spinnerWidth.toDp() })
+                    .background(CardColor)
             ) {
                 optionsList.forEach { option ->
                     DropdownMenuItem(
                         text = {
                             ReusableTextView(
                                 text = option,
-                                textColor = black,
+                                textColor = Color.Black,
                                 modifier = Modifier.fillMaxWidth()
                             )
                         },
@@ -1507,6 +1625,8 @@ fun FormSpinner(
         }
     }
 }
+
+
 
 
 /*@OptIn(ExperimentalLayoutApi::class, ExperimentalResourceApi::class)
@@ -2039,6 +2159,30 @@ fun ReusableCard(
     }
 }
 
+@Composable
+fun ReusableCards(
+    modifier: Modifier = Modifier,
+    backgroundColor: Color,
+    cornerRadius: Int = 12,
+    content: @Composable ColumnScope.() -> Unit
+) {
+    Card(
+        modifier = modifier,
+        colors = CardDefaults.cardColors(backgroundColor),
+        shape = RoundedCornerShape(cornerRadius.dp),
+        elevation = CardDefaults.cardElevation(3.dp)
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 5.dp, vertical = 15.dp)
+        ) {
+            content()
+        }
+    }
+}
+
+
 
 @Composable
 fun GroupCardUI(
@@ -2062,18 +2206,20 @@ fun GroupCardUI(
             ) {
 
                 Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                    ReusableTextView(text = "Group Name : ${item.groupName}", fontSize = 14 ,textColor = Color.Gray,)
-                    ReusableTextView(text = "No. of Customers : ${item.customers}", fontSize = 14 ,textColor = black,)
-                    ReusableTextView(text = "Village Name : ${item.village}", fontSize = 14, textColor = Color.Gray,)
-                    ReusableTextView(text = "Loan Officer : ${item.officer}", fontSize = 14 ,textColor = black,)
-                    ReusableTextView(text = "Group formation date : ${item.formation}", fontSize = 14 ,textColor = Color.Gray,)
+
+                    LabelValueText(label = "Group Name :", value = item.groupName)
+                    LabelValueText(label = "No. of Customers :", value = item.customers.toString())
+                    LabelValueText(label = "Village Name :", value = item.village)
+                    LabelValueText(label = "Loan Officer :", value = item.officer)
+                    LabelValueText(label = "Group formation date :", value = item.formation)
                 }
 
                 Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                    ReusableTextView(text = "Disbursement date : ${item.disbursement}", fontSize = 14, textColor = black,)
-                    ReusableTextView(text = "Center : ${item.center}", fontSize = 14 ,textColor = Color.Gray,)
-                    ReusableTextView(text = "Meeting day : ${item.meetingDay}", fontSize = 14 ,textColor = black,)
-                    ReusableTextView(text = "Next meeting Date : ${item.nextMeeting}", fontSize = 14 ,textColor = Color.Gray,)
+
+                    LabelValueText(label = "Disbursement date :", value = item.disbursement)
+                    LabelValueText(label = "Center :", value = item.center)
+                    LabelValueText(label = "Meeting day :", value = item.meetingDay)
+                    LabelValueText(label = "Next meeting Date :", value = item.nextMeeting)
                 }
             }
         }
@@ -2183,28 +2329,34 @@ fun <T : Any> FillDynamicSpinner(
 @Composable
 fun LabelValueText(label: String, value: String) {
     Row {
-        ReusableTextView(
+        ReusableTextViewGrayCard (
             text = label,
-            fontSize = 13,
-            textColor = Color.Black
-        )
+            )
         Spacer(modifier = Modifier.width(4.dp))
-        ReusableTextView(
+        ReusableTextViewBlackCard(
             text = value,
-            fontSize = 13,
-            textColor = Color.Gray
+
+
         )
     }
 }
 @Composable
-fun CustomerItemCard(customer: CustomerData,) {
+fun CustomerItemCard(
+    customer: CustomerData,
+    checked: Boolean,
+    onCheckedChange: (Boolean) -> Unit,
+    onCardClick: (CustomerData) -> Unit
+) {
 
-    var checked by remember { mutableStateOf(false) }
-
-    ReusableCard(
+    ReusableCards(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 8.dp),
+            .padding(vertical = 8.dp)
+            .clickable {
+                if (checked) {
+                    onCardClick(customer)
+                }
+            },
         backgroundColor = CardColor,
         cornerRadius = 12
     ) {
@@ -2216,16 +2368,17 @@ fun CustomerItemCard(customer: CustomerData,) {
             verticalAlignment = Alignment.CenterVertically
         ) {
 
-
+            // ✔ Checkbox
             Checkbox(
                 checked = checked,
-                onCheckedChange = { checked = it },
+                onCheckedChange = { onCheckedChange(it) },
                 colors = CheckboxDefaults.colors(
                     checkedColor = PrimaryDark,
                     uncheckedColor = Color.Gray,
                     checkmarkColor = Color.White
-                ),
+                )
             )
+
 
             Column(
                 modifier = Modifier.weight(1f)
@@ -2238,6 +2391,7 @@ fun CustomerItemCard(customer: CustomerData,) {
 
             Spacer(modifier = Modifier.width(10.dp))
 
+            // ✔ 2 Gray Boxes
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 Box(
                     modifier = Modifier
@@ -2374,7 +2528,10 @@ fun ReusableTextViewBlackCard(
         ),
         textAlign = textAlignment
     )
+
+
 }
+
 
 
 
