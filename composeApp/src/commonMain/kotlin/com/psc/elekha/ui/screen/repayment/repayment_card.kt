@@ -1,5 +1,4 @@
 package com.psc.elekha.ui.screen.repayment
-
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -12,19 +11,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.psc.elekha.ui.screen.repayment.model.RepaymentItem
-import com.psc.elekha.utils.ReusableTextView
-import e_lekha.composeapp.generated.resources.Res
-import e_lekha.composeapp.generated.resources.roboto_medium
-import org.jetbrains.compose.resources.Font
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
+import com.psc.elekha.ui.theme.black
 import com.psc.elekha.ui.theme.editext_bg_color
+import com.psc.elekha.utils.ReusableTextViewBlackCard
+import com.psc.elekha.utils.ReusableTextViewGrayCard
+import com.psc.elekha.utils.ReusablePaymentDropdown
 
 @Composable
 fun RepaymentItemCard(
     item: RepaymentItem,
     isSelected: Boolean,
-    onSelected: () -> Unit
+    onSelected: () -> Unit,
+    onCameraClick: () -> Unit = {}
 ) {
     var showMenu by remember { mutableStateOf(false) }
     var selectedPaymentMode by remember { mutableStateOf("Select") }
@@ -36,20 +34,22 @@ fun RepaymentItemCard(
         colors = CardDefaults.cardColors(containerColor = editext_bg_color),
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 7.dp)
+            .padding(4.dp)
     ) {
+
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(10.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-
             // Checkbox
             Checkbox(
                 checked = isSelected,
                 onCheckedChange = { onSelected() },
-                modifier = Modifier.size(20.dp),
+                modifier = Modifier
+                    .size(20.dp)
+                    .padding(top = 4.dp),
                 colors = CheckboxDefaults.colors(
                     checkedColor = Color(0xFF4CAF50),
                     uncheckedColor = Color.Gray
@@ -58,156 +58,109 @@ fun RepaymentItemCard(
 
             Spacer(modifier = Modifier.width(8.dp))
 
-            // Customer Info
+            // LEFT SIDE CONTENT
             Column(
-                modifier = Modifier.width(85.dp),
-                verticalArrangement = Arrangement.Center
+                modifier = Modifier.weight(1f)
             ) {
-                ReusableTextView(
-                    text = item.customerId,
-                    fontSize = 15,
-                    fontWeight = FontWeight.Bold,
-                    textColor = Color(0xFF1976D2),
-                    fontFamily = FontFamily(Font(Res.font.roboto_medium))
-                )
-                ReusableTextView(
-                    text = item.customerName,
-                    fontSize = 12,
-                    textColor = Color(0xFFFF7043),
-                    fontFamily = FontFamily(Font(Res.font.roboto_medium))
-                )
-            }
-
-            // Loan Details
-            Column(
-                modifier = Modifier.width(90.dp),
-                verticalArrangement = Arrangement.Center
-            ) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    ReusableTextView(
-                        text = "Loan:",
-                        fontSize = 12,
-                        textColor = Color.Black,
-                        fontFamily = FontFamily(Font(Res.font.roboto_medium))
-                    )
-                    ReusableTextView(
-                        text = item.loanAmount,
-                        fontSize = 11,
-                        textColor = Color.Black,
-                        fontFamily = FontFamily(Font(Res.font.roboto_medium))
-                    )
-                }
-
-                Spacer(modifier = Modifier.height(3.dp))
-
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    ReusableTextView(
-                        text = "EMI ",
-                        fontSize = 11,
-                        textColor = Color.Black,
-                        fontFamily = FontFamily(Font(Res.font.roboto_medium))
-                    )
-                    ReusableTextView(
-                        text = item.emiAmount,
-                        fontSize = 11,
-                        fontWeight = FontWeight.Bold,
-                        textColor = Color(0xFFFF7043),
-                        fontFamily = FontFamily(Font(Res.font.roboto_medium))
-                    )
-                }
-            }
-
-            // Total Due
-            Column(
-                modifier = Modifier.width(75.dp),
-                verticalArrangement = Arrangement.Center
-            ) {
-                ReusableTextView(
-                    text = item.totalDue,
-                    fontSize = 13,
-                    fontWeight = FontWeight.Bold,
-                    textColor = Color(0xFFE53935),
-                    fontFamily = FontFamily(Font(Res.font.roboto_medium))
-                )
-
-                Spacer(modifier = Modifier.height(2.dp))
-
-                ReusableTextView(
-                    text = "Week(s): ${item.weeksInArrear}",
-                    fontSize = 12,
-                    textColor = Color.Black,
-                    fontFamily = FontFamily(Font(Res.font.roboto_medium))
-                )
-            }
-
-            // Payment Mode + Camera icon
-            Column(
-                modifier = Modifier.weight(1f),
-                horizontalAlignment = Alignment.End,
-                verticalArrangement = Arrangement.Center
-            ) {
-                // Dropdown
-                Box {
-                    Button(
-                        onClick = { showMenu = true },
-                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFBBDEFB)),
-                        shape = RoundedCornerShape(4.dp),
-                        contentPadding = PaddingValues(horizontal = 6.dp, vertical = 2.dp),
-                        modifier = Modifier
-                            .width(85.dp)
-                            .height(20.dp)
-                    ) {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            ReusableTextView(
-                                text = selectedPaymentMode,
-                                fontSize = 12,
-                                textColor = Color.Black,
-                                fontFamily = FontFamily(Font(Res.font.roboto_medium))
-                            )
-                            Text("▼", fontSize = 10.sp)
-                        }
-                    }
-
-                    DropdownMenu(
-                        expanded = showMenu,
-                        onDismissRequest = { showMenu = false }
-                    ) {
-                        paymentOptions.forEach { option ->
-                            DropdownMenuItem(
-                                text = { Text(option, fontSize = 12.sp) },
-                                onClick = {
-                                    selectedPaymentMode = option
-                                    showMenu = false
-                                }
-                            )
-                        }
-                    }
-                }
-
-                Spacer(modifier = Modifier.height(4.dp))
-
-                ReusableTextView(
-                    text = "Total Repayment",
-                    fontSize = 12,
-                    textColor = Color.Gray,
-                    fontFamily = FontFamily(Font(Res.font.roboto_medium))
-                )
-
-                Spacer(modifier = Modifier.height(2.dp))
-
-                IconButton(
-                    onClick = { /*camera click*/ },
-                    modifier = Modifier.size(32.dp)
+                // ---------- FIRST ROW ----------
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
                 ) {
+                    ReusableTextViewGrayCard("Customer")
+                    Spacer(Modifier.width(4.dp))
+                    ReusableTextViewBlackCard(item.customerId)
+                    ReusableTextViewBlackCard(item.customerName)
+
+                    Spacer(modifier = Modifier.height(10.dp))
+
+
+
+                }
+
+                Spacer(modifier = Modifier.height(10.dp))
+
+                // ---------- SECOND ROW (Loan Details) ----------
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    ReusableTextViewGrayCard("Loan Amount")
+//                    Spacer(Modifier.height(4.dp))
+                    ReusableTextViewBlackCard(item.loanAmount)
+                    ReusableTextViewGrayCard("EMI")
+                    ReusableTextViewBlackCard(item.emiAmount)
+//                    Spacer(Modifier.height(4.dp))
+
+
+                }
+
+                Spacer(modifier = Modifier.height(10.dp))
+
+                // ---------- THIRD ROW (Total Due) ----------
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    ReusableTextViewGrayCard("Total Due")
+                    Spacer(Modifier.height(4.dp))
+                    ReusableTextViewBlackCard(item.totalDue)
+
+                    Spacer(modifier = Modifier.width(20.dp))
+                    ReusableTextViewGrayCard("Weeks in Arrear")
+                    Spacer(Modifier.height(4.dp))
+                    ReusableTextViewBlackCard(item.weeksInArrear)
+                }
+
+                Spacer(modifier = Modifier.height(10.dp))
+
+                // ---------- FOURTH ROW (Payment Mode & Repayment) ----------
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    ReusableTextViewGrayCard("Payment Mode")
+                    Spacer(modifier = Modifier.width(3.dp))
+                    ReusablePaymentDropdown(
+                        selectedValue = selectedPaymentMode,
+                        options = paymentOptions,
+                        onValueSelected = { selectedPaymentMode = it },
+                        modifier = Modifier.weight(1f)
+                    )
+
+                    Spacer(modifier = Modifier.width(8.dp))
+
+                    OutlinedTextField(
+                        value = "",
+                        onValueChange = {},
+                        placeholder = { Text("Repayment", fontSize = 12.sp) },
+                        modifier = Modifier
+                            .weight(1f)
+                            .height(32.dp),
+                        colors = OutlinedTextFieldDefaults.colors(
+                            focusedBorderColor = Color.Gray,
+                            unfocusedBorderColor = Color.LightGray
+                        ),
+                        shape = RoundedCornerShape(4.dp),
+                        textStyle = LocalTextStyle.current.copy(fontSize = 12.sp)
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.width(8.dp))
+
+            // RIGHT SIDE BUTTON COLUMN
+            Column(
+                verticalArrangement = Arrangement.spacedBy(5.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                IconButton(onClick = onCameraClick) {
                     Icon(
-                        Icons.Default.CameraAlt,
+                        imageVector = Icons.Default.CameraAlt,
                         contentDescription = "Camera",
-                        tint = Color.Black,
-                        modifier = Modifier.size(20.dp)
+                        modifier = Modifier.size(30.dp),
+                        tint = black
                     )
                 }
             }

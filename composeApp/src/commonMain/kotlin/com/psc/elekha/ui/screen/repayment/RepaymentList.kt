@@ -1,9 +1,7 @@
 package com.psc.elekha.ui.screen.repayment
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -28,7 +26,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.font.FontFamily
 import com.psc.elekha.ui.screen.repayment.model.sampleRepaymentList
 import com.psc.elekha.ui.screen.repayment.model.RepaymentItem
-import com.psc.elekha.ui.theme.btn_color
+import com.psc.elekha.utils.CommonSaveButton
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RepaymentList(
@@ -38,14 +36,19 @@ fun RepaymentList(
     var selectedItems by remember { mutableStateOf(setOf<Int>()) }
     val repaymentItems = sampleRepaymentList
 
-    Box(modifier = Modifier.fillMaxSize()) {
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+    ) {
+
         Image(
             painter = painterResource(Res.drawable.background),
             contentDescription = null,
             modifier = Modifier.matchParentSize(),
             contentScale = ContentScale.FillBounds
         )
-
+        }
         // Content
         Scaffold(
             modifier = Modifier.fillMaxSize(),
@@ -57,171 +60,144 @@ fun RepaymentList(
                     onNavigationClick = { navController.popBackStack() }
                 )
             },
-            bottomBar = {
-                BottomCollectionBar(
-                    selectedCount = selectedItems.size,
-                    totalItems = repaymentItems.size,
-                    onSubmit = { /* Submit functionality */ }
-                )
-            }
-        ) { innerPadding ->
-            Column(
+
+            ) { innerPadding ->
+            Box(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(innerPadding)
-                    .padding(12.dp)
             ) {
-                // Header Row
-                Row(
+                Column(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(10.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween
+                        .fillMaxSize()
+                        .padding(horizontal = 12.dp)
                 ) {
-                    // Left Side
-                    Column(verticalArrangement = Arrangement.Center) {
-                        ReusableTextView(
-                            text = "Center Name",
-                            fontSize = 11,
-                            fontWeight = FontWeight.Medium,
-                            textColor = Color.Black,
-                            fontFamily = FontFamily(Font(Res.font.roboto_medium))
-                        )
-                        ReusableTextView(
-                            text = "Next Emi Date",
-                            fontSize = 11,
-                            fontWeight = FontWeight.Medium,
-                            textColor = Color.Black,
-                            fontFamily = FontFamily(Font(Res.font.roboto_medium))
-                        )
-                        ReusableTextView(
-                            text = "16/04/2025",
-                            fontSize = 11,
-                            fontWeight = FontWeight.Medium,
-                            textColor = Color.Black,
-                            fontFamily = FontFamily(Font(Res.font.roboto_medium))
-                        )
-                    }
+                    // Header Row
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(10.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        // Left Side
+                        Column(verticalArrangement = Arrangement.Center) {
+                            ReusableTextView(
+                                text = "Center Name",
+                                fontSize = 11,
+                                fontWeight = FontWeight.Medium,
+                                textColor = Color.Black,
+                                fontFamily = FontFamily(Font(Res.font.roboto_medium))
+                            )
+                            ReusableTextView(
+                                text = "Next Emi Date",
+                                fontSize = 11,
+                                fontWeight = FontWeight.Medium,
+                                textColor = Color.Black,
+                                fontFamily = FontFamily(Font(Res.font.roboto_medium))
+                            )
+                            ReusableTextView(
+                                text = "16/04/2025",
+                                fontSize = 11,
+                                fontWeight = FontWeight.Medium,
+                                textColor = Color.Black,
+                                fontFamily = FontFamily(Font(Res.font.roboto_medium))
+                            )
+                        }
 
-                    // Right Side
-                    Column(horizontalAlignment = Alignment.End) {
-                        ReusableTextView(
-                            text = "Username",
-                            fontSize = 13,
-                            fontWeight = FontWeight.Medium,
-                            textColor = Color.Black,
-                            fontFamily = FontFamily(Font(Res.font.roboto_medium))
-                        )
-                        ReusableTextView(
-                            text = "Time",
-                            fontSize = 13,
-                            fontWeight = FontWeight.Medium,
-                            textColor = Color.Black,
-                            fontFamily = FontFamily(Font(Res.font.roboto_medium))
-                        )
-                        ReusableTextView(
-                            text = "Day and Date",
-                            fontSize = 13,
-                            fontWeight = FontWeight.Medium,
-                            textColor = Color.Black,
-                            fontFamily = FontFamily(Font(Res.font.roboto_medium))
-                        )
-                    }
-                }
-
-                CollectionDetailsCard(
-                    items = repaymentItems,
-                    selectedItems = selectedItems,
-                    onItemSelected = { index ->
-                        selectedItems = if (selectedItems.contains(index)) {
-                            selectedItems - index
-                        } else {
-                            selectedItems + index
+                        // Right Side
+                        Column(horizontalAlignment = Alignment.End) {
+                            ReusableTextView(
+                                text = "Username",
+                                fontSize = 13,
+                                fontWeight = FontWeight.Medium,
+                                textColor = Color.Black,
+                                fontFamily = FontFamily(Font(Res.font.roboto_medium))
+                            )
+                            ReusableTextView(
+                                text = "Time",
+                                fontSize = 13,
+                                fontWeight = FontWeight.Medium,
+                                textColor = Color.Black,
+                                fontFamily = FontFamily(Font(Res.font.roboto_medium))
+                            )
+                            ReusableTextView(
+                                text = "Day and Date",
+                                fontSize = 13,
+                                fontWeight = FontWeight.Medium,
+                                textColor = Color.Black,
+                                fontFamily = FontFamily(Font(Res.font.roboto_medium))
+                            )
                         }
                     }
-                )
+
+
+                    CollectionDetailsCard(
+                        items = repaymentItems,
+                        selectedItems = selectedItems,
+                        onItemSelected = { index ->
+                            selectedItems = if (selectedItems.contains(index)) {
+                                selectedItems - index
+                            } else {
+                                selectedItems + index
+                            }
+                        },
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(bottom = 70.dp)
+                    )
+                }
+
+                Box(
+                    modifier = Modifier
+                        .align(Alignment.BottomCenter)
+
+                ) {
+                    CommonSaveButton(
+                        onSaveClick = {},
+                        saveText = ("Submit")
+                    )
+                }
+
+                // Alternative: Use custom bottom bar if needed
+                // BottomCollectionBar(
+                //     selectedCount = selectedItems.size,
+                //     totalItems = repaymentItems.size,
+                //     onSubmit = {}
+                // )
             }
         }
     }
-}
+
 
 @Composable
 fun CollectionDetailsCard(
     items: List<RepaymentItem>,
     selectedItems: Set<Int>,
-    onItemSelected: (Int) -> Unit
+    onItemSelected: (Int) -> Unit,
+    modifier: Modifier = Modifier
 ) {
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(modifier = modifier) {
         // Header
         ReusableTextView(
             text = "Collection Details :",
             fontSize = 18,
             fontWeight = FontWeight.SemiBold,
-            modifier = Modifier.padding(12.dp),
             textColor = Color.Black,
             fontFamily = FontFamily(Font(Res.font.roboto_medium))
         )
-
-        // Table Header Row
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(Color(0xFFF8F8F8))
-                .padding(horizontal = 8.dp, vertical = 8.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Box(modifier = Modifier.width(32.dp))
-
-            Box(modifier = Modifier.width(85.dp)) {
-                ReusableTextView(
-                    text = "Customer",
-                    fontWeight = FontWeight.Medium,
-                    textColor = Color.Black,
-                    fontFamily = FontFamily(Font(Res.font.roboto_medium))
-                )
-            }
-
-            Box(modifier = Modifier.width(90.dp)) {
-                ReusableTextView(
-                    text = "Loan Details",
-                    fontWeight = FontWeight.Medium,
-                    textColor = Color.Black,
-                    fontFamily = FontFamily(Font(Res.font.roboto_medium))
-                )
-            }
-
-            Box(modifier = Modifier.width(75.dp)) {
-                ReusableTextView(
-                    text = "Total Due",
-                    fontWeight = FontWeight.Medium,
-                    textColor = Color.Black,
-                    fontFamily = FontFamily(Font(Res.font.roboto_medium))
-                )
-            }
-
-            Box(modifier = Modifier.weight(1f)) {
-                ReusableTextView(
-                    text = "Payment",
-                    fontWeight = FontWeight.Medium,
-                    textColor = Color.Black,
-                    fontFamily = FontFamily(Font(Res.font.roboto_medium))
-                )
-            }
-        }
-
         HorizontalDivider(color = Color(0xFFE0E0E0), thickness = 1.dp)
-   Spacer(
-       Modifier.height(10.dp)
-   )
+        Spacer(Modifier.height(10.dp))
+
         // List Items
-        LazyColumn(modifier = Modifier.weight(1f)) {
+        LazyColumn(
+
+        ) {
             items(items.size) { index ->
                 RepaymentItemCard(
                     item = items[index],
                     isSelected = selectedItems.contains(index),
                     onSelected = { onItemSelected(index) }
                 )
-
 
                 if (index < items.size - 1) {
                     Spacer(modifier = Modifier.height(8.dp))
@@ -231,59 +207,3 @@ fun CollectionDetailsCard(
     }
 }
 
-
-
-@Composable
-fun BottomCollectionBar(
-    selectedCount: Int,
-    totalItems: Int,
-    onSubmit: () -> Unit
-) {
-    Surface(
-        shadowElevation = 8.dp,
-        color = Color.White
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Column {
-                ReusableTextView(
-                    text = "Collections $selectedCount/5",
-                    fontSize = 11,
-                    textColor = Color.Gray,
-                    fontFamily = FontFamily(Font(Res.font.roboto_medium))
-                )
-                ReusableTextView(
-                    text = "Total Collection: $selectedCount",
-                    fontWeight = FontWeight.Bold,
-                    textColor = Color.Black,
-                    fontFamily = FontFamily(Font(Res.font.roboto_medium))
-                )
-            }
-
-            Button(
-                onClick = onSubmit,
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = btn_color,
-                    contentColor = Color.Black
-                ),
-                shape = RoundedCornerShape(8.dp),
-                modifier = Modifier
-                    .width(110.dp)
-                    .height(45.dp)
-            ) {
-                ReusableTextView(
-                    text = "SUBMIT",
-                    fontSize = 13,
-                    fontWeight = FontWeight.Bold,
-                    textColor = Color.White,
-                    fontFamily = FontFamily(Font(Res.font.roboto_medium))
-                )
-            }
-        }
-    }
-}

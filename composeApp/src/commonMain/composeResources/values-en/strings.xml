@@ -141,7 +141,8 @@
     <string name= "user_reduce">You Can Only reduce the loan amount here, not increase</string>
     <string name= "user_proceed">Save And Proceed</string>
     <string name= "user_name_details">User Name Details </string>
-
-
+    <string name= "customer_details">Customer Details</string>
+    <string name= "customer_image">Customer image</string>
+    <string name= "guarantor_image">Guarantor image</string>
 
 </resources>
