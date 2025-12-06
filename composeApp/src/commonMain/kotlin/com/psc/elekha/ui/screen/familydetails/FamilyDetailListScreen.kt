@@ -1,7 +1,6 @@
-package com.psc.elekha.ui.screen.registrationlist
+package com.psc.elekha.ui.screen.familydetails
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -15,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.psc.elekha.model.RegistrationModel
+import com.psc.elekha.model.FamilyDetailModel
 import com.psc.elekha.ui.theme.black
 import com.psc.elekha.ui.theme.btn_color
 import com.psc.elekha.utils.CustomAlertDialogRegistrationExisting
@@ -31,34 +30,34 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-fun RegistrationListScreen(navController: NavController) {
+fun FamilyDetailListScreen(
+    onNextTab: () -> Unit = {},
+    onCancelTab: () -> Unit = {},
+    navController: NavController
+) {
     var showDialog by remember { mutableStateOf(false) }
 
-    var registrationModel by rememberSaveable {
+    var familyDetailModel by rememberSaveable {
         mutableStateOf(
             listOf(
-                RegistrationModel(
+                FamilyDetailModel(
                     "Test",
-                    "9999999911",
-                    "Married"
+                    "Brother",
+                    "Graduate",
+                    "Teacher"
                 ),
-                RegistrationModel(
+                FamilyDetailModel(
                     "XYZ",
-                    "8899889988",
-                    "Single"
+                    "Sister",
+                    "PostGraduate",
+                    "Doctor"
                 ),
-                RegistrationModel("ABC", "7711778866", "Divorced")
+                FamilyDetailModel("ABC", "Father", "12th", "Driver")
             )
         )
     }
 
     /*Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .navigationBarsPadding().background(white)
-    ) {*/
-
-    Box(
         modifier = Modifier
             .fillMaxSize()
             .navigationBarsPadding()
@@ -72,30 +71,31 @@ fun RegistrationListScreen(navController: NavController) {
                 onNavigationClick = {
                     navController.popBackStack()
                 }
-            )
+            )*/
 
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-            ) {
+            )
+            {
 
-                Image(
+                /*Image(
                     painter = painterResource(Res.drawable.background),
                     contentDescription = null,
-                    modifier = Modifier.matchParentSize(),
-                    contentScale = ContentScale.FillBounds
-                )
+                    modifier = Modifier.fillMaxSize(),    // THIS is enough
+                    contentScale = ContentScale.Crop
+                )*/
 
                 Spacer(modifier = Modifier.height(10.dp))
 
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(horizontal = 16.dp, vertical = 8.dp)
+                        .padding(/*horizontal = 16.dp, */vertical = 8.dp)
                 ) {
-                    items(registrationModel) { item ->
-                        RegistrationCard(
-                            registrationModel = item,
+                    items(familyDetailModel) { item ->
+                        FamilyDetailCard(
+                            familyDetailModel = item,
                             onEdit = {
                                 /*edit click listener here*/
                             },
@@ -107,41 +107,10 @@ fun RegistrationListScreen(navController: NavController) {
                     }
                 }
 
-                //icon with text
-                /*ExtendedFloatingActionButton(
-                    onClick = {
-                        navController.navigate(RouteName.registration_tabs)
-                    },
-                    containerColor = btn_color,
-                    shape = CircleShape,
-                    modifier = Modifier
-                        .align(Alignment.BottomEnd)
-                        .padding(18.dp)
-                        .border(
-                            width = 1.dp,
-                            color = btn_color,
-                            shape = CircleShape
-                        ),
-                    icon = {
-                        Icon(
-                            painter = painterResource(Res.drawable.addicon),
-                            contentDescription = stringResource(Res.string.add),
-                            tint = black
-                        )
-                    },
-                    text = {
-                        ReusableTextView(
-                            text = stringResource(Res.string.add),
-                            textColor = black,
-                            fontWeight = FontWeight.W500
-                        )
-                    }
-                )*/
-
                 //just icon
                 FloatingActionButton(
                     onClick = {
-                        showDialog = true
+                        navController.navigate(RouteName.family_detail_form_screen)
                     },
                     containerColor = btn_color,
                     shape = CircleShape,
@@ -161,22 +130,7 @@ fun RegistrationListScreen(navController: NavController) {
                     )
                 }
             }
-            if (showDialog) {
-                CustomAlertDialogRegistrationExisting(
-                    onRegistration = {
-                        navController.navigate(RouteName.registration_tabs)
-                        showDialog = false
-                    },
-                    onExitsing = {
-                        navController.navigate(RouteName.registration_tabs)
-                        showDialog = false
-                    },
-                    onBack = {
-                        showDialog = false
-                    }
-                )
-            }
         }
-    }
+    /*}
 
-}
+}*/
