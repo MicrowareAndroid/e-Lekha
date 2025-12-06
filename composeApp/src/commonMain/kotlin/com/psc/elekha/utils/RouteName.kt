@@ -11,4 +11,5 @@ object RouteName {
     const val registration_list = "registration_list"
 
     const val replayment_list = "repayment_list"
+    const val family_detail_form_screen = "family_detail_form_screen"
 }

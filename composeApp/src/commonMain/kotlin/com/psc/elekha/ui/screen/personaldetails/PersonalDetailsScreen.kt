@@ -249,7 +249,7 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(10.dp),
-                    verticalAlignment = Alignment.Bottom   // 👈 THIS aligns button with EditText
+                    verticalAlignment = Alignment.Bottom   // THIS aligns button with EditText
                 ) {
                     FormField(
                         label = stringResource(Res.string.mobile_number),

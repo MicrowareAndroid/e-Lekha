@@ -29,6 +29,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.psc.elekha.ui.screen.bankdetails.BankDetailsScreen
+import com.psc.elekha.ui.screen.economicdetails.EconomicDetailsScreen
+import com.psc.elekha.ui.screen.familydetails.FamilyDetailListScreen
 import com.psc.elekha.ui.screen.kycdetails.KycDetailsScreen
 import com.psc.elekha.ui.screen.personaldetails.PersonalDetailsScreen
 import com.psc.elekha.ui.theme.toolbar_color
@@ -176,6 +178,17 @@ fun RegistartionTabScreen(navController: NavController, pref: AppPreferences) {
                     2 -> BankDetailsScreen(
                         onNextTab = { selectedTabIndex++ },
                         onCancelTab = { selectedTabIndex-- })
+
+                    3 -> FamilyDetailListScreen(
+                        onNextTab = { selectedTabIndex++ },
+                        onCancelTab = { selectedTabIndex-- },
+                        navController = navController
+                    )
+
+                    4 -> EconomicDetailsScreen(
+                        onNextTab = { selectedTabIndex++ },
+                        onCancelTab = { selectedTabIndex-- }
+                    )
 
                     /*3 -> CustomAlertDialog(
                         true,
