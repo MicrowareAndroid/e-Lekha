@@ -14,6 +14,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
@@ -24,6 +25,7 @@ import com.psc.elekha.ui.theme.PrimaryDark
 import com.psc.elekha.ui.theme.black
 import com.psc.elekha.ui.theme.editext_bg_color
 import com.psc.elekha.ui.theme.white
+import com.psc.elekha.utils.CameraPicker
 import com.psc.elekha.utils.CommonSingleButtonsBottomString
 import com.psc.elekha.utils.FillDynamicSpinner
 import com.psc.elekha.utils.FormField
@@ -33,6 +35,7 @@ import com.psc.elekha.utils.ReusableTextView
 import com.psc.elekha.utils.ReusableTextViewBlackCard
 import com.psc.elekha.utils.ReusableTextViews
 import com.psc.elekha.utils.ReusableTopBar
+import com.psc.elekha.utils.toPlatformImageBitmap
 import e_lekha.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.painterResource
@@ -47,6 +50,11 @@ fun CustomerDetailScreen(
     val branchList = listOf("3000", "4000", "5000", "6000")
     var selectedBranch by remember { mutableStateOf("") }
 
+    var openCamera by remember { mutableStateOf(false) }
+    var activeCamera by remember { mutableStateOf("") }
+
+    var customerImage by remember { mutableStateOf<ImageBitmap?>(null) }
+    var centerImage by remember { mutableStateOf<ImageBitmap?>(null) }
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
@@ -314,11 +322,17 @@ fun CustomerDetailScreen(
                     ) {
                         Box(
                             modifier = Modifier
-                                .size(85.dp)
-                                .background(Color.Gray, RoundedCornerShape(12.dp)),
-                            contentAlignment = Alignment.Center
+                                .size(100.dp)
+                                .background(Color.LightGray)
                         ) {
-
+                            customerImage?.let { img ->
+                                Image(
+                                    bitmap = img,
+                                    contentDescription = "Customer Image",
+                                    modifier = Modifier.fillMaxSize(),
+                                    contentScale = ContentScale.Crop
+                                )
+                            }
                         }
                     }
                     Row(
@@ -343,7 +357,10 @@ fun CustomerDetailScreen(
                                 contentDescription = null,
                                 modifier = Modifier
                                     .size(35.dp)
-                                    .clickable { },
+                                    .clickable {
+                                        activeCamera = "customer"
+                                        openCamera = true
+                                    },
 
                                 )
                         }
@@ -368,12 +385,19 @@ fun CustomerDetailScreen(
                     ) {
                         Box(
                             modifier = Modifier
-                                .size(85.dp)
-                                .background(Color.Gray, RoundedCornerShape(12.dp)),
-                            contentAlignment = Alignment.Center
+                                .size(100.dp)
+                                .background(Color.LightGray)
                         ) {
-
+                            centerImage?.let { img ->
+                                Image(
+                                    bitmap = img,
+                                    contentDescription = "Center Image",
+                                    modifier = Modifier.fillMaxSize(),
+                                    contentScale = ContentScale.Crop
+                                )
+                            }
                         }
+
                     }
                     Spacer(modifier = Modifier.height(12.dp))
 
@@ -400,7 +424,10 @@ fun CustomerDetailScreen(
                                 contentDescription = null,
                                 modifier = Modifier
                                     .size(35.dp)
-                                    .clickable { },
+                                    .clickable {
+                                        activeCamera = "center"
+                                        openCamera = true
+                                    }
 
                                 )
                         }
@@ -477,5 +504,21 @@ fun CustomerDetailScreen(
 
             }
         }
+    }
+    if (openCamera) {
+        CameraPicker(
+            openCamera = openCamera,
+            onImagePicked = { bytes ->
+                val img = bytes?.toPlatformImageBitmap()
+
+                when (activeCamera) {
+                    "customer" -> customerImage = img
+                    "center" -> centerImage = img
+                }
+
+                openCamera = false
+                activeCamera = ""
+            }
+        )
     }
 }

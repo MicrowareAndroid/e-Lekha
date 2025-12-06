@@ -18,7 +18,8 @@
     <string name="home_date">Date  :</string>
     <string name="home_active_customer">Active Customer</string>
     <string name="home_default">Default</string>
-    <string name="home_registration">REGISTRATION</string>
+    <string name="home_registration">Registration</string>
+    <string name="home_registration_detail">REGISTRATION</string>
     <string name="home_credit">Credit Enquiry</string>
     <string name="home_arrear">Arrear/Par</string>
     <string name="home_closed">Loan Closed</string>

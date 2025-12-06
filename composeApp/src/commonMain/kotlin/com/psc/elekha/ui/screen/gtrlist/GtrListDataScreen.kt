@@ -13,11 +13,11 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.psc.elekha.di.initKoin
 import com.psc.elekha.ui.theme.LightSkyBlue
 import com.psc.elekha.ui.theme.PrimaryDark
 import com.psc.elekha.ui.theme.black
@@ -27,7 +27,6 @@ import e_lekha.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
-import org.koin.core.definition.indexKey
 
 @Composable
 fun GtrListDataScreen(
@@ -37,6 +36,9 @@ fun GtrListDataScreen(
     var selectedScreen by remember { mutableStateOf("GTR List Data") }
     val checkedMap = remember { mutableStateMapOf<CustomerData, Boolean>() }
 
+
+    var openCamera by remember { mutableStateOf(false) }
+    var capturedImage by remember { mutableStateOf<ImageBitmap?>(null) }
     val customerList = listOf(
         CustomerData("Shanti Devi w/o Manohar Singh", "987654321", "50,000"),
         CustomerData("Rina Kumari w/o Gopal Sharma", "9988776655", "75,000"),
@@ -65,9 +67,7 @@ fun GtrListDataScreen(
                     .navigationBarsPadding()
             ) {
                 CommonSingleButtonsBottomString(
-                    onOkClick = {
-
-                    },
+                    onOkClick = {},
                     stringResource(Res.string.gtr_save),
                     textSize = 16
                 )
@@ -81,7 +81,6 @@ fun GtrListDataScreen(
                 .padding(innerPadding)
         ) {
 
-
             Image(
                 painter = painterResource(Res.drawable.background),
                 contentDescription = null,
@@ -93,15 +92,12 @@ fun GtrListDataScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(horizontal = 15.dp, vertical = 5.dp)
-
             ) {
-
 
                 Column(
                     horizontalAlignment = Alignment.Start,
                     verticalArrangement = Arrangement.spacedBy(4.dp)
-                )
-                {
+                ) {
 
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         ReusableTextView(
@@ -109,59 +105,60 @@ fun GtrListDataScreen(
                             textColor = PrimaryDark
                         )
                         Spacer(Modifier.width(6.dp))
-                        ReusableTextView(text = "Vikash", textColor =Color.Black)
+                        ReusableTextView(text = "Vikash", textColor = Color.Black)
                     }
-
 
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         ReusableTextView(text = stringResource(Res.string.home_time), textColor = PrimaryDark)
                         Spacer(Modifier.width(6.dp))
-                        ReusableTextView(text = "10:45 AM", textColor =Color.Black)
+                        ReusableTextView(text = "10:45 AM", textColor = Color.Black)
                     }
-
 
                     Row(verticalAlignment = Alignment.CenterVertically) {
-                        ReusableTextView(text =  stringResource(Res.string.home_date), textColor =PrimaryDark )
+                        ReusableTextView(text = stringResource(Res.string.home_date), textColor = PrimaryDark)
                         Spacer(Modifier.width(6.dp))
-                        ReusableTextView(text = "04/12/2025", textColor =Color.Black)
+                        ReusableTextView(text = "04/12/2025", textColor = Color.Black)
                     }
                 }
+
                 Spacer(modifier = Modifier.height(18.dp))
 
                 Row(
-                    modifier = Modifier
-                        .fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.Top
                 ) {
 
-                    Column(
-                        modifier = Modifier.weight(1f)
-                    ) {
+                    Column(modifier = Modifier.weight(1f)) {
+
                         ReusableTextView(
                             text = stringResource(Res.string.gtr_customer),
                             fontSize = 14,
                             textColor = black
                         )
                         Spacer(Modifier.height(6.dp))
+
                         ReusableTextView(
                             text = stringResource(Res.string.gtr_center),
                             fontSize = 12,
                             textColor = black
                         )
                         Spacer(Modifier.height(6.dp))
+
                         ReusableTextView(
                             text = stringResource(Res.string.gtr_meeting),
                             fontSize = 12,
                             textColor = black
                         )
                         Spacer(Modifier.height(6.dp))
+
                         ReusableTextView(
                             text = stringResource(Res.string.gtr_next_meeting),
                             fontSize = 12,
                             textColor = black
                         )
                         Spacer(Modifier.height(6.dp))
+
                         ReusableTextView(
                             text = stringResource(Res.string.gtr_remaining_days),
                             fontSize = 12,
@@ -180,7 +177,16 @@ fun GtrListDataScreen(
                             modifier = Modifier
                                 .size(100.dp)
                                 .background(Color.LightGray)
-                        )
+                        ) {
+                            capturedImage?.let { img ->
+                                Image(
+                                    bitmap = img,
+                                    contentDescription = "Captured Image",
+                                    modifier = Modifier.fillMaxSize(),
+                                    contentScale = ContentScale.Crop
+                                )
+                            }
+                        }
 
                         Spacer(Modifier.height(8.dp))
 
@@ -189,7 +195,7 @@ fun GtrListDataScreen(
                             contentDescription = null,
                             modifier = Modifier
                                 .size(35.dp)
-                                .clickable { }
+                                .clickable { openCamera = true }
                         )
                     }
                 }
@@ -197,9 +203,7 @@ fun GtrListDataScreen(
                 Spacer(Modifier.height(15.dp))
                 Divider(color = LightSkyBlue, thickness = 1.dp)
 
-
-            Spacer(Modifier.height(10.dp))
-
+                Spacer(Modifier.height(10.dp))
 
                 Column(
                     modifier = Modifier
@@ -208,7 +212,6 @@ fun GtrListDataScreen(
                         .padding(bottom = 20.dp)
                 ) {
                     customerList.forEach { customer ->
-
                         val isChecked = checkedMap[customer] ?: false
 
                         CustomerItemCard(
@@ -220,10 +223,18 @@ fun GtrListDataScreen(
                             }
                         )
                     }
-
                 }
             }
         }
     }
-}
 
+       if (openCamera) {
+        CameraPicker(
+            openCamera = openCamera,
+            onImagePicked = { bytes ->
+                capturedImage = bytes?.toPlatformImageBitmap()
+                openCamera = false
+            }
+        )
+    }
+}
