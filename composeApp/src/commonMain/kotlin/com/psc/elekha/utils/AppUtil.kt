@@ -71,6 +71,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.focusTarget
@@ -124,9 +125,11 @@ import com.psc.elekha.ui.theme.textview_color
 import com.psc.elekha.ui.theme.toolbar_color
 import com.psc.elekha.ui.theme.white
 import e_lekha.composeapp.generated.resources.Res
+import e_lekha.composeapp.generated.resources.annual
 import e_lekha.composeapp.generated.resources.app_name
 import e_lekha.composeapp.generated.resources.back
 import e_lekha.composeapp.generated.resources.camera
+import e_lekha.composeapp.generated.resources.cancel
 import e_lekha.composeapp.generated.resources.close
 import e_lekha.composeapp.generated.resources.dd_mm_yy
 import e_lekha.composeapp.generated.resources.document_icon
@@ -139,15 +142,21 @@ import e_lekha.composeapp.generated.resources.hh_mm
 import e_lekha.composeapp.generated.resources.ic_arrow_drop_down
 import e_lekha.composeapp.generated.resources.ic_close
 import e_lekha.composeapp.generated.resources.login_subtitle
+import e_lekha.composeapp.generated.resources.mobile_number
+import e_lekha.composeapp.generated.resources.movable_assets
 import e_lekha.composeapp.generated.resources.new_registration
 import e_lekha.composeapp.generated.resources.next
+import e_lekha.composeapp.generated.resources.ok
 import e_lekha.composeapp.generated.resources.password
+import e_lekha.composeapp.generated.resources.purpose
 import e_lekha.composeapp.generated.resources.roboto_medium
 import e_lekha.composeapp.generated.resources.save
 import e_lekha.composeapp.generated.resources.spinner_select
+import e_lekha.composeapp.generated.resources.total_monthly_expenditure
 import e_lekha.composeapp.generated.resources.type_here
 import e_lekha.composeapp.generated.resources.user_default
 import e_lekha.composeapp.generated.resources.username
+import e_lekha.composeapp.generated.resources.vehicle_no
 import kotlinx.coroutines.delay
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
@@ -702,51 +711,51 @@ fun FormFields(
 ) {
 
 
-        OutlinedTextField(
-            enabled = isEnable,
-            readOnly = isReadable,
-            value = value,
-            onValueChange = { newValue ->
-                val filteredValue = when (inputType) {
-                    KeyboardType.Number, KeyboardType.Phone -> newValue.filter { it.isDigit() }
-                    else -> newValue
-                }
-                if (filteredValue.length <= maxLength) {
-                    onValueChange(filteredValue)
-                }
-            },
-            trailingIcon = trailingIcon,
-            placeholder = {
-                ReusableTextView(
-                    text = placeholder,
-                    fontSize = placeholderTextSize,
-                    textColor = placeholderColor,
-                    textAlignment = TextAlign.Start
-                )
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight()
-                .height(48.dp),
-            shape = RoundedCornerShape(15.dp),
-            textStyle = TextStyle(
-                fontSize = 15.sp,
-                fontFamily = FontFamily(Font(Res.font.roboto_medium)),
-                textAlign = TextAlign.Start
-            ),
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedContainerColor = if (isEnable) backgroundColor else disabledBackgroundColor,
-                unfocusedContainerColor = if (isEnable) backgroundColor else disabledBackgroundColor,
-                disabledContainerColor = disabledBackgroundColor,
-                focusedBorderColor = borderColor,
-                unfocusedBorderColor = borderColor,
-                cursorColor = Color.Black
-            ),
-            maxLines = maxLines,
-            keyboardOptions = KeyboardOptions(
-                keyboardType = inputType
+    OutlinedTextField(
+        enabled = isEnable,
+        readOnly = isReadable,
+        value = value,
+        onValueChange = { newValue ->
+            val filteredValue = when (inputType) {
+                KeyboardType.Number, KeyboardType.Phone -> newValue.filter { it.isDigit() }
+                else -> newValue
+            }
+            if (filteredValue.length <= maxLength) {
+                onValueChange(filteredValue)
+            }
+        },
+        trailingIcon = trailingIcon,
+        placeholder = {
+            ReusableTextView(
+                text = placeholder,
+                fontSize = placeholderTextSize,
+                textColor = placeholderColor,
+                textAlignment = TextAlign.Start
             )
+        },
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight()
+            .height(48.dp),
+        shape = RoundedCornerShape(15.dp),
+        textStyle = TextStyle(
+            fontSize = 15.sp,
+            fontFamily = FontFamily(Font(Res.font.roboto_medium)),
+            textAlign = TextAlign.Start
+        ),
+        colors = OutlinedTextFieldDefaults.colors(
+            focusedContainerColor = if (isEnable) backgroundColor else disabledBackgroundColor,
+            unfocusedContainerColor = if (isEnable) backgroundColor else disabledBackgroundColor,
+            disabledContainerColor = disabledBackgroundColor,
+            focusedBorderColor = borderColor,
+            unfocusedBorderColor = borderColor,
+            cursorColor = Color.Black
+        ),
+        maxLines = maxLines,
+        keyboardOptions = KeyboardOptions(
+            keyboardType = inputType
         )
+    )
 
 }
 
@@ -1645,8 +1654,6 @@ fun FormSpinner(
 fun Int.toDp() = (this / LocalDensity.current.density).dp
 
 
-
-
 /*@OptIn(ExperimentalLayoutApi::class, ExperimentalResourceApi::class)
 @Composable
 fun MultiSelectDropdownWithChips1(
@@ -2203,7 +2210,6 @@ fun ReusableCards(
 }
 
 
-
 @Composable
 fun GroupCardUI(
     item: GroupCardData,
@@ -2358,7 +2364,7 @@ fun <T : Any> FillDynamicSpinner(
 @Composable
 fun LabelValueText(label: String, value: String) {
     Row {
-        ReusableTextViewGrayCard (
+        ReusableTextViewGrayCard(
             text = label,
             fontSize = 13
             )
@@ -2368,7 +2374,7 @@ fun LabelValueText(label: String, value: String) {
             fontSize = 13
 
 
-        )
+            )
     }
 }
 
@@ -2650,11 +2656,10 @@ fun CommonDivider(
 @Composable
 fun CustomAlertDialogRegistrationExisting(
     title: String = stringResource(Res.string.app_name),
-    confirmText: String = stringResource(Res.string.back),
+    confirmText: String = stringResource(Res.string.cancel),
     onRegistration: () -> Unit = {},
     onExitsing: () -> Unit = {},
-    onBack: () -> Unit = {},
-    onDismiss: () -> Unit = {}
+    onBack: () -> Unit = {}
 ) {
     Dialog(
         onDismissRequest = { },
@@ -2711,7 +2716,6 @@ fun CustomAlertDialogRegistrationExisting(
                             backgroundColor = LightMint,
                             onSaveClick = {
                                 onRegistration()
-                                onDismiss()
                             },
                             saveText = stringResource(Res.string.new_registration)
                         )
@@ -2734,7 +2738,6 @@ fun CustomAlertDialogRegistrationExisting(
                             backgroundColor = repaymentColor,
                             onSaveClick = {
                                 onExitsing()
-                                onDismiss()
                             },
                             saveText = stringResource(Res.string.existing_customer)
                         )
@@ -2756,13 +2759,183 @@ fun CustomAlertDialogRegistrationExisting(
                         CommonSaveButton(
                             onSaveClick = {
                                 onBack()
-                                onDismiss()
                             },
                             saveText = confirmText
                         )
                     }
 
                     Spacer(Modifier.weight(0.5f))
+                }
+
+                Spacer(Modifier.height(10.dp))
+            }
+        }
+    }
+}
+
+@Composable
+fun SelectableChip(
+    text: String,
+    isSelected: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val selectedBackground: Color = toolbar_color
+    val unSelectedBackground: Color = formborder
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = modifier
+            .clip(RoundedCornerShape(15.dp))
+            .background(
+                if (isSelected)
+                    selectedBackground
+                else
+                    unSelectedBackground
+            )
+            .clickable { onClick() }
+            .padding(horizontal = 8.dp, vertical = 10.dp)
+    ) {
+        Text(
+            text = text,
+            fontSize = 12.sp,
+            color = if (isSelected) Color.White else Color.Black,
+            fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal // <-- bold
+        )
+    }
+}
+
+@Composable
+fun CustomAlertMovableAssets(
+    title: String = stringResource(Res.string.app_name),
+    submitText: String = stringResource(Res.string.ok),
+    cancelText: String = stringResource(Res.string.cancel),
+    onSubmit: () -> Unit = {},
+    onCancel: () -> Unit = {}
+) {
+    Dialog(
+        onDismissRequest = { },
+    )
+    {
+        Box(
+            modifier = Modifier
+                .wrapContentHeight()
+                .wrapContentWidth()
+                .widthIn(min = 400.dp, max = 500.dp)
+                .heightIn(max = 500.dp)
+                .background(lightGrey, RoundedCornerShape(16.dp))
+                .border(1.dp, lightGrey, RoundedCornerShape(16.dp))
+        ) {
+            Column(
+                modifier = Modifier
+                    .wrapContentWidth()
+                    .widthIn(400.dp)
+                    .background(lightGrey, shape = RoundedCornerShape(16.dp))
+                    .border(1.dp, Color.LightGray, shape = RoundedCornerShape(16.dp)),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center,
+                    modifier = Modifier.fillMaxWidth().background(
+                        toolbar_color,
+                        shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp)
+                    )
+                        .heightIn(50.dp)
+                ) {
+                    ReusableTextView(
+                        text = title,
+                        fontSize = 20,
+                        fontWeight = FontWeight.Bold,
+                        textColor = white,
+                        textAlignment = TextAlign.Center,
+                        modifier = Modifier.padding(start = 10.dp)
+                    )
+                }
+
+                Spacer(Modifier.height(5.dp))
+
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Spacer(Modifier.weight(0.2f))
+
+                    Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.Center) {
+                        FormSpinner(
+                            label = stringResource(Res.string.movable_assets),
+                            options = listOf("Car", "Bike", "Truck"),
+                            selectedOption = "",
+                            onOptionSelected = { }
+                        )
+                    }
+
+                    Spacer(Modifier.weight(0.2f))
+                }
+
+                Spacer(Modifier.height(5.dp))
+
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+
+                    Spacer(Modifier.weight(0.2f))
+
+                    Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.Center) {
+                        FormField(
+                            label = stringResource(Res.string.vehicle_no),
+                            value = "",
+                            onValueChange = { "" },
+                            placeholder = stringResource(Res.string.type_here),
+                            maxLength = 10
+                        )
+                    }
+
+                    Spacer(Modifier.weight(0.2f))
+                }
+
+                Spacer(Modifier.height(5.dp))
+
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Spacer(Modifier.weight(0.2f))
+
+                    Button(
+                        onClick = onCancel,
+                        modifier = Modifier
+                            .weight(1f)
+                            .height(48.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = btn_color,
+                            contentColor = Color.Black
+                        ),
+                        shape = RoundedCornerShape(15.dp)
+                    ) {
+                        Text(cancelText)
+                    }
+
+                    Spacer(Modifier.weight(0.2f))
+
+                    Button(
+                        onClick = onSubmit,
+                        modifier = Modifier
+                            .weight(1f)
+                            .height(48.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = btn_color,
+                            contentColor = Color.Black
+                        ),
+                        shape = RoundedCornerShape(15.dp)
+                    ) {
+                        Text(submitText)
+                    }
+
+                    Spacer(Modifier.weight(0.2f))
                 }
 
                 Spacer(Modifier.height(10.dp))

@@ -157,5 +157,20 @@
     <string name= "back">Back</string>
     <string name= "ok">Ok</string>
     <string name= "economic_details">Economic Details</string>
+    <string name= "occupation">Occupation</string>
+    <string name= "gender">Gender</string>
+    <string name= "age">Age</string>
+    <string name= "cancel">Cancel</string>
+    <string name= "other_income">Other Income</string>
+    <string name= "monthly_expenditure">Monthly Expenditure</string>
+    <string name= "daily_expenses">Daily expenses</string>
+    <string name= "education_expenses">Education expenses</string>
+    <string name= "medical_expenses">Medical expenses</string>
+    <string name= "other_expenses">Other expenses</string>
+    <string name= "total_monthly_expenditure">Total monthly expenditure</string>
+    <string name= "annual">Annual</string>
+    <string name= "movable_assets">Movable assets</string>
+
+    <string name= "vehicle_no">Vehicle no.</string>
 
 </resources>
