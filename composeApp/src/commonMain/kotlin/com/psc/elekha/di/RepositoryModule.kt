@@ -1,5 +1,23 @@
 package com.psc.elekha.di
 
+import CustomerRepository
+import com.psc.elekha.database.repository.CustomerDefaultRepository
+import com.psc.elekha.database.repository.CustomerExistingLoanDetailRepository
+import com.psc.elekha.database.repository.CustomerFamilyMemberDetailsRepository
+import com.psc.elekha.database.repository.CustomerLoanDisbursementRepository
+import com.psc.elekha.database.repository.CustomerStatusRepository
+import com.psc.elekha.database.repository.CustomerTransactionDataRepository
+import com.psc.elekha.database.repository.CustomerTransactionsDetailsRepository
+import com.psc.elekha.database.repository.ImageDetailRepository
+import com.psc.elekha.database.repository.ImageTrackingRecordRepository
+import com.psc.elekha.database.repository.KYCDocCategoryRepository
+import com.psc.elekha.database.repository.KYCDocConfigurationRepository
+import com.psc.elekha.database.repository.KYCDocumentRepository
+import com.psc.elekha.database.repository.KYCStatusConditionRepository
+import com.psc.elekha.database.repository.KYCStatusRepository
+import com.psc.elekha.database.repository.LoanClosureRepository
+import com.psc.elekha.database.repository.LoanRepaymentRepository
+import com.psc.elekha.database.repository.LoanScheduleRepository
 import com.psc.elekha.database.repository.MSTAssetsValuationRepository
 import com.psc.elekha.database.repository.MSTBankBranchRepository
 import com.psc.elekha.database.repository.MSTBankRepository
@@ -25,6 +43,24 @@ import com.psc.elekha.database.repository.UsersRepository
 import org.koin.dsl.module
 
 val repositoryModule = module {
+    single {CustomerRepository( get())  }
+    single { CustomerDefaultRepository( get()) }
+    single { CustomerExistingLoanDetailRepository( get()) }
+    single { CustomerFamilyMemberDetailsRepository( get()) }
+    single { CustomerLoanDisbursementRepository( get()) }
+    single { CustomerStatusRepository( get()) }
+    single { CustomerTransactionDataRepository( get()) }
+    single { CustomerTransactionsDetailsRepository( get()) }
+    single { ImageDetailRepository( get()) }
+    single { ImageTrackingRecordRepository( get()) }
+    single { KYCDocCategoryRepository( get()) }
+    single { KYCDocConfigurationRepository( get()) }
+    single { KYCDocumentRepository( get()) }
+    single { KYCStatusConditionRepository( get()) }
+    single { KYCStatusRepository( get()) }
+    single { LoanClosureRepository( get()) }
+    single { LoanRepaymentRepository( get()) }
+    single { LoanScheduleRepository( get()) }
     single { MSTAssetsValuationRepository(get()) }
     single { MSTBankBranchRepository(get()) }
     single { MSTBankRepository(get()) }

@@ -1,5 +1,23 @@
 package com.psc.elekha.di
 
+import com.psc.elekha.database.viewmodel.CustomerDefaultViewModel
+import com.psc.elekha.database.viewmodel.CustomerExistingLoanDetailViewModel
+import com.psc.elekha.database.viewmodel.CustomerFamilyMemberDetailsViewModel
+import com.psc.elekha.database.viewmodel.CustomerLoanDisbursementViewModel
+import com.psc.elekha.database.viewmodel.CustomerStatusViewModel
+import com.psc.elekha.database.viewmodel.CustomerTransactionDataViewModel
+import com.psc.elekha.database.viewmodel.CustomerTransactionsDetailsViewModel
+import com.psc.elekha.database.viewmodel.CustomerViewModel
+import com.psc.elekha.database.viewmodel.ImageDetailViewModel
+import com.psc.elekha.database.viewmodel.ImageTrackingRecordViewModel
+import com.psc.elekha.database.viewmodel.KYCDocCategoryViewModel
+import com.psc.elekha.database.viewmodel.KYCDocConfigurationViewModel
+import com.psc.elekha.database.viewmodel.KYCDocumentViewModel
+import com.psc.elekha.database.viewmodel.KYCStatusConditionViewModel
+import com.psc.elekha.database.viewmodel.KYCStatusViewModel
+import com.psc.elekha.database.viewmodel.LoanClosureViewModel
+import com.psc.elekha.database.viewmodel.LoanRepaymentViewModel
+import com.psc.elekha.database.viewmodel.LoanScheduleViewModel
 import com.psc.elekha.database.viewmodel.MSTAssetsValuationViewModel
 import com.psc.elekha.database.viewmodel.MSTBankBranchViewModel
 import com.psc.elekha.database.viewmodel.MSTBankViewModel
@@ -24,6 +42,24 @@ import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 
 val viewmodelModule = module {
+    viewModelOf(::CustomerViewModel)
+    viewModelOf(::CustomerDefaultViewModel)
+    viewModelOf(::CustomerExistingLoanDetailViewModel)
+    viewModelOf(::CustomerFamilyMemberDetailsViewModel)
+    viewModelOf(::CustomerLoanDisbursementViewModel)
+    viewModelOf(::CustomerStatusViewModel)
+    viewModelOf(::CustomerTransactionDataViewModel)
+    viewModelOf(::CustomerTransactionsDetailsViewModel)
+    viewModelOf(::ImageDetailViewModel)
+    viewModelOf(::ImageTrackingRecordViewModel)
+    viewModelOf(::KYCDocCategoryViewModel)
+    viewModelOf(::KYCDocConfigurationViewModel)
+    viewModelOf(::KYCDocumentViewModel)
+    viewModelOf(::KYCStatusConditionViewModel)
+    viewModelOf(::KYCStatusViewModel)
+    viewModelOf(::LoanClosureViewModel)
+    viewModelOf(::LoanRepaymentViewModel)
+    viewModelOf(::LoanScheduleViewModel)
     viewModelOf(::MSTAssetsValuationViewModel)
     viewModelOf(::MSTBankBranchViewModel)
     viewModelOf(::MSTBankViewModel)
