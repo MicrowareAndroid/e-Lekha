@@ -2046,12 +2046,14 @@ fun DashboardCardItem(
         // FIXED LABEL
         Text(
             text = label,
-            fontSize = 8.sp,
+            fontSize = 11.sp,
             fontWeight = FontWeight.Medium,
             color = lightgreens,
-            textAlign = TextAlign.Start,
+            textAlign = TextAlign.Center,
             maxLines = 1,
+            modifier = Modifier.fillMaxWidth()
         )
+
     }
 }
 
@@ -2216,87 +2218,47 @@ fun GroupCardUI(
     ReusableCard(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(6.dp)
+            .padding(8.dp)
             .clickable { onCardClick(item) },
         backgroundColor = CardColor
     ) {
 
-        Column(modifier = Modifier.fillMaxWidth()) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal =10.dp ),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
 
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.Top
+
+            Column(
+                verticalArrangement = Arrangement.spacedBy(2.dp),
+                 // <-- IMPORTANT
             ) {
+                LabelValueText(label = "Group Name :", value = item.groupName)
+                LabelValueText(label = "No. of Customers :", value = item.customers.toString())
+                LabelValueText(label = "Village Name :", value = item.village)
+                LabelValueText(label = "Loan Officer :", value = item.officer)
+                LabelValueText(label = "Group formation date :", value = item.formation)
+            }
 
-                Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                    ReusableTextView(
-                        text = "Group Name : ${item.groupName}",
-                        fontSize = 14,
-                        textColor = Color.Gray,
-                    )
-                    ReusableTextView(
-                        text = "No. of Customers : ${item.customers}",
-                        fontSize = 14,
-                        textColor = black,
-                    )
-                    ReusableTextView(
-                        text = "Village Name : ${item.village}",
-                        fontSize = 14,
-                        textColor = Color.Gray,
-                    )
-                    ReusableTextView(
-                        text = "Loan Officer : ${item.officer}",
-                        fontSize = 14,
-                        textColor = black,
-                    )
-                    ReusableTextView(
-                        text = "Group formation date : ${item.formation}",
-                        fontSize = 14,
-                        textColor = Color.Gray,
-                    )
-                }
 
-                Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                    ReusableTextView(
-                        text = "Disbursement date : ${item.disbursement}",
-                        fontSize = 14,
-                        textColor = black,
-                    )
-                    ReusableTextView(
-                        text = "Center : ${item.center}",
-                        fontSize = 14,
-                        textColor = Color.Gray,
-                    )
-                    ReusableTextView(
-                        text = "Meeting day : ${item.meetingDay}",
-                        fontSize = 14,
-                        textColor = black,
-                    )
-                    ReusableTextView(
-                        text = "Next meeting Date : ${item.nextMeeting}",
-                        fontSize = 14,
-                        textColor = Color.Gray,
-                    )
 
-                    LabelValueText(label = "Group Name :", value = item.groupName)
-                    LabelValueText(label = "No. of Customers :", value = item.customers.toString())
-                    LabelValueText(label = "Village Name :", value = item.village)
-                    LabelValueText(label = "Loan Officer :", value = item.officer)
-                    LabelValueText(label = "Group formation date :", value = item.formation)
-                }
 
-                Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+            Column(
+                verticalArrangement = Arrangement.spacedBy(2.dp),
 
-                    LabelValueText(label = "Disbursement date :", value = item.disbursement)
-                    LabelValueText(label = "Center :", value = item.center)
-                    LabelValueText(label = "Meeting day :", value = item.meetingDay)
-                    LabelValueText(label = "Next meeting Date :", value = item.nextMeeting)
-                }
+            ) {
+                LabelValueText(label = "Disbursement date :", value = item.disbursement)
+                LabelValueText(label = "Center :", value = item.center)
+                LabelValueText(label = "Meeting day :", value = item.meetingDay)
+                LabelValueText(label = "Next meeting Date :", value = item.nextMeeting)
             }
         }
     }
 }
+
+
 
 @Composable
 fun <T : Any> FillDynamicSpinner(
@@ -2404,10 +2366,12 @@ fun LabelValueText(label: String, value: String) {
     Row {
         ReusableTextViewGrayCard(
             text = label,
-        )
+            fontSize = 13
+            )
         Spacer(modifier = Modifier.width(4.dp))
         ReusableTextViewBlackCard(
             text = value,
+            fontSize = 13
 
 
             )

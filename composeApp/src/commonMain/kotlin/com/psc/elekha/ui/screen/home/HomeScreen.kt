@@ -145,7 +145,7 @@ fun HomeScreen(
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(start = 10.dp, end = 37.dp),
+                            .padding(horizontal = 25.dp),
                         horizontalArrangement = Arrangement.spacedBy(12.dp)
                     ) {
                         DashboardCardItem("837", stringResource(Res.string.home_active_customer), painterResource(Res.drawable.ic_setting), Modifier.weight(1f))
@@ -160,7 +160,7 @@ fun HomeScreen(
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(start = 10.dp, end = 37.dp),
+                            .padding(horizontal = 25.dp),
                         horizontalArrangement = Arrangement.spacedBy(12.dp)
                     ) {
                         DashboardCardItem("837", stringResource(Res.string.home_arrear), painterResource(Res.drawable.ic_setting), Modifier.weight(1f))
@@ -182,7 +182,7 @@ fun HomeScreen(
                     CommonSingleButtons(
                         onOkClick = {  navController.navigate(RouteName.registration_list)},
                         backgroundColor = LightMint,
-                        text = stringResource(Res.string.home_registration),
+                        text = stringResource(Res.string.home_registration_detail),
                         textColor = black
                     )
 
