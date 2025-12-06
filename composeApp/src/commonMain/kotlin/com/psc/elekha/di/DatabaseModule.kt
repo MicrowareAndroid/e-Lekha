@@ -11,6 +11,45 @@ import org.koin.dsl.module
 val databaseModule = module {
     single { getRoomDatabase(getDatabaseBuilder()) }
     single { get<AppDatabase>().userDao() }
+    single { get<AppDatabase>().customerDao() }
+    single { get<AppDatabase>().customerDefaultDao() }
+    single { get<AppDatabase>().customerExistingLoanDetailDao() }
+    single { get<AppDatabase>().customerFamilyMemberDetailsDao() }
+    single { get<AppDatabase>().customerLoanDisbursementDao() }
+    single { get<AppDatabase>().customerStatusDao() }
+    single { get<AppDatabase>().customerTransactionDataDao() }
+    single { get<AppDatabase>().customerTransactionsDetailsDao() }
+    single { get<AppDatabase>().imageDetailDao() }
+    single { get<AppDatabase>().imageTrackingRecordDao() }
+    single { get<AppDatabase>().kYCDocCategoryDao() }
+    single { get<AppDatabase>().kYCDocConfigurationDao() }
+    single { get<AppDatabase>().kYCDocumentDao() }
+    single { get<AppDatabase>().kYCStatusConditionDao() }
+    single { get<AppDatabase>().kYCStatusDao() }
+    single { get<AppDatabase>().loanClosureDao() }
+    single { get<AppDatabase>().loanRepaymentDao() }
+    single { get<AppDatabase>().loanScheduleDao() }
+    single { get<AppDatabase>().mSTAssetsValuationDao() }
+    single { get<AppDatabase>().mSTBankBranchDao() }
+    single { get<AppDatabase>().mSTBankDao() }
+    single { get<AppDatabase>().mSTBranchDao() }
+    single { get<AppDatabase>().mSTCenterDao() }
+    single { get<AppDatabase>().mSTComboBox_NDao() }
+    single { get<AppDatabase>().mSTDistrictDao() }
+    single { get<AppDatabase>().mSTLoanOfficerDao() }
+    single { get<AppDatabase>().mSTLoanProductDao() }
+    single { get<AppDatabase>().mSTLoanTypeDao() }
+    single { get<AppDatabase>().mSTMFILoanProductDao() }
+    single { get<AppDatabase>().mSTMonthlyIncomeMarksDao() }
+    single { get<AppDatabase>().mSTPovertyStatusDao() }
+    single { get<AppDatabase>().mSTStateDao() }
+    single { get<AppDatabase>().mSTVillageDao() }
+    single { get<AppDatabase>().registrationStatusDao()}
+    single { get<AppDatabase>().tabletMenuDao() }
+    single { get<AppDatabase>().tabletMenuRoleDao() }
+    single { get<AppDatabase>().userBranchDao() }
+    single { get<AppDatabase>().userResponseDao() }
+    single { get<AppDatabase>().usersDao() }
 //    single { get<AppDatabase>().lookUpDao() }
 //    single { get<AppDatabase>().lookUpvalueDao() }
 //    single { get<AppDatabase>().caseCategoryQuestionDao() }
