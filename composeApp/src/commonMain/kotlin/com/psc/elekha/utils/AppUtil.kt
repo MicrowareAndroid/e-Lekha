@@ -621,7 +621,7 @@ fun FormField(
     isReadable: Boolean = false,
     labelColor: Color = textview_color,
     placeholderColor: Color = Color(0xFF212121),
-    backgroundColor: Color = editext_bg_color,
+    backgroundColor: Color = Color(0xFFE8F2FF),
     borderColor: Color = boderColor,
     maxLines: Int = 1,
 //    disabledBackgroundColor: Color = Color(0xFFE0E0E0),
@@ -919,7 +919,7 @@ fun FormDatePicker(
     isReadable: Boolean = false,
     labelColor: Color = textview_color,
     placeholderColor: Color = Color(0xFF212121),
-    backgroundColor: Color = editext_bg_color,
+    backgroundColor: Color = Color(0xFFE8F2FF),
     borderColor: Color = boderColor,
     modifier: Modifier = Modifier
 ) {
@@ -1561,7 +1561,7 @@ fun FormSpinner(
     onOptionSelected: (String) -> Unit,
     modifier: Modifier = Modifier,
     labelColor: Color = textview_color,
-    backgroundColor: Color = editext_bg_color,
+    backgroundColor: Color = Color(0xFFE8F2FF),
     textColor: Color = Color.Black,
     fontFamily: FontFamily = FontFamily(Font(Res.font.roboto_medium)),
     borderColor: Color = boderColor
