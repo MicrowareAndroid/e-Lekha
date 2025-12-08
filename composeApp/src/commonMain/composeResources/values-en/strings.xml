@@ -172,5 +172,24 @@
     <string name= "movable_assets">Movable assets</string>
 
     <string name= "vehicle_no">Vehicle no.</string>
+    <string name= "data_saved_successfully">Data Saved SuccessFully</string>
+    <string name= "personal_customer_name">Please Enter Customer Name</string>
+    <string name= "personal_date_birth">Please Enter Date Of Birth</string>
+    <string name= "personal_marital">Please Select Marital Status</string>
+    <string name= "personal_education">Please Select Education</string>
+    <string name= "personal_religion">Please Select Religion</string>
+    <string name= "personal_purpose">Please Select Purpose</string>
+    <string name= "personal_mobile_number">Please Enter Mobile Number</string>
+    <string name= "personal_husband_name">Please Enter Husband Name</string>
+    <string name= "personal_gurantor_name">Please Enter Guarantor Name</string>
+    <string name= "personal_relation">Please Select Relation</string>
+    <string name= "personal_gurantor_mobile">Please Enter Gurantor Mobile Number</string>
+    <string name= "personal_full_address">Please Enter Full Address</string>
+    <string name= "personal_state">Please Select State</string>
+    <string name= "personal_district">Please Select District</string>
+    <string name= "personal_village">Please Enter Village</string>
+    <string name= "personal_tehsil">Please Enter Tehsil</string>
+    <string name= "personal_landmark">Please Enter LandMark</string>
+    <string name= "personal_pincode">Please Enter PinCode</string>
 
 </resources>

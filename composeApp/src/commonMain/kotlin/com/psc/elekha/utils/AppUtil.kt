@@ -2945,6 +2945,39 @@ fun CustomAlertMovableAssets(
 }
 
 
+fun convertDateFormatYYYYMMDD(inputDate: String): String {
+    var newDate = ""
+    try {
+        if (!inputDate.isNullOrEmpty()) {
+            val parts = inputDate.split("-")
+            val day = parts[0].toInt()
+            val month = parts[1].toInt()
+            val year = parts[2].toInt()
+            newDate = "$year-$month-$day"
+        }
+    }catch (ex: Exception){
+        ex.printStackTrace()
+    }
+    return newDate
+}
+
+fun convertDateFormatDDMMYYYY(inputDate: String): String {
+    var newDate = ""
+    try{
+        if (!inputDate.isNullOrEmpty()) {
+            val parts = inputDate.split("-")
+            val day = parts[2].toInt()
+            val month = parts[1].toInt()
+            val year = parts[0].toInt()
+            newDate = "$day-$month-$year"
+        }
+    }catch (ex: Exception){
+        ex.printStackTrace()
+    }
+    return newDate
+
+}
+
 
 
 

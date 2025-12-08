@@ -33,7 +33,7 @@ interface CustomerDefaultDao {
     fun getCustomerAadhaar(GUID: String): String?
 
     @Query("Select GUID from CustomerDefault where UserID =:UserID and CutomerStatusID=5")
-    fun getCustomerDefaultGUID(UserID: String): String?
+    fun getCustomerDefaultGUID(UserID: String): List<CustomerDefaultEntity>
 
     @Query("Delete from CustomerDefault")
     fun deleteAllCustomer()
