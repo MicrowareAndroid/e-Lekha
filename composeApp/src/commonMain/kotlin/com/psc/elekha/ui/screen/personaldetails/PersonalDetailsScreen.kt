@@ -39,7 +39,9 @@ import com.psc.elekha.utils.CommonSingleButtons
 import com.psc.elekha.utils.CommonSingleButtonsBottomString
 import com.psc.elekha.utils.DynamicCheckBox
 import com.psc.elekha.utils.FormDatePicker
+import com.psc.elekha.utils.FormDatePickerCompact
 import com.psc.elekha.utils.FormField
+import com.psc.elekha.utils.FormFieldCompact
 import com.psc.elekha.utils.FormSpinner
 import com.psc.elekha.utils.ReusableTextView
 import com.psc.elekha.utils.pickDate
@@ -129,6 +131,7 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
                     .weight(1f)
                     .verticalScroll(rememberScrollState())
                     .padding(bottom = 15.dp)
+
             ) {
 
 //                ReusableTextView(
@@ -216,7 +219,7 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
                     horizontalArrangement = Arrangement.spacedBy(10.dp)
                 )
                 {
-                    FormField(
+                    FormFieldCompact(
                         label = stringResource(Res.string.customer_name),
                         value = "",
                         onValueChange = { "" },
@@ -234,7 +237,7 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
                    modifier = Modifier.fillMaxWidth(),
                    horizontalArrangement = Arrangement.spacedBy(10.dp)
                ) {
-                   FormDatePicker(
+                   FormDatePickerCompact(
                        label = stringResource(Res.string.date_of_birth),
                        value = "",
                        onValueChange = {},
@@ -248,8 +251,7 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
                                tint = Color.Unspecified
                            )
                        },
-                       isEnable = false,
-                       isReadable = true,
+                       isEnable = true,
                        modifier = Modifier.weight(1f)
                    )
 
@@ -294,19 +296,19 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
 
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    horizontalArrangement = Arrangement.spacedBy(5.dp),
                     verticalAlignment = Alignment.Bottom   // THIS aligns button with EditText
                 ) {
-                    FormField(
+                    FormFieldCompact(
                         label = stringResource(Res.string.mobile_number),
                         value = "",
                         onValueChange = { "" },
                         placeholder = stringResource(Res.string.type_here),
                         maxLength = 10,
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier.weight(2f)
                     )
 
-                    FormField(
+                    FormFieldCompact(
                         label = stringResource(Res.string.enter_otp),
                         value = "",
                         onValueChange = { "" },
@@ -320,14 +322,14 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
                         },
                         stringResource(Res.string.send_otp),
                         modifier = Modifier.weight(1f),
-                        textSize = 12
+                        textSize = 11
                     )
                 }
 
                 Spacer(modifier = Modifier.height(8.dp))
 
                 // ---------------- Form Start ----------------
-                FormField(
+                FormFieldCompact(
                     label = stringResource(Res.string.husband_name),
                     value = "",
                     placeholder = stringResource(Res.string.type_here),
@@ -346,34 +348,13 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
                 Spacer(modifier = Modifier.height(2.dp))
 
                 // ---------------- Form Start ----------------
-                FormField(
+                FormFieldCompact(
                     label = stringResource(Res.string.guarantor_name),
                     value = "",
                     placeholder = stringResource(Res.string.type_here),
                     onValueChange = { "" },
                     maxLength = 20
                 )
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(10.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .weight(1f)
-                            .fillMaxHeight(),      // Make text area match the height of right side
-                        contentAlignment = Alignment.CenterStart        // Center vertically
-                    ) {
-                        ReusableTextView(
-                            text = stringResource(Res.string.guarantor_image),
-                            fontSize = 14,
-                            textColor = textview_color
-                        )
-                    }
-                }
                 Spacer(modifier = Modifier.height(8.dp))
 
                 Row(
@@ -388,7 +369,7 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
                         modifier = Modifier.weight(1f)
                     )
 
-                    FormDatePicker(
+                    FormDatePickerCompact(
                         label = stringResource(Res.string.date_of_birth),
                         value = "",
                         onValueChange = {},
@@ -406,7 +387,6 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
                             )
                         },
                         isEnable = false,
-                        isReadable = true,
                         modifier = Modifier.weight(1f)
                     )
                 }
@@ -414,7 +394,7 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
                 Spacer(modifier = Modifier.height(8.dp))
 
                 // ---------------- Form Start ----------------
-                FormField(
+                FormFieldCompact(
                     label = stringResource(Res.string.guarantor_mobile_number),
                     value = "",
                     placeholder = stringResource(Res.string.not_same_as_customer_mobile_number),
@@ -429,7 +409,7 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
                     horizontalArrangement = Arrangement.spacedBy(10.dp),
                     verticalAlignment = Alignment.Bottom   // THIS aligns button with EditText
                 ) {
-                    FormField(
+                    FormFieldCompact(
                         label = stringResource(Res.string.enter_otp),
                         value = "",
                         onValueChange = { "" },
@@ -450,7 +430,7 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
                 Spacer(modifier = Modifier.height(8.dp))
 
                 // ---------------- Form Start ----------------
-                FormField(
+                FormFieldCompact(
                     label = stringResource(Res.string.your_full_address),
                     value = "",
                     placeholder = stringResource(Res.string.type_here),
@@ -487,7 +467,7 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(10.dp)
                 ) {
-                    FormField(
+                    FormFieldCompact(
                         label = stringResource(Res.string.village_name),
                         value = "",
                         onValueChange = { "" },
@@ -495,7 +475,7 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
                         modifier = Modifier.weight(1f)
                     )
 
-                    FormField(
+                    FormFieldCompact(
                         label = stringResource(Res.string.tehsil),
                         value = "",
                         onValueChange = { "" },
@@ -510,7 +490,7 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(10.dp)
                 ) {
-                    FormField(
+                    FormFieldCompact(
                         label = stringResource(Res.string.landmark),
                         value = "",
                         onValueChange = { "" },
@@ -518,7 +498,7 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
                         modifier = Modifier.weight(1f)
                     )
 
-                    FormField(
+                    FormFieldCompact(
                         label = stringResource(Res.string.pin_code),
                         value = "",
                         onValueChange = { "" },
