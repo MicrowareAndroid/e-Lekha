@@ -17,42 +17,54 @@ class KYCDocumentViewModel(
     private val _allDocuments = MutableStateFlow<List<KYCDocumentEntity>>(emptyList())
     val allDocuments: StateFlow<List<KYCDocumentEntity>> = _allDocuments
 
-    // -------------------------------
-    // Load all documents
-    // -------------------------------
+    // --------------------------------------
+    // Load all documents from repository
+    // --------------------------------------
     fun loadAllDocuments() {
         viewModelScope.launch(Dispatchers.IO) {
             _allDocuments.value = repository.getAllKYCDocument() ?: emptyList()
         }
     }
 
-    // -------------------------------
+    // --------------------------------------
     // Insert single document
-    // -------------------------------
-    fun insertDocument(document: KYCDocumentEntity, onComplete: (() -> Unit)? = null) {
+    // --------------------------------------
+    fun insertDocument(
+        document: KYCDocumentEntity,
+        onComplete: (() -> Unit)? = null
+    ) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.insertKYCDocument(document)
+            loadAllDocuments()     // refresh list
             onComplete?.invoke()
         }
     }
 
-    // -------------------------------
+    // --------------------------------------
     // Insert multiple documents
-    // -------------------------------
-    fun insertAllDocuments(documents: List<KYCDocumentEntity>, onComplete: (() -> Unit)? = null) {
+    // --------------------------------------
+    fun insertAllDocuments(
+        documents: List<KYCDocumentEntity>,
+        onComplete: (() -> Unit)? = null
+    ) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.insertAllKYCDocument(documents)
+            loadAllDocuments()     // refresh list
             onComplete?.invoke()
         }
     }
 
-    // -------------------------------
+    // --------------------------------------
     // Delete all documents
-    // -------------------------------
+    // --------------------------------------
     fun deleteAllDocuments() {
         viewModelScope.launch(Dispatchers.IO) {
             repository.deleteAllKYCDocument()
             _allDocuments.value = emptyList()
         }
+    }
+
+    fun getAllDocumentsDirect(): List<KYCDocumentEntity> {
+        return repository.getAllKYCDocument() ?: emptyList()
     }
 }

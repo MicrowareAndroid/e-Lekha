@@ -1,5 +1,5 @@
 package com.psc.elekha.ui.screen.registrationtab
-
+import com.psc.elekha.ui.screen.kycdetails.KycDetailsScreen
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -31,12 +31,10 @@ import androidx.navigation.NavController
 import com.psc.elekha.ui.screen.bankdetails.BankDetailsScreen
 import com.psc.elekha.ui.screen.economicdetails.EconomicDetailsScreen
 import com.psc.elekha.ui.screen.familydetails.FamilyDetailListScreen
-import com.psc.elekha.ui.screen.kycdetails.KycDetailsScreen
 import com.psc.elekha.ui.screen.personaldetails.PersonalDetailsScreen
 import com.psc.elekha.ui.theme.toolbar_color
 import com.psc.elekha.ui.theme.white
 import com.psc.elekha.utils.AppPreferences
-import com.psc.elekha.utils.CustomAlertDialog
 import com.psc.elekha.utils.ReusableTopBar
 import e_lekha.composeapp.generated.resources.Res
 import e_lekha.composeapp.generated.resources.bank_details
@@ -170,6 +168,7 @@ fun RegistartionTabScreen(navController: NavController, pref: AppPreferences) {
                     0 -> PersonalDetailsScreen(
                         onNextTab = { selectedTabIndex++ },
                         onCancelTab = { navController.popBackStack() })
+
 
                     1 -> KycDetailsScreen(
                         onNextTab = { selectedTabIndex++ },

@@ -17,60 +17,188 @@ class LoanScheduleViewModel(
     private val _allLoanSchedules = MutableStateFlow<List<LoanScheduleEntity>>(emptyList())
     val allLoanSchedules: StateFlow<List<LoanScheduleEntity>> = _allLoanSchedules
 
-    // Load all loan schedules
+    // ---------------------------------------------------------
+    // Load all schedules
+    // ---------------------------------------------------------
     fun loadAllLoanSchedules() {
         viewModelScope.launch(Dispatchers.IO) {
             _allLoanSchedules.value = repository.getAllLoanSchedule() ?: emptyList()
         }
     }
 
+    // ---------------------------------------------------------
     // Load schedules by GUID
+    // ---------------------------------------------------------
     fun loadLoanScheduleByGUID(GUID: String) {
         viewModelScope.launch(Dispatchers.IO) {
             _allLoanSchedules.value = repository.getLoanScheduleByGUID(GUID) ?: emptyList()
         }
     }
 
-    fun insertLoanSchedule(loanSchedule: LoanScheduleEntity, onComplete: (() -> Unit)? = null) {
+    // ---------------------------------------------------------
+    // Insert single schedule
+    // ---------------------------------------------------------
+    fun insertLoanSchedule(
+        loanSchedule: LoanScheduleEntity,
+        onComplete: (() -> Unit)? = null
+    ) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.insertLoanSchedule(loanSchedule)
             onComplete?.invoke()
         }
     }
 
-    fun insertAllLoanSchedule(loanSchedules: List<LoanScheduleEntity>, onComplete: (() -> Unit)? = null) {
+    // ---------------------------------------------------------
+    // Insert multiple schedules
+    // ---------------------------------------------------------
+    fun insertAllLoanSchedule(
+        loanSchedules: List<LoanScheduleEntity>,
+        onComplete: (() -> Unit)? = null
+    ) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.insertAllLoanSchedule(loanSchedules)
             onComplete?.invoke()
         }
     }
 
-    // Additional functions for specific queries
-    fun getLoanScheduleByGUIDAndPaidDate(GUID: String, onComplete: (List<LoanScheduleEntity>) -> Unit) {
+    // ---------------------------------------------------------
+    // Functions directly mapped from repository
+    // ---------------------------------------------------------
+
+    fun getLoanScheduleByGUIDAndPaidDate(
+        GUID: String,
+        onComplete: (List<LoanScheduleEntity>) -> Unit
+    ) {
         viewModelScope.launch(Dispatchers.IO) {
-            val data = repository.getLoanScheduleByGUIDAndPaidDate(GUID) ?: emptyList()
-            onComplete(data)
+            onComplete(repository.getLoanScheduleByGUIDAndPaidDate(GUID) ?: emptyList())
         }
     }
 
-    fun getLoanScheduleModulusPay(GUID: String, sCurrentDate: String, onComplete: (List<LoanScheduleEntity>) -> Unit) {
+    fun getLoanScheduleByGUIDAndPaidDateWithLimit(
+        GUID: String,
+        onComplete: (List<LoanScheduleEntity>) -> Unit
+    ) {
         viewModelScope.launch(Dispatchers.IO) {
-            val data = repository.getLoanScheduleModulusPay(GUID, sCurrentDate) ?: emptyList()
-            onComplete(data)
+            onComplete(repository.getLoanScheduleByGUIDAndPaidDateWithLimit(GUID) ?: emptyList())
         }
     }
 
-    fun getUnpaidEMISum(GUID: String, onComplete: (Int) -> Unit) {
+    fun getLoanScheduleByGUIDAndPaidDateWithLimit4(
+        GUID: String,
+        onComplete: (List<LoanScheduleEntity>) -> Unit
+    ) {
         viewModelScope.launch(Dispatchers.IO) {
-            val sum = repository.getUnpaidEMISum(GUID)
-            onComplete(sum)
+            onComplete(repository.getLoanScheduleByGUIDAndPaidDateWithLimit4(GUID) ?: emptyList())
         }
     }
 
-    fun getLastPaidDate(GUID: String, onComplete: (String) -> Unit) {
+    fun getWorkingDateByGUID(
+        GUID: String,
+        onComplete: (String?) -> Unit
+    ) {
         viewModelScope.launch(Dispatchers.IO) {
-            val date = repository.getLastPaidDate(GUID)
-            onComplete(date)
+            onComplete(repository.getWorkingDateByGUID(GUID))
+        }
+    }
+
+    fun getEMIDueDateByGUID(
+        GUID: String,
+        onComplete: (String?) -> Unit
+    ) {
+        viewModelScope.launch(Dispatchers.IO) {
+            onComplete(repository.getEMIDueDateByGUID(GUID))
+        }
+    }
+
+    fun getLoanScheduleModulus(
+        GUID: String,
+        onComplete: (List<LoanScheduleEntity>) -> Unit
+    ) {
+        viewModelScope.launch(Dispatchers.IO) {
+            onComplete(repository.getLoanScheduleModulus(GUID) ?: emptyList())
+        }
+    }
+
+    fun getLoanScheduleCountByGUID(
+        GUID: String,
+        onComplete: (Int) -> Unit
+    ) {
+        viewModelScope.launch(Dispatchers.IO) {
+            onComplete(repository.getLoanScheduleCountByGUID(GUID))
+        }
+    }
+
+    fun getMaxCustomerLoanID(
+        GUID: String,
+        onComplete: (Int) -> Unit
+    ) {
+        viewModelScope.launch(Dispatchers.IO) {
+            onComplete(repository.getMaxCustomerLoanID(GUID))
+        }
+    }
+
+    fun getCloseDate(
+        GUID: String,
+        CustomerLoanID: Int,
+        onComplete: (String) -> Unit
+    ) {
+        viewModelScope.launch(Dispatchers.IO) {
+            onComplete(repository.getCloseDate(GUID, CustomerLoanID))
+        }
+    }
+
+    fun getLoanScheduleModulusPay(
+        GUID: String,
+        sCurrentDate: String,
+        onComplete: (List<LoanScheduleEntity>) -> Unit
+    ) {
+        viewModelScope.launch(Dispatchers.IO) {
+            onComplete(repository.getLoanScheduleModulusPay(GUID, sCurrentDate) ?: emptyList())
+        }
+    }
+
+    fun getLoanScheduleModulusPayTwoDate(
+        GUID: String,
+        sLastPaidDate: String,
+        sCurrentDate: String,
+        onComplete: (List<LoanScheduleEntity>) -> Unit
+    ) {
+        viewModelScope.launch(Dispatchers.IO) {
+            onComplete(
+                repository.getLoanScheduleModulusPayTwoDate(
+                    GUID,
+                    sLastPaidDate,
+                    sCurrentDate
+                ) ?: emptyList()
+            )
+        }
+    }
+
+    fun getLastPaidDate(
+        GUID: String,
+        onComplete: (String) -> Unit
+    ) {
+        viewModelScope.launch(Dispatchers.IO) {
+            onComplete(repository.getLastPaidDate(GUID))
+        }
+    }
+
+    fun getUnpaidEMISum(
+        GUID: String,
+        onComplete: (Int) -> Unit
+    ) {
+        viewModelScope.launch(Dispatchers.IO) {
+            onComplete(repository.getUnpaidEMISum(GUID))
+        }
+    }
+
+    fun getMaxCustomerLoanIDBYEMI(
+        GUID: String,
+        CustomerLoanID: Int,
+        onComplete: (Int) -> Unit
+    ) {
+        viewModelScope.launch(Dispatchers.IO) {
+            onComplete(repository.getMaxCustomerLoanIDBYEMI(GUID, CustomerLoanID))
         }
     }
 }

@@ -4,11 +4,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.psc.elekha.database.entity.CustomerExistingLoanDetailEntity
 import com.psc.elekha.database.repository.CustomerExistingLoanDetailRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
 
 class CustomerExistingLoanDetailViewModel(
     private val repository: CustomerExistingLoanDetailRepository
@@ -30,19 +30,19 @@ class CustomerExistingLoanDetailViewModel(
     private val _uploadCount = MutableStateFlow<Int>(0)
     val uploadCount: StateFlow<Int> = _uploadCount
 
-    // --------------------------------
-    // Load All Loans for a Customer
-    // --------------------------------
+
+    // -------------------------------------------------
+    // LOAD ALL LOANS BY GUID
+    // -------------------------------------------------
     fun loadAllLoans(guid: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            val data = repository.getAllCustomerExistingLoan(guid) ?: emptyList()
-            _allLoans.value = data
+            _allLoans.value = repository.getAllCustomerExistingLoan(guid) ?: emptyList()
         }
     }
 
-    // --------------------------------
-    // Insert Single Loan
-    // --------------------------------
+    // -------------------------------------------------
+    // INSERT ONE LOAN
+    // -------------------------------------------------
     fun insertCustomerExistingLoan(
         loan: CustomerExistingLoanDetailEntity,
         onComplete: (() -> Unit)? = null
@@ -53,9 +53,9 @@ class CustomerExistingLoanDetailViewModel(
         }
     }
 
-    // --------------------------------
-    // Insert All Loans
-    // --------------------------------
+    // -------------------------------------------------
+    // INSERT ALL LOANS
+    // -------------------------------------------------
     fun insertAllCustomerExistingLoan(
         loans: List<CustomerExistingLoanDetailEntity>,
         onComplete: (() -> Unit)? = null
@@ -66,27 +66,27 @@ class CustomerExistingLoanDetailViewModel(
         }
     }
 
-    // --------------------------------
-    // Delete All Loans
-    // --------------------------------
+    // -------------------------------------------------
+    // DELETE ALL EXISTING LOANS
+    // -------------------------------------------------
     fun deleteAllLoans() {
         viewModelScope.launch(Dispatchers.IO) {
             repository.deleteAllCustomerExistingLoan()
         }
     }
 
-    // --------------------------------
-    // Get Loan Count
-    // --------------------------------
+    // -------------------------------------------------
+    // GET LOAN COUNT
+    // -------------------------------------------------
     fun loadLoanCount(guid: String) {
         viewModelScope.launch(Dispatchers.IO) {
             _loanCount.value = repository.getMyLoanCount(guid)
         }
     }
 
-    // --------------------------------
-    // Update Loan (Simple)
-    // --------------------------------
+    // -------------------------------------------------
+    // UPDATE LOAN
+    // -------------------------------------------------
     fun updateMyLoan(
         loanAmount: Int,
         loanPurposeId: Int,
@@ -94,18 +94,14 @@ class CustomerExistingLoanDetailViewModel(
         onComplete: (() -> Unit)? = null
     ) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.updateMyLoan(
-                loanAmount,
-                loanPurposeId,
-                guid
-            )
+            repository.updateMyLoan(loanAmount, loanPurposeId, guid)
             onComplete?.invoke()
         }
     }
 
-    // --------------------------------
-    // Update MFI Details
-    // --------------------------------
+    // -------------------------------------------------
+    // UPDATE MFI DETAILS
+    // -------------------------------------------------
     fun updateMFI(
         loanAmount: Int,
         loanPurposeId: Int,
@@ -134,36 +130,37 @@ class CustomerExistingLoanDetailViewModel(
         }
     }
 
-    // --------------------------------
-    // Load All Edited Loans for Upload
-    // --------------------------------
+    // -------------------------------------------------
+    // LOAD EDITED LOANS FOR UPLOAD
+    // -------------------------------------------------
     fun loadLoanUploadList() {
         viewModelScope.launch(Dispatchers.IO) {
-            _loanUploadList.value = repository.getAllCustomerExistingLoanUpload() ?: emptyList()
+            _loanUploadList.value =
+                repository.getAllCustomerExistingLoanUpload() ?: emptyList()
         }
     }
 
-    // --------------------------------
-    // Update Uploaded
-    // --------------------------------
+    // -------------------------------------------------
+    // MARK DATA AS UPLOADED
+    // -------------------------------------------------
     fun updateUploaded() {
         viewModelScope.launch(Dispatchers.IO) {
             repository.updateUploaded()
         }
     }
 
-    // --------------------------------
-    // load upload flag by GUID
-    // --------------------------------
+    // -------------------------------------------------
+    // GET UPLOADED FLAG BY GUID
+    // -------------------------------------------------
     fun loadIsUploaded(guid: String) {
         viewModelScope.launch(Dispatchers.IO) {
             _isUploaded.value = repository.getIsUploaded(guid)
         }
     }
 
-    // --------------------------------
-    // Load Upload Count
-    // --------------------------------
+    // -------------------------------------------------
+    // GET COUNT OF UPLOADABLE DATA
+    // -------------------------------------------------
     fun loadUploadCount() {
         viewModelScope.launch(Dispatchers.IO) {
             _uploadCount.value = repository.getUploadCount()

@@ -26,49 +26,70 @@ class ImageDetailViewModel(
     private val _countImage = MutableStateFlow<Int?>(null)
     val countImage: StateFlow<Int?> = _countImage
 
-    // -------------------------------
-    // Load all images
-    // -------------------------------
+    // --------------------------------------------------------
+    // INSERT SINGLE IMAGE DETAIL
+    // --------------------------------------------------------
+    fun insertImageDetail(
+        image: ImageDetailEntity,
+        onComplete: (() -> Unit)? = null
+    ) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.insertImageDetail(image)
+            onComplete?.invoke()
+        }
+    }
+
+    // --------------------------------------------------------
+    // INSERT ALL IMAGE DETAILS
+    // --------------------------------------------------------
+    fun insertAllImageDetail(
+        images: List<ImageDetailEntity>,
+        onComplete: (() -> Unit)? = null
+    ) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.insertAllImageDetail(images)
+            onComplete?.invoke()
+        }
+    }
+
+    // --------------------------------------------------------
+    // LOAD ALL IMAGES
+    // --------------------------------------------------------
     fun loadAllImages() {
         viewModelScope.launch(Dispatchers.IO) {
             _allImages.value = repository.getAllImageDetail() ?: emptyList()
         }
     }
 
-    // -------------------------------
-    // Load image details by RefFieldName
-    // -------------------------------
+    // --------------------------------------------------------
+    // LOAD IMAGES BY REF FIELD NAME
+    // --------------------------------------------------------
     fun loadImageDetails(refFieldName: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             _imageDetails.value = repository.getImageDetail(refFieldName) ?: emptyList()
         }
     }
 
-    // -------------------------------
-    // Load renamed image by RefFieldName
-    // -------------------------------
+    // --------------------------------------------------------
+    // LOAD RENAMED IMAGE
+    // --------------------------------------------------------
     fun loadRenameImage(refFieldName: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             _renameImage.value = repository.getRenameImage(refFieldName)
         }
     }
 
-    // -------------------------------
-    // Load image count by RefFieldName
-    // -------------------------------
+
     fun loadCountImage(refFieldName: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             _countImage.value = repository.getCountImageDetail(refFieldName)
         }
     }
 
-    // -------------------------------
-    // Delete all images
-    // -------------------------------
+
     fun deleteAllImages() {
         viewModelScope.launch(Dispatchers.IO) {
             repository.deleteAllImageDetail()
-            // Refresh list after deletion
             _allImages.value = emptyList()
         }
     }
