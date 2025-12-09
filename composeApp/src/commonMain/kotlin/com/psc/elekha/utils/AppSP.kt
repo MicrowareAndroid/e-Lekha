@@ -6,5 +6,8 @@ object AppSP {
     var password = "password"
     var profileComplainant = "profileComplainant"
     var caseIdentifier = "caseIdentifier"
+    var customerGuid = "customerGuid"
+    var dateOfBirth = "dateOfBirth"
+    var userId = "userId"
 
 }

@@ -38,7 +38,7 @@ class CustomerDefaultRepository(private val customerDefaultDao: CustomerDefaultD
         return customerDefaultDao.getCustomerAadhaar(guid)
     }
 
-    fun getCustomerDefaultGUID(userId: String): String? {
+    fun getCustomerDefaultGUID(userId: String): List<CustomerDefaultEntity> {
         return customerDefaultDao.getCustomerDefaultGUID(userId)
     }
 

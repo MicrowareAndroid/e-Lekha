@@ -22,12 +22,14 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.Uri
 import coil3.compose.LocalPlatformContext
 import com.psc.elekha.ui.theme.textview_color
@@ -80,10 +82,13 @@ import e_lekha.composeapp.generated.resources.user_default
 import e_lekha.composeapp.generated.resources.village_name
 import e_lekha.composeapp.generated.resources.voter_id
 import e_lekha.composeapp.generated.resources.your_full_address
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 import e_lekha.composeapp.generated.resources.your_photo_with_guarantor
 import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.viewmodel.koinViewModel
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -104,12 +109,10 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
 //    var message = viewModel.saveMessage
     var customerImage by remember { mutableStateOf<Uri?>(null) }
     var guarantorImage by remember { mutableStateOf<Uri?>(null) }
-
+    val viewModel = koinViewModel<PersonalDetailViewModel>()
+    val coroutineScope = rememberCoroutineScope()
     LaunchedEffect(Unit) {
-//        stateViewModel.loadUsers()
-//        viewModel.selectState=2
-//        lookUpValueViewModel.loadLookUpValues(lookupTypeFk = 1, langId = 1)
-
+viewModel.loadSavedData()
     }
 
     Box(
@@ -531,7 +534,9 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
 
             // Bottom Buttons (Not scrollable)
             CommonSaveButton (
-                onSaveClick = {},
+                onSaveClick ={
+                    viewModel.saveData()
+                },
                 saveText = stringResource(Res.string.next)
             )
         }
