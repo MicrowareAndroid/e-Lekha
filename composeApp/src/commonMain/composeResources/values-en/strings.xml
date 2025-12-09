@@ -174,4 +174,7 @@
     <string name="customer_photo">Customer Photo</string>
     <string name="your_photo_with_guarantor">Photo With Guarantor</string>
     <string name="customer_id">Customer ID BHK.12.123</string>
+    <string name="chose_document_type">Chosse Document Type</string>
+    <string name="id_proof">ID Proof</string>
+    <string name="select_id_proof">Select Id Proof</string>
 </resources>

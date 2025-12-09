@@ -17,42 +17,41 @@ class KYCStatusViewModel(
     private val _allStatus = MutableStateFlow<List<KYCStatusEntity>>(emptyList())
     val allStatus: StateFlow<List<KYCStatusEntity>> = _allStatus
 
-    // -------------------------------
-    // Load all KYC status
-    // -------------------------------
     fun loadAllStatus() {
         viewModelScope.launch(Dispatchers.IO) {
             _allStatus.value = repository.getAllKYCStatus() ?: emptyList()
         }
     }
 
-    // -------------------------------
-    // Insert single status
-    // -------------------------------
     fun insertStatus(status: KYCStatusEntity, onComplete: (() -> Unit)? = null) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.insertKYCStatus(status)
+            loadAllStatus()   // refresh
             onComplete?.invoke()
         }
     }
 
-    // -------------------------------
-    // Insert multiple statuses
-    // -------------------------------
-    fun insertAllStatus(statusList: List<KYCStatusEntity>, onComplete: (() -> Unit)? = null) {
+
+    fun insertAllStatus(
+        statusList: List<KYCStatusEntity>,
+        onComplete: (() -> Unit)? = null
+    ) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.insertAllKYCStatus(statusList)
+            loadAllStatus()   // refresh
             onComplete?.invoke()
         }
     }
 
-    // -------------------------------
-    // Delete all statuses
-    // -------------------------------
+
     fun deleteAllStatus() {
         viewModelScope.launch(Dispatchers.IO) {
             repository.deleteAllKYCStatus()
             _allStatus.value = emptyList()
         }
+    }
+
+    fun getAllStatusDirect(): List<KYCStatusEntity> {
+        return repository.getAllKYCStatus() ?: emptyList()
     }
 }

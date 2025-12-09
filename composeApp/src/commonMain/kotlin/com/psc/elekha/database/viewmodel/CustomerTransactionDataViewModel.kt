@@ -23,31 +23,26 @@ class CustomerTransactionDataViewModel(
     private val _transactionCount = MutableStateFlow(0)
     val transactionCount: StateFlow<Int> = _transactionCount
 
+    private val _uploadCount = MutableStateFlow(0)
+    val uploadCount: StateFlow<Int> = _uploadCount
+
     private val _transactionByMerchant = MutableStateFlow<CustomerTransactionDataEntity?>(null)
     val transactionByMerchant: StateFlow<CustomerTransactionDataEntity?> = _transactionByMerchant
 
     // --------------------------------
-    // Load All Transactions
-    // --------------------------------
     fun loadAllTransactions(GUID: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            val data = repository.getAllCustomerTransactionData(GUID) ?: emptyList()
-            _allTransactions.value = data
+            _allTransactions.value = repository.getAllCustomerTransactionData(GUID) ?: emptyList()
         }
     }
 
-    // --------------------------------
-    // Load Transactions for Upload
     // --------------------------------
     fun loadAllTransactionsUpload() {
         viewModelScope.launch(Dispatchers.IO) {
-            val data = repository.getAllCustomerTransactionDataUpload() ?: emptyList()
-            _uploadTransactions.value = data
+            _uploadTransactions.value = repository.getAllCustomerTransactionDataUpload() ?: emptyList()
         }
     }
 
-    // --------------------------------
-    // Load Transaction Count by GUID
     // --------------------------------
     fun loadTransactionCount(GUID: String) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -56,27 +51,19 @@ class CustomerTransactionDataViewModel(
     }
 
     // --------------------------------
-    // Load Total Upload Count
-    // --------------------------------
     fun loadUploadTransactionCount() {
-
         viewModelScope.launch(Dispatchers.IO) {
-            _transactionCount.value = repository.getAllCustomerTransactionDataCount()
+            _uploadCount.value = repository.getAllCustomerTransactionDataCount()
         }
     }
 
     // --------------------------------
-    // Load Transaction by MerchantTransactionID
-    // --------------------------------
     fun loadTransactionByMerchant(MerchantTransactionID: String, GUID: String) {
-
         viewModelScope.launch(Dispatchers.IO) {
             _transactionByMerchant.value = repository.getDatabyMerchantTransID(MerchantTransactionID, GUID)
         }
     }
 
-    // --------------------------------
-    // Update Uploaded Transactions
     // --------------------------------
     fun updateUploaded() {
         viewModelScope.launch(Dispatchers.IO) {
@@ -85,8 +72,6 @@ class CustomerTransactionDataViewModel(
     }
 
     // --------------------------------
-    // Insert Single Transaction
-    // --------------------------------
     fun insertTransaction(transaction: CustomerTransactionDataEntity) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.insertCustomerTransactionData(transaction)
@@ -94,16 +79,12 @@ class CustomerTransactionDataViewModel(
     }
 
     // --------------------------------
-    // Insert Multiple Transactions
-    // --------------------------------
     fun insertAllTransactions(transactions: List<CustomerTransactionDataEntity>) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.insertAllCustomerTransactionData(transactions)
         }
     }
 
-    // --------------------------------
-    // Delete All Transactions
     // --------------------------------
     fun deleteAllTransactions() {
         viewModelScope.launch(Dispatchers.IO) {

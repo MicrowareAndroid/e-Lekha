@@ -23,48 +23,56 @@ class LoanRepaymentViewModel(
     private val _loanRepaymentUploadCount = MutableStateFlow(0)
     val loanRepaymentUploadCount: StateFlow<Int> = _loanRepaymentUploadCount
 
-    // -------------------------------
-    // Load all loan repayments
-    // -------------------------------
+
     fun loadAllLoanRepayment() {
         viewModelScope.launch(Dispatchers.IO) {
             _allLoanRepayments.value = repository.getAllLoanRepayment() ?: emptyList()
         }
     }
 
-    // -------------------------------
-    // Load loan repayments to upload
-    // -------------------------------
     fun loadLoanRepaymentUploadData() {
         viewModelScope.launch(Dispatchers.IO) {
-            _loanRepaymentUploadData.value = repository.getLoanRepaymentUploadData() ?: emptyList()
-            _loanRepaymentUploadCount.value = repository.getLoanRepaymentUploadDataCount()
+            _loanRepaymentUploadData.value =
+                repository.getLoanRepaymentUploadData() ?: emptyList()
+
+            _loanRepaymentUploadCount.value =
+                repository.getLoanRepaymentUploadDataCount()
         }
     }
 
-    // -------------------------------
-    // Insert single loan repayment
-    // -------------------------------
-    fun insertLoanRepayment(loanRepayment: LoanRepaymentEntity, onComplete: (() -> Unit)? = null) {
+
+    fun insertLoanRepayment(
+        loanRepayment: LoanRepaymentEntity,
+        onComplete: (() -> Unit)? = null
+    ) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.insertLoanRepayment(loanRepayment)
             onComplete?.invoke()
         }
     }
 
-    // -------------------------------
-    // Insert multiple loan repayments
-    // -------------------------------
-    fun insertAllLoanRepayment(loanRepayments: List<LoanRepaymentEntity>, onComplete: (() -> Unit)? = null) {
+
+    fun insertAllLoanRepayment(
+        loanRepayments: List<LoanRepaymentEntity>,
+        onComplete: (() -> Unit)? = null
+    ) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.insertAllLoanRepayment(loanRepayments)
             onComplete?.invoke()
         }
     }
 
-    // -------------------------------
-    // Update loan repayment data
-    // -------------------------------
+
+    fun getLoanRepaymentByGUID(
+        GUID: String,
+        onResult: (LoanRepaymentEntity?) -> Unit
+    ) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val data = repository.getLoanRepaymentByGUID(GUID)
+            onResult(data)
+        }
+    }
+
     fun updateLoanRepaymentData(
         Total: Double,
         PaidDate: String,
@@ -76,26 +84,30 @@ class LoanRepaymentViewModel(
         onComplete: (() -> Unit)? = null
     ) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.updateLoanRepaymentData(Total, PaidDate, LoanLat, LoanLong, LoanPlace, PaymentType, GUID)
+            repository.updateLoanRepaymentData(
+                Total,
+                PaidDate,
+                LoanLat,
+                LoanLong,
+                LoanPlace,
+                PaymentType,
+                GUID
+            )
             onComplete?.invoke()
         }
     }
 
-    // -------------------------------
-    // Mark uploaded
-    // -------------------------------
+
     fun updateLoanRepaymentDataUploaded() {
         viewModelScope.launch(Dispatchers.IO) {
             repository.updateLoanRepaymentDataUploaded()
         }
     }
 
-    // -------------------------------
-    // Delete all loan repayments
-    // -------------------------------
     fun deleteAllLoanRepayment() {
         viewModelScope.launch(Dispatchers.IO) {
             repository.deleteAllLoanRepayment()
+
             _allLoanRepayments.value = emptyList()
             _loanRepaymentUploadData.value = emptyList()
             _loanRepaymentUploadCount.value = 0

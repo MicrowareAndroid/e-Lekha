@@ -121,6 +121,7 @@ import com.psc.elekha.ui.theme.lightGrey
 import com.psc.elekha.ui.theme.lightgreens
 import com.psc.elekha.ui.theme.repaymentColor
 import com.psc.elekha.ui.theme.teal700
+import com.psc.elekha.ui.theme.text_fiiled_color
 import com.psc.elekha.ui.theme.textview_color
 import com.psc.elekha.ui.theme.toolbar_color
 import com.psc.elekha.ui.theme.white
@@ -621,7 +622,7 @@ fun FormField(
     isReadable: Boolean = false,
     labelColor: Color = textview_color,
     placeholderColor: Color = Color(0xFF212121),
-    backgroundColor: Color = Color(0xFFE8F2FF),
+    backgroundColor: Color = text_fiiled_color,
     borderColor: Color = boderColor,
     maxLines: Int = 1,
 //    disabledBackgroundColor: Color = Color(0xFFE0E0E0),
@@ -701,7 +702,7 @@ fun FormFields(
     isReadable: Boolean = false,
     labelColor: Color = textview_color,
     placeholderColor: Color = Color(0xFF212121),
-    backgroundColor: Color = editext_bg_color,
+    backgroundColor: Color= text_fiiled_color,
     borderColor: Color = boderColor,
     maxLines: Int = 1,
 //    disabledBackgroundColor: Color = Color(0xFFE0E0E0),
@@ -919,7 +920,7 @@ fun FormDatePicker(
     isReadable: Boolean = false,
     labelColor: Color = textview_color,
     placeholderColor: Color = Color(0xFF212121),
-    backgroundColor: Color = Color(0xFFE8F2FF),
+    backgroundColor: Color = text_fiiled_color,
     borderColor: Color = boderColor,
     modifier: Modifier = Modifier
 ) {
@@ -1561,7 +1562,7 @@ fun FormSpinner(
     onOptionSelected: (String) -> Unit,
     modifier: Modifier = Modifier,
     labelColor: Color = textview_color,
-    backgroundColor: Color = Color(0xFFE8F2FF),
+    backgroundColor: Color = text_fiiled_color,
     textColor: Color = Color.Black,
     fontFamily: FontFamily = FontFamily(Font(Res.font.roboto_medium)),
     borderColor: Color = boderColor

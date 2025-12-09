@@ -14,6 +14,10 @@ class CustomerStatusViewModel(
     private val repository: CustomerStatusRepository
 ) : ViewModel() {
 
+    // ---------------------------------------------------------
+    // StateFlow Variables
+    // ---------------------------------------------------------
+
     private val _allStatus = MutableStateFlow<List<CustomerStatusEntity>>(emptyList())
     val allStatus: StateFlow<List<CustomerStatusEntity>> = _allStatus
 
@@ -24,16 +28,43 @@ class CustomerStatusViewModel(
     val statusData: StateFlow<List<CustomerStatusEntity>> = _statusData
 
     // ---------------------------------------------------------
+    // Insert Single Customer Status
+    // ---------------------------------------------------------
+    fun insertCustomerStatus(
+        status: CustomerStatusEntity,
+        onComplete: (() -> Unit)? = null
+    ) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.insertCustomerStatus(status)
+            onComplete?.invoke()
+        }
+    }
+
+    // ---------------------------------------------------------
+    // Insert List of Customer Status
+    // ---------------------------------------------------------
+    fun insertAllCustomerStatus(
+        list: List<CustomerStatusEntity>,
+        onComplete: (() -> Unit)? = null
+    ) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.insertAllCustomerStatus(list)
+            onComplete?.invoke()
+        }
+    }
+
+    // ---------------------------------------------------------
     // Load All Status Records
     // ---------------------------------------------------------
     fun loadAllStatus() {
+
         viewModelScope.launch(Dispatchers.IO) {
             _allStatus.value = repository.getAllCustomerStatus() ?: emptyList()
         }
     }
 
     // ---------------------------------------------------------
-    // Load Single Status Name
+    // Load Single Status Name by ID
     // ---------------------------------------------------------
     fun loadCustomerStatusName(statusId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -51,7 +82,7 @@ class CustomerStatusViewModel(
     }
 
     // ---------------------------------------------------------
-    // Delete All Status
+    // Delete All Status Records
     // ---------------------------------------------------------
     fun deleteAllStatus(onComplete: (() -> Unit)? = null) {
         viewModelScope.launch(Dispatchers.IO) {
