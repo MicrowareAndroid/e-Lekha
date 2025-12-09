@@ -107,6 +107,7 @@ fun KycDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = {}) {
     val context = LocalPlatformContext.current
     var showDialog by remember { mutableStateOf(false) }
     var expanded by remember { mutableStateOf(false) }
+
     var customerAadhaarImage1 by remember { mutableStateOf<Uri?>(null) }
     var customerAadhaarImage2 by remember { mutableStateOf<Uri?>(null) }
     var voterIDImage1 by remember { mutableStateOf<Uri?>(null) }
@@ -117,6 +118,10 @@ fun KycDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = {}) {
     var guarantorAadhaarImage2 by remember { mutableStateOf<Uri?>(null) }
     var electricityBillImage1 by remember { mutableStateOf<Uri?>(null) }
     var electricityBillImage2 by remember { mutableStateOf<Uri?>(null) }
+    var customerName by remember { mutableStateOf(value = "") }
+    var adharCard by remember{mutableStateOf(value = "")}
+    var voteridCard by remember { mutableStateOf(value = "") }
+    var rasanCard by remember { mutableStateOf(value = "") }
 
 
     LaunchedEffect(Unit) {
@@ -184,11 +189,11 @@ fun KycDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = {}) {
                 ) {
                     FormField(
                         label = stringResource(Res.string.customer_name),
-                        value = "",
-                        onValueChange = { "" },
-                        placeholder = "",
+                        value = customerName,
+                        onValueChange = {newName -> customerName = newName},
+                        placeholder = stringResource(Res.string.type_here),
                         modifier = Modifier.weight(1f),
-                        isEnable = false
+                        isEnable = true
                     )
 
                     ReusableImageView(
@@ -223,9 +228,9 @@ fun KycDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = {}) {
 
                 FormField(
                     label = stringResource(Res.string.aadhaar_card),
-                    value = "",
+                    value = adharCard,
                     placeholder = stringResource(Res.string.type_here),
-                    onValueChange = { "" },
+                    onValueChange = { newadharcard->adharCard=newadharcard },
                     maxLength = 12,
                     inputType = KeyboardType.Number
                 )
@@ -273,9 +278,9 @@ fun KycDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = {}) {
 
                 FormField(
                     label = stringResource(Res.string.voter_id_card),
-                    value = "",
+                    value = voteridCard,
                     placeholder = stringResource(Res.string.type_here),
-                    onValueChange = { "" },
+                    onValueChange = { newvoterid->voteridCard=newvoterid },
                     maxLength = 17
                 )
 
@@ -324,10 +329,10 @@ fun KycDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = {}) {
 
                 FormField(
                     label = stringResource(Res.string.ration_card_4_digit),
-                    value = "",
+                    value = rasanCard,
                     placeholder = stringResource(Res.string.type_here),
-                    onValueChange = { "" },
-                    maxLength = 17,
+                    onValueChange = { newratanCard->rasanCard=newratanCard },
+                    maxLength = 4,
                     inputType = KeyboardType.Number
                 )
 
