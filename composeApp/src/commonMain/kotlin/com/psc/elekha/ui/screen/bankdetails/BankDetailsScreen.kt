@@ -183,9 +183,8 @@ fun BankDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = {}) 
                 FormField(
                     label = stringResource(Res.string.ifsc_code),
                     value = "",
-                    placeholder = "",
+                    placeholder = stringResource(Res.string.type_here),
                     onValueChange = { "" },
-                    isEnable = false
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))

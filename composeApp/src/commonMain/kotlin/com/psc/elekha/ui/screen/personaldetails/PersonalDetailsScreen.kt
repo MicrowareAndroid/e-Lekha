@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -45,6 +46,8 @@ import com.psc.elekha.utils.FormSpinner
 import com.psc.elekha.utils.ReusableTextView
 import com.psc.elekha.utils.pickDate
 import e_lekha.composeapp.generated.resources.Res
+import e_lekha.composeapp.generated.resources.camera
+import e_lekha.composeapp.generated.resources.customer_id
 import e_lekha.composeapp.generated.resources.customer_image
 import e_lekha.composeapp.generated.resources.customer_name
 import e_lekha.composeapp.generated.resources.date
@@ -81,6 +84,7 @@ import e_lekha.composeapp.generated.resources.voter_id
 import e_lekha.composeapp.generated.resources.your_full_address
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
+import e_lekha.composeapp.generated.resources.your_photo_with_guarantor
 import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -118,9 +122,11 @@ viewModel.loadSavedData()
     ) {
         Column(modifier = Modifier.fillMaxSize()) {
 
+
+
             Spacer(modifier = Modifier.height(10.dp))
 
-            // -------- ALL FORM CONTENT SHOULD BE INSIDE THIS SCROLL COLUMN ----------
+
             Column(
                 modifier = Modifier
                     .weight(1f)
@@ -128,13 +134,86 @@ viewModel.loadSavedData()
                     .padding(bottom = 15.dp)
             ) {
 
+//                ReusableTextView(
+//                    text = stringResource(Res.string.enter_your_personal_details)
+//                )
+                Spacer(modifier = Modifier.height(6.dp))
                 ReusableTextView(
-                    text = stringResource(Res.string.enter_your_personal_details)
+                    text = stringResource(Res.string.customer_id)
                 )
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 10.dp),
+                    horizontalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+
+
+                    Column(
+                        modifier = Modifier.weight(1f),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+
+                        Box(
+                            modifier = Modifier
+                                .size(120.dp)
+                                .background(Color(0xFFE8E8E8)),  // Light Grey Box
+                            contentAlignment = Alignment.Center
+                        ) {
+
+                        }
+
+                        Spacer(modifier = Modifier.height(6.dp))
+
+                        ReusableTextView(
+                            text = stringResource(Res.string.customer_image)
+                        )
+
+                        Spacer(modifier = Modifier.height(6.dp))
+
+                        Icon(
+                            painter = painterResource(Res.drawable.camera),
+                            contentDescription = null,
+                            tint = Color.Black,
+                            modifier = Modifier.size(28.dp)
+                        )
+                    }
+
+
+                    Column(
+                        modifier = Modifier.weight(1f),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+
+                        Box(
+                            modifier = Modifier
+                                .size(120.dp)
+                                .background(Color(0xFFE8E8E8)),  // Light Grey Box
+                            contentAlignment = Alignment.Center
+                        ) {
+
+                        }
+
+                        Spacer(modifier = Modifier.height(6.dp))
+
+                        ReusableTextView(
+                            text = stringResource(Res.string.your_photo_with_guarantor)
+                        )
+                        Spacer(modifier = Modifier.height(6.dp))
+
+                        Icon(
+                            painter = painterResource(Res.drawable.camera),
+                            contentDescription = null,
+                            tint = Color.Black,
+                            modifier = Modifier.size(28.dp)
+                        )
+                    }
+                }
+
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                // -------- Row --------
+
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(10.dp)
@@ -149,87 +228,55 @@ viewModel.loadSavedData()
                         maxLength = 30
                     )
 
-                    FormDatePicker(
-                        label = stringResource(Res.string.date_of_birth),
-                        value = "",
-                        onValueChange = {},
-                        onClick = {
-                            pickDate(context) { date ->
-                                ""
-                            }
-
-                        },
-                        trailingIcon = {
-                            Icon(
-                                painter = painterResource(Res.drawable.date),
-                                contentDescription = "Date Icon",
-                                tint = Color.Unspecified
-                            )
-                        },
-                        isEnable = false,
-                        isReadable = true,
-                        modifier = Modifier.weight(1f)
-                    )
                 }
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(10.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .weight(1f)
-                            .fillMaxHeight(),      // Make text area match the height of right side
-                        contentAlignment = Alignment.CenterStart        // Center vertically
-                    ) {
-                        ReusableTextView(
-                            text = stringResource(Res.string.customer_image),
-                            fontSize = 14,
-                            textColor = textview_color
-                        )
-                    }
 
-                    CameraPreviewField(
-                        image = customerImage,
-                        onClick = { },
-                        placeholderRes = Res.drawable.user_default,
-                        modifier = Modifier.weight(1f)
-                    )
-                }
+               Row(
+                   modifier = Modifier.fillMaxWidth(),
+                   horizontalArrangement = Arrangement.spacedBy(10.dp)
+               ) {
+                   FormDatePicker(
+                       label = stringResource(Res.string.date_of_birth),
+                       value = "",
+                       onValueChange = {},
+                       onClick = {
+                           pickDate(context) { date -> "" }
+                       },
+                       trailingIcon = {
+                           Icon(
+                               painter = painterResource(Res.drawable.date),
+                               contentDescription = "Date Icon",
+                               tint = Color.Unspecified
+                           )
+                       },
+                       isEnable = false,
+                       isReadable = true,
+                       modifier = Modifier.weight(1f)
+                   )
 
+                   FormSpinner(
+                       label = stringResource(Res.string.marital_status),
+                       options = listOf("Married", "Unmarried", "Single"),
+                       selectedOption = "",
+                       onOptionSelected = { },
+                       modifier = Modifier.weight(1f)
+                   )
+               }
                 Spacer(modifier = Modifier.height(8.dp))
 
-                // -------- Row 2 --------
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(10.dp)
-                ) {
-                    FormSpinner(
-                        label = stringResource(Res.string.marital_status),
-                        options = listOf("Married", "Unmarried", "Single", "Separated"),
-                        selectedOption = "",
-                        onOptionSelected = { },
-                        modifier = Modifier.weight(1f)
-                    )
-
+                    ){
                     FormSpinner(
                         label = stringResource(Res.string.education),
-                        options = listOf("Graduation", "Post Graduation", "12th"),
+                        options = listOf("12th", "Graduation", "Post Graduation"),
                         selectedOption = "",
                         onOptionSelected = { },
                         modifier = Modifier.weight(1f)
                     )
-                }
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(10.dp)
-                ) {
                     FormSpinner(
                         label = stringResource(Res.string.religion),
                         options = listOf("Hindu", "Muslim"),
@@ -237,16 +284,15 @@ viewModel.loadSavedData()
                         onOptionSelected = { },
                         modifier = Modifier.weight(1f)
                     )
-
-                    FormSpinner(
-                        label = stringResource(Res.string.purpose),
-                        options = listOf("Study Loan", "Home Loan"),
-                        selectedOption = "",
-                        onOptionSelected = { },
-                        modifier = Modifier.weight(1f)
-                    )
                 }
 
+                FormSpinner(
+                    label = stringResource(Res.string.purpose),
+                    options = listOf("Business", "Study Loan", "Home Loan"),
+                    selectedOption = "",
+                    onOptionSelected = { },
+                    modifier = Modifier.fillMaxWidth()
+                )
                 Spacer(modifier = Modifier.height(8.dp))
 
                 Row(
@@ -330,15 +376,7 @@ viewModel.loadSavedData()
                             textColor = textview_color
                         )
                     }
-
-                    CameraPreviewField(
-                        image = guarantorImage,
-                        onClick = { },
-                        placeholderRes = Res.drawable.user_default,
-                        modifier = Modifier.weight(1f)
-                    )
                 }
-
                 Spacer(modifier = Modifier.height(8.dp))
 
                 Row(

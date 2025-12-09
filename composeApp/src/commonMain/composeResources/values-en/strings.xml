@@ -92,7 +92,7 @@
     <string name="bank_details">Bank Details</string>
     <string name="family_details">Family Details</string>
     <string name= "enter_your_personal_details">Enter Your Personal Details</string>
-    <string name= "customer_name">Customer name</string>
+    <string name= "customer_name">Customer Name</string>
     <string name= "marital_status">Marital status</string>
     <string name= "education">Education</string>
     <string name= "religion">Religion</string>
@@ -170,7 +170,6 @@
     <string name= "total_monthly_expenditure">Total monthly expenditure</string>
     <string name= "annual">Annual</string>
     <string name= "movable_assets">Movable assets</string>
-
     <string name= "vehicle_no">Vehicle no.</string>
     <string name= "data_saved_successfully">Data Saved SuccessFully</string>
     <string name= "personal_customer_name">Please Enter Customer Name</string>
@@ -191,5 +190,7 @@
     <string name= "personal_tehsil">Please Enter Tehsil</string>
     <string name= "personal_landmark">Please Enter LandMark</string>
     <string name= "personal_pincode">Please Enter PinCode</string>
-
+    <string name="customer_photo">Customer Photo</string>
+    <string name="your_photo_with_guarantor">Photo With Guarantor</string>
+    <string name="customer_id">Customer ID BHK.12.123</string>
 </resources>
