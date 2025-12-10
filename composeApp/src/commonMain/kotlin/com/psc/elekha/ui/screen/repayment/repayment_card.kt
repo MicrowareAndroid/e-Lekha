@@ -40,12 +40,12 @@ fun RepaymentItemCard(
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp)
-            .defaultMinSize(minHeight = 100.dp)
+            .defaultMinSize(minHeight = 80.dp)
     ) {
 
-        Column(modifier = Modifier.fillMaxWidth()) {
+        Column(modifier = Modifier.fillMaxWidth().padding(horizontal = 10.dp, vertical = 5.dp)) {
 
-            // -------- TOP ROW → LEFT TEXT + RIGHT IMAGE ----------
+
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -55,7 +55,7 @@ fun RepaymentItemCard(
 
 
 
-                // LEFT TEXT AREA
+
                 Column(
                     modifier = Modifier.weight(1f)
                 ) {
@@ -75,34 +75,14 @@ fun RepaymentItemCard(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
 
-                        // Loan Amount will take all available width
-                        Row(
-                            modifier = Modifier.weight(1f),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            ReusableTextViewGrayCard("Loan Amount", fontSize = 13)
-                            Spacer(modifier = Modifier.width(8.dp))
-                            ReusableTextViewBlackCard(
-                                text = item.loanAmount,
-                                fontSize = 13,
-                            )
-                        }
-
-                        Spacer(modifier = Modifier.width(10.dp))
-
-
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            ReusableTextViewGrayCard("EMI", fontSize = 13)
+                            ReusableTextViewGrayCard("Loan Amount", fontSize = 13, modifier =   Modifier.weight(2f))
+                            Spacer(modifier = Modifier.width(15.dp))
+                            ReusableTextViewBlackCard(item.loanAmount, fontSize = 13, modifier =   Modifier.weight(1.5f))
+                        ReusableTextViewGrayCard("EMI", fontSize = 13, modifier =   Modifier.weight(0.6f))
                             Spacer(modifier = Modifier.width(4.dp))
-                            ReusableTextViewBlackCard(
-                                text = item.emiAmount,
-                                fontSize = 13,
-                            )
-                        }
-                    }
+                            ReusableTextViewBlackCard(item.emiAmount, fontSize = 13, modifier =   Modifier.weight(1f))
 
+                    }
 
 
                     Spacer(modifier = Modifier.height(10.dp))
@@ -137,11 +117,10 @@ fun RepaymentItemCard(
 
 
                 Column(
-                    verticalArrangement = Arrangement.spacedBy(10.dp),
+                    verticalArrangement = Arrangement.Top,
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier.width(80.dp)
                 ) {
-
                     Box(
                         modifier = Modifier
                             .size(55.dp)
@@ -161,6 +140,7 @@ fun RepaymentItemCard(
                     }
                 }
 
+
                 Checkbox(
                     checked = isSelected,
                     onCheckedChange = { onSelected() },
@@ -171,7 +151,7 @@ fun RepaymentItemCard(
             }
 
 
-            Spacer(modifier = Modifier.height(2.dp))
+
 
             Row(
                 modifier = Modifier
