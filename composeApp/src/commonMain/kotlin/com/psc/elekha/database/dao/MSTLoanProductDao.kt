@@ -7,27 +7,27 @@ import com.psc.elekha.database.entity.MSTLoanProductEntity
 interface MSTLoanProductDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertLoanProduct(mSTLoanProductEntity: MSTLoanProductEntity)
+   suspend fun insertLoanProduct(mSTLoanProductEntity: MSTLoanProductEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAllLoanProduct(mSTLoanProductEntity: List<MSTLoanProductEntity>?)
+    suspend fun insertAllLoanProduct(mSTLoanProductEntity: List<MSTLoanProductEntity>?)
 
     @Query("Select * from MSTLoanProduct where  IsDeleted = 0 and IsActive=1 and LoanProductID=:LoanProductID")
-    fun getAllLoanProduct(LoanProductID: Int): List<MSTLoanProductEntity>?
+    suspend fun getAllLoanProduct(LoanProductID: Int): List<MSTLoanProductEntity>?
 
     @Query("Select * from MSTLoanProduct where IsDeleted = 0 and IsActive=1 Order By LoanProduct")
-    fun getLoanAmount(): List<MSTLoanProductEntity>?
+    suspend fun getLoanAmount(): List<MSTLoanProductEntity>?
 
     /*@Query("Select * from MSTLoanProduct where LoanProductID in(25,27,29,31) and IsDeleted = 0 and IsActive=1 Order By LoanProduct")
     fun getLoanAmount(): List<MSTLoanProductEntity>?*/
 
     @Query("Select * from MSTLoanProduct where LoanProductID in(25,31) and IsDeleted = 0 and IsActive=1 Order By LoanProduct")
-    fun getNewLoanAmount(): List<MSTLoanProductEntity>?
+    suspend  fun getNewLoanAmount(): List<MSTLoanProductEntity>?
 
     @Query("Select LoanProduct from MSTLoanProduct where LoanProductID=:LoanProductID")
-    fun getLoanProductByLoanID(LoanProductID: Int): Double?
+    suspend  fun getLoanProductByLoanID(LoanProductID: Int): Double?
 
     @Query("Delete from MSTLoanProduct")
-    fun deleteAllLoanProduct()
+    suspend  fun deleteAllLoanProduct()
 
 }

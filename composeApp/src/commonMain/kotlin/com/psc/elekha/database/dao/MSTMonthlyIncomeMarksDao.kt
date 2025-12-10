@@ -7,15 +7,15 @@ import com.psc.elekha.database.entity.MSTMonthlyIncomeMarksEntity
 interface MSTMonthlyIncomeMarksDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertMonthlyIncomeMarks(mSTMonthlyIncomeMarksEntity: MSTMonthlyIncomeMarksEntity)
+    suspend fun insertMonthlyIncomeMarks(mSTMonthlyIncomeMarksEntity: MSTMonthlyIncomeMarksEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAllMonthlyIncomeMarks(mSTMonthlyIncomeMarksEntity: List<MSTMonthlyIncomeMarksEntity>?)
+    suspend fun insertAllMonthlyIncomeMarks(mSTMonthlyIncomeMarksEntity: List<MSTMonthlyIncomeMarksEntity>?)
 
     @Query("Select * from MstMonthlyIncomeMarks")
-    fun getAllMonthlyIncomeMarks(): List<MSTMonthlyIncomeMarksEntity>?
+    suspend  fun getAllMonthlyIncomeMarks(): List<MSTMonthlyIncomeMarksEntity>?
 
     @Query("Delete from MstMonthlyIncomeMarks")
-    fun deleteAllMonthlyIncomeMarks()
+    suspend fun deleteAllMonthlyIncomeMarks()
 
 }

@@ -7,15 +7,15 @@ import com.psc.elekha.database.entity.MSTPovertyStatusEntity
 interface MSTPovertyStatusDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertPovertyStatus(mSTPovertyStatusEntity: MSTPovertyStatusEntity)
+    suspend fun insertPovertyStatus(mSTPovertyStatusEntity: MSTPovertyStatusEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAllPovertyStatus(mSTPovertyStatusEntity: List<MSTPovertyStatusEntity>?)
+    suspend fun insertAllPovertyStatus(mSTPovertyStatusEntity: List<MSTPovertyStatusEntity>?)
 
     @Query("Select * from MSTPovertyStatus")
-    fun getAllPovertyStatus(): List<MSTPovertyStatusEntity>?
+    suspend fun getAllPovertyStatus(): List<MSTPovertyStatusEntity>?
 
     @Query("Delete from MSTPovertyStatus")
-    fun deleteAllPovertyStatus()
+    suspend fun deleteAllPovertyStatus()
 
 }

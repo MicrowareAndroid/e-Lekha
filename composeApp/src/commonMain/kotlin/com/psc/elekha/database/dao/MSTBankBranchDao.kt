@@ -7,24 +7,24 @@ import com.psc.elekha.database.entity.MSTBankBranchEntity
 interface MSTBankBranchDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertBankBranch(mSTBankBranchEntity: MSTBankBranchEntity)
+    suspend fun insertBankBranch(mSTBankBranchEntity: MSTBankBranchEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAllBankBranch(mSTBankBranchEntity: List<MSTBankBranchEntity>?)
+    suspend fun insertAllBankBranch(mSTBankBranchEntity: List<MSTBankBranchEntity>?)
 
     @Query("Select * from MSTBankBranch")
-    fun getAllBankBranch(): List<MSTBankBranchEntity>?
+    suspend fun getAllBankBranch(): List<MSTBankBranchEntity>?
 
     @Query("select * from MSTBankBranch where BankID =:BankID order by BranchName")
-    fun getBankBranchByBankID(BankID: Int): List<MSTBankBranchEntity>?
+    suspend fun getBankBranchByBankID(BankID: Int): List<MSTBankBranchEntity>?
 
     @Query("select IFSCCode from MSTBankBranch where BankID=:BankID and BranchID=:BranchID")
-    fun getIFSCCode(BankID: Int,BranchID:Int): String
+    suspend  fun getIFSCCode(BankID: Int,BranchID:Int): String
 
     @Query("select BranchID from MSTBankBranch where BankID=:BankID and IFSCCode=:IFSCCode")
-    fun getBranchID(BankID: Int,IFSCCode:String): Int
+    suspend fun getBranchID(BankID: Int,IFSCCode:String): Int
 
     @Query("Delete from MSTBankBranch")
-    fun deleteAllBankBranch()
+    suspend  fun deleteAllBankBranch()
 
 }

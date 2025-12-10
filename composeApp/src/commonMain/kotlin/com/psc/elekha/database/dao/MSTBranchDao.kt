@@ -7,15 +7,15 @@ import com.psc.elekha.database.entity.MSTBranchEntity
 interface MSTBranchDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertBranch(mSTBranchEntity: MSTBranchEntity)
+    suspend fun insertBranch(mSTBranchEntity: MSTBranchEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAllBranch(mSTBranchEntity: List<MSTBranchEntity>?)
+    suspend  fun insertAllBranch(mSTBranchEntity: List<MSTBranchEntity>?)
 
     @Query("Select * from MSTBranch")
-    fun getAllBranch(): List<MSTBranchEntity>?
+    suspend fun getAllBranch(): List<MSTBranchEntity>?
 
     @Query("Delete from MSTBranch")
-    fun deleteAllBranch()
+    suspend  fun deleteAllBranch()
 
 }

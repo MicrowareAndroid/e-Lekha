@@ -32,8 +32,7 @@ class CustomerDefaultViewModel(
     private val _customerAadhaar = MutableStateFlow<String?>(null)
     val customerAadhaar: StateFlow<String?> = _customerAadhaar
 
-    private val _customerDefaultGUIDList =
-        MutableStateFlow<List<CustomerDefaultEntity>>(emptyList())
+    private val _customerDefaultGUIDList = MutableStateFlow<List<CustomerDefaultEntity>>(emptyList())
     val customerDefaultGUIDList: StateFlow<List<CustomerDefaultEntity>> = _customerDefaultGUIDList
 
     fun loadCustomers() {

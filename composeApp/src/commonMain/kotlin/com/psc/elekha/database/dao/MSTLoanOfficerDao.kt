@@ -7,15 +7,15 @@ import com.psc.elekha.database.entity.MSTLoanOfficerEntity
 interface MSTLoanOfficerDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertLoanOfficer(mSTLoanOfficerEntity: MSTLoanOfficerEntity)
+    suspend fun insertLoanOfficer(mSTLoanOfficerEntity: MSTLoanOfficerEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAllLoanOfficer(mSTLoanOfficerEntity: List<MSTLoanOfficerEntity>?)
+    suspend  fun insertAllLoanOfficer(mSTLoanOfficerEntity: List<MSTLoanOfficerEntity>?)
 
     @Query("Select * from MSTLoanOfficer")
-    fun getAllLoanOfficer(): List<MSTLoanOfficerEntity>?
+    suspend fun getAllLoanOfficer(): List<MSTLoanOfficerEntity>?
 
     @Query("Delete from MSTLoanOfficer")
-    fun deleteAllLoanOfficer()
+    suspend  fun deleteAllLoanOfficer()
 
 }

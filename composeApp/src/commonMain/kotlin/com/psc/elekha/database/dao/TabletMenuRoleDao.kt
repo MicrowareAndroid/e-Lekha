@@ -7,15 +7,15 @@ import com.psc.elekha.database.entity.TabletMenuRoleEntity
 interface TabletMenuRoleDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertTabletMenuRole(tabletMenuRoleEntity: TabletMenuRoleEntity)
+    suspend fun insertTabletMenuRole(tabletMenuRoleEntity: TabletMenuRoleEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAllTabletMenuRole(tabletMenuRoleEntity: List<TabletMenuRoleEntity>?)
+     suspend fun insertAllTabletMenuRole(tabletMenuRoleEntity: List<TabletMenuRoleEntity>?)
 
     @Query("Select * from TabletMenuRole")
-    fun getAllTabletMenuRole(): List<TabletMenuRoleEntity>?
+    suspend fun getAllTabletMenuRole(): List<TabletMenuRoleEntity>?
 
     @Query("Delete from TabletMenuRole")
-    fun deleteAllTabletMenuRole()
+    suspend  fun deleteAllTabletMenuRole()
 
 }
