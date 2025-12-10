@@ -695,9 +695,10 @@ fun FormField(
         )
     }
 }
+
 @Composable
 fun FormFieldCompact(
-    label: String,
+    label: String? = null,
     value: String,
     onValueChange: (String) -> Unit,
     maxLength: Int = Int.MAX_VALUE,
@@ -718,11 +719,13 @@ fun FormFieldCompact(
 
     Column(modifier) {
 
-        ReusableTextView(
-            text = label,
-            fontSize = 14,
-            textColor = labelColor
-        )
+        if (!label.isNullOrEmpty()) {
+            ReusableTextView(
+                text = label,
+                fontSize = 14,
+                textColor = labelColor
+            )
+        }
 
         Spacer(Modifier.height(5.dp))
 
@@ -2403,7 +2406,6 @@ fun ReusableCards(
     }
 }
 
-
 @Composable
 fun GroupCardUI(
     item: GroupCardData,
@@ -2412,22 +2414,21 @@ fun GroupCardUI(
     ReusableCard(
         modifier = Modifier
             .fillMaxWidth()
-            .padding( 8.dp)
+            .padding(8.dp)
             .clickable { onCardClick(item) },
-        backgroundColor = CardColor
+        backgroundColor = repaymentColor
     ) {
-
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 10.dp ),
+                .padding(horizontal = 10.dp, vertical = 8.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
 
-
+            // LEFT COLUMN
             Column(
                 verticalArrangement = Arrangement.spacedBy(2.dp),
-                 // <-- IMPORTANT
+                modifier = Modifier.weight(1f)
             ) {
                 LabelValueText(label = "Group Name :", value = item.groupName)
                 LabelValueText(label = "No. of Customers :", value = item.customers.toString())
@@ -2436,12 +2437,12 @@ fun GroupCardUI(
                 LabelValueText(label = "Group formation date :", value = item.formation)
             }
 
+            Spacer(modifier = Modifier.width(16.dp))
 
-
-
+            // RIGHT COLUMN
             Column(
                 verticalArrangement = Arrangement.spacedBy(2.dp),
-
+                modifier = Modifier.weight(1f)
             ) {
                 LabelValueText(label = "Disbursement date :", value = item.disbursement)
                 LabelValueText(label = "Center :", value = item.center)
@@ -2588,7 +2589,7 @@ fun CustomerItemCard(
                     onCardClick(customer)
                 }
             },
-        backgroundColor = CardColor,
+        backgroundColor = repaymentColor,
         cornerRadius =  12
     ) {
 
@@ -2778,7 +2779,7 @@ fun CameraPreviewField(
 fun ReusableTextViewGrayCard(
     text: String,
     modifier: Modifier = Modifier,
-    textColor: Color = Color.Gray,
+    textColor: Color =toolbar_color,
     fontSize: Int = 15,
     fontWeight: FontWeight = FontWeight.W500,
     fontFamily: FontFamily = FontFamily(Font(Res.font.roboto_medium)),

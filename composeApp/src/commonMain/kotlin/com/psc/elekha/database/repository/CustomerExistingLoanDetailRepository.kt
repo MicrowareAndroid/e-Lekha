@@ -7,27 +7,27 @@ class CustomerExistingLoanDetailRepository(
     private val customerExistingLoanDetailDao: CustomerExistingLoanDetailDao
 ) {
 
-    fun insertCustomerExistingLoan(customer: CustomerExistingLoanDetailEntity) {
+    suspend fun insertCustomerExistingLoan(customer: CustomerExistingLoanDetailEntity) {
         customerExistingLoanDetailDao.insertCustomerExistingLoan(customer)
     }
 
-    fun insertAllCustomerExistingLoan(customers: List<CustomerExistingLoanDetailEntity>) {
+    suspend fun insertAllCustomerExistingLoan(customers: List<CustomerExistingLoanDetailEntity>) {
         customerExistingLoanDetailDao.insertAllCustomerExistingLoan(customers)
     }
 
-    fun getAllCustomerExistingLoan(guid: String): List<CustomerExistingLoanDetailEntity>? {
+    suspend fun getAllCustomerExistingLoan(guid: String): List<CustomerExistingLoanDetailEntity>? {
         return customerExistingLoanDetailDao.getAllCustomerExistingLoan(guid)
     }
 
-    fun deleteAllCustomerExistingLoan() {
+    suspend  fun deleteAllCustomerExistingLoan() {
         customerExistingLoanDetailDao.deleteAllCustomerExistingLoan()
     }
 
-    fun getMyLoanCount(guid: String): Int? {
+    suspend  fun getMyLoanCount(guid: String): Int? {
         return customerExistingLoanDetailDao.getMyLoanCount(guid)
     }
 
-    fun updateMyLoan(
+    suspend  fun updateMyLoan(
         LoanAmount: Int,
         LoanPurposeID: Int,
         GUID: String
@@ -39,7 +39,7 @@ class CustomerExistingLoanDetailRepository(
         )
     }
 
-    fun updateMFI(
+    suspend  fun updateMFI(
         LoanAmount: Int,
         LoanPurposeID: Int,
         MFIID: Int,
@@ -63,19 +63,19 @@ class CustomerExistingLoanDetailRepository(
         )
     }
 
-    fun getAllCustomerExistingLoanUpload(): List<CustomerExistingLoanDetailEntity>? {
+    suspend fun getAllCustomerExistingLoanUpload(): List<CustomerExistingLoanDetailEntity>? {
         return customerExistingLoanDetailDao.getAllCustomerExistingLoanUpload()
     }
 
-    fun updateUploaded() {
+    suspend fun updateUploaded() {
         customerExistingLoanDetailDao.updateUploaded()
     }
 
-    fun getIsUploaded(guid: String): Int? {
+    suspend fun getIsUploaded(guid: String): Int? {
         return customerExistingLoanDetailDao.getIsUploaded(guid)
     }
 
-    fun getUploadCount(): Int {
+    suspend fun getUploadCount(): Int {
         return customerExistingLoanDetailDao.getAllCustomerExistingLoanUploadCount()
     }
 }

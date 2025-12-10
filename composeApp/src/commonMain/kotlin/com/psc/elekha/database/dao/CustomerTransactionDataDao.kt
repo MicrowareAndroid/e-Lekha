@@ -7,13 +7,13 @@ import com.psc.elekha.database.entity.CustomerTransactionDataEntity
 interface CustomerTransactionDataDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertCustomerTransactionData(customerTransactionDataEntity: CustomerTransactionDataEntity)
+    suspend fun insertCustomerTransactionData(customerTransactionDataEntity: CustomerTransactionDataEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAllCustomerTransactionData(customerTransactionDataEntity: List<CustomerTransactionDataEntity>?)
+    suspend fun insertAllCustomerTransactionData(customerTransactionDataEntity: List<CustomerTransactionDataEntity>?)
 
     @Query("Delete from CustomerTransactionData")
-    fun deleteAllCustomerTransactionData()
+    suspend fun deleteAllCustomerTransactionData()
 
     @Query("Select * from CustomerTransactionData where IsDeleted=0 and IsEdited=1")
     fun getAllCustomerTransactionDataUpload(): List<CustomerTransactionDataEntity>?
