@@ -8,27 +8,27 @@ class CustomerLoanDisbursementRepository (
     private val customerLoanDisbursementDao: CustomerLoanDisbursementDao
 ){
     //Insert signle of loan disbursements
-    fun insertLoanDisbursement(loan: CustomerLoanDisbursementEntity){
+    suspend fun insertLoanDisbursement(loan: CustomerLoanDisbursementEntity){
         customerLoanDisbursementDao.insertLoanDisbursement(loan)
     }
     //Insert list of loan disbursements
-    fun insertAllLoanDisbursement(loans:List<CustomerLoanDisbursementEntity>){
+    suspend fun insertAllLoanDisbursement(loans:List<CustomerLoanDisbursementEntity>){
         customerLoanDisbursementDao.insertAllLoanDisbursement(loans)
     }
     //Get all loan disbursements
-    fun getAllLoanDisbursement():List<CustomerLoanDisbursementEntity>? {
+    suspend fun getAllLoanDisbursement():List<CustomerLoanDisbursementEntity>? {
         return customerLoanDisbursementDao.getAllLoanDisbursement()
     }
     //get loan disbursement with status (2,3)
-    fun getLoanDisbursementData(): List<CustomerLoanDataClass>? {
+    suspend fun getLoanDisbursementData(): List<CustomerLoanDataClass>? {
         return customerLoanDisbursementDao.getLoanDisbursementData()
     }
     //get loan disbursement by specific status Id
-    fun getLoanDisbursementDataByStatus(customerStatusId: Int): List<CustomerLoanDataClass>? {
+    suspend fun getLoanDisbursementDataByStatus(customerStatusId: Int): List<CustomerLoanDataClass>? {
         return customerLoanDisbursementDao.getLoanDisbursementDataByStatus(customerStatusId)
     }
     // Delete all loan disbursement records
-    fun deleteAllLoanDisbursement() {
+    suspend fun deleteAllLoanDisbursement() {
         customerLoanDisbursementDao.deleteAllLoanDisbursement()
     }
 }
