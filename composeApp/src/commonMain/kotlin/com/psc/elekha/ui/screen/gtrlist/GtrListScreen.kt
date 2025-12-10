@@ -38,7 +38,7 @@ fun GtrListScreen(
     navController: NavHostController,
 ) {
 
-    val branchList = listOf("Dudu", "Sikar", "Jaipur", "Ajmer")
+    val branchList = listOf("All", "Center", "Village")
     var selectedBranch by remember { mutableStateOf("") }
     var selectedScreen by remember { mutableStateOf("GTR List") }
 
@@ -159,7 +159,7 @@ fun GtrListScreen(
                         .padding(top = 10.dp, bottom = 24.dp)
                 ){
 
-                if (selectedBranch == "Dudu") {
+                if (selectedBranch == "All") {
                     duduCardList.forEach { item ->
                         GroupCardUI(
                             item = item,

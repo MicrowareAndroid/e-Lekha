@@ -27,13 +27,13 @@ class CustomerFamilyMemberDetailsViewModel (
 
     }
     //get all Family members
-    fun getAllCustomerFamilyMember():List<CustomerFamilyMemberDetailsEntity>?{
+    suspend fun getAllCustomerFamilyMember():List<CustomerFamilyMemberDetailsEntity>?{
         return  repository.getAllCustomerFamilyMember()
     }
 
     //Delete All
 
-    fun deleteAllCustomerFamilyMembers(){
+    suspend fun deleteAllCustomerFamilyMembers(){
         viewModelScope.launch(Dispatchers.IO) {
             repository.deleteAllCustomer()
         }

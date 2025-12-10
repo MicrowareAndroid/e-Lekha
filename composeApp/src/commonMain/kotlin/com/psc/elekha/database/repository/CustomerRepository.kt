@@ -4,27 +4,27 @@ import com.psc.elekha.database.entity.CustomerEntity
 
 class CustomerRepository(private val customerDao: CustomerDao) {
 
-    fun insertCustomer(customer: CustomerEntity) {
+    suspend fun insertCustomer(customer: CustomerEntity) {
         customerDao.insertCustomer(customer)
     }
 
-    fun insertAllCustomers(customers: List<CustomerEntity>) {
+    suspend fun insertAllCustomers(customers: List<CustomerEntity>) {
         customerDao.insertAllCustomer(customers)
     }
 
-    fun getAllCustomers(): List<CustomerEntity>? {
+    suspend fun getAllCustomers(): List<CustomerEntity>? {
         return customerDao.getAllCustomer()
     }
 
-    fun getCustomerByContact(contactNo: String): List<CustomerEntity>? {
+    suspend fun getCustomerByContact(contactNo: String): List<CustomerEntity>? {
         return customerDao.getCustomerByContactNumber(contactNo)
     }
 
-    fun getCustomerDetails(guid: String): CustomerEntity? {
+    suspend fun getCustomerDetails(guid: String): CustomerEntity? {
         return customerDao.getCustomerDetails(guid)
     }
 
-    fun updateMyProfile(
+    suspend fun updateMyProfile(
         maritalStatusId: Int,
         firstName: String,
         middleName: String,

@@ -6,47 +6,47 @@ import com.psc.elekha.database.entity.CustomerEntity
 
 class CustomerDefaultRepository(private val customerDefaultDao: CustomerDefaultDao) {
 
-    fun insertCustomer(customer: CustomerDefaultEntity) {
+    suspend fun insertCustomer(customer: CustomerDefaultEntity) {
         customerDefaultDao.insertCustomer(customer)
     }
 
-    fun insertAllCustomers(customers: List<CustomerDefaultEntity>) {
+    suspend fun insertAllCustomers(customers: List<CustomerDefaultEntity>) {
         customerDefaultDao.insertAllCustomer(customers)
     }
 
-    fun getAllCustomers(): List<CustomerDefaultEntity>? {
+    suspend  fun getAllCustomers(): List<CustomerDefaultEntity>? {
         return customerDefaultDao.getAllCustomer()
     }
 
-    fun getCustomerByContact(contactNo: String): List<CustomerDefaultEntity>? {
+    suspend fun getCustomerByContact(contactNo: String): List<CustomerDefaultEntity>? {
         return customerDefaultDao.getCustomerByContactNumber(contactNo)
     }
 
-    fun getCustomerDetails(guid: String): CustomerDefaultEntity? {
+    suspend fun getCustomerDetails(guid: String): CustomerDefaultEntity? {
         return customerDefaultDao.getCustomerDetails(guid)
     }
 
-    fun getCustomerDetailsForCustomer(guid: String): CustomerEntity? {
+    suspend fun getCustomerDetailsForCustomer(guid: String): CustomerEntity? {
         return customerDefaultDao.getCustomerDetailsForCustomer(guid)
     }
 
-    fun getAllCustomerUpload(): List<CustomerDefaultEntity>? {
+    suspend fun getAllCustomerUpload(): List<CustomerDefaultEntity>? {
         return customerDefaultDao.getAllCustomerUpload()
     }
 
-    fun getCustomerAadhaar(guid: String): String? {
+    suspend fun getCustomerAadhaar(guid: String): String? {
         return customerDefaultDao.getCustomerAadhaar(guid)
     }
 
-    fun getCustomerDefaultGUID(userId: String): List<CustomerDefaultEntity> {
+    suspend fun getCustomerDefaultGUID(userId: String): List<CustomerDefaultEntity> {
         return customerDefaultDao.getCustomerDefaultGUID(userId)
     }
 
-    fun deleteAllCustomers() {
+    suspend fun deleteAllCustomers() {
         customerDefaultDao.deleteAllCustomer()
     }
 
-    fun updateMyProfile(
+    suspend  fun updateMyProfile(
         maritalStatusId: Int,
         firstName: String,
         middleName: String,
@@ -108,7 +108,7 @@ class CustomerDefaultRepository(private val customerDefaultDao: CustomerDefaultD
         )
     }
 
-    fun updateMyKYC(
+    suspend fun updateMyKYC(
         CKYC_UID: String,
         CKYC_UID_Image: String,
         CKYC_UID_Image2: String,
@@ -176,31 +176,31 @@ class CustomerDefaultRepository(private val customerDefaultDao: CustomerDefaultD
         )
     }
 
-    fun updateUploaded() {
+    suspend  fun updateUploaded() {
         customerDefaultDao.updateUploaded()
     }
 
-    fun updateUploadedNew() {
+    suspend fun updateUploadedNew() {
         customerDefaultDao.updateUploadedNew()
     }
 
-    fun getIsUploaded(guid: String): Int? {
+    suspend fun getIsUploaded(guid: String): Int? {
         return customerDefaultDao.getIsUploaded(guid)
     }
 
-    fun getCount(): Int {
+    suspend fun getCount(): Int {
         return customerDefaultDao.getCount()
     }
 
-    fun getUploadCount(): Int {
+    suspend fun getUploadCount(): Int {
         return customerDefaultDao.getAllCustomerUploadCount()
     }
 
-    fun getUploadCountNew(): Int {
+    suspend fun getUploadCountNew(): Int {
         return customerDefaultDao.getAllCustomerUploadCountNew()
     }
 
-    fun getAllCustomerUploadNew(): List<CustomerDefaultEntity>? {
+    suspend  fun getAllCustomerUploadNew(): List<CustomerDefaultEntity>? {
         return customerDefaultDao.getAllCustomerUploadNew()
     }
 }

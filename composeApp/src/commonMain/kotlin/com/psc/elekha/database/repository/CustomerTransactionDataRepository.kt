@@ -8,17 +8,17 @@ class CustomerTransactionDataRepository(
 ) {
 
     // Insert single transaction
-    fun insertCustomerTransactionData(transaction: CustomerTransactionDataEntity) {
+    suspend fun insertCustomerTransactionData(transaction: CustomerTransactionDataEntity) {
         dao.insertCustomerTransactionData(transaction)
     }
 
     // Insert list of transactions
-    fun insertAllCustomerTransactionData(transactions: List<CustomerTransactionDataEntity>) {
+    suspend fun insertAllCustomerTransactionData(transactions: List<CustomerTransactionDataEntity>) {
         dao.insertAllCustomerTransactionData(transactions)
     }
 
     // Delete all transaction data
-    fun deleteAllCustomerTransactionData() {
+    suspend fun deleteAllCustomerTransactionData() {
         dao.deleteAllCustomerTransactionData()
     }
 
