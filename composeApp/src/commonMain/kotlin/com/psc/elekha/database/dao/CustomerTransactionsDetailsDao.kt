@@ -7,17 +7,17 @@ import com.psc.elekha.database.entity.CustomerTransactionsDetailsEntity
 interface CustomerTransactionsDetailsDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertCustomerTransactionData(customerTransactionsDetailsEntity: CustomerTransactionsDetailsEntity)
+    suspend fun insertCustomerTransactionData(customerTransactionsDetailsEntity: CustomerTransactionsDetailsEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAllCustomerTransactionData(customerTransactionsDetailsEntity: List<CustomerTransactionsDetailsEntity>?)
+    suspend fun insertAllCustomerTransactionData(customerTransactionsDetailsEntity: List<CustomerTransactionsDetailsEntity>?)
 
     @Query("Delete from CustomerTransactionsDetails")
-    fun deleteAllCustomerTransactionData()
+    suspend fun deleteAllCustomerTransactionData()
 
     @Query("Select * from CustomerTransactionsDetails where CustomerGUID=:GUID order by date(trans_date) DESC")
-    fun getAllCustomerTransactionData(GUID: String): List<CustomerTransactionsDetailsEntity>?
+    suspend fun getAllCustomerTransactionData(GUID: String): List<CustomerTransactionsDetailsEntity>?
 
     @Query("Select Count(*) from CustomerTransactionsDetails where CustomerGUID=:GUID")
-    fun getAllCustomerTransactionDataCount(GUID: String): Int
+    suspend fun getAllCustomerTransactionDataCount(GUID: String): Int
 }

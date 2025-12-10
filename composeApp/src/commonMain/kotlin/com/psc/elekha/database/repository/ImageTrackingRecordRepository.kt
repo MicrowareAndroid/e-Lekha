@@ -7,31 +7,31 @@ class ImageTrackingRecordRepository(
     private val dao: ImageTrackingRecordDao
 ) {
 
-    fun insertImageTrackingRecord(record: ImageTrackingRecordEntity) {
+    suspend fun insertImageTrackingRecord(record: ImageTrackingRecordEntity) {
         dao.insertImageTrackingRecord(record)
     }
 
-    fun insertAllImageTrackingRecord(records: List<ImageTrackingRecordEntity>) {
+    suspend fun insertAllImageTrackingRecord(records: List<ImageTrackingRecordEntity>) {
         dao.insertAllImageTrackingRecord(records)
     }
 
-    fun getAllImageTrackingRecord(): List<ImageTrackingRecordEntity>? {
+    suspend fun getAllImageTrackingRecord(): List<ImageTrackingRecordEntity>? {
         return dao.getAllImageTrackingRecord()
     }
 
-    fun getImageAllData(): List<ImageTrackingRecordEntity>? {
+    suspend fun getImageAllData(): List<ImageTrackingRecordEntity>? {
         return dao.getImageAllData()
     }
 
-    fun deleteAllImageTrackingRecord() {
+    suspend fun deleteAllImageTrackingRecord() {
         dao.deleteAllImageTrackingRecord()
     }
 
-    fun getCountImageTrackingRecord(refFieldName: String, guid: String): Int? {
+    suspend fun getCountImageTrackingRecord(refFieldName: String, guid: String): Int? {
         return dao.getCountImageTrackingRecord(refFieldName, guid)
     }
 
-    fun updateImageTrackingRecord(
+    suspend fun updateImageTrackingRecord(
         imageName: String,
         isEdited: Int,
         isUpload: Int,
@@ -40,11 +40,11 @@ class ImageTrackingRecordRepository(
         dao.updateImageTrackingRecord(imageName, isEdited, isUpload, refFieldName)
     }
 
-    fun updateImageUpload(guid: String, refFieldName: String) {
+    suspend fun updateImageUpload(guid: String, refFieldName: String) {
         dao.updateImageUpload(guid, refFieldName)
     }
 
-    fun getAllImageTrackingRecordDataCount(): Int {
+    suspend fun getAllImageTrackingRecordDataCount(): Int {
         return dao.getAllImageTrackingRecordDataCount()
     }
 }

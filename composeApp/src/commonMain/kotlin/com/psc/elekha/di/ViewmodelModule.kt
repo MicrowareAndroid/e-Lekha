@@ -38,7 +38,6 @@ import com.psc.elekha.database.viewmodel.UserBranchViewModel
 import com.psc.elekha.database.viewmodel.UserResponseViewModel
 import com.psc.elekha.database.viewmodel.UserViewmodel
 import com.psc.elekha.database.viewmodel.UsersViewModel
-import com.psc.elekha.ui.screen.personaldetails.PersonalDetailViewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 
@@ -81,7 +80,7 @@ val viewmodelModule = module {
     viewModelOf(::UsersViewModel)
     viewModelOf(::UserResponseViewModel)
     viewModelOf(::UserViewmodel)
-    viewModelOf(::PersonalDetailViewModel)
+//    viewModelOf(::PersonalDetailViewModel)
 
 
 

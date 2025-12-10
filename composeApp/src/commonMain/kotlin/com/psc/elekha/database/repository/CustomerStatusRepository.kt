@@ -8,32 +8,32 @@ class CustomerStatusRepository(
 ) {
 
     // Insert single customer status
-    fun insertCustomerStatus(status: CustomerStatusEntity) {
+    suspend fun insertCustomerStatus(status: CustomerStatusEntity) {
         dao.insertCustomerStatus(status)
     }
 
     // Insert list of customer status
-    fun insertAllCustomerStatus(statusList: List<CustomerStatusEntity>) {
+    suspend fun insertAllCustomerStatus(statusList: List<CustomerStatusEntity>) {
         dao.insertAllCustomerStatus(statusList)
     }
 
     // Get all customer statuses
-    fun getAllCustomerStatus(): List<CustomerStatusEntity>? {
+    suspend fun getAllCustomerStatus(): List<CustomerStatusEntity>? {
         return dao.getAllCustomerStatus()
     }
 
     // Get customer status name by ID
-    fun getCustomerStatus(customerStatusId: Int): String? {
+    suspend fun getCustomerStatus(customerStatusId: Int): String? {
         return dao.getCustomerStatus(customerStatusId)
     }
 
     // Get statuses where ID in (2,3) and IsDeleted = 0
-    fun getCustomerStatusData(): List<CustomerStatusEntity>? {
+    suspend fun getCustomerStatusData(): List<CustomerStatusEntity>? {
         return dao.getCustomerStatusData()
     }
 
     // Delete all customer status
-    fun deleteAllCustomerStatus() {
+    suspend fun deleteAllCustomerStatus() {
         dao.deleteAllCustomerStatus()
     }
 }

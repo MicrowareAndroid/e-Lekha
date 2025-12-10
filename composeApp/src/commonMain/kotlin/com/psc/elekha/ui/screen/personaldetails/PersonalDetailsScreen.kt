@@ -111,11 +111,11 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
 //    var message = viewModel.saveMessage
     var customerImage by remember { mutableStateOf<Uri?>(null) }
     var guarantorImage by remember { mutableStateOf<Uri?>(null) }
-    val viewModel = koinViewModel<PersonalDetailViewModel>()
+//    val viewModel = koinViewModel<PersonalDetailViewModel>()
     val coroutineScope = rememberCoroutineScope()
-    LaunchedEffect(Unit) {
-viewModel.loadSavedData()
-    }
+//    LaunchedEffect(Unit) {
+//viewModel.loadSavedData()
+//    }
 
     Box(
         modifier = Modifier
@@ -515,7 +515,7 @@ viewModel.loadSavedData()
             // Bottom Buttons (Not scrollable)
             CommonSaveButton (
                 onSaveClick ={
-                    viewModel.saveData()
+//                    viewModel.saveData()
                 },
                 saveText = stringResource(Res.string.next)
             )

@@ -7,25 +7,25 @@ import com.psc.elekha.database.entity.LoanRepaymentEntity
 interface LoanRepaymentDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertLoanRepayment(loanRepaymentEntity: LoanRepaymentEntity)
+    suspend fun insertLoanRepayment(loanRepaymentEntity: LoanRepaymentEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAllLoanRepayment(loanRepaymentEntity: List<LoanRepaymentEntity>?)
+    suspend fun insertAllLoanRepayment(loanRepaymentEntity: List<LoanRepaymentEntity>?)
 
     @Query("Select * from LoanRepayment")
-    fun getAllLoanRepayment(): List<LoanRepaymentEntity>?
+    suspend fun getAllLoanRepayment(): List<LoanRepaymentEntity>?
 
     @Query("Select * from LoanRepayment where GUID=:GUID")
-    fun getLoanRepaymentByGUID(GUID: String): LoanRepaymentEntity?
+    suspend fun getLoanRepaymentByGUID(GUID: String): LoanRepaymentEntity?
 
     @Query("Select * from LoanRepayment Where IsEdited = 1")
-    fun getLoanRepaymentUploadData(): List<LoanRepaymentEntity>?
+    suspend fun getLoanRepaymentUploadData(): List<LoanRepaymentEntity>?
 
     @Query("Select Count(*) from LoanRepayment Where IsEdited = 1")
-    fun getLoanRepaymentUploadDataCount(): Int
+    suspend fun getLoanRepaymentUploadDataCount(): Int
 
     @Query("Update LoanRepayment set IsEdited=1,Total=:Total,PaidDate=:PaidDate,LoanLat=:LoanLat,LoanLong=:LoanLong,LoanPlace=:LoanPlace,PaymentType=:PaymentType where GUID=:GUID")
-    fun updateLoanRepaymentData(
+    suspend fun updateLoanRepaymentData(
         Total: Double,
         PaidDate: String,
         LoanLat: Double,
@@ -36,9 +36,9 @@ interface LoanRepaymentDao {
     )
 
     @Query("Update LoanRepayment set IsUploaded=1,IsEdited=0 where IsEdited = 1")
-    fun updateLoanRepaymentDataUploaded()
+    suspend fun updateLoanRepaymentDataUploaded()
 
     @Query("Delete from LoanRepayment")
-    fun deleteAllLoanRepayment()
+    suspend fun deleteAllLoanRepayment()
 
 }

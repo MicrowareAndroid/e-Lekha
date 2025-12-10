@@ -64,7 +64,7 @@ class KYCDocumentViewModel(
         }
     }
 
-    fun getAllDocumentsDirect(): List<KYCDocumentEntity> {
+   suspend fun getAllDocumentsDirect(): List<KYCDocumentEntity> {
         return repository.getAllKYCDocument() ?: emptyList()
     }
 }

@@ -7,15 +7,15 @@ import com.psc.elekha.database.entity.KYCStatusConditionEntity
 interface KYCStatusConditionDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertKYCStatusCondition(kYCStatusConditionEntity: KYCStatusConditionEntity)
+    suspend fun insertKYCStatusCondition(kYCStatusConditionEntity: KYCStatusConditionEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAllKYCStatusCondition(kYCStatusConditionEntity: List<KYCStatusConditionEntity>?)
+    suspend fun insertAllKYCStatusCondition(kYCStatusConditionEntity: List<KYCStatusConditionEntity>?)
 
     @Query("Select * from KYCStatusCondition")
-    fun getAllKYCStatusCondition(): List<KYCStatusConditionEntity>?
+    suspend fun getAllKYCStatusCondition(): List<KYCStatusConditionEntity>?
 
     @Query("Delete from KYCStatusCondition")
-    fun deleteAllKYCStatusCondition()
+    suspend fun deleteAllKYCStatusCondition()
 
 }

@@ -7,19 +7,19 @@ class KYCDocCategoryRepository(
     private val dao: KYCDocCategoryDao
 ) {
 
-    fun insertKYCDocCategory(category: KYCDocCategoryEntity) {
+    suspend fun insertKYCDocCategory(category: KYCDocCategoryEntity) {
         dao.insertKYCDocCategory(category)
     }
 
-    fun insertAllKYCDocCategory(categories: List<KYCDocCategoryEntity>) {
+    suspend fun insertAllKYCDocCategory(categories: List<KYCDocCategoryEntity>) {
         dao.insertAllKYCDocCategory(categories)
     }
 
-    fun getAllKYCDocCategory(): List<KYCDocCategoryEntity>? {
+    suspend fun getAllKYCDocCategory(): List<KYCDocCategoryEntity>? {
         return dao.getAllKYCDocCategory()
     }
 
-    fun deleteAllKYCDocCategory() {
+    suspend fun deleteAllKYCDocCategory() {
         dao.deleteAllKYCDocCategory()
     }
 }

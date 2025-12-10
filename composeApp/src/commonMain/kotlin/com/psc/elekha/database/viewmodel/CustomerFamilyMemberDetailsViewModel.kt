@@ -27,7 +27,7 @@ class CustomerFamilyMemberDetailsViewModel (
 
     }
     //get all Family members
-    fun getAllCustomerFamilyMember():List<CustomerFamilyMemberDetailsEntity>?{
+   suspend fun getAllCustomerFamilyMember():List<CustomerFamilyMemberDetailsEntity>?{
         return  repository.getAllCustomerFamilyMember()
     }
 

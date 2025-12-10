@@ -7,18 +7,18 @@ class CustomerFamilyMemberDetailsRepository (
     private val dao: CustomerFamilyMemberDetailsDao
 ){
      //Insert Single Family member
-    fun insertCustomerFamilyMember(member: CustomerFamilyMemberDetailsEntity){
+     suspend fun insertCustomerFamilyMember(member: CustomerFamilyMemberDetailsEntity){
         dao.insertCustomerFamilyMember(member)
     }
     //Insert List of Family members
-    fun insertAllCustomerFamilyMember(members:List<CustomerFamilyMemberDetailsEntity>){
+    suspend fun insertAllCustomerFamilyMember(members:List<CustomerFamilyMemberDetailsEntity>){
         dao.insertAllCustomerFamilyMember(members)
     }
     //Get All Family Members
-    fun getAllCustomerFamilyMember():List<CustomerFamilyMemberDetailsEntity>?{
+    suspend fun getAllCustomerFamilyMember():List<CustomerFamilyMemberDetailsEntity>?{
         return dao.getAllCustomerFamilyMember()
     }
-    fun deleteAllCustomer(){
+    suspend fun deleteAllCustomer(){
         dao.deleteAllCustomerFamilyMember()
     }
 }

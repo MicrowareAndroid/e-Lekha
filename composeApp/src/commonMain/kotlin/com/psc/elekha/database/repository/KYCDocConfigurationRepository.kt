@@ -7,19 +7,19 @@ class KYCDocConfigurationRepository(
     private val dao: KYCDocConfigurationDao
 ) {
 
-    fun insertKYCDocConfiguration(config: KYCDocConfigurationEntity) {
+    suspend fun insertKYCDocConfiguration(config: KYCDocConfigurationEntity) {
         dao.insertKYCDocConfiguration(config)
     }
 
-    fun insertAllKYCDocConfiguration(configs: List<KYCDocConfigurationEntity>) {
+    suspend fun insertAllKYCDocConfiguration(configs: List<KYCDocConfigurationEntity>) {
         dao.insertAllKYCDocConfiguration(configs)
     }
 
-    fun getAllKYCDocConfiguration(): List<KYCDocConfigurationEntity>? {
+    suspend fun getAllKYCDocConfiguration(): List<KYCDocConfigurationEntity>? {
         return dao.getAllKYCDocConfiguration()
     }
 
-    fun deleteAllKYCDocConfiguration() {
+    suspend fun deleteAllKYCDocConfiguration() {
         dao.deleteAllKYCDocConfiguration()
     }
 }

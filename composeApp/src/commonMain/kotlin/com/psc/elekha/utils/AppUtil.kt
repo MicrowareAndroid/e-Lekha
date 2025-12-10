@@ -1,6 +1,4 @@
 package com.psc.elekha.utils
-
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -12,12 +10,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.defaultMinSize
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -38,7 +33,6 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
-import androidx.compose.material.icons.filled.CameraAlt
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
@@ -63,7 +57,6 @@ import androidx.compose.material3.RadioButton
 import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -106,35 +99,26 @@ import coil3.compose.rememberAsyncImagePainter
 import com.psc.elekha.ui.screen.gtrlist.CustomerData
 import com.psc.elekha.ui.screen.gtrlist.GroupCardData
 import com.psc.elekha.ui.theme.CardColor
-import com.psc.elekha.ui.theme.LightBlueBackground
 import com.psc.elekha.ui.theme.LightMint
-import com.psc.elekha.ui.theme.LightSkyBlue
-import com.psc.elekha.ui.theme.LightTeal
 import com.psc.elekha.ui.theme.LoginTextBox
 import com.psc.elekha.ui.theme.PrimaryDark
-import com.psc.elekha.ui.theme.assureOrange
 import com.psc.elekha.ui.theme.bgColor
 import com.psc.elekha.ui.theme.black
 import com.psc.elekha.ui.theme.boderColor
 import com.psc.elekha.ui.theme.btn_color
 import com.psc.elekha.ui.theme.desire_orange
-import com.psc.elekha.ui.theme.editext_bg_color
 import com.psc.elekha.ui.theme.formborder
 import com.psc.elekha.ui.theme.lightGrey
 import com.psc.elekha.ui.theme.lightgreens
 import com.psc.elekha.ui.theme.repaymentColor
-import com.psc.elekha.ui.theme.teal700
 import com.psc.elekha.ui.theme.text_fiiled_color
 import com.psc.elekha.ui.theme.textview_color
 import com.psc.elekha.ui.theme.toolbar_color
 import com.psc.elekha.ui.theme.white
 import e_lekha.composeapp.generated.resources.Res
-import e_lekha.composeapp.generated.resources.annual
 import e_lekha.composeapp.generated.resources.app_name
-import e_lekha.composeapp.generated.resources.back
 import e_lekha.composeapp.generated.resources.camera
 import e_lekha.composeapp.generated.resources.cancel
-import e_lekha.composeapp.generated.resources.close
 import e_lekha.composeapp.generated.resources.dd_mm_yy
 import e_lekha.composeapp.generated.resources.document_icon
 import e_lekha.composeapp.generated.resources.enter_here
@@ -145,11 +129,8 @@ import e_lekha.composeapp.generated.resources.gtr_save
 import e_lekha.composeapp.generated.resources.hh_mm
 import e_lekha.composeapp.generated.resources.ic_arrow_drop_down
 import e_lekha.composeapp.generated.resources.ic_close
-import e_lekha.composeapp.generated.resources.login_subtitle
-import e_lekha.composeapp.generated.resources.mobile_number
 import e_lekha.composeapp.generated.resources.movable_assets
 import e_lekha.composeapp.generated.resources.new_registration
-import e_lekha.composeapp.generated.resources.next
 import e_lekha.composeapp.generated.resources.ok
 import e_lekha.composeapp.generated.resources.password
 import e_lekha.composeapp.generated.resources.purpose
@@ -695,6 +676,7 @@ fun FormField(
         )
     }
 }
+
 @Composable
 fun FormFieldCompact(
     label: String,
@@ -2373,7 +2355,7 @@ fun ReusableCard(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 8.dp, vertical = 15.dp)
+                .padding(horizontal = 8.dp)
         ) {
             content()
         }
@@ -2414,13 +2396,13 @@ fun GroupCardUI(
             .fillMaxWidth()
             .padding(8.dp)
             .clickable { onCardClick(item) },
-        backgroundColor = CardColor
+        backgroundColor = repaymentColor
     ) {
 
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal =10.dp ),
+                .padding(horizontal =10.dp, vertical = 20.dp ),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
 
@@ -2588,7 +2570,7 @@ fun CustomerItemCard(
                     onCardClick(customer)
                 }
             },
-        backgroundColor = CardColor,
+        backgroundColor = repaymentColor,
         cornerRadius = 12
     ) {
 
@@ -2681,7 +2663,7 @@ fun CameraPreviewField(
 fun ReusableTextViewGrayCard(
     text: String,
     modifier: Modifier = Modifier,
-    textColor: Color = Color.Gray,
+    textColor: Color = toolbar_color,
     fontSize: Int = 15,
     fontWeight: FontWeight = FontWeight.W500,
     fontFamily: FontFamily = FontFamily(Font(Res.font.roboto_medium)),
