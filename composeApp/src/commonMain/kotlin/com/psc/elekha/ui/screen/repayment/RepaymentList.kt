@@ -25,7 +25,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.sp
-import com.psc.elekha.ui.screen.repayment.model.sampleRepaymentList
+
 import com.psc.elekha.ui.screen.repayment.model.RepaymentItem
 import com.psc.elekha.ui.theme.btn_color
 
@@ -37,7 +37,13 @@ fun RepaymentList(
     var select by remember { mutableStateOf("Repayment List") }
     var selectedItems by remember { mutableStateOf(setOf<Int>()) }
     var showFilterDialog by remember { mutableStateOf(false) }
-    val repaymentItems = sampleRepaymentList
+    val sampleRepaymentList = listOf(
+        RepaymentItem("BHK03.123", "MEENA W/O Kailash chand", "1,00,000", "5300", "10,600", "4", true),
+        RepaymentItem("BHK03.234", "SUNITA W/O Mahesh", "75,000", "3200", "8,200", "3", true),
+        RepaymentItem("BHK03.345", "PRIYA D/O Suresh", "50,000", "2500", "5,000", "2", true),
+        RepaymentItem("BHK03.456", "REKHA W/O Ajay", "60,000", "2800", "4,000", "1", false),
+        RepaymentItem("BHK03.567", "KAVITA W/O waju", "90,000", "4100", "9,200", "5", false)
+    )
 
 
 
@@ -149,7 +155,7 @@ fun RepaymentList(
                     }
 
                     CollectionDetailsCard(
-                        items = repaymentItems,
+                        items = sampleRepaymentList,
                         selectedItems = selectedItems,
                         onItemSelected = { index ->
                             selectedItems = if (selectedItems.contains(index)) {

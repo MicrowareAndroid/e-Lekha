@@ -630,11 +630,11 @@ fun FormField(
     maxLines: Int = 1,
 //    disabledBackgroundColor: Color = Color(0xFFE0E0E0),
     disabledBackgroundColor: Color = formborder,
-    modifier: Modifier = Modifier, // ✅ ADDED THIS
+    modifier: Modifier = Modifier,
     placeholderTextSize: Int = 13
 ) {
 
-    Column(modifier = modifier) {            // ✅ APPLY modifier HERE
+    Column(modifier = modifier) {
 
         ReusableTextView(
             text = label,
