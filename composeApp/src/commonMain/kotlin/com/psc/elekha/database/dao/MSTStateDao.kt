@@ -7,15 +7,15 @@ import com.psc.elekha.database.entity.MSTStateEntity
 interface MSTStateDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertState(mSTStateEntity: MSTStateEntity)
+    suspend fun insertState(mSTStateEntity: MSTStateEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAllState(mSTStateEntity: List<MSTStateEntity>?)
+    suspend fun insertAllState(mSTStateEntity: List<MSTStateEntity>?)
 
     @Query("Select * from MSTState")
-    fun getAllState(): List<MSTStateEntity>?
+    suspend fun getAllState(): List<MSTStateEntity>?
 
     @Query("Delete from MSTState")
-    fun deleteAllState()
+    suspend fun deleteAllState()
 
 }

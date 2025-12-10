@@ -8,22 +8,18 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CameraAlt
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.psc.elekha.ui.screen.repayment.model.RepaymentItem
 import com.psc.elekha.ui.theme.black
 import com.psc.elekha.ui.theme.editext_bg_color
-import com.psc.elekha.utils.CameraPicker
-import com.psc.elekha.utils.ReusableTextViewBlackCard
-import com.psc.elekha.utils.ReusableTextViewGrayCard
-import com.psc.elekha.utils.ReusablePaymentDropdown
-import com.psc.elekha.utils.toPlatformImageBitmap
+import com.psc.elekha.utils.*
+import e_lekha.composeapp.generated.resources.Res
+import e_lekha.composeapp.generated.resources.type_here
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun RepaymentItemCard(
@@ -42,133 +38,140 @@ fun RepaymentItemCard(
         shape = RoundedCornerShape(12.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         colors = CardDefaults.cardColors(containerColor = editext_bg_color),
-        modifier = Modifier.fillMaxWidth().padding(4.dp)
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp)
+            .defaultMinSize(minHeight = 45.dp)
     ) {
 
-        Row(
-            modifier = Modifier.fillMaxWidth().padding(10.dp),
-            verticalAlignment = Alignment.CenterVertically
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(10.dp)
         ) {
 
-            // Checkbox
-            Checkbox(
-                checked = isSelected,
-                onCheckedChange = { onSelected() },
-                modifier = Modifier.size(20.dp),
-                colors = CheckboxDefaults.colors(
-                    checkedColor = Color(0xFF4CAF50),
-                    uncheckedColor = Color.Gray
+           Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+
+                Checkbox(
+                    checked = isSelected,
+                    onCheckedChange = { onSelected() },
+                    modifier = Modifier.size(22.dp),
+                    colors = CheckboxDefaults.colors(
+                        checkedColor = Color(0xFF4CAF50),
+                        uncheckedColor = Color.Gray
+                    )
                 )
-            )
 
-            Spacer(modifier = Modifier.width(8.dp))
+                Spacer(modifier = Modifier.width(10.dp))
 
-            // LEFT SIDE
-            Column(modifier = Modifier.weight(1f)) {
-
-                Row(
+               Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    ReusableTextViewGrayCard("Customer")
-                    ReusableTextViewBlackCard(item.customerId)
-                    ReusableTextViewBlackCard(item.customerName)
-                }
-
-                Spacer(modifier = Modifier.height(10.dp))
-
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    ReusableTextViewGrayCard("Loan Amount")
-                    ReusableTextViewBlackCard(item.loanAmount)
-                    ReusableTextViewGrayCard("EMI")
-                    ReusableTextViewBlackCard(item.emiAmount)
-                }
-
-                Spacer(modifier = Modifier.height(10.dp))
-
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    ReusableTextViewGrayCard("Total Due")
-                    ReusableTextViewBlackCard(item.totalDue)
-
-                    ReusableTextViewGrayCard("Weeks in Arrear")
-                    ReusableTextViewBlackCard(item.weeksInArrear)
-                }
-
-                Spacer(modifier = Modifier.height(10.dp))
-
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
+                    verticalAlignment = Alignment.Top
                 ) {
 
-                    ReusableTextViewGrayCard("Payment Mode")
+                   Column(
+                        modifier = Modifier.weight(1f),
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
 
-                    ReusablePaymentDropdown(
-                        selectedValue = selectedPaymentMode,
-                        options = paymentOptions,
-                        onValueSelected = { selectedPaymentMode = it },
-                        modifier = Modifier.weight(1f)
-                    )
+                        Row {
+                            ReusableTextViewGrayCard("Customer", fontSize = 13)
+                            Spacer(modifier = Modifier.width(4.dp))
+                            ReusableTextViewBlackCard(item.customerId, fontSize = 13)
+                            Spacer(modifier = Modifier.width(4.dp))
+                            ReusableTextViewBlackCard(item.customerName, fontSize = 13)
+                        }
 
-                    Spacer(modifier = Modifier.width(8.dp))
+                        Row {
+                            ReusableTextViewGrayCard("Loan Amount", fontSize = 13)
+                            Spacer(modifier = Modifier.width(4.dp))
+                            ReusableTextViewBlackCard(item.loanAmount, fontSize = 13)
+                            Spacer(modifier = Modifier.width(8.dp))
+                            ReusableTextViewGrayCard("EMI", fontSize = 13)
+                            Spacer(modifier = Modifier.width(4.dp))
+                            ReusableTextViewBlackCard(item.emiAmount, fontSize = 13)
+                        }
 
-                    OutlinedTextField(
-                        value = repaymentAmount,
-                        onValueChange = { repaymentAmount = it },
-                        placeholder = { Text("Payment", fontSize = 10.sp) },
-                        modifier = Modifier.weight(1f).height(50.dp),
-                        colors = OutlinedTextFieldDefaults.colors(
-                            focusedBorderColor = Color.LightGray,
-                            unfocusedBorderColor = Color.Gray
-                        ),
-                        shape = RoundedCornerShape(4.dp),
-                        textStyle = LocalTextStyle.current.copy(fontSize = 10.sp)
-                    )
+                        Row {
+                            ReusableTextViewGrayCard("Total Due", fontSize = 13)
+                            Spacer(modifier = Modifier.width(4.dp))
+                            ReusableTextViewBlackCard(item.totalDue, fontSize = 13)
+                            Spacer(modifier = Modifier.width(8.dp))
+                            ReusableTextViewGrayCard("Weeks Arrear", fontSize = 13)
+                            Spacer(modifier = Modifier.width(4.dp))
+                            ReusableTextViewBlackCard(item.weeksInArrear, fontSize = 13)
+                        }
+                    }
+
+
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        modifier = Modifier.width(80.dp)
+                    ) {
+
+                        Box(
+                            modifier = Modifier
+                                .size(55.dp)
+                                .background(Color.LightGray, RoundedCornerShape(6.dp))
+                        ) {
+                            capturedImage?.let { bitmap ->
+                                Image(
+                                    bitmap = bitmap,
+                                    contentDescription = "Captured Image",
+                                    contentScale = ContentScale.Crop,
+                                    modifier = Modifier.fillMaxSize()
+                                )
+                            }
+                        }
+
+
+
+                        IconButton(
+                            onClick = { openCamera = true },
+                            modifier = Modifier.size(40.dp)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.CameraAlt,
+                                contentDescription = "Camera",
+                                tint = black,
+                                modifier = Modifier.size(30.dp)
+                            )
+                        }
+                    }
                 }
             }
 
-            Spacer(modifier = Modifier.width(8.dp))
 
 
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-                modifier = Modifier.width(80.dp)
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
             ) {
 
+                ReusableTextViewGrayCard("Payment Mode", fontSize = 13)
 
-                Box(
-                    modifier = Modifier.size(100.dp).background(Color.LightGray)
-                ) {
-                    capturedImage?.let { bitmap ->
-                        Image(
-                            bitmap = bitmap,
-                            contentDescription = "Captured Image",
-                            contentScale = ContentScale.Crop,
-                            modifier = Modifier.fillMaxSize()
-                        )
-                    }
-                }
+                Spacer(modifier = Modifier.width(4.dp))
 
+                ReusableDynamicSpinner(
+                    selectedValue = selectedPaymentMode,
+                    options = paymentOptions,
+                    onValueSelected = { selectedPaymentMode = it },
+                    modifier = Modifier.weight(1f)
+                )
 
-                IconButton(
-                    onClick = { openCamera = true },
-                    modifier = Modifier.size(40.dp)
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.CameraAlt,
-                        contentDescription = "Camera",
-                        tint = black,
-                        modifier = Modifier.size(30.dp)
-                    )
-                }
+                Spacer(modifier = Modifier.width(4.dp))
+
+                FormFieldCompacts(
+                    value = repaymentAmount,
+                    onValueChange = { repaymentAmount = it },
+                    placeholder = stringResource(Res.string.type_here),
+                    maxLength = 10,
+                    modifier = Modifier.weight(1f)
+                )
             }
         }
     }

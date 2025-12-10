@@ -32,6 +32,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.relocation.BringIntoViewRequester
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -121,6 +122,7 @@ import com.psc.elekha.ui.theme.lightGrey
 import com.psc.elekha.ui.theme.lightgreens
 import com.psc.elekha.ui.theme.repaymentColor
 import com.psc.elekha.ui.theme.teal700
+import com.psc.elekha.ui.theme.text_fiiled_color
 import com.psc.elekha.ui.theme.textview_color
 import com.psc.elekha.ui.theme.toolbar_color
 import com.psc.elekha.ui.theme.white
@@ -2218,7 +2220,7 @@ fun GroupCardUI(
     ReusableCard(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(8.dp)
+            .padding( 8.dp)
             .clickable { onCardClick(item) },
         backgroundColor = CardColor
     ) {
@@ -2226,7 +2228,7 @@ fun GroupCardUI(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal =10.dp ),
+                .padding(horizontal = 10.dp ),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
 
@@ -2366,7 +2368,7 @@ fun LabelValueText(label: String, value: String) {
     Row {
         ReusableTextViewGrayCard(
             text = label,
-            fontSize = 13
+            fontSize =  13
             )
         Spacer(modifier = Modifier.width(4.dp))
         ReusableTextViewBlackCard(
@@ -2395,7 +2397,7 @@ fun CustomerItemCard(
                 }
             },
         backgroundColor = CardColor,
-        cornerRadius = 12
+        cornerRadius =  12
     ) {
 
         Row(
@@ -2441,6 +2443,103 @@ fun CustomerItemCard(
                         .background(Color.Gray, RoundedCornerShape(6.dp))
                 )
             }
+        }
+    }
+}
+
+
+@Composable
+fun FormFieldCompacts(
+
+    value: String,
+    onValueChange: (String) -> Unit,
+    maxLength: Int = Int.MAX_VALUE,
+    trailingIcon: @Composable (() -> Unit)? = null,
+    inputType: KeyboardType = KeyboardType.Text,
+    placeholder: String = stringResource(Res.string.type_here),
+    isEnable: Boolean = true,
+    isReadable: Boolean = false,
+    labelColor: Color = toolbar_color,
+    placeholderColor: Color = Color(0xFF212121),
+    backgroundColor: Color = text_fiiled_color,
+    borderColor: Color = boderColor,
+    disabledBackgroundColor: Color = formborder,
+    maxLines: Int = 1,
+    modifier: Modifier = Modifier,
+    placeholderTextSize: Int = 13
+) {
+
+    Column(modifier) {
+
+
+
+        Spacer(Modifier.height(5.dp))
+
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(40.dp)
+                .background(
+                    color = if (isEnable) backgroundColor else disabledBackgroundColor,
+                    shape = RoundedCornerShape(15.dp)
+                )
+                .border(1.dp, borderColor, RoundedCornerShape(15.dp))
+                .clickable(enabled = isEnable) { /* triggers keyboard focus */ },
+            contentAlignment = Alignment.CenterStart
+        ) {
+
+            BasicTextField(
+                value = value,
+                enabled = isEnable,
+                readOnly = isReadable,
+                onValueChange = {
+
+
+                },
+
+                textStyle = TextStyle(
+                    fontSize = 12.sp,
+                    lineHeight = 14.sp,
+                    color = Color.Black,
+                    fontFamily = FontFamily(Font(Res.font.roboto_medium)),
+                    textAlign = TextAlign.Start
+                ),
+
+                maxLines = maxLines,
+                keyboardOptions = KeyboardOptions(keyboardType = inputType),
+
+                modifier = Modifier
+                    .matchParentSize()
+                    .padding(horizontal = 12.dp, vertical = 8.dp),
+
+                decorationBox = { innerTextField ->
+
+                    Row(
+                        modifier = Modifier.fillMaxSize(),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+
+
+                        Box(
+                            modifier = Modifier.weight(1f),
+                            contentAlignment = Alignment.CenterStart
+                        ) {
+                            if (value.isEmpty()) {
+                                ReusableTextView(
+                                    text = placeholder,
+                                    fontSize = placeholderTextSize,
+                                    textColor = placeholderColor
+                                )
+                            }
+                            innerTextField()
+                        }
+
+                        if (trailingIcon != null) {
+                            trailingIcon()
+                        }
+                    }
+                }
+            )
         }
     }
 }
@@ -2568,67 +2667,88 @@ fun ReusableTextViewBlackCard(
 
 
 }
-
 @Composable
-fun ReusablePaymentDropdown(
-    selectedValue: String,
+fun ReusableDynamicSpinner(
+    selectedValue: String?,
     options: List<String>,
+    placeholder: String = "Select",
     onValueSelected: (String) -> Unit,
     modifier: Modifier = Modifier,
-    height: Dp = 50.dp,
-    backgroundColor: Color = Color(0xFFBBDEFB),
-    cornerRadius: Dp = 4.dp,
-    fontFamily: FontFamily = FontFamily(Font(Res.font.roboto_medium))
+    backgroundColor: Color = text_fiiled_color,
+    borderColor: Color = boderColor,
 ) {
+
     var expanded by remember { mutableStateOf(false) }
+    var spinnerWidth by remember { mutableStateOf(0) }
 
-    Box(modifier = modifier) {
+    val density = LocalDensity.current
 
-        Button(
-            onClick = { expanded = true },
-            colors = ButtonDefaults.buttonColors(
-                containerColor = backgroundColor
-            ),
-            shape = RoundedCornerShape(cornerRadius),
-            contentPadding = PaddingValues(horizontal = 2.dp, vertical = 4.dp),
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(height)
+    val robotoMedium = FontFamily(Font(Res.font.roboto_medium))
+    val textColor = Color.Black
+
+    val displayText = selectedValue?.takeIf { it.isNotEmpty() } ?: placeholder
+
+    Box(
+        modifier = modifier
+            .height(40.dp)
+            .onGloballyPositioned { coordinates ->
+                spinnerWidth = coordinates.size.width
+            }
+            .background(
+                color = backgroundColor,
+                shape = RoundedCornerShape(15.dp)
+            )
+            .border(
+                width = 1.dp,
+                color = borderColor,
+                shape = RoundedCornerShape(15.dp)
+            )
+            .clickable { expanded = true }
+            .padding(horizontal = 12.dp),
+        contentAlignment = Alignment.CenterStart
+    ) {
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
 
-            Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth()
-            ) {
+            Text(
+                text = displayText,
+                color = textColor,
+                fontSize = 12.sp,
+                fontFamily = robotoMedium
+            )
 
-                Text(
-                    text = selectedValue,
-                    fontSize = 12.sp,
-                    color = Color.Black,
-                    fontFamily = fontFamily
-                )
-
-                Text("▼", fontSize = 10.sp, color = Color.Black)
-            }
+            Text(
+                text = "▼",
+                fontSize = 12.sp,
+                fontFamily = robotoMedium,
+                color = textColor
+            )
         }
 
-        // DROPDOWN MENU
         DropdownMenu(
             expanded = expanded,
-            onDismissRequest = { expanded = false }
+            onDismissRequest = { expanded = false },
+            modifier = Modifier
+                .width(with(density) { spinnerWidth.toDp() })
         ) {
-            options.forEach { option ->
+
+            options.forEach { item ->
+
                 DropdownMenuItem(
                     text = {
                         Text(
-                            option,
+                            text = item,
                             fontSize = 12.sp,
-                            color = Color.Black
+                            fontFamily = robotoMedium,
+                            color = textColor
                         )
                     },
                     onClick = {
-                        onValueSelected(option)
+                        onValueSelected(item)
                         expanded = false
                     }
                 )
@@ -2636,6 +2756,7 @@ fun ReusablePaymentDropdown(
         }
     }
 }
+
 
 @Composable
 fun CommonDivider(

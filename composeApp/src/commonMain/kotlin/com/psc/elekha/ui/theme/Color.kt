@@ -54,7 +54,7 @@ val textview_color = Color(0xFF658889)
 val editext_bg_color = Color(0xFFC4E2EA)
 val btn_color = Color(0xFFFCC739)
 val toolbar_color = Color(0xFF02435A)
-
+val text_fiiled_color= Color(0xFFE8F2FF)
 fun blendColors(color1: Color, color2: Color, ratio: Float): Color {
     val inverseRatio = 1 - ratio
     return Color(

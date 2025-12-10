@@ -1,22 +1,20 @@
 package com.psc.elekha
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.window.ComposeUIViewController
-import com.psc.elekha.ui.login.LoginScreen
-import com.psc.elekha.ui.splashScreen.SplashScreen
+import com.psc.elekha.application.ELekhaApplication
+import com.psc.elekha.di.initKoin
+import com.psc.elekha.utils.AppPreferences
+import com.psc.elekha.utils.provideAppPreferences
 
-fun MainViewController() = ComposeUIViewController {
-//    App()
-    var showSplash by remember { mutableStateOf(true) }
 
-    if (showSplash) {
-        SplashScreen(
-            onFinished = { showSplash = false }
-        )
-    } else {
-        LoginScreen()
+fun MainViewController() = ComposeUIViewController(
+
+
+    configure = {
+
+        initKoin()
     }
+) {
+    val appPreferences: AppPreferences = provideAppPreferences()
+    ELekhaApplication(appPreferences)
 }

@@ -7,15 +7,15 @@ import com.psc.elekha.database.entity.MSTDistrictEntity
 interface MSTDistrictDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertDistrict(mSTDistrictEntity: MSTDistrictEntity)
+    suspend  fun insertDistrict(mSTDistrictEntity: MSTDistrictEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAllDistrict(mSTDistrictEntity: List<MSTDistrictEntity>?)
+    suspend  fun insertAllDistrict(mSTDistrictEntity: List<MSTDistrictEntity>?)
 
     @Query("Select * from MSTDistrict")
-    fun getAllDistrict(): List<MSTDistrictEntity>?
+    suspend  fun getAllDistrict(): List<MSTDistrictEntity>?
 
     @Query("Delete from MSTDistrict")
-    fun deleteAllDistrict()
+    suspend  fun deleteAllDistrict()
 
 }

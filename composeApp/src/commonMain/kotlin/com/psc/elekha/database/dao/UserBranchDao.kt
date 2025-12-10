@@ -7,18 +7,18 @@ import com.psc.elekha.database.entity.UserBranchEntity
 interface UserBranchDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertUserBranch(userBranchEntity: UserBranchEntity)
+    suspend  fun insertUserBranch(userBranchEntity: UserBranchEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAllUserBranch(userBranchEntity: List<UserBranchEntity>?)
+    suspend  fun insertAllUserBranch(userBranchEntity: List<UserBranchEntity>?)
 
     @Query("Select * from UserBranch")
-    fun getAllUserBranch(): List<UserBranchEntity>?
+    suspend fun getAllUserBranch(): List<UserBranchEntity>?
 
     @Query("Select BranchID from UserBranch where UserID=:UserID")
-    fun getBranchIDbyUser(UserID: String): Int?
+    suspend  fun getBranchIDbyUser(UserID: String): Int?
 
     @Query("Delete from UserBranch")
-    fun deleteAllUserBranch()
+    suspend fun deleteAllUserBranch()
 
 }

@@ -7,21 +7,21 @@ import com.psc.elekha.database.entity.MSTMFILoanProductEntity
 interface MSTMFILoanProductDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertMFILoanProduct(mSTMFILoanProductEntity: MSTMFILoanProductEntity)
+    suspend fun insertMFILoanProduct(mSTMFILoanProductEntity: MSTMFILoanProductEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAllMFILoanProduct(mSTMFILoanProductEntity: List<MSTMFILoanProductEntity>?)
+    suspend fun insertAllMFILoanProduct(mSTMFILoanProductEntity: List<MSTMFILoanProductEntity>?)
 
     @Query("Select * from mstMFILoanProduct")
-    fun getAllMFILoanProduct(): List<MSTMFILoanProductEntity>?
+    suspend fun getAllMFILoanProduct(): List<MSTMFILoanProductEntity>?
 
     @Query("Select * from mstMFILoanProduct where MFIID=:MFIID")
-    fun getMFILoanProductBYMFIID(MFIID: Int): List<MSTMFILoanProductEntity>?
+    suspend fun getMFILoanProductBYMFIID(MFIID: Int): List<MSTMFILoanProductEntity>?
 
     @Query("Select LoanProductAmount from mstMFILoanProduct where MFILoanProductID=:MFILoanProductID")
-    fun getLoanProductAmount(MFILoanProductID: Int): Int?
+    suspend fun getLoanProductAmount(MFILoanProductID: Int): Int?
 
     @Query("Delete from mstMFILoanProduct")
-    fun deleteAllMFILoanProduct()
+    suspend fun deleteAllMFILoanProduct()
 
 }

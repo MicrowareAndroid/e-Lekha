@@ -7,18 +7,18 @@ import com.psc.elekha.database.entity.RegistrationStatusEntity
 interface RegistrationStatusDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertRegistrationStatus(registrationStatusEntity: RegistrationStatusEntity)
+    suspend fun insertRegistrationStatus(registrationStatusEntity: RegistrationStatusEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAllRegistrationStatus(registrationStatusEntity: List<RegistrationStatusEntity>?)
+    suspend fun insertAllRegistrationStatus(registrationStatusEntity: List<RegistrationStatusEntity>?)
 
     @Query("Select * from RegistrationStatus")
-    fun getAllRegistrationStatus(): List<RegistrationStatusEntity>?
+    suspend fun getAllRegistrationStatus(): List<RegistrationStatusEntity>?
 
     @Query("Select RegistrationStatus from RegistrationStatus where RegistrationStatusID=:RegistrationStatusID")
-    fun getRegistrationStatusbyID(RegistrationStatusID: Int): String
+    suspend  fun getRegistrationStatusbyID(RegistrationStatusID: Int): String
 
     @Query("Delete from RegistrationStatus")
-    fun deleteAllRegistrationStatus()
+    suspend fun deleteAllRegistrationStatus()
 
 }

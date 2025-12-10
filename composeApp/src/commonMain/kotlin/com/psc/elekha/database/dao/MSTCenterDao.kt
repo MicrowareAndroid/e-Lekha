@@ -7,15 +7,15 @@ import com.psc.elekha.database.entity.MSTCenterEntity
 interface MSTCenterDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertCenter(mSTCenterEntity: MSTCenterEntity)
+    suspend  fun insertCenter(mSTCenterEntity: MSTCenterEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAllCenter(mSTCenterEntity: List<MSTCenterEntity>?)
+    suspend  fun insertAllCenter(mSTCenterEntity: List<MSTCenterEntity>?)
 
     @Query("Select * from MstCenter")
-    fun getAllCenter(): List<MSTCenterEntity>?
+    suspend  fun getAllCenter(): List<MSTCenterEntity>?
 
     @Query("Delete from MstCenter")
-    fun deleteAllCenter()
+    suspend fun deleteAllCenter()
 
 }

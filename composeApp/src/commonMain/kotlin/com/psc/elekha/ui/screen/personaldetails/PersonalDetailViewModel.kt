@@ -243,12 +243,12 @@ class PersonalDetailViewModel(
 
                     customerName = returnStringValue(data.FirstName)
                    maritalStatusId = returnIntegerValue(data.MaritalStatusID?.toString())
-                    educationId = returnIntegerValue(data.EducationID?.toString())
+                educationId = returnIntegerValue(data.EducationID?.toString())
 
-                    religionId = returnIntegerValue(data.ReligionID?.toString())
-                mobileNumber=returnStringValue(listData[0].ContactNo)
-                husbandName=returnStringValue(listData[0].HusbandMName)
-                gurantorName=returnStringValue(listData[0].GurantorMName)
+                religionId = returnIntegerValue(data.ReligionID?.toString())
+                mobileNumber=returnStringValue(data.ContactNo.toString())
+                husbandName=returnStringValue(data.HusbandMName)
+                gurantorName=returnStringValue(data.GurantorMName)
 
                   //  relationId = returnIntegerValue(data.Re.toString())
 
