@@ -40,6 +40,7 @@ import com.psc.elekha.ui.theme.white
 import com.psc.elekha.utils.CommonSaveButton
 import com.psc.elekha.utils.CustomAlertMovableAssets
 import com.psc.elekha.utils.FormField
+import com.psc.elekha.utils.FormFieldCompact
 import com.psc.elekha.utils.ReusableTextView
 import com.psc.elekha.utils.SelectableChip
 import e_lekha.composeapp.generated.resources.Res
@@ -145,7 +146,7 @@ fun EconomicDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
                                 horizontalArrangement = Arrangement.spacedBy(10.dp),
                                 verticalAlignment = Alignment.Bottom
                             ) {
-                                FormField(
+                                FormFieldCompact(
                                     label = stringResource(Res.string.daily_expenses),
                                     value = "",
                                     onValueChange = { "" },
@@ -155,7 +156,7 @@ fun EconomicDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
                                     inputType = KeyboardType.Number
                                 )
 
-                                FormField(
+                                FormFieldCompact(
                                     label = stringResource(Res.string.education_expenses),
                                     value = "",
                                     onValueChange = { "" },
@@ -173,7 +174,7 @@ fun EconomicDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
                                 horizontalArrangement = Arrangement.spacedBy(10.dp),
                                 verticalAlignment = Alignment.Bottom
                             ) {
-                                FormField(
+                                FormFieldCompact(
                                     label = stringResource(Res.string.medical_expenses),
                                     value = "",
                                     onValueChange = { "" },
@@ -183,7 +184,7 @@ fun EconomicDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
                                     inputType = KeyboardType.Number
                                 )
 
-                                FormField(
+                                FormFieldCompact(
                                     label = stringResource(Res.string.other_expenses),
                                     value = "",
                                     onValueChange = { "" },
@@ -201,7 +202,7 @@ fun EconomicDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
                                 horizontalArrangement = Arrangement.spacedBy(10.dp),
                                 verticalAlignment = Alignment.Bottom
                             ) {
-                                FormField(
+                                FormFieldCompact(
                                     label = stringResource(Res.string.total_monthly_expenditure),
                                     value = "",
                                     onValueChange = { "" },
@@ -211,7 +212,7 @@ fun EconomicDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
                                     inputType = KeyboardType.Number
                                 )
 
-                                FormField(
+                                FormFieldCompact(
                                     label = stringResource(Res.string.annual),
                                     value = "",
                                     onValueChange = { "" },

@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.sp
 import com.psc.elekha.ui.theme.white
 import com.psc.elekha.utils.CommonSaveButton
 import com.psc.elekha.utils.FormField
+import com.psc.elekha.utils.FormFieldCompact
 import com.psc.elekha.utils.ReusableTextView
 import e_lekha.composeapp.generated.resources.Res
 import e_lekha.composeapp.generated.resources.back_image
@@ -136,7 +137,7 @@ fun KycDetailsScreen(
 fun ElectricityBillForm() {
     Column(    modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally) {
-        FormField(
+        FormFieldCompact(
             label = "Name on Electricity bill",
             value = "",
             onValueChange = {},
@@ -145,7 +146,7 @@ fun ElectricityBillForm() {
 
         Spacer(Modifier.height(12.dp))
 
-        FormField(
+        FormFieldCompact(
             label = "Account Number",
             value = "",
             onValueChange = {},
@@ -154,7 +155,7 @@ fun ElectricityBillForm() {
 
         Spacer(Modifier.height(12.dp))
 
-        FormField(
+        FormFieldCompact(
             label = "K Number",
             value = "",
             onValueChange = {},
@@ -197,7 +198,7 @@ fun ElectricityBillForm() {
 @Composable
 fun AadhaarCardForm() {
     Column {
-        FormField(
+        FormFieldCompact(
             label = "Aadhaar Number",
             value = "",
             onValueChange = {},
@@ -205,7 +206,7 @@ fun AadhaarCardForm() {
             maxLength = 12,
         )
         Spacer(Modifier.height(12.dp))
-        FormField(
+        FormFieldCompact(
             label = "Name on Aadhaar",
             value = "",
             onValueChange = {},
@@ -271,7 +272,7 @@ fun AadhaarCardForm() {
 @Composable
 fun VidForm() {
 Column {
-    FormField(
+    FormFieldCompact(
         label = "Voter Number",
         value = "",
         onValueChange = {},
@@ -280,7 +281,7 @@ Column {
     )
     Spacer(modifier = Modifier.height(10.dp))
 
-    FormField(
+    FormFieldCompact(
         label = "Name on VID",
         value = "",
         onValueChange = {},
@@ -380,7 +381,7 @@ fun PanCardForm() {
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        FormField(
+        FormFieldCompact(
             label = "PAN Number",
             value = "",
             onValueChange = {},
@@ -389,7 +390,7 @@ fun PanCardForm() {
 
         Spacer(Modifier.height(12.dp))
 
-        FormField(
+        FormFieldCompact(
             label = "Name on PAN",
             value = "",
             onValueChange = {},

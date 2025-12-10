@@ -48,6 +48,7 @@ import com.psc.elekha.utils.CommonSingleButtonsBottomString
 import com.psc.elekha.utils.DynamicCheckBox
 import com.psc.elekha.utils.FormDatePicker
 import com.psc.elekha.utils.FormField
+import com.psc.elekha.utils.FormFieldCompact
 import com.psc.elekha.utils.FormSpinner
 import com.psc.elekha.utils.ReusableImageView
 import com.psc.elekha.utils.ReusableTextView
@@ -141,7 +142,7 @@ fun BankDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = {}) 
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                FormField(
+                FormFieldCompact(
                     label = stringResource(Res.string.customer_name_in_bank_dairy),
                     value = "",
                     placeholder = stringResource(Res.string.type_here),
@@ -151,7 +152,7 @@ fun BankDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = {}) 
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                FormField(
+                FormFieldCompact(
                     label = stringResource(Res.string.bank_account_number),
                     value = "",
                     placeholder = stringResource(Res.string.type_here),
@@ -180,7 +181,7 @@ fun BankDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = {}) 
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                FormField(
+                FormFieldCompact(
                     label = stringResource(Res.string.ifsc_code),
                     value = "",
                     placeholder = stringResource(Res.string.type_here),

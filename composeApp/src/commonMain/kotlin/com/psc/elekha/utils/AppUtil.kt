@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -32,6 +33,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.relocation.BringIntoViewRequester
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -92,6 +94,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
@@ -588,7 +591,7 @@ fun CommonSingleButtonsBottomString(
         Button(
             onClick = onOkClick,
             modifier = Modifier
-                .height(48.dp)
+                .height(40.dp)
                 .fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(
                 containerColor = btn_color,
@@ -620,7 +623,7 @@ fun FormField(
     placeholder: String = stringResource(Res.string.type_here),
     isEnable: Boolean = true,
     isReadable: Boolean = false,
-    labelColor: Color = textview_color,
+    labelColor: Color = toolbar_color,
     placeholderColor: Color = Color(0xFF212121),
     backgroundColor: Color = text_fiiled_color,
     borderColor: Color = boderColor,
@@ -628,7 +631,7 @@ fun FormField(
 //    disabledBackgroundColor: Color = Color(0xFFE0E0E0),
     disabledBackgroundColor: Color = formborder,
     modifier: Modifier = Modifier, // ✅ ADDED THIS
-    placeholderTextSize: Int = 15
+    placeholderTextSize: Int = 13
 ) {
 
     Column(modifier = modifier) {            // ✅ APPLY modifier HERE
@@ -665,14 +668,15 @@ fun FormField(
             },
             modifier = Modifier
                 .fillMaxWidth()
-                .wrapContentHeight()
-                .height(48.dp),
+                .height(40.dp),
             shape = RoundedCornerShape(15.dp),
             textStyle = TextStyle(
-                fontSize = 15.sp,
+                fontSize = 12.sp,
+                lineHeight = 14.sp,
                 fontFamily = FontFamily(Font(Res.font.roboto_medium)),
                 textAlign = TextAlign.Start
             ),
+
             colors = OutlinedTextFieldDefaults.colors(
                 focusedContainerColor = if (isEnable) backgroundColor else disabledBackgroundColor,
                 unfocusedContainerColor = if (isEnable) backgroundColor else disabledBackgroundColor,
@@ -682,10 +686,115 @@ fun FormField(
                 cursorColor = Color.Black
             ),
             maxLines = maxLines,
+
             keyboardOptions = KeyboardOptions(
                 keyboardType = inputType
+
             )
+
         )
+    }
+}
+@Composable
+fun FormFieldCompact(
+    label: String,
+    value: String,
+    onValueChange: (String) -> Unit,
+    maxLength: Int = Int.MAX_VALUE,
+    trailingIcon: @Composable (() -> Unit)? = null,
+    inputType: KeyboardType = KeyboardType.Text,
+    placeholder: String = stringResource(Res.string.type_here),
+    isEnable: Boolean = true,
+    isReadable: Boolean = false,
+    labelColor: Color = toolbar_color,
+    placeholderColor: Color = Color(0xFF212121),
+    backgroundColor: Color = text_fiiled_color,
+    borderColor: Color = boderColor,
+    disabledBackgroundColor: Color = formborder,
+    maxLines: Int = 1,
+    modifier: Modifier = Modifier,
+    placeholderTextSize: Int = 13
+) {
+
+    Column(modifier) {
+
+        ReusableTextView(
+            text = label,
+            fontSize = 14,
+            textColor = labelColor
+        )
+
+        Spacer(Modifier.height(5.dp))
+
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(40.dp)
+                .background(
+                    color = if (isEnable) backgroundColor else disabledBackgroundColor,
+                    shape = RoundedCornerShape(15.dp)
+                )
+                .border(1.dp, borderColor, RoundedCornerShape(15.dp))
+                .clickable(enabled = isEnable) { /* triggers keyboard focus */ },
+            contentAlignment = Alignment.CenterStart
+        ) {
+
+            BasicTextField(
+                value = value,
+                enabled = isEnable,
+                readOnly = isReadable,
+                onValueChange = { newValue ->
+                    val filtered = when (inputType) {
+                        KeyboardType.Number, KeyboardType.Phone -> newValue.filter { it.isDigit() }
+                        else -> newValue
+                    }
+                    if (filtered.length <= maxLength) onValueChange(filtered)
+                },
+
+                textStyle = TextStyle(
+                    fontSize = 12.sp,
+                    lineHeight = 14.sp,
+                    color = Color.Black,
+                    fontFamily = FontFamily(Font(Res.font.roboto_medium)),
+                    textAlign = TextAlign.Start
+                ),
+
+                maxLines = maxLines,
+                keyboardOptions = KeyboardOptions(keyboardType = inputType),
+
+                modifier = Modifier
+                    .matchParentSize()
+                    .padding(horizontal = 12.dp, vertical = 8.dp),
+
+                decorationBox = { innerTextField ->
+
+                    Row(
+                        modifier = Modifier.fillMaxSize(),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+
+
+                        Box(
+                            modifier = Modifier.weight(1f),
+                            contentAlignment = Alignment.CenterStart
+                        ) {
+                            if (value.isEmpty()) {
+                                ReusableTextView(
+                                    text = placeholder,
+                                    fontSize = placeholderTextSize,
+                                    textColor = placeholderColor
+                                )
+                            }
+                            innerTextField()
+                        }
+
+                        if (trailingIcon != null) {
+                            trailingIcon()
+                        }
+                    }
+                }
+            )
+        }
     }
 }
 
@@ -708,7 +817,7 @@ fun FormFields(
 //    disabledBackgroundColor: Color = Color(0xFFE0E0E0),
     disabledBackgroundColor: Color = formborder,
     modifier: Modifier = Modifier,
-    placeholderTextSize: Int = 15
+    placeholderTextSize: Int = 12
 ) {
 
 
@@ -727,17 +836,21 @@ fun FormFields(
         },
         trailingIcon = trailingIcon,
         placeholder = {
-            ReusableTextView(
+            Text(
                 text = placeholder,
-                fontSize = placeholderTextSize,
-                textColor = placeholderColor,
-                textAlignment = TextAlign.Start
+                fontSize = placeholderTextSize.sp,
+                color = placeholderColor,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                style = TextStyle(
+                    lineHeight = 10.sp  // ✅ Line height कम करें
+                )
             )
         },
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()
-            .height(48.dp),
+            .height(42.dp),
         shape = RoundedCornerShape(15.dp),
         textStyle = TextStyle(
             fontSize = 15.sp,
@@ -759,6 +872,7 @@ fun FormFields(
     )
 
 }
+
 
 
 @Composable
@@ -908,6 +1022,85 @@ fun MultiSelectDropdownWithChips(
 }
 
 @Composable
+fun FormDatePickerCompact(
+    label: String,
+    value: String,
+    onValueChange: (String) -> Unit,
+    onClick: () -> Unit,
+    trailingIcon: @Composable (() -> Unit)? = null,
+    placeholder: String = stringResource(Res.string.dd_mm_yy),
+    isEnable: Boolean = true,
+    labelColor: Color = toolbar_color,
+    placeholderColor: Color = Color(0xFF212121),
+    backgroundColor: Color = text_fiiled_color,
+    borderColor: Color = boderColor,
+    modifier: Modifier = Modifier
+) {
+
+    Column(modifier = modifier) {
+
+        // Label
+        ReusableTextView(
+            text = label,
+            fontSize = 14,
+            textColor = labelColor
+        )
+
+        Spacer(Modifier.height(5.dp))
+
+        // Full custom box (no cut, compact)
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(40.dp)   // ← EXACT height
+                .background(backgroundColor, RoundedCornerShape(15.dp))
+                .border(1.dp, borderColor, RoundedCornerShape(15.dp))
+                .clickable(enabled = isEnable) { onClick() }
+                .padding(horizontal = 10.dp),
+            contentAlignment = Alignment.CenterStart
+        ) {
+
+            // BasicTextField for Date
+            BasicTextField(
+                value = value,
+                onValueChange = onValueChange,
+                enabled = false,          // ← readOnly date picker
+                readOnly = true,
+                textStyle = TextStyle(
+                    fontSize = 14.sp,
+                    color = Color.Black,
+                    fontFamily = FontFamily(Font(Res.font.roboto_medium))
+                ),
+                decorationBox = { innerTextField ->
+
+                    // Placeholder (never cut)
+                    if (value.isEmpty()) {
+                        Text(
+                            text = placeholder,
+                            fontSize = 13.sp,
+                            color = placeholderColor
+                        )
+                    }
+
+                    innerTextField()
+
+                    // Trailing icon
+                    if (trailingIcon != null) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.End
+                        ) {
+                            trailingIcon()
+                        }
+                    }
+                }
+            )
+        }
+    }
+}
+
+
+@Composable
 fun FormDatePicker(
     label: String,
     value: String,
@@ -948,7 +1141,7 @@ fun FormDatePicker(
             },
             modifier = Modifier
                 .fillMaxWidth()
-                .height(48.dp)
+                .height(40.dp)
                 .clickable { onClick() },
             shape = RoundedCornerShape(15.dp),
             textStyle = TextStyle(
@@ -1561,7 +1754,7 @@ fun FormSpinner(
     selectedOption: String,
     onOptionSelected: (String) -> Unit,
     modifier: Modifier = Modifier,
-    labelColor: Color = textview_color,
+    labelColor: Color = toolbar_color,
     backgroundColor: Color = text_fiiled_color,
     textColor: Color = Color.Black,
     fontFamily: FontFamily = FontFamily(Font(Res.font.roboto_medium)),
@@ -1593,7 +1786,7 @@ fun FormSpinner(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(48.dp)
+                .height(40.dp)
                 .border(1.dp, borderColor, RoundedCornerShape(15.dp))
                 .background(backgroundColor, RoundedCornerShape(15.dp))
                 .clickable { expanded = true }
@@ -2556,6 +2749,7 @@ fun ReusableTextViewBlackCard(
     Text(
         text = displayText,
         modifier = modifier
+            .fillMaxWidth()
             .background(color = backgroundColor, shape = RoundedCornerShape(cornerRadius))
             .padding(padding),
         style = style.copy(
@@ -2885,7 +3079,7 @@ fun CustomAlertMovableAssets(
                     Spacer(Modifier.weight(0.2f))
 
                     Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.Center) {
-                        FormField(
+                        FormFieldCompact(
                             label = stringResource(Res.string.vehicle_no),
                             value = "",
                             onValueChange = { "" },
