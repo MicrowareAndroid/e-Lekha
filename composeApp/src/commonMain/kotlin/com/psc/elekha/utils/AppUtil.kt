@@ -611,7 +611,7 @@ fun CommonSingleButtonsBottomString(
     onOkClick: () -> Unit,
     text: String,
     modifier: Modifier = Modifier,
-    textSize: Int = 14
+    textSize: Int = 18
 ) {
     Box(
         modifier = modifier,
@@ -784,7 +784,7 @@ fun FormFieldCompact(
                 },
 
                 textStyle = TextStyle(
-                    fontSize = 12.sp,
+                    fontSize = 16.sp,
                     lineHeight = 14.sp,
                     color = Color.Black,
                     fontFamily = FontFamily(Font(Res.font.roboto_medium)),
@@ -1098,7 +1098,7 @@ fun FormDatePickerCompact(
                 enabled = false,          // ← readOnly date picker
                 readOnly = true,
                 textStyle = TextStyle(
-                    fontSize = 14.sp,
+                    fontSize = 16.sp,
                     color = Color.Black,
                     fontFamily = FontFamily(Font(Res.font.roboto_medium))
                 ),
