@@ -114,6 +114,11 @@ import org.jetbrains.compose.resources.stringResource
 @Composable
 fun BankDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = {}) {
     var passbookImage by remember { mutableStateOf<Uri?>(null) }
+    var nameOnAccount by remember { mutableStateOf("") }
+    var AccountNo by remember { mutableStateOf("") }
+    var bankName by remember { mutableStateOf("") }
+    var branchName by remember { mutableStateOf("") }
+    var ifscCode by remember { mutableStateOf("") }
 
 
     LaunchedEffect(Unit) {
@@ -145,9 +150,9 @@ fun BankDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = {}) 
 
                 FormFieldCompact(
                     label = stringResource(Res.string.customer_name_in_bank_dairy),
-                    value = "",
+                    value = nameOnAccount,
                     placeholder = stringResource(Res.string.type_here),
-                    onValueChange = { "" },
+                    onValueChange = { nameOnAccount = it},
                     maxLength = 30
                 )
 
@@ -155,9 +160,9 @@ fun BankDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = {}) 
 
                 FormFieldCompact(
                     label = stringResource(Res.string.bank_account_number),
-                    value = "",
+                    value = AccountNo,
                     placeholder = stringResource(Res.string.type_here),
-                    onValueChange = { "" },
+                    onValueChange = { AccountNo = it },
                     maxLength = 18,
                     inputType = KeyboardType.Number
                 )
@@ -167,8 +172,8 @@ fun BankDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = {}) 
                 FormSpinner(
                     label = stringResource(Res.string.bank_name),
                     options = listOf("SBI", "HDFC", "AXIS"),
-                    selectedOption = "",
-                    onOptionSelected = { }
+                    selectedOption = bankName,
+                    onOptionSelected = { bankName = it}
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -176,17 +181,17 @@ fun BankDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = {}) 
                 FormSpinner(
                     label = stringResource(Res.string.branch_name),
                     options = listOf("SBI Delhi","SBI Gurgaon", "HDFC Delhi","HDFC Gurgaon", "AXIS Delhi","AXIS Gurgaon"),
-                    selectedOption = "",
-                    onOptionSelected = { }
+                    selectedOption = branchName,
+                    onOptionSelected = {branchName = it }
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
 
                 FormFieldCompact(
                     label = stringResource(Res.string.ifsc_code),
-                    value = "",
+                    value = ifscCode,
                     placeholder = stringResource(Res.string.type_here),
-                    onValueChange = { "" },
+                    onValueChange = { ifscCode = it},
                 )
 
                 Spacer(modifier = Modifier.height(10.dp))
