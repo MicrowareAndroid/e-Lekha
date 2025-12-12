@@ -13,12 +13,12 @@ class TabletMenuRoleRepository(
     }
 
     // Insert list of tablet menu roles
-    suspend fun insertAllTabletMenuRole(list: List<TabletMenuRoleEntity>?) {
+    suspend fun insertAllTabletMenuRole(list: List<TabletMenuRoleEntity>) {
         tabletMenuRoleDao.insertAllTabletMenuRole(list)
     }
 
     // Get all tablet menu roles
-    suspend fun getAllTabletMenuRole(): List<TabletMenuRoleEntity>? {
+    suspend fun getAllTabletMenuRole(): List<TabletMenuRoleEntity> {
         return tabletMenuRoleDao.getAllTabletMenuRole()
     }
 

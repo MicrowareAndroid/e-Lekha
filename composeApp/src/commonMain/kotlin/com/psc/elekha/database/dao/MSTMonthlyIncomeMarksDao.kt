@@ -10,10 +10,10 @@ interface MSTMonthlyIncomeMarksDao {
     suspend fun insertMonthlyIncomeMarks(mSTMonthlyIncomeMarksEntity: MSTMonthlyIncomeMarksEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAllMonthlyIncomeMarks(mSTMonthlyIncomeMarksEntity: List<MSTMonthlyIncomeMarksEntity>?)
+    suspend fun insertAllMonthlyIncomeMarks(mSTMonthlyIncomeMarksEntity: List<MSTMonthlyIncomeMarksEntity>)
 
     @Query("Select * from MstMonthlyIncomeMarks")
-    suspend  fun getAllMonthlyIncomeMarks(): List<MSTMonthlyIncomeMarksEntity>?
+    suspend  fun getAllMonthlyIncomeMarks(): List<MSTMonthlyIncomeMarksEntity>
 
     @Query("Delete from MstMonthlyIncomeMarks")
     suspend fun deleteAllMonthlyIncomeMarks()

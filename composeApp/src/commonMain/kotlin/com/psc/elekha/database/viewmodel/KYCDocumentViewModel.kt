@@ -22,7 +22,7 @@ class KYCDocumentViewModel(
     // --------------------------------------
     suspend fun loadAllDocuments() {
         viewModelScope.launch(Dispatchers.IO) {
-            _allDocuments.value = repository.getAllKYCDocument() ?: emptyList()
+            _allDocuments.value = repository.getAllKYCDocument()
         }
     }
 
@@ -65,6 +65,6 @@ class KYCDocumentViewModel(
     }
 
     suspend fun getAllDocumentsDirect(): List<KYCDocumentEntity> {
-        return repository.getAllKYCDocument() ?: emptyList()
+        return repository.getAllKYCDocument()
     }
 }

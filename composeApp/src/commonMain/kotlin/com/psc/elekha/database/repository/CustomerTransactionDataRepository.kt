@@ -23,12 +23,12 @@ class CustomerTransactionDataRepository(
     }
 
     // Get all transactions to upload
-    fun getAllCustomerTransactionDataUpload(): List<CustomerTransactionDataEntity>? {
+    fun getAllCustomerTransactionDataUpload(): List<CustomerTransactionDataEntity> {
         return dao.getAllCustomerTransactionDataUpload()
     }
 
     // Get all transaction data by GUID
-    fun getAllCustomerTransactionData(GUID: String): List<CustomerTransactionDataEntity>? {
+    fun getAllCustomerTransactionData(GUID: String): List<CustomerTransactionDataEntity> {
         return dao.getAllCustomerTransactionData(GUID)
     }
 

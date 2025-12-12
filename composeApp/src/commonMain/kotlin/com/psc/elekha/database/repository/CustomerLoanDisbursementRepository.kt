@@ -16,15 +16,15 @@ class CustomerLoanDisbursementRepository (
         customerLoanDisbursementDao.insertAllLoanDisbursement(loans)
     }
     //Get all loan disbursements
-    suspend fun getAllLoanDisbursement():List<CustomerLoanDisbursementEntity>? {
+    suspend fun getAllLoanDisbursement():List<CustomerLoanDisbursementEntity> {
         return customerLoanDisbursementDao.getAllLoanDisbursement()
     }
     //get loan disbursement with status (2,3)
-    suspend fun getLoanDisbursementData(): List<CustomerLoanDataClass>? {
+    suspend fun getLoanDisbursementData(): List<CustomerLoanDataClass> {
         return customerLoanDisbursementDao.getLoanDisbursementData()
     }
     //get loan disbursement by specific status Id
-    suspend fun getLoanDisbursementDataByStatus(customerStatusId: Int): List<CustomerLoanDataClass>? {
+    suspend fun getLoanDisbursementDataByStatus(customerStatusId: Int): List<CustomerLoanDataClass> {
         return customerLoanDisbursementDao.getLoanDisbursementDataByStatus(customerStatusId)
     }
     // Delete all loan disbursement records

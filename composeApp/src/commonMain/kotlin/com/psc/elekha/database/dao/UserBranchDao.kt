@@ -10,10 +10,10 @@ interface UserBranchDao {
     suspend  fun insertUserBranch(userBranchEntity: UserBranchEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend  fun insertAllUserBranch(userBranchEntity: List<UserBranchEntity>?)
+    suspend  fun insertAllUserBranch(userBranchEntity: List<UserBranchEntity>)
 
     @Query("Select * from UserBranch")
-    suspend fun getAllUserBranch(): List<UserBranchEntity>?
+    suspend fun getAllUserBranch(): List<UserBranchEntity>
 
     @Query("Select BranchID from UserBranch where UserID=:UserID")
     suspend  fun getBranchIDbyUser(UserID: String): Int?

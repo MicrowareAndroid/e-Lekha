@@ -15,7 +15,7 @@ class KYCStatusConditionRepository(
         dao.insertAllKYCStatusCondition(conditions)
     }
 
-    suspend fun getAllKYCStatusCondition(): List<KYCStatusConditionEntity>? {
+    suspend fun getAllKYCStatusCondition(): List<KYCStatusConditionEntity> {
         return dao.getAllKYCStatusCondition()
     }
 

@@ -40,8 +40,6 @@ import com.psc.elekha.database.dao.RegistrationStatusDao
 import com.psc.elekha.database.dao.TabletMenuDao
 import com.psc.elekha.database.dao.TabletMenuRoleDao
 import com.psc.elekha.database.dao.UserBranchDao
-import com.psc.elekha.database.entity.UserEntity
-import com.psc.elekha.database.dao.UserDao
 import com.psc.elekha.database.dao.UserResponseDao
 import com.psc.elekha.database.dao.UsersDao
 import com.psc.elekha.database.entity.CustomerDefaultEntity
@@ -85,7 +83,7 @@ import com.psc.elekha.database.entity.UserBranchEntity
 import com.psc.elekha.database.entity.UserResponseEntity
 import com.psc.elekha.database.entity.UsersEntity
 
-@Database(entities = [UserEntity::class,
+@Database(entities = [
     CustomerStatusEntity::class, MSTAssetsValuationEntity::class, MSTBankBranchEntity::class, MSTBankEntity::class,
     MSTBranchEntity::class, MSTCenterEntity::class, MSTComboBox_NEntity::class, MSTDistrictEntity::class,
     MSTLoanOfficerEntity::class, MSTLoanProductEntity::class, MSTLoanTypeEntity::class, MSTMFILoanProductEntity::class,
@@ -97,12 +95,9 @@ import com.psc.elekha.database.entity.UsersEntity
     CustomerLoanDisbursementEntity::class, ImageTrackingRecordEntity::class, ImageDetailEntity::class, UserResponseEntity::class,
     CustomerDefaultEntity::class, MstLoanDetailsEntity::class, RegistrationStatusEntity::class, CustomerTransactionDataEntity::class,
     CustomerTransactionsDetailsEntity::class],
-    version = 1, exportSchema = false)
+    version = 1, exportSchema = true)
 @ConstructedBy(AppDatabaseConstructor::class)
 abstract class AppDatabase : RoomDatabase() {
-
-
-    abstract fun userDao(): UserDao
 
     abstract fun customerStatusDao(): CustomerStatusDao
     abstract fun mSTAssetsValuationDao(): MSTAssetsValuationDao

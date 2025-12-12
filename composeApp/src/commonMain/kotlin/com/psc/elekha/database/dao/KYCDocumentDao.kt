@@ -10,10 +10,10 @@ interface KYCDocumentDao {
     suspend fun insertKYCDocument(kYCDocumentEntity: KYCDocumentEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAllKYCDocument(kYCDocumentEntity: List<KYCDocumentEntity>?)
+    suspend fun insertAllKYCDocument(kYCDocumentEntity: List<KYCDocumentEntity>)
 
     @Query("Select * from KYCDocument")
-    suspend fun getAllKYCDocument(): List<KYCDocumentEntity>?
+    suspend fun getAllKYCDocument(): List<KYCDocumentEntity>
 
     @Query("Delete from KYCDocument")
     suspend fun deleteAllKYCDocument()

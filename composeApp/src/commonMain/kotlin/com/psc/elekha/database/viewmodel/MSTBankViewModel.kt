@@ -19,7 +19,7 @@ class MSTBankViewModel(
     fun loadAllBanks() {
         viewModelScope.launch {
             val result = repository.getAllBank()
-            _bankList.value = result ?: emptyList()
+            _bankList.value = result
         }
     }
 
@@ -32,7 +32,7 @@ class MSTBankViewModel(
     }
 
     // Insert list of banks
-    fun insertAllBank(list: List<MSTBankEntity>?) {
+    fun insertAllBank(list: List<MSTBankEntity>) {
         viewModelScope.launch {
             repository.insertAllBank(list)
             loadAllBanks() // Refresh list

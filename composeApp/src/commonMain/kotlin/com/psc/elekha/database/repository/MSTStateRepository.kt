@@ -13,12 +13,12 @@ class MSTStateRepository(
     }
 
     // Insert list of states
-    suspend fun insertAllState(list: List<MSTStateEntity>?) {
+    suspend fun insertAllState(list: List<MSTStateEntity>) {
         stateDao.insertAllState(list)
     }
 
     // Get all states
-    suspend fun getAllState(): List<MSTStateEntity>? {
+    suspend fun getAllState(): List<MSTStateEntity> {
         return stateDao.getAllState()
     }
 

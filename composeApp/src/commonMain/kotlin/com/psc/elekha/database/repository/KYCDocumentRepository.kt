@@ -15,7 +15,7 @@ class KYCDocumentRepository(
         dao.insertAllKYCDocument(documents)
     }
 
-    suspend fun getAllKYCDocument(): List<KYCDocumentEntity>? {
+    suspend fun getAllKYCDocument(): List<KYCDocumentEntity> {
         return dao.getAllKYCDocument()
     }
 

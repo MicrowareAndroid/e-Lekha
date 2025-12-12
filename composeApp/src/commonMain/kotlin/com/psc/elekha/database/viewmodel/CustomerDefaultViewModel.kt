@@ -37,7 +37,7 @@ class CustomerDefaultViewModel(
 
     fun loadCustomers() {
         viewModelScope.launch {
-            _customers.value = repository.getAllCustomers() ?: emptyList()
+            _customers.value = repository.getAllCustomers()
         }
     }
 
@@ -81,7 +81,7 @@ class CustomerDefaultViewModel(
     fun loadCustomerByContact(contact: String) {
         viewModelScope.launch {
             _customerByContact.value =
-                repository.getCustomerByContact(contact) ?: emptyList()
+                repository.getCustomerByContact(contact)
         }
     }
 
@@ -251,7 +251,7 @@ class CustomerDefaultViewModel(
 
     fun loadAllCustomerUpload() {
         viewModelScope.launch {
-            _allCustomerUpload.value = repository.getAllCustomerUpload() ?: emptyList()
+            _allCustomerUpload.value = repository.getAllCustomerUpload()
         }
     }
 

@@ -19,7 +19,7 @@ class TabletMenuRoleViewModel(
     fun loadAllTabletMenuRole() {
         viewModelScope.launch {
             val result = repository.getAllTabletMenuRole()
-            _tabletMenuRoleList.value = result ?: emptyList()
+            _tabletMenuRoleList.value = result
         }
     }
 
@@ -32,7 +32,7 @@ class TabletMenuRoleViewModel(
     }
 
     // Insert list of tablet menu roles
-    fun insertAllTabletMenuRole(list: List<TabletMenuRoleEntity>?) {
+    fun insertAllTabletMenuRole(list: List<TabletMenuRoleEntity>) {
         viewModelScope.launch {
             repository.insertAllTabletMenuRole(list)
             loadAllTabletMenuRole() // Refresh list

@@ -10,13 +10,13 @@ interface ImageTrackingRecordDao {
     suspend fun insertImageTrackingRecord(imageTrackingRecordEntity: ImageTrackingRecordEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAllImageTrackingRecord(imageTrackingRecordEntity: List<ImageTrackingRecordEntity>?)
+    suspend fun insertAllImageTrackingRecord(imageTrackingRecordEntity: List<ImageTrackingRecordEntity>)
 
     @Query("Select * from ImageTrackingRecord where IsDeleted = 0 and IsEdited = 1 and IsUpload = 0")
-    suspend fun getAllImageTrackingRecord(): List<ImageTrackingRecordEntity>?
+    suspend fun getAllImageTrackingRecord(): List<ImageTrackingRecordEntity>
 
     @Query("Select * from ImageTrackingRecord where IsDeleted = 0")
-    suspend fun getImageAllData(): List<ImageTrackingRecordEntity>?
+    suspend fun getImageAllData(): List<ImageTrackingRecordEntity>
 
     @Query("Delete from ImageTrackingRecord")
     suspend fun deleteAllImageTrackingRecord()

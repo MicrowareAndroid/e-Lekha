@@ -20,7 +20,7 @@ class RegistrationStatusViewModel(
     fun loadAllRegistrationStatuses() {
         viewModelScope.launch {
             val result = repository.getAllRegistrationStatus()
-            _registrationStatusList.value = result ?: emptyList()
+            _registrationStatusList.value = result
         }
     }
 
@@ -33,7 +33,7 @@ class RegistrationStatusViewModel(
     }
 
     // Insert list of registration statuses
-    fun insertAllRegistrationStatus(list: List<RegistrationStatusEntity>?) {
+    fun insertAllRegistrationStatus(list: List<RegistrationStatusEntity>) {
         viewModelScope.launch {
             repository.insertAllRegistrationStatus(list)
             loadAllRegistrationStatuses() // Refresh list

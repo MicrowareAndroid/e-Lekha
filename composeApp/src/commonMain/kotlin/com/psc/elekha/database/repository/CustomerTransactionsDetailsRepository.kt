@@ -18,7 +18,7 @@ class CustomerTransactionsDetailsRepository(
     }
 
     // Get all transactions for a customer
-    suspend fun getAllCustomerTransaction(GUID: String): List<CustomerTransactionsDetailsEntity>? {
+    suspend fun getAllCustomerTransaction(GUID: String): List<CustomerTransactionsDetailsEntity> {
         return dao.getAllCustomerTransactionData(GUID)
     }
 

@@ -1,6 +1,4 @@
-
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -16,6 +14,9 @@ plugins {
 }
 
 kotlin {
+    sourceSets.commonMain {
+        kotlin.srcDir("build/generated/ksp/metadata")
+    }
 
     androidTarget {
         compilerOptions {
@@ -35,6 +36,8 @@ kotlin {
             linkerOpts.add("-lsqlite3")
         }
     }
+
+    jvm()
 
     sourceSets {
 
@@ -115,9 +118,9 @@ kotlin {
             implementation(libs.kotlinx.coroutinesSwing)
         }
 
-        /*dependencies {
+        dependencies {
             ksp(libs.androidx.room.compiler)
-        }*/
+        }
     }
 }
 
@@ -132,6 +135,13 @@ android {
         versionCode = 1
         versionName = "1.0"
     }
+
+    buildFeatures {
+        compose = true
+        buildConfig = true
+    }
+
+
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -158,6 +168,18 @@ dependencies {
 
 room {
     schemaDirectory("$projectDir/schemas")
+}
+
+compose.desktop {
+    application {
+        mainClass = "com.psc.elekha.MainKt"
+
+        nativeDistributions {
+            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
+            packageName = "com.psc.elekha"
+            packageVersion = "1.0.0"
+        }
+    }
 }
 
 

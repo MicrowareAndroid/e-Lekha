@@ -13,12 +13,12 @@ class RegistrationStatusRepository(
     }
 
     // Insert list of registration statuses
-    suspend fun insertAllRegistrationStatus(list: List<RegistrationStatusEntity>?) {
+    suspend fun insertAllRegistrationStatus(list: List<RegistrationStatusEntity>) {
         registrationStatusDao.insertAllRegistrationStatus(list)
     }
 
     // Get all registration statuses
-    suspend fun getAllRegistrationStatus(): List<RegistrationStatusEntity>? {
+    suspend fun getAllRegistrationStatus(): List<RegistrationStatusEntity> {
         return registrationStatusDao.getAllRegistrationStatus()
     }
 

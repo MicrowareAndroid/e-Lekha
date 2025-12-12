@@ -12,25 +12,35 @@ import androidx.compose.ui.*
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.psc.elekha.database.viewmodel.UsersViewModel
 import com.psc.elekha.utils.RouteName
 import e_lekha.composeapp.generated.resources.Res
 import e_lekha.composeapp.generated.resources.logo
+import kotlinx.coroutines.delay
 import org.jetbrains.compose.resources.painterResource
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun SplashScreenNew(navController: NavController) {
-//    val finished by viewModel.finished.collectAsState()
+    val viewModel = koinViewModel<UsersViewModel>()
+    val userList by viewModel.userList.collectAsState()
 
     LaunchedEffect(Unit) {
-        navController.navigate(RouteName.login) {
-            popUpTo(RouteName.splash) { inclusive = true }
+        viewModel.loadAllUsers()
+        delay(5000)
+        if (userList.isNotEmpty()) {
+            navController.navigate(RouteName.home) {
+                popUpTo(RouteName.splash) { inclusive = true }
+            }
+        } else {
+            navController.navigate(RouteName.login) {
+                popUpTo(RouteName.splash) { inclusive = true }
+            }
         }
     }
 
     Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.White),
+        modifier = Modifier.fillMaxSize().background(Color.White),
         contentAlignment = Alignment.Center
     ) {
         Image(

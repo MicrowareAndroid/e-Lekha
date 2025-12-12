@@ -13,12 +13,12 @@ class MSTLoanOfficerRepository(
     }
 
     // Insert list of loan officers
-    suspend fun insertAllLoanOfficer(list: List<MSTLoanOfficerEntity>?) {
+    suspend fun insertAllLoanOfficer(list: List<MSTLoanOfficerEntity>) {
         loanOfficerDao.insertAllLoanOfficer(list)
     }
 
     // Get all loan officers
-    suspend fun getAllLoanOfficer(): List<MSTLoanOfficerEntity>? {
+    suspend fun getAllLoanOfficer(): List<MSTLoanOfficerEntity> {
         return loanOfficerDao.getAllLoanOfficer()
     }
 

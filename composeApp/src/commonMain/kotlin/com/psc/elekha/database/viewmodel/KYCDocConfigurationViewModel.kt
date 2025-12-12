@@ -22,7 +22,7 @@ class KYCDocConfigurationViewModel(
     // -------------------------------
     fun loadAllConfigurations() {
         viewModelScope.launch(Dispatchers.IO) {
-            _allConfigurations.value = repository.getAllKYCDocConfiguration() ?: emptyList()
+            _allConfigurations.value = repository.getAllKYCDocConfiguration()
         }
     }
 

@@ -10,10 +10,10 @@ interface MSTDistrictDao {
     suspend  fun insertDistrict(mSTDistrictEntity: MSTDistrictEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend  fun insertAllDistrict(mSTDistrictEntity: List<MSTDistrictEntity>?)
+    suspend  fun insertAllDistrict(mSTDistrictEntity: List<MSTDistrictEntity>)
 
     @Query("Select * from MSTDistrict")
-    suspend  fun getAllDistrict(): List<MSTDistrictEntity>?
+    suspend  fun getAllDistrict(): List<MSTDistrictEntity>
 
     @Query("Delete from MSTDistrict")
     suspend  fun deleteAllDistrict()

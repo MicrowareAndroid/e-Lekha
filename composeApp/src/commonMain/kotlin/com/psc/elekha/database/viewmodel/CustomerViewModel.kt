@@ -16,7 +16,7 @@ class CustomerViewModel(private val customerRepository: CustomerRepository) : Vi
     // Load all customers
     fun loadCustomers() {
         viewModelScope.launch {
-            val result = customerRepository.getAllCustomers() ?: emptyList()
+            val result = customerRepository.getAllCustomers()
             _customers.value = result
         }
     }

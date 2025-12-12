@@ -41,7 +41,7 @@ class UsersViewModel(
     fun fetchUserDetails(userName: String, password: String) {
         viewModelScope.launch {
             val details = repository.getUserDetails(userName, password)
-            _userDetails.value = details ?: emptyList()
+            _userDetails.value = details
         }
     }
 
@@ -55,7 +55,7 @@ class UsersViewModel(
     }
 
     // Insert list of users
-    fun insertAllUsers(list: List<UsersEntity>?) {
+    fun insertAllUsers(list: List<UsersEntity>) {
         viewModelScope.launch {
             repository.insertAllUsers(list)
             loadAllUsers() // Refresh list

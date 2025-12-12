@@ -19,7 +19,7 @@ class MSTDistrictViewModel(
     fun loadAllDistricts() {
         viewModelScope.launch {
             val result = repository.getAllDistrict()
-            _districtList.value = result ?: emptyList()
+            _districtList.value = result
         }
     }
 
@@ -32,7 +32,7 @@ class MSTDistrictViewModel(
     }
 
     // Insert list of districts
-    fun insertAllDistrict(list: List<MSTDistrictEntity>?) {
+    fun insertAllDistrict(list: List<MSTDistrictEntity>) {
         viewModelScope.launch {
             repository.insertAllDistrict(list)
             loadAllDistricts() // Refresh list

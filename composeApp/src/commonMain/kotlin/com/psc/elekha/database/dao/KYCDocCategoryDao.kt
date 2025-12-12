@@ -10,10 +10,10 @@ interface KYCDocCategoryDao {
     suspend fun insertKYCDocCategory(kYCDocCategoryEntity: KYCDocCategoryEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAllKYCDocCategory(kYCDocCategoryEntity: List<KYCDocCategoryEntity>?)
+    suspend fun insertAllKYCDocCategory(kYCDocCategoryEntity: List<KYCDocCategoryEntity>)
 
     @Query("Select * from KYCDocCategory")
-    suspend fun getAllKYCDocCategory(): List<KYCDocCategoryEntity>?
+    suspend fun getAllKYCDocCategory(): List<KYCDocCategoryEntity>
 
     @Query("Delete from KYCDocCategory")
     suspend fun deleteAllKYCDocCategory()

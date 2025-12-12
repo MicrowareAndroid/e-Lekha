@@ -23,7 +23,7 @@ class KYCStatusConditionViewModel(
     fun loadAllConditions() {
 
         viewModelScope.launch(Dispatchers.IO) {
-            _allConditions.value = repository.getAllKYCStatusCondition() ?: emptyList()
+            _allConditions.value = repository.getAllKYCStatusCondition()
         }
     }
 

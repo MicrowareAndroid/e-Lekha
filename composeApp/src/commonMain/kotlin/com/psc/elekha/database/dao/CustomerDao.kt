@@ -10,10 +10,10 @@ interface CustomerDao {
    suspend fun insertCustomer(customerEntity: CustomerEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAllCustomer(customerEntity: List<CustomerEntity>?)
+    suspend fun insertAllCustomer(customerEntity: List<CustomerEntity>)
 
     @Query("Select * from Customer")
-    suspend fun getAllCustomer(): List<CustomerEntity>?
+    suspend fun getAllCustomer(): List<CustomerEntity>
 
     @Query("Select Count(*) from Customer Where IsDeleted = 0 and IsUpload = 0 and CutomerStatusID = 1")
     suspend fun getAllCountCustomer(): Int?
@@ -22,13 +22,13 @@ interface CustomerDao {
     suspend fun getLoanAppliedIDCount(): Int?
 
     @Query("Select * from Customer where IsDeleted=0 and IsEdited=1")
-    suspend fun getAllCustomerUpload(): List<CustomerEntity>?
+    suspend fun getAllCustomerUpload(): List<CustomerEntity>
 
     @Query("Select * from Customer where ContactNo=:ContactNo")
-    suspend fun getCustomerByContactNumber(ContactNo: String): List<CustomerEntity>?
+    suspend fun getCustomerByContactNumber(ContactNo: String): List<CustomerEntity>
 
     @Query("Select * from Customer where ContactNo=:ContactNo and UserID=:UserID and CutomerStatusID = 5")
-    suspend fun getCustomerByContactNumber(ContactNo: String, UserID: String): List<CustomerEntity>?
+    suspend fun getCustomerByContactNumber(ContactNo: String, UserID: String): List<CustomerEntity>
 
     @Query("Select Count(*) from Customer where ContactNo=:ContactNo and CutomerStatusID=:CutomerStatusID")
     suspend fun getCountByContactNumber(ContactNo: String, CutomerStatusID: Int): Int?
@@ -37,7 +37,7 @@ interface CustomerDao {
     suspend fun getCountByContactNumber(ContactNo: String): Int?
 
     @Query("Select * from Customer where GUID=:GUID")
-    suspend fun getCustomerDetails(GUID: String): CustomerEntity?
+    suspend fun getCustomerDetails(GUID: String): CustomerEntity
 
     @Query("Select CutomerStatusID from Customer where GUID=:GUID")
     suspend fun getCustomerStatus(GUID: String): Int?
@@ -143,7 +143,7 @@ interface CustomerDao {
     )
 
     @Query("Select * from Customer where IsDeleted = 0 and CutomerStatusID in(:CutomerStatusID) order by CutomerStatusID")
-    suspend fun getCustomerByLoanApplied(CutomerStatusID: List<Int>): List<CustomerEntity>?
+    suspend fun getCustomerByLoanApplied(CutomerStatusID: List<Int>): List<CustomerEntity>
 
     @Query("Select CKYC_UID from Customer where GUID =:GUID")
     suspend fun getCustomerAadhaar(GUID: String): String?
@@ -167,13 +167,13 @@ interface CustomerDao {
     suspend fun getCount(): Int
 
     @Query("Select * from Customer where RegistrationStatusID NOT in(:RegistrationStatusID) order by RegistrationStatusID")
-    suspend fun getCustomerByRegistrationStatusID(RegistrationStatusID: List<Int>): List<CustomerEntity>?
+    suspend fun getCustomerByRegistrationStatusID(RegistrationStatusID: List<Int>): List<CustomerEntity>
 
     @Query("Select max(LoanDisbursedDate) from Customer where ContactNo=:ContactNo")
     suspend fun getMaxLoan(ContactNo: String): String?
 
     @Query("Select * from Customer where LoanDisbursedDate=:LoanDisbursedDate")
-    suspend fun getCustomerDataBYLoanDate(LoanDisbursedDate: String): List<CustomerEntity>?
+    suspend fun getCustomerDataBYLoanDate(LoanDisbursedDate: String): List<CustomerEntity>
 
     @Query("Select Count(*) from Customer where IsDeleted = 0 and CutomerStatusID in(:CutomerStatusID)")
     suspend fun getCustomerByLoanAppliedCount(CutomerStatusID: List<Int>): Int?
@@ -182,7 +182,7 @@ interface CustomerDao {
     suspend fun getAllCustomerUploadCount(): Int
 
     @Query("Select * from Customer where IsDeleted=0 and IsEdited=1 and CustomerBankIFSCCode is not null and LoanAppliedID != 0")
-    suspend  fun getAllCustomerUploadNew(): List<CustomerEntity>?
+    suspend  fun getAllCustomerUploadNew(): List<CustomerEntity>
 
     @Query("Select Count(*) from Customer where IsDeleted=0 and IsEdited=1 and CustomerBankIFSCCode is not null and LoanAppliedID != 0")
     suspend fun getAllCustomerUploadCountNew(): Int

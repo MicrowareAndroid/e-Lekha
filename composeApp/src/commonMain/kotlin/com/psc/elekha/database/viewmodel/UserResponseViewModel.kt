@@ -25,7 +25,7 @@ class UserResponseViewModel(
     fun loadAllUsers() {
         viewModelScope.launch {
             val result = repository.getAllUsers()
-            _userList.value = result ?: emptyList()
+            _userList.value = result
         }
     }
 
@@ -41,7 +41,7 @@ class UserResponseViewModel(
     fun fetchUserDetails(contact: String) {
         viewModelScope.launch {
             val details = repository.getUserDetails(contact)
-            _userDetails.value = details ?: emptyList()
+            _userDetails.value = details
         }
     }
 
@@ -55,7 +55,7 @@ class UserResponseViewModel(
     }
 
     // Insert list of users
-    fun insertAllUsers(list: List<UserResponseEntity>?) {
+    fun insertAllUsers(list: List<UserResponseEntity>) {
         viewModelScope.launch {
             repository.insertAllUsers(list)
             loadAllUsers() // Refresh list

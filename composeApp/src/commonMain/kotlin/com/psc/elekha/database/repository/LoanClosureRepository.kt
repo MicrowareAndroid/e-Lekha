@@ -18,12 +18,12 @@ class LoanClosureRepository(
     }
 
     // Get all loan closures
-    suspend fun getAllLoanClosure(): List<LoanClosureEntity>? {
+    suspend fun getAllLoanClosure(): List<LoanClosureEntity> {
         return dao.getAllLoanClouser()
     }
 
     // Get loan closures to upload
-    suspend fun getLoanClosureUploadData(): List<LoanClosureEntity>? {
+    suspend fun getLoanClosureUploadData(): List<LoanClosureEntity> {
         return dao.getLoanClouserUploadData()
     }
 

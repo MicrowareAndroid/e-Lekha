@@ -10,10 +10,10 @@ interface MSTBankDao {
     suspend   fun insertBank(mSTBankEntity: MSTBankEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAllBank(mSTBankEntity: List<MSTBankEntity>?)
+    suspend fun insertAllBank(mSTBankEntity: List<MSTBankEntity>)
 
     @Query("Select * from MSTBank where IsDeleted = 0 order by Bank")
-    suspend fun getAllBank(): List<MSTBankEntity>?
+    suspend fun getAllBank(): List<MSTBankEntity>
 
     @Query("Delete from MSTBank")
     suspend  fun deleteAllBank()
