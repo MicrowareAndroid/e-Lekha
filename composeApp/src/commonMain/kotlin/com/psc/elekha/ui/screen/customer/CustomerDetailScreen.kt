@@ -10,6 +10,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -17,21 +18,28 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.psc.elekha.ui.screen.gtrlist.BranchItem
 import com.psc.elekha.ui.theme.LightSkyBlue
+import com.psc.elekha.ui.theme.LightTeal
 import com.psc.elekha.ui.theme.PrimaryDark
 import com.psc.elekha.ui.theme.black
 import com.psc.elekha.ui.theme.editext_bg_color
+import com.psc.elekha.ui.theme.toolbar_color
 import com.psc.elekha.ui.theme.white
 import com.psc.elekha.utils.CameraPicker
+import com.psc.elekha.utils.CommonDivider
 import com.psc.elekha.utils.CommonSingleButtonsBottomString
 import com.psc.elekha.utils.FillDynamicSpinner
 import com.psc.elekha.utils.FormField
 import com.psc.elekha.utils.FormFieldCompact
 import com.psc.elekha.utils.FormFields
 import com.psc.elekha.utils.FormSpinner
+import com.psc.elekha.utils.ReusableCard
+import com.psc.elekha.utils.ReusableDynamicSpinner
 import com.psc.elekha.utils.ReusableTextView
 import com.psc.elekha.utils.ReusableTextViewBlackCard
 import com.psc.elekha.utils.ReusableTextViews
@@ -48,7 +56,7 @@ fun CustomerDetailScreen(
     navController: NavHostController,
 ) {
     var selectedScreen by remember { mutableStateOf("New Customer") }
-    val branchList = listOf("3000", "4000", "5000", "6000")
+    var branchList = listOf("3000", "4000", "5000", "6000")
     var selectedBranch by remember { mutableStateOf("") }
 
     var openCamera by remember { mutableStateOf(false) }
@@ -65,11 +73,11 @@ fun CustomerDetailScreen(
                 onNavigationClick = { navController.popBackStack() }
             )
         },
-                bottomBar = {
+        bottomBar = {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(white)
+                    .background(toolbar_color)
                     .padding(horizontal = 16.dp, vertical = 10.dp)
                     .navigationBarsPadding()
             ) {
@@ -107,38 +115,76 @@ fun CustomerDetailScreen(
             ) {
 
 
-                Column(
-                    horizontalAlignment = Alignment.Start,
-                    verticalArrangement = Arrangement.spacedBy(4.dp)
+                ReusableCard(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(5.dp),
+                    backgroundColor = LightTeal,
+                    cornerRadius = 12
                 )
                 {
 
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        ReusableTextView(
-                            text = stringResource(Res.string.home_user),
-                            textColor = PrimaryDark
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(5.dp)
+                    ) {
+
+                        // ---------- ROW 1 : USER NAME (LEFT FULL WIDTH) ----------
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Start
+                        ) {
+                            ReusableTextView(
+                                text = stringResource(Res.string.home_user),
+                                textColor = PrimaryDark
+                            )
+                            Spacer(Modifier.width(6.dp))
+                            ReusableTextView(text = "Vikash", textColor = Color.Black)
+                        }
+
+                        Spacer(Modifier.height(6.dp))
+
+                        // ---------- ROW 2 : TIME (LEFT) + DATE (RIGHT) ----------
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically
                         )
-                        Spacer(Modifier.width(6.dp))
-                        ReusableTextView(text = "Vikash", textColor =Color.Black)
-                    }
+                        {
 
+                            // TIME → LEFT
+                            Row(
+                                modifier = Modifier.weight(1f),   // <-- Left side full space
+                                verticalAlignment = Alignment.CenterVertically
+                            )
+                            {
+                                ReusableTextView(
+                                    text = stringResource(Res.string.home_time),
+                                    textColor = PrimaryDark
+                                )
+                                Spacer(Modifier.width(6.dp))
+                                ReusableTextView(text = "10:45 AM", textColor = Color.Black)
+                            }
 
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        ReusableTextView(text = stringResource(Res.string.home_time), textColor = PrimaryDark)
-                        Spacer(Modifier.width(6.dp))
-                        ReusableTextView(text = "10:45 AM", textColor =Color.Black)
-                    }
+                            // DATE → RIGHT
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                ReusableTextView(
+                                    text = stringResource(Res.string.home_date),
+                                    textColor = PrimaryDark
+                                )
+                                Spacer(Modifier.width(6.dp))
+                                ReusableTextView(text = "04/12/2025", textColor = Color.Black)
+                            }
+                        }
 
-
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        ReusableTextView(text =  stringResource(Res.string.home_date), textColor =PrimaryDark )
-                        Spacer(Modifier.width(6.dp))
-                        ReusableTextView(text = "04/12/2025", textColor =Color.Black)
                     }
                 }
 
 
-                Spacer(modifier = Modifier.height(20.dp))
+                Spacer(modifier = Modifier.height(10.dp))
 
 
                 Row(
@@ -173,12 +219,12 @@ fun CustomerDetailScreen(
                     Box(
                         modifier = Modifier
                             .size(100.dp)
-                            .background(Color.Gray, RoundedCornerShape(6.dp))
+                            .background(Color(0xFFE8E8E8), RoundedCornerShape(6.dp))
                     )
                     Box(
                         modifier = Modifier
                             .size(100.dp)
-                            .background(Color.Gray, RoundedCornerShape(6.dp))
+                            .background((Color(0xFFE8E8E8)), RoundedCornerShape(6.dp))
                     )
                 }
                 Spacer(modifier = Modifier.height(15.dp))
@@ -231,8 +277,7 @@ fun CustomerDetailScreen(
                     ) {
                         ReusableTextViewBlackCard(
                             text = stringResource(Res.string.user_psc),
-                                    modifier = Modifier.width(120.dp)
-                            ,
+                            modifier = Modifier.width(120.dp),
                         )
                         Spacer(modifier = Modifier.width(8.dp))
                         FormFieldCompact(
@@ -303,7 +348,7 @@ fun CustomerDetailScreen(
                             text = stringResource(Res.string.user_existing),
                             modifier = Modifier.width(120.dp),
 
-                        )
+                            )
                         Spacer(modifier = Modifier.width(7.dp))
                         FormFieldCompact(
                             value = "",
@@ -326,7 +371,7 @@ fun CustomerDetailScreen(
                             text = stringResource(Res.string.user_ebill),
                             modifier = Modifier.width(120.dp),
 
-                        )
+                            )
                         Spacer(modifier = Modifier.width(7.dp))
                         FormFieldCompact(
                             value = "",
@@ -349,21 +394,19 @@ fun CustomerDetailScreen(
 
                     Spacer(modifier = Modifier.height(10.dp))
                     Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 10.dp),
+                        modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.End
-                    ) {
-
+                    )
+                    {
                         Column(
-                            modifier = Modifier.width(120.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-
+                            modifier = Modifier.fillMaxWidth().padding(horizontal = 10.dp),
+                            horizontalAlignment = Alignment.End
+                        )
+                        {
                             Box(
                                 modifier = Modifier
                                     .size(100.dp)
-                                    .background(Color.LightGray)
+                                    .background((Color(0xFFE8E8E8)))
                             ) {
                                 customerImage?.let { img ->
                                     Image(
@@ -375,72 +418,55 @@ fun CustomerDetailScreen(
                                 }
                             }
 
-
                             Spacer(Modifier.height(8.dp))
 
-                            Icon(
-                                painter = painterResource(Res.drawable.camera),
-                                contentDescription = null,
-                                modifier = Modifier
-                                    .size(35.dp)
-                                    .clickable { openCamera = true }
+
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically
                             )
-                        }
-                    }
-
-
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 10.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        ReusableTextViewBlackCard(
-                            text = stringResource(Res.string.user_electricity),
-                        )
-                        Box(
-                            modifier = Modifier
-                                .padding(end = 15.dp)
-                                .size(40.dp)
-                                .background(Color.White, RoundedCornerShape(8.dp)),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Icon(
-                                painter = painterResource(Res.drawable.camera),
-                                contentDescription = null,
-                                modifier = Modifier
-                                    .size(35.dp)
-                                    .clickable {
-                                        activeCamera = "customer"
-                                        openCamera = true
-                                    },
-
+                            {
+                                Text(
+                                    text = stringResource(Res.string.user_electricity), // left side text
+                                    fontSize = 14.sp,
+                                    color = Color.Black,
+                                    fontFamily = FontFamily(Font(Res.font.roboto_medium)),
+                                    fontWeight = FontWeight.SemiBold
                                 )
+
+                                Icon(
+                                    painter = painterResource(Res.drawable.camera),
+                                    contentDescription = null,
+                                    modifier = Modifier
+                                        .size(45.dp).padding(end = 15.dp)
+                                        .clickable { openCamera = true }
+                                )
+                            }
                         }
                     }
-
-                    Spacer(modifier = Modifier.height(12.dp))
+                    Spacer(modifier = Modifier.height(10.dp))
 
                     Divider(color = LightSkyBlue, thickness = 1.dp)
 
-                    Spacer(modifier = Modifier.height(12.dp))
+                    Spacer(modifier = Modifier.height(10.dp))
+
+
+
                     Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 10.dp),
+                        modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.End
-                    ) {
-
+                    )
+                    {
                         Column(
-                            modifier = Modifier.width(120.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-
+                            modifier = Modifier.fillMaxWidth().padding(horizontal = 10.dp),
+                            horizontalAlignment = Alignment.End
+                        )
+                        {
                             Box(
                                 modifier = Modifier
                                     .size(100.dp)
-                                    .background(Color.LightGray)
+                                    .background((Color(0xFFE8E8E8)))
                             ) {
                                 customerImage?.let { img ->
                                     Image(
@@ -452,20 +478,35 @@ fun CustomerDetailScreen(
                                 }
                             }
 
-
                             Spacer(Modifier.height(8.dp))
 
-                            Icon(
-                                painter = painterResource(Res.drawable.camera),
-                                contentDescription = null,
-                                modifier = Modifier
-                                    .size(35.dp)
-                                    .clickable { openCamera = true }
+
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically
                             )
+                            {
+                                Text(
+                                    text = stringResource(Res.string.user_house), // left side text
+                                    fontSize = 14.sp,
+                                    color = Color.Black,
+                                    fontFamily = FontFamily(Font(Res.font.roboto_medium)),
+                                    fontWeight = FontWeight.SemiBold,
+
+                                )
+
+                                Icon(
+                                    painter = painterResource(Res.drawable.camera),
+                                    contentDescription = null,
+                                    modifier = Modifier
+                                        .size(45.dp).padding(end = 15.dp)
+                                        .clickable { openCamera = true }
+                                )
+                            }
                         }
                     }
-                    Spacer(modifier = Modifier.height(12.dp))
-
+                    Spacer(Modifier.height(10.dp))
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -475,27 +516,18 @@ fun CustomerDetailScreen(
                     )
                     {
                         ReusableTextViewBlackCard(
-                            text = stringResource(Res.string.user_house),
-                        )
-                        Box(
-                            modifier = Modifier
-                                .padding(end = 15.dp)
-                                .size(40.dp)
-                                .background(Color.White, RoundedCornerShape(8.dp)),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Icon(
-                                painter = painterResource(Res.drawable.camera),
-                                contentDescription = null,
-                                modifier = Modifier
-                                    .size(35.dp)
-                                    .clickable {
-                                        activeCamera = "center"
-                                        openCamera = true
-                                    }
+                            text = stringResource(Res.string.user_loan_any),
+                            modifier = Modifier.width(120.dp),
 
-                                )
-                        }
+                            )
+                        Spacer(modifier = Modifier.width(7.dp))
+                        ReusableDynamicSpinner(
+                            selectedValue = selectedBranch,
+                            options = branchList,
+                            onValueSelected = { selectedBranch = it },
+                            modifier = Modifier.weight(1f)
+                        )
+
                     }
                     Spacer(modifier = Modifier.height(12.dp))
                     FormFieldCompact(
@@ -508,45 +540,6 @@ fun CustomerDetailScreen(
                         maxLength = 30
                     )
 
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 10.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-
-
-                        Box(
-                            modifier = Modifier
-                                .wrapContentWidth().padding(top = 15.dp),
-                            contentAlignment = Alignment.CenterStart
-                        ) {
-                            ReusableTextViewBlackCard(
-                                text = stringResource(Res.string.user_loan_any),
-                                textColor = Color.Black
-                            )
-                        }
-                        Spacer(modifier = Modifier.width(20.dp))
-                        FormSpinner(
-                            label = "",
-                            options = branchList,
-                            selectedOption = selectedBranch,
-                            onOptionSelected = { selectedBranch = it },
-
-                            )
-                    }
-
-                    Spacer(modifier = Modifier.height(12.dp))
-                    FormFieldCompact(
-                        value = "",
-                        onValueChange = { ""},
-                        placeholder = stringResource(Res.string.user_remarks_any),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 10.dp),
-                        maxLength = 30
-                    )
                     Spacer(modifier = Modifier.height(12.dp))
                     Row(
                         modifier = Modifier
@@ -570,25 +563,7 @@ fun CustomerDetailScreen(
                         )
                     }
                 }
-
-
             }
         }
-    }
-    if (openCamera) {
-        CameraPicker(
-            openCamera = openCamera,
-            onImagePicked = { bytes ->
-                val img = bytes?.toPlatformImageBitmap()
-
-                when (activeCamera) {
-                    "customer" -> customerImage = img
-                    "center" -> centerImage = img
-                }
-
-                openCamera = false
-                activeCamera = ""
-            }
-        )
     }
 }

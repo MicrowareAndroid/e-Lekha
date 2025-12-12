@@ -1,4 +1,5 @@
 package com.psc.elekha.ui.screen.repayment
+
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -7,6 +8,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.material3.*
+import androidx.compose.material3.FloatingActionButtonDefaults.elevation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -27,7 +29,13 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.sp
 
 import com.psc.elekha.ui.screen.repayment.model.RepaymentItem
+import com.psc.elekha.ui.theme.LightMint
+import com.psc.elekha.ui.theme.LightSkyBlue
+import com.psc.elekha.ui.theme.LightTeal
+import com.psc.elekha.ui.theme.PrimaryDark
 import com.psc.elekha.ui.theme.btn_color
+import com.psc.elekha.ui.theme.toolbar_color
+import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -38,7 +46,15 @@ fun RepaymentList(
     var selectedItems by remember { mutableStateOf(setOf<Int>()) }
     var showFilterDialog by remember { mutableStateOf(false) }
     val sampleRepaymentList = listOf(
-        RepaymentItem("BHK03.123", "MEENA W/O Kailash chand", "1,00,000", "5300", "10,600", "4", true),
+        RepaymentItem(
+            "BHK03.123",
+            "MEENA W/O Kailash chand",
+            "1,00,000",
+            "5300",
+            "10,600",
+            "4",
+            true
+        ),
         RepaymentItem("BHK03.234", "SUNITA W/O Mahesh", "75,000", "3200", "8,200", "3", true),
         RepaymentItem("BHK03.345", "PRIYA D/O Suresh", "50,000", "2500", "5,000", "2", true),
         RepaymentItem("BHK03.456", "REKHA W/O Ajay", "60,000", "2800", "4,000", "1", false),
@@ -48,44 +64,44 @@ fun RepaymentList(
 
 
 
-        Scaffold(
-            modifier = Modifier.fillMaxSize(),
-            containerColor = Color.Transparent,
-            topBar = {
-                ReusableTopBar(
-                    title = select,
-                    navigationIcon = painterResource(Res.drawable.ic_back),
-                    onNavigationClick = { navController.popBackStack() }
-                )
-            },
-            bottomBar = {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(color = Color.White)
-                        .padding(horizontal = 16.dp, vertical = 10.dp)
-                        .navigationBarsPadding()
-                ) {
-                    CommonSingleButtonsBottomString(
-                        onOkClick = {
-
-                        },
-                        "Submit",
-                        textSize = 16
-                    )
-                    }
-              }
-        ) { innerPadding ->
-            Box(
-                modifier = Modifier.fillMaxSize().padding(innerPadding)
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        containerColor = Color.Transparent,
+        topBar = {
+            ReusableTopBar(
+                title = select,
+                navigationIcon = painterResource(Res.drawable.ic_back),
+                onNavigationClick = { navController.popBackStack() }
             )
-            {
-                Image(
-                    painter = painterResource(Res.drawable.background),
-                    contentDescription = null,
-                    modifier = Modifier.matchParentSize(),
-                    contentScale = ContentScale.FillBounds
+        },
+        bottomBar = {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(color = toolbar_color)
+                    .padding(horizontal = 16.dp, vertical = 10.dp)
+                    .navigationBarsPadding()
+            ) {
+                CommonSingleButtonsBottomString(
+                    onOkClick = {
+
+                    },
+                    stringResource(Res.string.gtr_save),
+                    textSize = 16
                 )
+            }
+        }
+    ) { innerPadding ->
+        Box(
+            modifier = Modifier.fillMaxSize().padding(innerPadding)
+        )
+        {
+            Image(
+                painter = painterResource(Res.drawable.background),
+                contentDescription = null,
+                modifier = Modifier.matchParentSize(),
+                contentScale = ContentScale.FillBounds
+            )
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -96,63 +112,81 @@ fun RepaymentList(
                         .fillMaxSize()
                         .padding(horizontal = 12.dp)
                 ) {
-                    // Header Row
-                    Row(
+
+                    ReusableCard(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(10.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        // Left Side
-                        Column(verticalArrangement = Arrangement.Center) {
-                            ReusableTextView(
-                                text = "Center Name",
-                                fontSize = 11,
-                                fontWeight = FontWeight.Medium,
-                                textColor = Color.Black,
-                                fontFamily = FontFamily(Font(Res.font.roboto_medium))
-                            )
-                            ReusableTextView(
-                                text = "Next Emi Date",
-                                fontSize = 11,
-                                fontWeight = FontWeight.Medium,
-                                textColor = Color.Black,
-                                fontFamily = FontFamily(Font(Res.font.roboto_medium))
-                            )
-                            ReusableTextView(
-                                text = "16/04/2025",
-                                fontSize = 11,
-                                fontWeight = FontWeight.Medium,
-                                textColor = Color.Black,
-                                fontFamily = FontFamily(Font(Res.font.roboto_medium))
-                            )
-                        }
+                            .padding(7.dp),
+                        backgroundColor = LightTeal,
+                        cornerRadius = 12
+                    )
+                    {
 
-                        // Right Side
-                        Column(horizontalAlignment = Alignment.End) {
-                            ReusableTextView(
-                                text = "Username",
-                                fontSize = 13,
-                                fontWeight = FontWeight.Medium,
-                                textColor = Color.Black,
-                                fontFamily = FontFamily(Font(Res.font.roboto_medium))
-                            )
-                            ReusableTextView(
-                                text = "Time",
-                                fontSize = 13,
-                                fontWeight = FontWeight.Medium,
-                                textColor = Color.Black,
-                                fontFamily = FontFamily(Font(Res.font.roboto_medium))
-                            )
-                            ReusableTextView(
-                                text = "Day and Date",
-                                fontSize = 13,
-                                fontWeight = FontWeight.Medium,
-                                textColor = Color.Black,
-                                fontFamily = FontFamily(Font(Res.font.roboto_medium))
-                            )
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(5.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.Top
+                        ) {
+
+                            // LEFT
+                            Column(verticalArrangement = Arrangement.Center)
+                            {
+                                Row(verticalAlignment = Alignment.CenterVertically) {
+                                    ReusableTextView(
+                                        text = stringResource(Res.string.select_customer_center),
+                                        textColor = PrimaryDark
+                                    )
+                                    Spacer(Modifier.width(6.dp))
+                                    ReusableTextView(text = "Gurgaon", textColor = Color.Black)
+                                }
+                                Row(verticalAlignment = Alignment.CenterVertically) {
+                                    ReusableTextView(
+                                        text = stringResource(Res.string.select_customer_next),
+                                        textColor = PrimaryDark
+                                    )
+                                    Spacer(Modifier.width(6.dp))
+                                    ReusableTextView(text = "10/4/2025", textColor = Color.Black)
+                                }
+                            }
+
+                            // RIGHT
+                            Column(
+                                horizontalAlignment = Alignment.Start,
+                                verticalArrangement = Arrangement.spacedBy(4.dp)
+                            ) {
+
+                                Row(verticalAlignment = Alignment.CenterVertically) {
+                                    ReusableTextView(
+                                        text = stringResource(Res.string.home_user),
+                                        textColor = PrimaryDark
+                                    )
+                                    Spacer(Modifier.width(6.dp))
+                                    ReusableTextView(text = "Vikash", textColor = Color.Black)
+                                }
+
+                                Row(verticalAlignment = Alignment.CenterVertically) {
+                                    ReusableTextView(
+                                        text = stringResource(Res.string.home_time),
+                                        textColor = PrimaryDark
+                                    )
+                                    Spacer(Modifier.width(6.dp))
+                                    ReusableTextView(text = "10:45 AM", textColor = Color.Black)
+                                }
+
+                                Row(verticalAlignment = Alignment.CenterVertically) {
+                                    ReusableTextView(
+                                        text = stringResource(Res.string.home_date),
+                                        textColor = PrimaryDark
+                                    )
+                                    Spacer(Modifier.width(6.dp))
+                                    ReusableTextView(text = "04/12/2025", textColor = Color.Black)
+                                }
+                            }
                         }
                     }
+
 
                     CollectionDetailsCard(
                         items = sampleRepaymentList,
@@ -203,7 +237,7 @@ fun CollectionDetailsCard(
             verticalAlignment = Alignment.CenterVertically
         ) {
             ReusableTextView(
-                text = "Collection Details :",
+                text = stringResource(Res.string.select_customer_collection),
                 fontSize = 18,
                 fontWeight = FontWeight.SemiBold,
                 textColor = Color.Black,
@@ -239,6 +273,7 @@ fun CollectionDetailsCard(
         }
     }
 }
+
 @Composable
 fun FilterLoanDetailsDialog(
     onDismiss: () -> Unit,
@@ -251,6 +286,7 @@ fun FilterLoanDetailsDialog(
     // Sample data - replace with actual data
     val villages = listOf("Village 1", "Village 2", "Village 3", "Village 4")
     val centers = listOf("Center A", "Center B", "Center C", "Center D")
+    val select = stringResource(Res.string.spinner_select)
 
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -258,14 +294,14 @@ fun FilterLoanDetailsDialog(
         title = {
             Column {
                 ReusableTextView(
-                    text = "Filter Loan Details",
+                    text = stringResource(Res.string.select_customer_filter_details),
                     fontWeight = FontWeight.Bold,
                     fontSize = 20,
                     textColor = Color.Black
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 CommonDivider(
-                    color = Color(0xFFE0E0E0),
+                    color = LightSkyBlue,
                     thickness = 1.dp
                 )
             }
@@ -279,7 +315,7 @@ fun FilterLoanDetailsDialog(
             ) {
                 // Village Dropdown
                 FormSpinner(
-                    label = "Village:",
+                    label = stringResource(Res.string.select_customer_village),
                     options = villages,
                     selectedOption = selectedVillage,
                     onOptionSelected = { selectedVillage = it },
@@ -293,7 +329,7 @@ fun FilterLoanDetailsDialog(
 
                 // Center Dropdown
                 FormSpinner(
-                    label = "Center :",
+                    label = stringResource(Res.string.select_customer_center_list),
                     options = centers,
                     selectedOption = selectedCenter,
                     onOptionSelected = { selectedCenter = it },
@@ -302,7 +338,7 @@ fun FilterLoanDetailsDialog(
 
                 // OR Text
                 ReusableTextView(
-                    text = "OR",
+                    text = stringResource(Res.string.select_customer_center_or),
                     fontSize = 16,
                     fontWeight = FontWeight.Bold,
                     textColor = Color.Black,
@@ -311,12 +347,14 @@ fun FilterLoanDetailsDialog(
                 )
 
                 // Customer ID Field
-                FormField(
-                    label = "Customer ID :",
-                    value = customerId,
-                    onValueChange = { customerId = it },
-                    placeholder = "BHK.",
-                    modifier = Modifier.fillMaxWidth()
+
+                FormFieldCompact(
+                    label = stringResource(Res.string.select_customer_id),
+                    value = "",
+                    onValueChange = { "" },
+                    placeholder = stringResource(Res.string.type_here),
+                    modifier = Modifier.weight(1f),
+                    maxLength = 30
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -338,7 +376,7 @@ fun FilterLoanDetailsDialog(
                         shape = RoundedCornerShape(8.dp)
                     ) {
                         Text(
-                            text = "Cancel",
+                            text = stringResource(Res.string.cancel),
                             fontSize = 16.sp,
                             fontWeight = FontWeight.Medium,
                             color = Color.Black
@@ -349,8 +387,8 @@ fun FilterLoanDetailsDialog(
                     Button(
                         onClick = {
                             onApplyFilter(
-                                selectedVillage.takeIf { it.isNotEmpty() && it != "Select" },
-                                selectedCenter.takeIf { it.isNotEmpty() && it != "Select" },
+                                selectedVillage.takeIf { it.isNotEmpty() && it != select },
+                                selectedCenter.takeIf { it.isNotEmpty() && it != select },
                                 customerId.ifEmpty { null }
                             )
                         },
@@ -363,7 +401,7 @@ fun FilterLoanDetailsDialog(
                         shape = RoundedCornerShape(8.dp)
                     ) {
                         Text(
-                            text = "Filter",
+                            text = stringResource(Res.string.select_customer_filter),
                             fontSize = 16.sp,
                             fontWeight = FontWeight.Medium,
                             color = Color.Black

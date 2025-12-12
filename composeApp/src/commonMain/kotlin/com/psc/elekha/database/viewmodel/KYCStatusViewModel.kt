@@ -51,7 +51,7 @@ class KYCStatusViewModel(
         }
     }
 
-    fun getAllStatusDirect(): List<KYCStatusEntity> {
+    suspend  fun getAllStatusDirect(): List<KYCStatusEntity> {
         return repository.getAllKYCStatus() ?: emptyList()
     }
 }

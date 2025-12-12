@@ -7,50 +7,50 @@ class LoanScheduleRepository(
     private val dao: LoanScheduleDao
 ) {
 
-    fun insertLoanSchedule(loanSchedule: LoanScheduleEntity) {
+    suspend fun insertLoanSchedule(loanSchedule: LoanScheduleEntity) {
         dao.insertLoanSchedule(loanSchedule)
     }
 
-    fun insertAllLoanSchedule(loanSchedules: List<LoanScheduleEntity>) {
+    suspend fun insertAllLoanSchedule(loanSchedules: List<LoanScheduleEntity>) {
         dao.insertAllLoanSchedule(loanSchedules)
     }
 
-    fun getAllLoanSchedule(): List<LoanScheduleEntity>? = dao.getAllLoanSchedule()
+    suspend fun getAllLoanSchedule(): List<LoanScheduleEntity>? = dao.getAllLoanSchedule()
 
-    fun getLoanScheduleByGUID(GUID: String): List<LoanScheduleEntity>? = dao.getLoanScheduleByGUID(GUID)
+    suspend fun getLoanScheduleByGUID(GUID: String): List<LoanScheduleEntity>? = dao.getLoanScheduleByGUID(GUID)
 
-    fun getLoanScheduleByGUIDAndPaidDate(GUID: String): List<LoanScheduleEntity>? =
+    suspend fun getLoanScheduleByGUIDAndPaidDate(GUID: String): List<LoanScheduleEntity>? =
         dao.getLoanScheduleByGUIDAndPaidDate(GUID)
 
-    fun getLoanScheduleByGUIDAndPaidDateWithLimit(GUID: String): List<LoanScheduleEntity>? =
+    suspend fun getLoanScheduleByGUIDAndPaidDateWithLimit(GUID: String): List<LoanScheduleEntity>? =
         dao.getLoanScheduleByGUIDAndPaidDateWithLimit(GUID)
 
-    fun getLoanScheduleByGUIDAndPaidDateWithLimit4(GUID: String): List<LoanScheduleEntity>? =
+    suspend fun getLoanScheduleByGUIDAndPaidDateWithLimit4(GUID: String): List<LoanScheduleEntity>? =
         dao.getLoanScheduleByGUIDAndPaidDateWithLimit4(GUID)
 
-    fun getWorkingDateByGUID(GUID: String): String? = dao.getWorkingDateByGUID(GUID)
+    suspend fun getWorkingDateByGUID(GUID: String): String? = dao.getWorkingDateByGUID(GUID)
 
-    fun getEMIDueDateByGUID(GUID: String): String? = dao.getEMIDueDateByGUID(GUID)
+    suspend fun getEMIDueDateByGUID(GUID: String): String? = dao.getEMIDueDateByGUID(GUID)
 
-    fun getLoanScheduleModulus(GUID: String): List<LoanScheduleEntity>? = dao.getLoanScheduleModulus(GUID)
+    suspend fun getLoanScheduleModulus(GUID: String): List<LoanScheduleEntity>? = dao.getLoanScheduleModulus(GUID)
 
-    fun getLoanScheduleCountByGUID(GUID: String): Int = dao.getLoanScheduleCountByGUID(GUID)
+    suspend fun getLoanScheduleCountByGUID(GUID: String): Int = dao.getLoanScheduleCountByGUID(GUID)
 
-    fun getMaxCustomerLoanID(GUID: String): Int = dao.getMaxCustomerLoanID(GUID)
+    suspend fun getMaxCustomerLoanID(GUID: String): Int = dao.getMaxCustomerLoanID(GUID)
 
-    fun getCloseDate(GUID: String, CustomerLoanID: Int): String = dao.getCloseDate(GUID, CustomerLoanID)
+    suspend fun getCloseDate(GUID: String, CustomerLoanID: Int): String = dao.getCloseDate(GUID, CustomerLoanID)
 
-    fun getLoanScheduleModulusPay(GUID: String, sCurrentDate: String): List<LoanScheduleEntity>? =
+    suspend  fun getLoanScheduleModulusPay(GUID: String, sCurrentDate: String): List<LoanScheduleEntity>? =
         dao.getLoanScheduleModulusPay(GUID, sCurrentDate)
 
-    fun getLoanScheduleModulusPayTwoDate(GUID: String, sLastPaidDate: String, sCurrentDate: String): List<LoanScheduleEntity>? =
+    suspend  fun getLoanScheduleModulusPayTwoDate(GUID: String, sLastPaidDate: String, sCurrentDate: String): List<LoanScheduleEntity>? =
         dao.getLoanScheduleModulusPayTwoDate(GUID, sLastPaidDate, sCurrentDate)
 
-    fun getLastPaidDate(GUID: String): String = dao.getLastPaidDate(GUID)
+    suspend fun getLastPaidDate(GUID: String): String = dao.getLastPaidDate(GUID)
 
-    fun getUnpaidEMISum(GUID: String): Int = dao.getUnpaidEMISum(GUID)
+    suspend  fun getUnpaidEMISum(GUID: String): Int = dao.getUnpaidEMISum(GUID)
 
-    fun getMaxCustomerLoanIDBYEMI(GUID: String, CustomerLoanID: Int): Int =
+    suspend  fun getMaxCustomerLoanIDBYEMI(GUID: String, CustomerLoanID: Int): Int =
         dao.getMaxCustomerLoanIDBYEMI(GUID, CustomerLoanID)
 
 }

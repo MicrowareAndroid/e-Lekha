@@ -8,37 +8,37 @@ class LoanRepaymentRepository(
 ) {
 
     // Insert single loan repayment
-    fun insertLoanRepayment(loanRepayment: LoanRepaymentEntity) {
+    suspend fun insertLoanRepayment(loanRepayment: LoanRepaymentEntity) {
         dao.insertLoanRepayment(loanRepayment)
     }
 
     // Insert multiple loan repayments
-    fun insertAllLoanRepayment(loanRepayments: List<LoanRepaymentEntity>) {
+    suspend fun insertAllLoanRepayment(loanRepayments: List<LoanRepaymentEntity>) {
         dao.insertAllLoanRepayment(loanRepayments)
     }
 
     // Get all loan repayments
-    fun getAllLoanRepayment(): List<LoanRepaymentEntity>? {
+    suspend fun getAllLoanRepayment(): List<LoanRepaymentEntity>? {
         return dao.getAllLoanRepayment()
     }
 
     // Get loan repayment by GUID
-    fun getLoanRepaymentByGUID(GUID: String): LoanRepaymentEntity? {
+    suspend fun getLoanRepaymentByGUID(GUID: String): LoanRepaymentEntity? {
         return dao.getLoanRepaymentByGUID(GUID)
     }
 
     // Get loan repayments to upload
-    fun getLoanRepaymentUploadData(): List<LoanRepaymentEntity>? {
+    suspend fun getLoanRepaymentUploadData(): List<LoanRepaymentEntity>? {
         return dao.getLoanRepaymentUploadData()
     }
 
     // Get count of loan repayments to upload
-    fun getLoanRepaymentUploadDataCount(): Int {
+    suspend fun getLoanRepaymentUploadDataCount(): Int {
         return dao.getLoanRepaymentUploadDataCount()
     }
 
     // Update loan repayment data
-    fun updateLoanRepaymentData(
+    suspend fun updateLoanRepaymentData(
         Total: Double,
         PaidDate: String,
         LoanLat: Double,
@@ -51,12 +51,12 @@ class LoanRepaymentRepository(
     }
 
     // Mark uploaded
-    fun updateLoanRepaymentDataUploaded() {
+    suspend fun updateLoanRepaymentDataUploaded() {
         dao.updateLoanRepaymentDataUploaded()
     }
 
     // Delete all loan repayments
-    fun deleteAllLoanRepayment() {
+    suspend fun deleteAllLoanRepayment() {
         dao.deleteAllLoanRepayment()
     }
 }

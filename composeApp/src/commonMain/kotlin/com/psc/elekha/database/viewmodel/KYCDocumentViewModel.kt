@@ -20,7 +20,7 @@ class KYCDocumentViewModel(
     // --------------------------------------
     // Load all documents from repository
     // --------------------------------------
-    fun loadAllDocuments() {
+    suspend fun loadAllDocuments() {
         viewModelScope.launch(Dispatchers.IO) {
             _allDocuments.value = repository.getAllKYCDocument() ?: emptyList()
         }
@@ -29,7 +29,7 @@ class KYCDocumentViewModel(
     // --------------------------------------
     // Insert single document
     // --------------------------------------
-    fun insertDocument(
+     fun insertDocument(
         document: KYCDocumentEntity,
         onComplete: (() -> Unit)? = null
     ) {
@@ -43,7 +43,7 @@ class KYCDocumentViewModel(
     // --------------------------------------
     // Insert multiple documents
     // --------------------------------------
-    fun insertAllDocuments(
+       fun insertAllDocuments(
         documents: List<KYCDocumentEntity>,
         onComplete: (() -> Unit)? = null
     ) {
@@ -64,7 +64,7 @@ class KYCDocumentViewModel(
         }
     }
 
-    fun getAllDocumentsDirect(): List<KYCDocumentEntity> {
+    suspend fun getAllDocumentsDirect(): List<KYCDocumentEntity> {
         return repository.getAllKYCDocument() ?: emptyList()
     }
 }

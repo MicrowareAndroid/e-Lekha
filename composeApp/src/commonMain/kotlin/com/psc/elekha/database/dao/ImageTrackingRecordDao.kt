@@ -7,25 +7,25 @@ import com.psc.elekha.database.entity.ImageTrackingRecordEntity
 interface ImageTrackingRecordDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertImageTrackingRecord(imageTrackingRecordEntity: ImageTrackingRecordEntity)
+    suspend fun insertImageTrackingRecord(imageTrackingRecordEntity: ImageTrackingRecordEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAllImageTrackingRecord(imageTrackingRecordEntity: List<ImageTrackingRecordEntity>?)
+    suspend fun insertAllImageTrackingRecord(imageTrackingRecordEntity: List<ImageTrackingRecordEntity>?)
 
     @Query("Select * from ImageTrackingRecord where IsDeleted = 0 and IsEdited = 1 and IsUpload = 0")
-    fun getAllImageTrackingRecord(): List<ImageTrackingRecordEntity>?
+    suspend fun getAllImageTrackingRecord(): List<ImageTrackingRecordEntity>?
 
     @Query("Select * from ImageTrackingRecord where IsDeleted = 0")
-    fun getImageAllData(): List<ImageTrackingRecordEntity>?
+    suspend fun getImageAllData(): List<ImageTrackingRecordEntity>?
 
     @Query("Delete from ImageTrackingRecord")
-    fun deleteAllImageTrackingRecord()
+    suspend fun deleteAllImageTrackingRecord()
 
     @Query("Select Count(*) from ImageTrackingRecord where RefFieldName=:RefFieldName and GUID=:GUID and IsDeleted=0")
-    fun getCountImageTrackingRecord(RefFieldName: String, GUID: String): Int?
+    suspend  fun getCountImageTrackingRecord(RefFieldName: String, GUID: String): Int?
 
     @Query("Update ImageTrackingRecord set ImageName=:ImageName, IsEdited=:IsEdited, IsUpload=:IsUpload where RefFieldName=:RefFieldName")
-    fun updateImageTrackingRecord(
+    suspend fun updateImageTrackingRecord(
         ImageName: String,
         IsEdited: Int,
         IsUpload: Int,
@@ -33,10 +33,10 @@ interface ImageTrackingRecordDao {
     )
 
     @Query("Update ImageTrackingRecord set IsUpload=1, IsEdited=0  where GUID=:GUID and RefFieldName=:RefFieldName and IsDeleted=0 and IsEdited=1")
-    fun updateImageUpload(
+    suspend fun updateImageUpload(
         GUID: String,
         RefFieldName: String
     )
     @Query("Select Count(*) from ImageTrackingRecord where IsDeleted=0 and IsEdited=1")
-    fun getAllImageTrackingRecordDataCount(): Int
+    suspend fun getAllImageTrackingRecordDataCount(): Int
 }
