@@ -42,12 +42,12 @@ fun GtrListDataScreen(
     var openCamera by remember { mutableStateOf(false) }
     var capturedImage by remember { mutableStateOf<ImageBitmap?>(null) }
     val customerList = listOf(
-        CustomerData("Shanti Devi w/o Manohar Singh", "987654321", "50,000"),
-        CustomerData("Rina Kumari w/o Gopal Sharma", "9988776655", "75,000"),
-        CustomerData("Kamla Devi w/o Suresh Prasad", "8899776655", "62,000"),
-        CustomerData("Shanti Devi w/o Manohar Singh", "987654321", "50,000"),
-        CustomerData("Rina Kumari w/o Gopal Sharma", "9988776655", "75,000"),
-        CustomerData("Kamla Devi w/o Suresh Prasad", "8899776655", "62,000")
+        CustomerData(101,"Shanti Devi w/o Manohar Singh", "987654321", "50,000"),
+        CustomerData(112,"Rina Kumari w/o Gopal Sharma", "9988776655", "75,000"),
+        CustomerData(114,"Kamla Devi w/o Suresh Prasad", "8899776655", "62,000"),
+        CustomerData(115,"Ravi w/o Sidhona Singh", "9999554444", "90,000"),
+        CustomerData(119,"Soni Kumari w/o Amit Sharma", "9844554455", "45,000"),
+        CustomerData(201,"Pritivi Singh w/o Krishna Prasad", "9554334433", "66,000")
     )
 
     Scaffold(

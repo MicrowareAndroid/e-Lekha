@@ -2593,7 +2593,7 @@ fun <T : Any> FillDynamicSpinner(
 
 
 @Composable
-fun LabelValueText(label: String, value: String) {
+fun LabelValueText(label: String, value: String,) {
     Row(
         modifier = Modifier.fillMaxWidth()
             .height(IntrinsicSize.Min),
@@ -2602,8 +2602,6 @@ fun LabelValueText(label: String, value: String) {
         ReusableTextViewGrayCard(
             text = label,
             fontSize = 13,
-
-
             )
         Spacer(modifier = Modifier.width(4.dp))
         ReusableTextViewBlackCard(
@@ -2659,7 +2657,7 @@ fun CustomerItemCard(
             ) {
                 LabelValueText(
                     stringResource(Res.string.select_customer_id),
-                    stringResource(Res.string.select_new_customer)
+                    customer.id.toString()
                 )
                 LabelValueText(stringResource(Res.string.select_customer_name), customer.name)
                 LabelValueText(stringResource(Res.string.select_customer_mobile), customer.mobile)

@@ -52,43 +52,43 @@ fun GtrListScreen(
             "DUDU",
             "Afshan",
             "",
-            "DD/MM/YY",
+            "04/12/25",
             "111(17)",
             "Monday",
-            "DD/MM/YY"
+            "09/12/25"
         ),
         GroupCardData(
-            "D3140",
-            8,
-            "DUDU",
-            "Afshan",
+            "D5140",
+            10,
+            "PPPU",
+            "Ravi",
             "",
-            "DD/MM/YY",
-            "111(17)",
-            "Monday",
-            "DD/MM/YY"
+            "13/05/25",
+            "122(18)",
+            "Wednesday",
+            "04/12/24"
         ),
         GroupCardData(
-            "D3140",
-            8,
-            "DUDU",
-            "Afshan",
+            "D4169",
+            7,
+            "JJJU",
+            "Ravi",
             "",
-            "DD/MM/YY",
-            "111(17)",
-            "Monday",
-            "DD/MM/YY"
+            "07/08/16",
+            "116(15)",
+            "Thursday",
+            "05/07/19"
         ),
         GroupCardData(
-            "D3140",
-            8,
-            "DUDU",
-            "Afshan",
+            "D5444",
+            9,
+            "JJJP",
+            "Kailash",
             "",
-            "DD/MM/YY",
-            "111(17)",
-            "Monday",
-            "DD/MM/YY")
+            "04/12/24",
+            "119(14)",
+            "Friday",
+            "06/08/13")
     )
 
     Scaffold(
