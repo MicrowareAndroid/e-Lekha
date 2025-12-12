@@ -3,12 +3,12 @@ package com.psc.elekha.ui.screen.home
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -16,15 +16,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.psc.elekha.model.DashboardItem
+import com.psc.elekha.model.SliderItem
 import com.psc.elekha.ui.theme.LightMint
 import com.psc.elekha.ui.theme.LightTeal
 import com.psc.elekha.ui.theme.LightYellow
 import com.psc.elekha.ui.theme.PrimaryDark
-
 import com.psc.elekha.ui.theme.black
 import com.psc.elekha.ui.theme.lightgreens
 import com.psc.elekha.ui.theme.repaymentColor
-import com.psc.elekha.ui.theme.white
 import com.psc.elekha.utils.CommonSingleButtons
 import com.psc.elekha.utils.DashboardCardItem
 import com.psc.elekha.utils.ReusableTextView
@@ -39,27 +39,41 @@ fun HomeScreen(
     navController: NavHostController,
     onMenuClick: () -> Unit
 ) {
-
     val sliderItems = listOf(
-        Triple(
-            painterResource(Res.drawable.ic_setting),
-            painterResource(Res.drawable.ic_setting),
-            painterResource(Res.drawable.ic_setting)
+        SliderItem(
+            painterResource(Res.drawable.ic_loan),
+            painterResource(Res.drawable.ic_repayment),
+            painterResource(Res.drawable.ic_savings),
+            "Loan Process"
         ),
-        Triple(
-            painterResource(Res.drawable.ic_setting),
-            painterResource(Res.drawable.ic_setting),
-            painterResource(Res.drawable.ic_setting)
+        SliderItem(
+            painterResource(Res.drawable.ic_loan),
+            painterResource(Res.drawable.ic_repayment),
+            painterResource(Res.drawable.ic_savings),
+            "Repayment Info"
         ),
-        Triple(
-            painterResource(Res.drawable.ic_setting),
-            painterResource(Res.drawable.ic_setting),
-            painterResource(Res.drawable.ic_setting)
+        SliderItem(
+            painterResource(Res.drawable.ic_loan),
+            painterResource(Res.drawable.ic_repayment),
+            painterResource(Res.drawable.ic_savings),
+            "Case Alerts"
         )
     )
 
-    Box(modifier = Modifier.fillMaxSize()) {
 
+
+    val dashboardItems = listOf(
+        DashboardItem("837", stringResource(Res.string.home_active_customer), painterResource(Res.drawable.ic_setting)),
+        DashboardItem("80", stringResource(Res.string.home_default), painterResource(Res.drawable.ic_setting)),
+        DashboardItem("50", stringResource(Res.string.home_registration), painterResource(Res.drawable.ic_setting)),
+        DashboardItem("27", stringResource(Res.string.home_active_customer), painterResource(Res.drawable.ic_setting)),
+        DashboardItem("837", stringResource(Res.string.home_arrear), painterResource(Res.drawable.ic_setting)),
+        DashboardItem("80", stringResource(Res.string.home_closed), painterResource(Res.drawable.ic_setting)),
+        DashboardItem("50", stringResource(Res.string.home_gtr), painterResource(Res.drawable.ic_setting)),
+        DashboardItem("27", stringResource(Res.string.home_case), painterResource(Res.drawable.ic_setting))
+    )
+
+    Box(modifier = Modifier.fillMaxSize()) {
 
         Image(
             painter = painterResource(Res.drawable.group),
@@ -81,7 +95,6 @@ fun HomeScreen(
                     .statusBarsPadding()
             ) {
 
-
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -89,8 +102,6 @@ fun HomeScreen(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.Top
                 ) {
-
-
                     Icon(
                         painter = painterResource(Res.drawable.ic_menu),
                         contentDescription = null,
@@ -100,130 +111,107 @@ fun HomeScreen(
                             .clickable { onMenuClick() }
                     )
 
-
                     Column(
                         horizontalAlignment = Alignment.Start,
                         verticalArrangement = Arrangement.spacedBy(4.dp)
-                    )
-                    {
-
+                    ) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
-                            ReusableTextView(
-                                text = stringResource(Res.string.home_user),
-                                textColor = PrimaryDark
-                            )
+                            ReusableTextView(text = stringResource(Res.string.home_user), textColor = PrimaryDark)
                             Spacer(Modifier.width(6.dp))
-                            ReusableTextView(text = "Vikash", textColor =Color.Black)
+                            ReusableTextView(text = "Vikash", textColor = Color.Black)
                         }
-
 
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             ReusableTextView(text = stringResource(Res.string.home_time), textColor = PrimaryDark)
                             Spacer(Modifier.width(6.dp))
-                            ReusableTextView(text = "10:45 AM", textColor =Color.Black)
+                            ReusableTextView(text = "10:45 AM", textColor = Color.Black)
                         }
 
-
                         Row(verticalAlignment = Alignment.CenterVertically) {
-                            ReusableTextView(text =  stringResource(Res.string.home_date), textColor =PrimaryDark )
+                            ReusableTextView(text = stringResource(Res.string.home_date), textColor = PrimaryDark)
                             Spacer(Modifier.width(6.dp))
-                            ReusableTextView(text = "04/12/2025", textColor =Color.Black)
+                            ReusableTextView(text = "04/12/2025", textColor = Color.Black)
                         }
                     }
                 }
 
-
                 Spacer(Modifier.height(15.dp))
 
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .verticalScroll(rememberScrollState())
+                LazyColumn(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.spacedBy(20.dp)
                 ) {
 
-
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 25.dp),
-                        horizontalArrangement = Arrangement.spacedBy(12.dp)
-                    ) {
-                        DashboardCardItem("837", stringResource(Res.string.home_active_customer), painterResource(Res.drawable.ic_setting), Modifier.weight(1f))
-                        DashboardCardItem("80", stringResource(Res.string.home_default), painterResource(Res.drawable.ic_setting), Modifier.weight(1f))
-                        DashboardCardItem("50", stringResource(Res.string.home_registration), painterResource(Res.drawable.ic_setting), Modifier.weight(1f))
-                        DashboardCardItem("27", stringResource(Res.string.home_active_customer), painterResource(Res.drawable.ic_setting), Modifier.weight(1f))
+                    item {
+                        LazyVerticalGrid(
+                            columns = GridCells.Fixed(4),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 25.dp)
+                                .height(220.dp),   // ⭐ FIXED HEIGHT PREVENTS CRASH
+                            horizontalArrangement = Arrangement.spacedBy(12.dp),
+                            verticalArrangement = Arrangement.spacedBy(12.dp),
+                            userScrollEnabled = false
+                        ) {
+                            items(dashboardItems.size) { index ->
+                                val item = dashboardItems[index]
+                                DashboardCardItem(item.count, item.title, item.icon, Modifier)
+                            }
+                        }
                     }
 
-                    Spacer(Modifier.height(8.dp))
-
-
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 25.dp),
-                        horizontalArrangement = Arrangement.spacedBy(12.dp)
-                    ) {
-                        DashboardCardItem("837", stringResource(Res.string.home_arrear), painterResource(Res.drawable.ic_setting), Modifier.weight(1f))
-                        DashboardCardItem("80", stringResource(Res.string.home_closed), painterResource(Res.drawable.ic_setting), Modifier.weight(1f))
-                        DashboardCardItem("50", stringResource(Res.string.home_gtr), painterResource(Res.drawable.ic_setting), Modifier.weight(1f))
-                        DashboardCardItem("27", stringResource(Res.string.home_case), painterResource(Res.drawable.ic_setting), Modifier.weight(1f))
+                    item {
+                        Divider(
+                            color = lightgreens,
+                            thickness = 1.dp,
+                            modifier = Modifier.padding(horizontal = 8.dp)
+                        )
                     }
 
-                    Spacer(Modifier.height(15.dp))
+                    item {
+                        CommonSingleButtons(
+                            onOkClick = { navController.navigate(RouteName.registration_list) },
+                            backgroundColor = LightMint,
+                            text = stringResource(Res.string.home_registration_detail),
+                            textColor = black
+                        )
+                    }
 
-                    Divider(
-                        color = lightgreens,
-                        thickness = 1.dp,
-                        modifier = Modifier.padding(horizontal = 8.dp)
-                    )
+                    item {
+                        CommonSingleButtons(
+                            onOkClick = { navController.navigate(RouteName.gtr_list_screen) },
+                            backgroundColor = LightTeal,
+                            text = stringResource(Res.string.home_gtr_home),
+                            textColor = black
+                        )
+                    }
 
-                    Spacer(Modifier.height(20.dp))
+                    item {
+                        CommonSingleButtons(
+                            onOkClick = { navController.navigate(RouteName.replayment_list) },
+                            backgroundColor = LightYellow,
+                            text = stringResource(Res.string.home_repayment),
+                            textColor = black
+                        )
+                    }
 
-                    CommonSingleButtons(
-                        onOkClick = {  navController.navigate(RouteName.registration_list)},
-                        backgroundColor = LightMint,
-                        text = stringResource(Res.string.home_registration_detail),
-                        textColor = black
-                    )
-
-                    Spacer(Modifier.height(15.dp))
-
-                    CommonSingleButtons(
-
-                        onOkClick = {navController.navigate(RouteName.gtr_list_screen)},
-                        backgroundColor = LightTeal,
-                        text = stringResource(Res.string.home_gtr_home),
-                        textColor = black
-                    )
-
-                    Spacer(Modifier.height(15.dp))
-
-                    CommonSingleButtons(
-                        onOkClick = {navController.navigate(RouteName.replayment_list)},
-                        backgroundColor =LightYellow,
-                        text = stringResource(Res.string.home_repayment),
-                        textColor = black
-                    )
-
-                    Spacer(Modifier.height(15.dp))
-
-                    CommonSingleButtons(
-                        onOkClick = {},
-                        backgroundColor = repaymentColor,
-                        text = stringResource(Res.string.home_data),
-                        textColor = black
-                    )
-
-                    Spacer(Modifier.height(20.dp))
-
-
-                    TripleIconSlider(
-                        items = sliderItems,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 10.dp),
-                        bgColor = Color(0xFFDDEFFF)
-                    )
+                    item {
+                        CommonSingleButtons(
+                            onOkClick = {},
+                            backgroundColor = repaymentColor,
+                            text = stringResource(Res.string.home_data),
+                            textColor = black
+                        )
+                    }
+                    item {
+                        TripleIconSlider(
+                            items = sliderItems,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 10.dp),
+                            bgColor = Color(0xFFDDEFFF)
+                        )
+                    }
                 }
             }
         }
