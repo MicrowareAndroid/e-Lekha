@@ -7,19 +7,19 @@ class KYCDocumentRepository(
     private val dao: KYCDocumentDao
 ) {
 
-    fun insertKYCDocument(document: KYCDocumentEntity) {
+    suspend fun insertKYCDocument(document: KYCDocumentEntity) {
         dao.insertKYCDocument(document)
     }
 
-    fun insertAllKYCDocument(documents: List<KYCDocumentEntity>) {
+    suspend fun insertAllKYCDocument(documents: List<KYCDocumentEntity>) {
         dao.insertAllKYCDocument(documents)
     }
 
-    fun getAllKYCDocument(): List<KYCDocumentEntity>? {
+    suspend fun getAllKYCDocument(): List<KYCDocumentEntity>? {
         return dao.getAllKYCDocument()
     }
 
-    fun deleteAllKYCDocument() {
+    suspend fun deleteAllKYCDocument() {
         dao.deleteAllKYCDocument()
     }
 }

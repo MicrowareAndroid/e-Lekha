@@ -155,6 +155,23 @@ import e_lekha.composeapp.generated.resources.password
 import e_lekha.composeapp.generated.resources.purpose
 import e_lekha.composeapp.generated.resources.roboto_medium
 import e_lekha.composeapp.generated.resources.save
+import e_lekha.composeapp.generated.resources.select_center
+import e_lekha.composeapp.generated.resources.select_customer
+import e_lekha.composeapp.generated.resources.select_customer_id
+import e_lekha.composeapp.generated.resources.select_customer_loan
+import e_lekha.composeapp.generated.resources.select_customer_mobile
+import e_lekha.composeapp.generated.resources.select_customer_name
+import e_lekha.composeapp.generated.resources.select_customer_ok
+import e_lekha.composeapp.generated.resources.select_customer_please
+import e_lekha.composeapp.generated.resources.select_disbursement
+import e_lekha.composeapp.generated.resources.select_formation
+import e_lekha.composeapp.generated.resources.select_group
+import e_lekha.composeapp.generated.resources.select_information
+import e_lekha.composeapp.generated.resources.select_loan
+import e_lekha.composeapp.generated.resources.select_meeting
+import e_lekha.composeapp.generated.resources.select_new_customer
+import e_lekha.composeapp.generated.resources.select_next
+import e_lekha.composeapp.generated.resources.select_village
 import e_lekha.composeapp.generated.resources.spinner_select
 import e_lekha.composeapp.generated.resources.total_monthly_expenditure
 import e_lekha.composeapp.generated.resources.type_here
@@ -165,6 +182,7 @@ import kotlinx.coroutines.delay
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.Font
+import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.imageResource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -814,7 +832,7 @@ fun FormFields(
     isReadable: Boolean = false,
     labelColor: Color = textview_color,
     placeholderColor: Color = Color(0xFF212121),
-    backgroundColor: Color= text_fiiled_color,
+    backgroundColor: Color = text_fiiled_color,
     borderColor: Color = boderColor,
     maxLines: Int = 1,
 //    disabledBackgroundColor: Color = Color(0xFFE0E0E0),
@@ -875,7 +893,6 @@ fun FormFields(
     )
 
 }
-
 
 
 @Composable
@@ -947,7 +964,7 @@ fun MultiSelectDropdownWithChips(
             ) {
                 if (selectedOptions.isEmpty()) {
                     ReusableTextView(
-                        text = "Select",
+                        text = stringResource(Res.string.spinner_select),
                         textColor = Color.Gray,
                         fontFamily = fontFamily,
                         fontSize = 14
@@ -1226,7 +1243,7 @@ fun DynamicAlertDialog(
     showDialog: Boolean,
     title: String = stringResource(Res.string.app_name),
     message: String = "",
-    confirmText: String = "OK",
+    confirmText: String = stringResource(Res.string.select_customer_ok),
     dismissText: String? = null,
     onConfirm: () -> Unit = {},
     onDismiss: (() -> Unit)? = null
@@ -1258,7 +1275,7 @@ fun CustomAlertDialog(
     showDialog: Boolean,
     title: String = stringResource(Res.string.app_name),
     message: String = "",
-    confirmText: String = "OK",
+    confirmText: String = stringResource(Res.string.select_customer_ok),
     onConfirm: () -> Unit = {}
 ) {
     if (showDialog) {
@@ -1341,7 +1358,7 @@ fun CustomAlertDialog(
 @Composable
 fun ProgressDialog(
     showDialog: Boolean,
-    message: String = "Please wait..."
+    message: String = stringResource(Res.string.select_customer_please)
 ) {
     if (showDialog) {
         Box(
@@ -1459,9 +1476,9 @@ fun FormSpinner1(
     borderColor: Color = boderColor
 ) {
     var expanded by remember { mutableStateOf(false) }
-
+    val select = stringResource(Res.string.spinner_select)
     val finalOptions = remember(options) {
-        val list = mutableListOf("Select")
+        val list = mutableListOf(select)
         options?.let { list.addAll(it) }
         list
     }
@@ -1470,7 +1487,7 @@ fun FormSpinner1(
     val selectedText = if (selectedOption in finalOptions.indices)
         finalOptions[selectedOption!!]
     else
-        "Select"
+        select
 
     Column(modifier = modifier) {
         ReusableTextView(
@@ -1550,15 +1567,15 @@ fun FillStateSpinner(
     borderColor: Color = boderColor
 ) {
     var expanded by remember { mutableStateOf(false) }
-
+var select=stringResource(Res.string.spinner_select)
     val optionList = remember(options) {
         val list = mutableListOf<Pair<Int, String>>()
-        list.add(0 to "Select")
+        list.add(0 to select)
         options?.forEach { list.add((it.stateId to it.stateName.toString()) as Pair<Int, String>) }
         list
     }
 
-    val selectedText = optionList.find { it.first == selectedOption }?.second ?: "Select"
+    val selectedText = optionList.find { it.first == selectedOption }?.second ?: select
 
     Column(modifier = modifier) {
         ReusableTextView(
@@ -1676,16 +1693,16 @@ fun FillLookUpSpinner(
     borderColor: Color = boderColor
 ) {
     var expanded by remember { mutableStateOf(false) }
-
+var select=stringResource(Res.string.spinner_select)
     val optionList = remember(options) {
         val list = mutableListOf<Pair<Int, String>>() // Pair<id, name>
-        list.add(0 to "Select")
+        list.add(0 to select)
         options?.forEach { list.add((it.lookup_PK to it.lookName.toString()) as Pair<Int, String>) }
         list
     }
 
 
-    val selectedText = optionList.find { it.first == selectedOption }?.second ?: "Select"
+    val selectedText = optionList.find { it.first == selectedOption }?.second ?:select
 
     Column(modifier = modifier) {
         ReusableTextView(
@@ -1768,9 +1785,9 @@ fun FormSpinner(
 
     // FIX: Get density only once in Composable scope
     val density = LocalDensity.current
-
+    val select = stringResource(Res.string.spinner_select)
     val optionsList = remember(options) {
-        val list = mutableListOf("Select")
+        val list = mutableListOf(select)
         options?.forEach { list.add(it) }
         list
     }
@@ -1806,7 +1823,7 @@ fun FormSpinner(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 ReusableTextView(
-                    text = selectedOption.ifEmpty { "Select" },
+                    text = selectedOption.ifEmpty { stringResource(Res.string.spinner_select) },
                     textColor = textColor,
                     fontFamily = fontFamily
                 )
@@ -1900,7 +1917,7 @@ fun MultiSelectDropdownWithChips1(
                         contentAlignment = Alignment.CenterStart
                     ) {
                         ReusableTextView(
-                            text = "Select",
+                            text =stringResource(Res.string.spinner_select),
                             textColor = Color.Gray,
                             fontFamily = fontFamily,
                             fontSize = 14
@@ -2348,7 +2365,7 @@ fun TripleIconSlider(
 
 
                 Text(
-                    text = "INFORMATION",
+                    text = stringResource(Res.string.select_information),
                     color = Color.White,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier
@@ -2376,7 +2393,7 @@ fun ReusableCard(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 8.dp, vertical = 15.dp)
+                .padding(horizontal = 8.dp, vertical = 10.dp)
         ) {
             content()
         }
@@ -2421,38 +2438,57 @@ fun GroupCardUI(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 10.dp, vertical = 8.dp),
+                .padding(vertical = 8.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
 
             // LEFT COLUMN
             Column(
-                verticalArrangement = Arrangement.spacedBy(2.dp),
                 modifier = Modifier.weight(1f)
             ) {
-                LabelValueText(label = "Group Name :", value = item.groupName)
-                LabelValueText(label = "No. of Customers :", value = item.customers.toString())
-                LabelValueText(label = "Village Name :", value = item.village)
-                LabelValueText(label = "Loan Officer :", value = item.officer)
-                LabelValueText(label = "Group formation date :", value = item.formation)
+                LabelValueText(
+                    label = stringResource(Res.string.select_group),
+                    value = item.groupName
+                )
+                LabelValueText(
+                    label = stringResource(Res.string.select_customer),
+                    value = item.customers.toString()
+                )
+                LabelValueText(
+                    label = stringResource(Res.string.select_village),
+                    value = item.village
+                )
+                LabelValueText(label = stringResource(Res.string.select_loan), value = item.officer)
+                LabelValueText(
+                    label = stringResource(Res.string.select_formation),
+                    value = item.formation
+                )
             }
-
-            Spacer(modifier = Modifier.width(16.dp))
 
             // RIGHT COLUMN
             Column(
-                verticalArrangement = Arrangement.spacedBy(2.dp),
                 modifier = Modifier.weight(1f)
             ) {
-                LabelValueText(label = "Disbursement date :", value = item.disbursement)
-                LabelValueText(label = "Center :", value = item.center)
-                LabelValueText(label = "Meeting day :", value = item.meetingDay)
-                LabelValueText(label = "Next meeting Date :", value = item.nextMeeting)
+                LabelValueText(
+                    label = stringResource(Res.string.select_disbursement),
+                    value = item.disbursement
+                )
+                LabelValueText(
+                    label = stringResource(Res.string.select_center),
+                    value = item.center
+                )
+                LabelValueText(
+                    label = stringResource(Res.string.select_meeting),
+                    value = item.meetingDay
+                )
+                LabelValueText(
+                    label = stringResource(Res.string.select_next),
+                    value = item.nextMeeting
+                )
             }
         }
     }
 }
-
 
 
 @Composable
@@ -2558,15 +2594,21 @@ fun <T : Any> FillDynamicSpinner(
 
 @Composable
 fun LabelValueText(label: String, value: String) {
-    Row {
+    Row(
+        modifier = Modifier.fillMaxWidth()
+            .height(IntrinsicSize.Min),
+        verticalAlignment = Alignment.Top
+    ) {
         ReusableTextViewGrayCard(
             text = label,
-            fontSize =  13
+            fontSize = 13,
+
+
             )
         Spacer(modifier = Modifier.width(4.dp))
         ReusableTextViewBlackCard(
             text = value,
-            fontSize = 13
+            fontSize = 12,
 
 
             )
@@ -2583,14 +2625,14 @@ fun CustomerItemCard(
     ReusableCards(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 8.dp)
+            .padding(horizontal = 8.dp, vertical = 8.dp)
             .clickable {
                 if (checked) {
                     onCardClick(customer)
                 }
             },
         backgroundColor = repaymentColor,
-        cornerRadius =  12
+        cornerRadius = 12
     ) {
 
         Row(
@@ -2615,10 +2657,16 @@ fun CustomerItemCard(
             Column(
                 modifier = Modifier.weight(1f)
             ) {
-                LabelValueText("Customer ID :", "New Customer")
-                LabelValueText("Name :", customer.name)
-                LabelValueText("Mobile number :", customer.mobile)
-                LabelValueText("Loan Amount :", "Rs ${customer.amount}")
+                LabelValueText(
+                    stringResource(Res.string.select_customer_id),
+                    stringResource(Res.string.select_new_customer)
+                )
+                LabelValueText(stringResource(Res.string.select_customer_name), customer.name)
+                LabelValueText(stringResource(Res.string.select_customer_mobile), customer.mobile)
+                LabelValueText(
+                    stringResource(Res.string.select_customer_loan),
+                    "Rs ${customer.amount}"
+                )
             }
 
             Spacer(modifier = Modifier.width(10.dp))
@@ -2664,9 +2712,6 @@ fun FormFieldCompacts(
 
     Column(modifier) {
 
-
-
-        Spacer(Modifier.height(5.dp))
 
         Box(
             modifier = Modifier
@@ -2779,7 +2824,7 @@ fun CameraPreviewField(
 fun ReusableTextViewGrayCard(
     text: String,
     modifier: Modifier = Modifier,
-    textColor: Color =toolbar_color,
+    textColor: Color = toolbar_color,
     fontSize: Int = 15,
     fontWeight: FontWeight = FontWeight.W500,
     fontFamily: FontFamily = FontFamily(Font(Res.font.roboto_medium)),
@@ -2861,11 +2906,12 @@ fun ReusableTextViewBlackCard(
 
 
 }
+
 @Composable
 fun ReusableDynamicSpinner(
     selectedValue: String?,
     options: List<String>,
-    placeholder: String = "Select",
+    placeholder: String = stringResource(Res.string.spinner_select),
     onValueSelected: (String) -> Unit,
     modifier: Modifier = Modifier,
     backgroundColor: Color = text_fiiled_color,
@@ -3270,7 +3316,7 @@ fun convertDateFormatYYYYMMDD(inputDate: String): String {
             val year = parts[2].toInt()
             newDate = "$year-$month-$day"
         }
-    }catch (ex: Exception){
+    } catch (ex: Exception) {
         ex.printStackTrace()
     }
     return newDate
@@ -3278,7 +3324,7 @@ fun convertDateFormatYYYYMMDD(inputDate: String): String {
 
 fun convertDateFormatDDMMYYYY(inputDate: String): String {
     var newDate = ""
-    try{
+    try {
         if (!inputDate.isNullOrEmpty()) {
             val parts = inputDate.split("-")
             val day = parts[2].toInt()
@@ -3286,7 +3332,7 @@ fun convertDateFormatDDMMYYYY(inputDate: String): String {
             val year = parts[0].toInt()
             newDate = "$day-$month-$year"
         }
-    }catch (ex: Exception){
+    } catch (ex: Exception) {
         ex.printStackTrace()
     }
     return newDate

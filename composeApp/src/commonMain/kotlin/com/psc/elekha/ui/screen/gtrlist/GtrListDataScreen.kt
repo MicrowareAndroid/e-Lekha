@@ -19,8 +19,10 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.psc.elekha.ui.theme.LightSkyBlue
+import com.psc.elekha.ui.theme.LightTeal
 import com.psc.elekha.ui.theme.PrimaryDark
 import com.psc.elekha.ui.theme.black
+import com.psc.elekha.ui.theme.toolbar_color
 import com.psc.elekha.ui.theme.white
 import com.psc.elekha.utils.*
 import e_lekha.composeapp.generated.resources.*
@@ -62,7 +64,7 @@ fun GtrListDataScreen(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(white)
+                    .background(toolbar_color)
                     .padding(horizontal = 16.dp, vertical = 10.dp)
                     .navigationBarsPadding()
             ) {
@@ -94,34 +96,76 @@ fun GtrListDataScreen(
                     .padding(horizontal = 15.dp, vertical = 5.dp)
             ) {
 
-                Column(
-                    horizontalAlignment = Alignment.Start,
-                    verticalArrangement = Arrangement.spacedBy(4.dp)
-                ) {
+                ReusableCard(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(5.dp),
+                    backgroundColor = LightTeal,
+                    cornerRadius = 12
+                )
+                {
 
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        ReusableTextView(
-                            text = stringResource(Res.string.home_user),
-                            textColor = PrimaryDark
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(5.dp)
+                    ) {
+
+                        // ---------- ROW 1 : USER NAME (LEFT FULL WIDTH) ----------
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Start
+                        ) {
+                            ReusableTextView(
+                                text = stringResource(Res.string.home_user),
+                                textColor = PrimaryDark
+                            )
+                            Spacer(Modifier.width(6.dp))
+                            ReusableTextView(text = "Vikash", textColor = Color.Black)
+                        }
+
+                        Spacer(Modifier.height(6.dp))
+
+                        // ---------- ROW 2 : TIME (LEFT) + DATE (RIGHT) ----------
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically
                         )
-                        Spacer(Modifier.width(6.dp))
-                        ReusableTextView(text = "Vikash", textColor = Color.Black)
-                    }
+                        {
 
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        ReusableTextView(text = stringResource(Res.string.home_time), textColor = PrimaryDark)
-                        Spacer(Modifier.width(6.dp))
-                        ReusableTextView(text = "10:45 AM", textColor = Color.Black)
-                    }
+                            // TIME → LEFT
+                            Row(
+                                modifier = Modifier.weight(1f),   // <-- Left side full space
+                                verticalAlignment = Alignment.CenterVertically
+                            )
+                            {
+                                ReusableTextView(
+                                    text = stringResource(Res.string.home_time),
+                                    textColor = PrimaryDark
+                                )
+                                Spacer(Modifier.width(6.dp))
+                                ReusableTextView(text = "10:45 AM", textColor = Color.Black)
+                            }
 
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        ReusableTextView(text = stringResource(Res.string.home_date), textColor = PrimaryDark)
-                        Spacer(Modifier.width(6.dp))
-                        ReusableTextView(text = "04/12/2025", textColor = Color.Black)
+                            // DATE → RIGHT
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                ReusableTextView(
+                                    text = stringResource(Res.string.home_date),
+                                    textColor = PrimaryDark
+                                )
+                                Spacer(Modifier.width(6.dp))
+                                ReusableTextView(text = "04/12/2025", textColor = Color.Black)
+                            }
+                        }
+
                     }
                 }
 
-                Spacer(modifier = Modifier.height(18.dp))
+
+                Spacer(modifier = Modifier.height(3.dp))
 
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -209,7 +253,7 @@ fun GtrListDataScreen(
                     modifier = Modifier
                         .weight(1f)
                         .verticalScroll(rememberScrollState())
-                        .padding(bottom = 20.dp)
+                        .padding(bottom = 10.dp)
                 ) {
                     customerList.forEach { customer ->
                         val isChecked = checkedMap[customer] ?: false

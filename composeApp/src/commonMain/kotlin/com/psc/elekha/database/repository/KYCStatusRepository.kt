@@ -7,19 +7,19 @@ class KYCStatusRepository(
     private val dao: KYCStatusDao
 ) {
 
-    fun insertKYCStatus(status: KYCStatusEntity) {
+    suspend fun insertKYCStatus(status: KYCStatusEntity) {
         dao.insertKYCStatus(status)
     }
 
-    fun insertAllKYCStatus(statusList: List<KYCStatusEntity>) {
+    suspend fun insertAllKYCStatus(statusList: List<KYCStatusEntity>) {
         dao.insertAllKYCStatus(statusList)
     }
 
-    fun getAllKYCStatus(): List<KYCStatusEntity>? {
+    suspend fun getAllKYCStatus(): List<KYCStatusEntity>? {
         return dao.getAllKYCStatus()
     }
 
-    fun deleteAllKYCStatus() {
+    suspend fun deleteAllKYCStatus() {
         dao.deleteAllKYCStatus()
     }
 }

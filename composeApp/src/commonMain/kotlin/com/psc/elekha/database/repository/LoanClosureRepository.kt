@@ -8,32 +8,32 @@ class LoanClosureRepository(
 ) {
 
     // Insert single loan closure
-    fun insertLoanClosure(loanClosure: LoanClosureEntity) {
+    suspend fun insertLoanClosure(loanClosure: LoanClosureEntity) {
         dao.insertLoanClouser(loanClosure)
     }
 
     // Insert multiple loan closures
-    fun insertAllLoanClosure(loanClosures: List<LoanClosureEntity>) {
+    suspend fun insertAllLoanClosure(loanClosures: List<LoanClosureEntity>) {
         dao.insertAllLoanClouser(loanClosures)
     }
 
     // Get all loan closures
-    fun getAllLoanClosure(): List<LoanClosureEntity>? {
+    suspend fun getAllLoanClosure(): List<LoanClosureEntity>? {
         return dao.getAllLoanClouser()
     }
 
     // Get loan closures to upload
-    fun getLoanClosureUploadData(): List<LoanClosureEntity>? {
+    suspend fun getLoanClosureUploadData(): List<LoanClosureEntity>? {
         return dao.getLoanClouserUploadData()
     }
 
     // Get count of loan closures to upload
-    fun getLoanClosureUploadDataCount(): Int {
+    suspend  fun getLoanClosureUploadDataCount(): Int {
         return dao.getLoanClouserUploadDataCount()
     }
 
     // Update loan closure data
-    fun updateLoanClosureData(
+    suspend fun updateLoanClosureData(
         PaidDate: String,
         LoanLat: Double,
         LoanLong: Double,
@@ -44,12 +44,12 @@ class LoanClosureRepository(
     }
 
     // Mark uploaded
-    fun updateLoanClosureDataUploaded() {
+    suspend fun updateLoanClosureDataUploaded() {
         dao.updateLoanClouserDataUploaded()
     }
 
     // Delete all loan closures
-    fun deleteAllLoanClosure() {
+    suspend fun deleteAllLoanClosure() {
         dao.deleteAllLoanClouser()
     }
 }

@@ -7,15 +7,15 @@ import com.psc.elekha.database.entity.KYCDocCategoryEntity
 interface KYCDocCategoryDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertKYCDocCategory(kYCDocCategoryEntity: KYCDocCategoryEntity)
+    suspend fun insertKYCDocCategory(kYCDocCategoryEntity: KYCDocCategoryEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAllKYCDocCategory(kYCDocCategoryEntity: List<KYCDocCategoryEntity>?)
+    suspend fun insertAllKYCDocCategory(kYCDocCategoryEntity: List<KYCDocCategoryEntity>?)
 
     @Query("Select * from KYCDocCategory")
-    fun getAllKYCDocCategory(): List<KYCDocCategoryEntity>?
+    suspend fun getAllKYCDocCategory(): List<KYCDocCategoryEntity>?
 
     @Query("Delete from KYCDocCategory")
-    fun deleteAllKYCDocCategory()
+    suspend fun deleteAllKYCDocCategory()
 
 }

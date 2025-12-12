@@ -7,19 +7,19 @@ class KYCStatusConditionRepository(
     private val dao: KYCStatusConditionDao
 ) {
 
-    fun insertKYCStatusCondition(condition: KYCStatusConditionEntity) {
+    suspend fun insertKYCStatusCondition(condition: KYCStatusConditionEntity) {
         dao.insertKYCStatusCondition(condition)
     }
 
-    fun insertAllKYCStatusCondition(conditions: List<KYCStatusConditionEntity>) {
+    suspend fun insertAllKYCStatusCondition(conditions: List<KYCStatusConditionEntity>) {
         dao.insertAllKYCStatusCondition(conditions)
     }
 
-    fun getAllKYCStatusCondition(): List<KYCStatusConditionEntity>? {
+    suspend fun getAllKYCStatusCondition(): List<KYCStatusConditionEntity>? {
         return dao.getAllKYCStatusCondition()
     }
 
-    fun deleteAllKYCStatusCondition() {
+    suspend  fun deleteAllKYCStatusCondition() {
         dao.deleteAllKYCStatusCondition()
     }
 }
