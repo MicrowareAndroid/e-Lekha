@@ -58,6 +58,7 @@ import e_lekha.composeapp.generated.resources.district
 import e_lekha.composeapp.generated.resources.education
 import e_lekha.composeapp.generated.resources.enter_otp
 import e_lekha.composeapp.generated.resources.enter_your_personal_details
+import e_lekha.composeapp.generated.resources.father_name
 import e_lekha.composeapp.generated.resources.guarantor_image
 import e_lekha.composeapp.generated.resources.guarantor_mobile_number
 import e_lekha.composeapp.generated.resources.guarantor_name
@@ -65,6 +66,8 @@ import e_lekha.composeapp.generated.resources.husband_name
 import e_lekha.composeapp.generated.resources.image
 import e_lekha.composeapp.generated.resources.landmark
 import e_lekha.composeapp.generated.resources.marital_status
+import e_lekha.composeapp.generated.resources.maternal_address
+import e_lekha.composeapp.generated.resources.maternal_mob_no
 import e_lekha.composeapp.generated.resources.mobile_number
 import e_lekha.composeapp.generated.resources.next
 import e_lekha.composeapp.generated.resources.not_same_as_customer_mobile_number
@@ -287,7 +290,7 @@ viewModel.loadSavedData()
                         modifier = Modifier.weight(1f)
                     )
                 }
-
+                Spacer(modifier = Modifier.height(8.dp))
                 FormSpinner(
                     label = stringResource(Res.string.purpose),
                     options = listOf("Business", "Study Loan", "Home Loan"),
@@ -506,6 +509,55 @@ viewModel.loadSavedData()
                         value = "",
                         onValueChange = { "" },
                         placeholder = stringResource(Res.string.type_here),
+                        modifier = Modifier.weight(1f)
+                    )
+                }
+                Spacer(modifier = Modifier.height(8.dp))
+                FormFieldCompact(
+                    label = stringResource(Res.string.maternal_address),
+                    value = "",
+                    placeholder = stringResource(Res.string.type_here),
+                    onValueChange = { "" },
+                    maxLength = 20
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
+                    FormFieldCompact(
+                        label = stringResource(Res.string.village_name),
+                        value = "",
+                        onValueChange = { "" },
+                        placeholder = stringResource(Res.string.type_here),
+                        modifier = Modifier.weight(1f)
+                    )
+
+                    FormFieldCompact(
+                        label = stringResource(Res.string.maternal_mob_no),
+                        value = "",
+                        onValueChange = { "" },
+                        placeholder = stringResource(Res.string.type_here),
+                        modifier = Modifier.weight(1f)
+                    )
+                }
+                Spacer(modifier = Modifier.height(8.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
+                    FormFieldCompact(
+                        label = stringResource(Res.string.father_name),
+                        value = "",
+                        onValueChange = { "" },
+                        placeholder = stringResource(Res.string.type_here),
+                        modifier = Modifier.weight(1f)
+                    )
+                    FormSpinner(
+                        label = stringResource(Res.string.state),
+                        options = listOf("Delhi", "Punjab"),
+                        selectedOption = "",
+                        onOptionSelected = { },
                         modifier = Modifier.weight(1f)
                     )
                 }

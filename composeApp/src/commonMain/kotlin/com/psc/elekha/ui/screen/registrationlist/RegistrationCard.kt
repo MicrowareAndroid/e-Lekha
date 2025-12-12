@@ -55,93 +55,44 @@ fun RegistrationCard(
             .fillMaxWidth()
             .padding(4.dp)
     ) {
-        Row(
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(10.dp),
-            verticalAlignment = Alignment.Top
+                .padding(12.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            // LEFT SIDE CONTENT
-            Column(
-                modifier = Modifier
-                    .weight(1f)
+
+            //  NAME ROW
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
-
-                // ---------- FIRST ROW ----------
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Column(modifier = Modifier.weight(1f)) {
-                        ReusableTextViewGrayCard(
-                            stringResource(Res.string.name)
-                        )
-                        Spacer(Modifier.height(4.dp))
-                        ReusableTextViewBlackCard(registrationModel.name)
-                    }
-
-                    Spacer(modifier = Modifier.width(20.dp))
-
-                    Column(modifier = Modifier.weight(1f)) {
-                        ReusableTextViewGrayCard(
-                            stringResource(Res.string.mobile_number)
-                        )
-                        Spacer(Modifier.height(4.dp))
-                        ReusableTextViewBlackCard(registrationModel.phone)
-                    }
-                }
-
-                Spacer(modifier = Modifier.height(10.dp))
-
-                // ---------- SECOND ROW ----------
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Column(modifier = Modifier.weight(1f)) {
-                        ReusableTextViewGrayCard(
-                            stringResource(Res.string.marital_status)
-                        )
-                        Spacer(Modifier.height(4.dp))
-                        ReusableTextViewBlackCard(registrationModel.details)
-                    }
-
-                    Spacer(modifier = Modifier.width(20.dp))
-
-                    Column(modifier = Modifier.weight(1f)) {
-                        ReusableTextViewGrayCard(
-                            "Description"
-                        )
-                        Spacer(Modifier.height(4.dp))
-                        ReusableTextViewBlackCard("Some description here")
-                    }
-                }
+                ReusableTextViewGrayCard(stringResource(Res.string.name))
+                Spacer(Modifier.width(5.dp))
+                ReusableTextViewBlackCard(registrationModel.name)
             }
 
-            // RIGHT SIDE BUTTON COLUMN
-            Column(
-                verticalArrangement = Arrangement.spacedBy(5.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
+            //  MOBILE NUMBER ROW
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                IconButton(onClick = onEdit) {
-                    Icon(
-                        painter = painterResource(Res.drawable.edit),
-                        contentDescription = "Edit",
-                        modifier = Modifier.size(30.dp),
-                        tint = black
-                    )
-                }
-                IconButton(onClick = onDelete) {
-                    Icon(
-                        painter = painterResource(Res.drawable.delete),
-                        contentDescription = "Delete",
-                        modifier = Modifier.size(30.dp),
-                        tint = black
-                    )
-                }
+                ReusableTextViewGrayCard(stringResource(Res.string.mobile_number))
+                Spacer(Modifier.width(5.dp))
+                ReusableTextViewBlackCard(registrationModel.phone)
             }
+
+            //  MARITAL STATUS ROW
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                ReusableTextViewGrayCard(stringResource(Res.string.marital_status))
+                Spacer(Modifier.width(5.dp))
+                ReusableTextViewBlackCard(registrationModel.details)
+            }
+
         }
     }
-
 
 }

@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.psc.elekha.model.EconomicMovableAssetsModel
 import com.psc.elekha.ui.theme.editext_bg_color
+import com.psc.elekha.ui.theme.repaymentColor
 import com.psc.elekha.utils.ReusableTextViewBlackCard
 import com.psc.elekha.utils.ReusableTextViewGrayCard
 import e_lekha.composeapp.generated.resources.Res
@@ -32,7 +33,7 @@ fun EconomicMovableAssetsCard(
     Card(
         shape = RoundedCornerShape(12.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-        colors = CardDefaults.cardColors(containerColor = editext_bg_color),
+        colors = CardDefaults.cardColors(containerColor = repaymentColor),
         modifier = Modifier
             .fillMaxWidth()
             .padding(4.dp)
