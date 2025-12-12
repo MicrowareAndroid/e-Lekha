@@ -76,17 +76,17 @@ fun RepaymentList(
                 onNavigationClick = { navController.popBackStack() }
             )
         },
-      /* bottomBar = {
-            CommonSingleButtonsBottomString(
-                onOkClick = {},
-                text = stringResource(Res.string.gtr_save),
-                textSize = 16,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp)
-                    .navigationBarsPadding()
-            )
-        }*/
+        /* bottomBar = {
+              CommonSingleButtonsBottomString(
+                  onOkClick = {},
+                  text = stringResource(Res.string.gtr_save),
+                  textSize = 16,
+                  modifier = Modifier
+                      .fillMaxWidth()
+                      .padding(16.dp)
+                      .navigationBarsPadding()
+              )
+          }*/
 
     ) { innerPadding ->
         Box(
@@ -135,7 +135,7 @@ fun RepaymentList(
                                 Row(verticalAlignment = Alignment.CenterVertically) {
                                     ReusableTextView(
                                         text = stringResource(Res.string.select_customer_center),
-                                        textColor = PrimaryDark
+                                        textColor = toolbar_color
                                     )
                                     Spacer(Modifier.width(6.dp))
                                     ReusableTextView(text = "Gurgaon", textColor = Color.Black)
@@ -143,7 +143,7 @@ fun RepaymentList(
                                 Row(verticalAlignment = Alignment.CenterVertically) {
                                     ReusableTextView(
                                         text = stringResource(Res.string.select_customer_next),
-                                        textColor = PrimaryDark
+                                        textColor = toolbar_color
                                     )
                                     Spacer(Modifier.width(6.dp))
                                     ReusableTextView(text = "10/4/2025", textColor = Color.Black)
@@ -159,7 +159,7 @@ fun RepaymentList(
                                 Row(verticalAlignment = Alignment.CenterVertically) {
                                     ReusableTextView(
                                         text = stringResource(Res.string.home_user),
-                                        textColor = PrimaryDark
+                                        textColor = toolbar_color
                                     )
                                     Spacer(Modifier.width(6.dp))
                                     ReusableTextView(text = "Vikash", textColor = Color.Black)
@@ -168,7 +168,7 @@ fun RepaymentList(
                                 Row(verticalAlignment = Alignment.CenterVertically) {
                                     ReusableTextView(
                                         text = stringResource(Res.string.home_time),
-                                        textColor = PrimaryDark
+                                        textColor = toolbar_color
                                     )
                                     Spacer(Modifier.width(6.dp))
                                     ReusableTextView(text = "10:45 AM", textColor = Color.Black)
@@ -177,7 +177,7 @@ fun RepaymentList(
                                 Row(verticalAlignment = Alignment.CenterVertically) {
                                     ReusableTextView(
                                         text = stringResource(Res.string.home_date),
-                                        textColor = PrimaryDark
+                                        textColor = toolbar_color
                                     )
                                     Spacer(Modifier.width(6.dp))
                                     ReusableTextView(text = "04/12/2025", textColor = Color.Black)
@@ -310,11 +310,13 @@ fun FilterLoanDetailsDialog(
     // Sample data - replace with actual data
     val villages = listOf("Village 1", "Village 2", "Village 3", "Village 4")
     val centers = listOf("Center A", "Center B", "Center C", "Center D")
+    var customerIds  by remember { mutableStateOf("") }
     val select = stringResource(Res.string.spinner_select)
 
     AlertDialog(
         onDismissRequest = onDismiss,
         containerColor = Color.White,
+
         title = {
             Column {
                 ReusableTextView(
@@ -324,45 +326,36 @@ fun FilterLoanDetailsDialog(
                     textColor = Color.Black
                 )
                 Spacer(modifier = Modifier.height(8.dp))
-                CommonDivider(
-                    color = LightSkyBlue,
-                    thickness = 1.dp
-                )
+                CommonDivider(color = LightSkyBlue, thickness = 1.dp)
             }
         },
+
         text = {
             Column(
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .width(320.dp)     // <-- THIS MAKES DIALOG SMALL
                     .padding(vertical = 16.dp),
                 verticalArrangement = Arrangement.spacedBy(20.dp)
             ) {
-                // Village Dropdown
+
                 FormSpinner(
-                    label = stringResource(Res.string.select_customer_village),
+                    label = "Village",
                     options = villages,
                     selectedOption = selectedVillage,
                     onOptionSelected = { selectedVillage = it },
-                    modifier = Modifier.fillMaxWidth()
                 )
 
-                CommonDivider(
-                    color = Color(0xFFE0E0E0),
-                    thickness = 1.dp
-                )
+                CommonDivider(color = Color(0xFFE0E0E0), thickness = 1.dp)
 
-                // Center Dropdown
                 FormSpinner(
-                    label = stringResource(Res.string.select_customer_center_list),
+                    label = "Center",
                     options = centers,
                     selectedOption = selectedCenter,
-                    onOptionSelected = { selectedCenter = it },
-                    modifier = Modifier.fillMaxWidth()
+                    onOptionSelected = { selectedCenter = it }
                 )
 
-                // OR Text
                 ReusableTextView(
-                    text = stringResource(Res.string.select_customer_center_or),
+                    text = "OR",
                     fontSize = 16,
                     fontWeight = FontWeight.Bold,
                     textColor = Color.Black,
@@ -370,71 +363,41 @@ fun FilterLoanDetailsDialog(
                     textAlignment = androidx.compose.ui.text.style.TextAlign.Center
                 )
 
-                // Customer ID Field
-
                 FormFieldCompact(
-                    label = stringResource(Res.string.select_customer_id),
-                    value = "",
-                    onValueChange = { "" },
-                    placeholder = stringResource(Res.string.type_here),
-                    modifier = Modifier.weight(1f),
-                    maxLength = 30
+                    label = "Customer ID",
+                    value = customerIds,
+                    onValueChange = { customerIds = it },
+                    placeholder = "Type here"
                 )
 
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(Modifier.height(8.dp))
 
-                // Cancel and Filter Buttons Row
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
-                    // Cancel Button
                     Button(
                         onClick = onDismiss,
-                        modifier = Modifier
-                            .weight(1f)
-                            .height(48.dp),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = Color.LightGray
-                        ),
-                        shape = RoundedCornerShape(8.dp)
-                    ) {
-                        Text(
-                            text = stringResource(Res.string.cancel),
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.Medium,
-                            color = Color.Black
-                        )
-                    }
+                        modifier = Modifier.weight(1f).height(48.dp),
+                        colors = ButtonDefaults.buttonColors(containerColor = Color.LightGray)
+                    ) { Text("Cancel") }
 
-                    // Filter Button
                     Button(
                         onClick = {
                             onApplyFilter(
                                 selectedVillage.takeIf { it.isNotEmpty() && it != select },
                                 selectedCenter.takeIf { it.isNotEmpty() && it != select },
                                 customerId.ifEmpty { null }
-                            )
-                        },
-                        modifier = Modifier
-                            .weight(1f)
-                            .height(48.dp),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = btn_color
-                        ),
-                        shape = RoundedCornerShape(8.dp)
-                    ) {
-                        Text(
-                            text = stringResource(Res.string.select_customer_filter),
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.Medium,
-                            color = Color.Black
-                        )
-                    }
+                            ) },
+                        modifier = Modifier.weight(1f).height(48.dp),
+                        colors = ButtonDefaults.buttonColors(containerColor = btn_color)
+                    ) { Text("Filter") }
                 }
             }
         },
+
         confirmButton = {},
         dismissButton = {}
     )
+
 }

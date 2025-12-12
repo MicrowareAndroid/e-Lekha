@@ -82,7 +82,7 @@ fun CustomerDetailScreen(
                 onNavigationClick = { navController.popBackStack() }
             )
         },
-        bottomBar = {
+        /*bottomBar = {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -98,7 +98,7 @@ fun CustomerDetailScreen(
                     textSize = 16
                 )
             }
-        }
+        }*/
     )
     { innerPadding ->
 
@@ -121,7 +121,8 @@ fun CustomerDetailScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(horizontal = 15.dp, vertical = 5.dp)
-            ) {
+            )
+            {
 
 
                 ReusableCard(
@@ -147,7 +148,7 @@ fun CustomerDetailScreen(
                         ) {
                             ReusableTextView(
                                 text = stringResource(Res.string.home_user),
-                                textColor = PrimaryDark
+                                textColor = toolbar_color
                             )
                             Spacer(Modifier.width(6.dp))
                             ReusableTextView(text = "Vikash", textColor = Color.Black)
@@ -170,7 +171,7 @@ fun CustomerDetailScreen(
                             {
                                 ReusableTextView(
                                     text = stringResource(Res.string.home_time),
-                                    textColor = PrimaryDark
+                                    textColor = toolbar_color
                                 )
                                 Spacer(Modifier.width(6.dp))
                                 ReusableTextView(text = "10:45 AM", textColor = Color.Black)
@@ -182,7 +183,7 @@ fun CustomerDetailScreen(
                             ) {
                                 ReusableTextView(
                                     text = stringResource(Res.string.home_date),
-                                    textColor = PrimaryDark
+                                    textColor = toolbar_color
                                 )
                                 Spacer(Modifier.width(6.dp))
                                 ReusableTextView(text = "04/12/2025", textColor = Color.Black)
@@ -573,6 +574,22 @@ fun CustomerDetailScreen(
                     }
                 }
             }
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 5.dp)
+                    .align(Alignment.BottomCenter)
+
+            ) {
+                CommonSingleButtonsBottomString(
+                    onOkClick = {},
+                    text = stringResource(Res.string.gtr_save),
+                    textSize = 16,
+
+
+                    )
+            }
+
         }
     }
 }
