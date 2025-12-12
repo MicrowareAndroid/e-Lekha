@@ -13,12 +13,12 @@ class MSTComboBox_NRepository(
     }
 
     // Insert list of combo items
-    suspend fun insertAllComboBox(list: List<MSTComboBox_NEntity>?) {
+    suspend fun insertAllComboBox(list: List<MSTComboBox_NEntity>) {
         comboDao.insertAllComboBox(list)
     }
 
     // Get all combo items by Flag
-    suspend fun getAllComboBox(flag: Int): List<MSTComboBox_NEntity>? {
+    suspend fun getAllComboBox(flag: Int): List<MSTComboBox_NEntity> {
         return comboDao.getAllComboBox(flag)
     }
 

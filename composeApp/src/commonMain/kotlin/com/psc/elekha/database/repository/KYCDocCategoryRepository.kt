@@ -15,7 +15,7 @@ class KYCDocCategoryRepository(
         dao.insertAllKYCDocCategory(categories)
     }
 
-    suspend fun getAllKYCDocCategory(): List<KYCDocCategoryEntity>? {
+    suspend fun getAllKYCDocCategory(): List<KYCDocCategoryEntity> {
         return dao.getAllKYCDocCategory()
     }
 

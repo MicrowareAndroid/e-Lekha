@@ -15,7 +15,7 @@ class KYCDocConfigurationRepository(
         dao.insertAllKYCDocConfiguration(configs)
     }
 
-    suspend fun getAllKYCDocConfiguration(): List<KYCDocConfigurationEntity>? {
+    suspend fun getAllKYCDocConfiguration(): List<KYCDocConfigurationEntity> {
         return dao.getAllKYCDocConfiguration()
     }
 

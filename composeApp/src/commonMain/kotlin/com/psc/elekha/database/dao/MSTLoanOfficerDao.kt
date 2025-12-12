@@ -10,10 +10,10 @@ interface MSTLoanOfficerDao {
     suspend fun insertLoanOfficer(mSTLoanOfficerEntity: MSTLoanOfficerEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend  fun insertAllLoanOfficer(mSTLoanOfficerEntity: List<MSTLoanOfficerEntity>?)
+    suspend  fun insertAllLoanOfficer(mSTLoanOfficerEntity: List<MSTLoanOfficerEntity>)
 
     @Query("Select * from MSTLoanOfficer")
-    suspend fun getAllLoanOfficer(): List<MSTLoanOfficerEntity>?
+    suspend fun getAllLoanOfficer(): List<MSTLoanOfficerEntity>
 
     @Query("Delete from MSTLoanOfficer")
     suspend  fun deleteAllLoanOfficer()

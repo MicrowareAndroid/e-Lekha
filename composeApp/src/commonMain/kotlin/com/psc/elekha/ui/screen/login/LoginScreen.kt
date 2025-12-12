@@ -45,6 +45,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.psc.elekha.database.entity.MSTComboBox_NEntity
+import com.psc.elekha.database.viewmodel.MSTComboBox_NViewModel
 import com.psc.elekha.ui.theme.accentOrange
 import com.psc.elekha.ui.theme.assureOrange
 import com.psc.elekha.ui.theme.bgColor
@@ -77,6 +79,7 @@ import e_lekha.composeapp.generated.resources.type_here
 import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun LoginScreen(navController: NavController) {
@@ -92,6 +95,7 @@ fun LoginScreen(navController: NavController) {
     val robotoMedium = FontFamily(Font(Res.font.roboto_medium))
     val robotoRegular = FontFamily(Font(Res.font.roboto_regular))
     val robotoSemiBold = FontFamily(Font(Res.font.roboto_semibold))
+    val mstComboBox_NViewModel = koinViewModel<MSTComboBox_NViewModel>()
 
     /*LaunchedEffect(loginState) {
         when (loginState) {
@@ -275,6 +279,8 @@ fun LoginScreen(navController: NavController) {
             Spacer(modifier = Modifier.height(10.dp))
             Button(
                 onClick = {
+                    val values = MSTComboBox_NEntity(1,"Sudeep",1,"1",true)
+                    mstComboBox_NViewModel.insertComboBox(values)
 
                    /* val validationMessage = Validator.checkValidation(email, password)
                     if (validationMessage != null) {
@@ -283,6 +289,8 @@ fun LoginScreen(navController: NavController) {
                     } else {
                         viewModel.getToken(email, password)
                     }*/
+
+
                     navController.navigate(RouteName.home)
                 },
                 colors = ButtonDefaults.buttonColors(assureOrange),

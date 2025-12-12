@@ -19,7 +19,7 @@ class TabletMenuViewModel(
     fun loadAllTabletMenu() {
         viewModelScope.launch {
             val result = repository.getAllTabletMenu()
-            _tabletMenuList.value = result ?: emptyList()
+            _tabletMenuList.value = result
         }
     }
 
@@ -32,7 +32,7 @@ class TabletMenuViewModel(
     }
 
     // Insert list of tablet menu items
-    fun insertAllTabletMenu(list: List<TabletMenuEntity>?) {
+    fun insertAllTabletMenu(list: List<TabletMenuEntity>) {
         viewModelScope.launch {
             repository.insertAllTabletMenu(list)
             loadAllTabletMenu() // Refresh list

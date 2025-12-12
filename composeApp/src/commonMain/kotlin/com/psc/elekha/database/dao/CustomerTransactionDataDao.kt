@@ -10,16 +10,16 @@ interface CustomerTransactionDataDao {
     suspend fun insertCustomerTransactionData(customerTransactionDataEntity: CustomerTransactionDataEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAllCustomerTransactionData(customerTransactionDataEntity: List<CustomerTransactionDataEntity>?)
+    suspend fun insertAllCustomerTransactionData(customerTransactionDataEntity: List<CustomerTransactionDataEntity>)
 
     @Query("Delete from CustomerTransactionData")
     suspend fun deleteAllCustomerTransactionData()
 
     @Query("Select * from CustomerTransactionData where IsDeleted=0 and IsEdited=1")
-    fun getAllCustomerTransactionDataUpload(): List<CustomerTransactionDataEntity>?
+    fun getAllCustomerTransactionDataUpload(): List<CustomerTransactionDataEntity>
 
     @Query("Select * from CustomerTransactionData where IsDeleted=0 and GUID=:GUID order by date(TransactionOn) DESC")
-    fun getAllCustomerTransactionData(GUID: String): List<CustomerTransactionDataEntity>?
+    fun getAllCustomerTransactionData(GUID: String): List<CustomerTransactionDataEntity>
 
     @Query("Select Count(*) from CustomerTransactionData where IsDeleted=0 and GUID=:GUID")
     fun getAllCustomerTransactionDataCount(GUID: String): Int

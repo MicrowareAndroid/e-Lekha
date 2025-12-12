@@ -31,7 +31,7 @@ class ImageTrackingRecordViewModel(
     // -------------------------------
     fun loadAllRecords() {
         viewModelScope.launch(Dispatchers.IO) {
-            _allRecords.value = repository.getAllImageTrackingRecord() ?: emptyList()
+            _allRecords.value = repository.getAllImageTrackingRecord()
         }
     }
 
@@ -40,7 +40,7 @@ class ImageTrackingRecordViewModel(
     // -------------------------------
     fun loadAllData() {
         viewModelScope.launch(Dispatchers.IO) {
-            _allData.value = repository.getImageAllData() ?: emptyList()
+            _allData.value = repository.getImageAllData()
         }
     }
 

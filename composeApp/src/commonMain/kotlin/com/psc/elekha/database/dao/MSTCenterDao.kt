@@ -10,10 +10,10 @@ interface MSTCenterDao {
     suspend  fun insertCenter(mSTCenterEntity: MSTCenterEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend  fun insertAllCenter(mSTCenterEntity: List<MSTCenterEntity>?)
+    suspend  fun insertAllCenter(mSTCenterEntity: List<MSTCenterEntity>)
 
     @Query("Select * from MstCenter")
-    suspend  fun getAllCenter(): List<MSTCenterEntity>?
+    suspend  fun getAllCenter(): List<MSTCenterEntity>
 
     @Query("Delete from MstCenter")
     suspend fun deleteAllCenter()

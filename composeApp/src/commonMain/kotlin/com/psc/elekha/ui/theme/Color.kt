@@ -57,6 +57,8 @@ val btn_color = Color(0xFFFCC739)
 val text_fiiled_color= Color(0xFFE8F2FF)
 val toolbar_color = Color(0xFF02435A)
 
+val blue =Color(0xFF527BC0)
+
 fun blendColors(color1: Color, color2: Color, ratio: Float): Color {
     val inverseRatio = 1 - ratio
     return Color(

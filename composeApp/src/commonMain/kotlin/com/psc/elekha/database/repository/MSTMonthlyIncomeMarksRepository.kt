@@ -13,12 +13,12 @@ class MSTMonthlyIncomeMarksRepository(
     }
 
     // Insert list of monthly income marks records
-    suspend fun insertAllMonthlyIncomeMarks(list: List<MSTMonthlyIncomeMarksEntity>?) {
+    suspend fun insertAllMonthlyIncomeMarks(list: List<MSTMonthlyIncomeMarksEntity>) {
         monthlyIncomeMarksDao.insertAllMonthlyIncomeMarks(list)
     }
 
     // Get all monthly income marks records
-    suspend fun getAllMonthlyIncomeMarks(): List<MSTMonthlyIncomeMarksEntity>? {
+    suspend fun getAllMonthlyIncomeMarks(): List<MSTMonthlyIncomeMarksEntity> {
         return monthlyIncomeMarksDao.getAllMonthlyIncomeMarks()
     }
 

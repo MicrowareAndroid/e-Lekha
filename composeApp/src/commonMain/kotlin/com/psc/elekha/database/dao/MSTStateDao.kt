@@ -10,10 +10,10 @@ interface MSTStateDao {
     suspend fun insertState(mSTStateEntity: MSTStateEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAllState(mSTStateEntity: List<MSTStateEntity>?)
+    suspend fun insertAllState(mSTStateEntity: List<MSTStateEntity>)
 
     @Query("Select * from MSTState")
-    suspend fun getAllState(): List<MSTStateEntity>?
+    suspend fun getAllState(): List<MSTStateEntity>
 
     @Query("Delete from MSTState")
     suspend fun deleteAllState()

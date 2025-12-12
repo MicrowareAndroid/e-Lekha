@@ -13,12 +13,12 @@ class MSTPovertyStatusRepository(
     }
 
     // Insert list of poverty status records
-    suspend fun insertAllPovertyStatus(list: List<MSTPovertyStatusEntity>?) {
+    suspend fun insertAllPovertyStatus(list: List<MSTPovertyStatusEntity>) {
         povertyStatusDao.insertAllPovertyStatus(list)
     }
 
     // Get all poverty status records
-    suspend fun getAllPovertyStatus(): List<MSTPovertyStatusEntity>? {
+    suspend fun getAllPovertyStatus(): List<MSTPovertyStatusEntity> {
         return povertyStatusDao.getAllPovertyStatus()
     }
 

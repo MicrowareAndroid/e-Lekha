@@ -59,7 +59,7 @@ class CustomerStatusViewModel(
     fun loadAllStatus() {
 
         viewModelScope.launch(Dispatchers.IO) {
-            _allStatus.value = repository.getAllCustomerStatus() ?: emptyList()
+            _allStatus.value = repository.getAllCustomerStatus()
         }
     }
 
@@ -77,7 +77,7 @@ class CustomerStatusViewModel(
     // ---------------------------------------------------------
     fun loadCustomerStatusData() {
         viewModelScope.launch(Dispatchers.IO) {
-            _statusData.value = repository.getCustomerStatusData() ?: emptyList()
+            _statusData.value = repository.getCustomerStatusData()
         }
     }
 

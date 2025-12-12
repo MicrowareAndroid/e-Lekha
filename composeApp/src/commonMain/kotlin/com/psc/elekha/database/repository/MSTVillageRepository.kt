@@ -13,27 +13,27 @@ class MSTVillageRepository(
     }
 
     // Insert list of villages
-    suspend fun insertAllVillage(list: List<MSTVillageEntity>?) {
+    suspend fun insertAllVillage(list: List<MSTVillageEntity>) {
         villageDao.insertAllVillage(list)
     }
 
     // Get all villages
-    suspend fun getAllVillage(): List<MSTVillageEntity>? {
+    suspend fun getAllVillage(): List<MSTVillageEntity> {
         return villageDao.getAllVillage()
     }
 
     // Get all villages by BranchID
-    suspend fun getAllVillageByBranchID(branchID: Int): List<MSTVillageEntity>? {
+    suspend fun getAllVillageByBranchID(branchID: Int): List<MSTVillageEntity> {
         return villageDao.getAllVillageByBranchID(branchID)
     }
 
     // Get all villages by PinCode (with union query)
-    suspend fun getAllVillageByPincode(pinCode: String): List<MSTVillageEntity>? {
+    suspend fun getAllVillageByPincode(pinCode: String): List<MSTVillageEntity> {
         return villageDao.getAllVillageByPincode(pinCode)
     }
 
     // Get all villages by PinCode (exact match)
-    suspend fun getAllVillageByCode(pinCode: String): List<MSTVillageEntity>? {
+    suspend fun getAllVillageByCode(pinCode: String): List<MSTVillageEntity> {
         return villageDao.getAllVillageByCode(pinCode)
     }
 

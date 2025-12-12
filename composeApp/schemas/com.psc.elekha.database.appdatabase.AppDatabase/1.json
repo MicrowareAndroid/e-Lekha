@@ -1,0 +1,3915 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "44545f192fe3fb4ab5bef8dc7c5bd43d",
+    "entities": [
+      {
+        "tableName": "CustomerStatus",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`CustomerStatusID` INTEGER NOT NULL, `CustomerStatus` TEXT, `IsDeleted` INTEGER, PRIMARY KEY(`CustomerStatusID`))",
+        "fields": [
+          {
+            "fieldPath": "CustomerStatusID",
+            "columnName": "CustomerStatusID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "CustomerStatus",
+            "columnName": "CustomerStatus",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "IsDeleted",
+            "columnName": "IsDeleted",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "CustomerStatusID"
+          ]
+        }
+      },
+      {
+        "tableName": "MSTAssetsValuation",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`AssetID` INTEGER NOT NULL, `AssetValueID` INTEGER, `AssetValueName` TEXT, `Flag` INTEGER, `AssetValueMarks` REAL, `IsDeleted` INTEGER, PRIMARY KEY(`AssetID`))",
+        "fields": [
+          {
+            "fieldPath": "AssetID",
+            "columnName": "AssetID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "AssetValueID",
+            "columnName": "AssetValueID",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "AssetValueName",
+            "columnName": "AssetValueName",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "Flag",
+            "columnName": "Flag",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "AssetValueMarks",
+            "columnName": "AssetValueMarks",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "IsDeleted",
+            "columnName": "IsDeleted",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "AssetID"
+          ]
+        }
+      },
+      {
+        "tableName": "MSTBankBranch",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`BranchID` INTEGER NOT NULL, `BankID` INTEGER, `BranchName` TEXT, `IFSCCode` TEXT, PRIMARY KEY(`BranchID`))",
+        "fields": [
+          {
+            "fieldPath": "BranchID",
+            "columnName": "BranchID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "BankID",
+            "columnName": "BankID",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "BranchName",
+            "columnName": "BranchName",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "IFSCCode",
+            "columnName": "IFSCCode",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "BranchID"
+          ]
+        }
+      },
+      {
+        "tableName": "MSTBank",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`BankID` INTEGER NOT NULL, `Bank` TEXT, `IsDeleted` INTEGER, PRIMARY KEY(`BankID`))",
+        "fields": [
+          {
+            "fieldPath": "BankID",
+            "columnName": "BankID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "Bank",
+            "columnName": "Bank",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "IsDeleted",
+            "columnName": "IsDeleted",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "BankID"
+          ]
+        }
+      },
+      {
+        "tableName": "MSTBranch",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`BranchID` INTEGER NOT NULL, `WorkingDate` TEXT, `DistrictID` INTEGER, `Branch` TEXT, `BranchPhoneNumber` TEXT, `BranchCode` TEXT, `IsDeleted` INTEGER, PRIMARY KEY(`BranchID`))",
+        "fields": [
+          {
+            "fieldPath": "BranchID",
+            "columnName": "BranchID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "WorkingDate",
+            "columnName": "WorkingDate",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "DistrictID",
+            "columnName": "DistrictID",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "Branch",
+            "columnName": "Branch",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "BranchPhoneNumber",
+            "columnName": "BranchPhoneNumber",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "BranchCode",
+            "columnName": "BranchCode",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "IsDeleted",
+            "columnName": "IsDeleted",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "BranchID"
+          ]
+        }
+      },
+      {
+        "tableName": "MstCenter",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`CenterID` INTEGER NOT NULL, `Center` TEXT, `VillageID` INTEGER, `CollectionDay` INTEGER, `MeetingTime` TEXT, `UserID` TEXT, `HouseNo` TEXT, `Road` TEXT, `Locality` TEXT, `LandMark` TEXT, `Pin` TEXT, `DistanceFromBranch` REAL, `ActiveCustomer` INTEGER, `IsDeleted` INTEGER, PRIMARY KEY(`CenterID`))",
+        "fields": [
+          {
+            "fieldPath": "CenterID",
+            "columnName": "CenterID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "Center",
+            "columnName": "Center",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "VillageID",
+            "columnName": "VillageID",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "CollectionDay",
+            "columnName": "CollectionDay",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "MeetingTime",
+            "columnName": "MeetingTime",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "UserID",
+            "columnName": "UserID",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "HouseNo",
+            "columnName": "HouseNo",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "Road",
+            "columnName": "Road",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "Locality",
+            "columnName": "Locality",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "LandMark",
+            "columnName": "LandMark",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "Pin",
+            "columnName": "Pin",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "DistanceFromBranch",
+            "columnName": "DistanceFromBranch",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "ActiveCustomer",
+            "columnName": "ActiveCustomer",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "IsDeleted",
+            "columnName": "IsDeleted",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "CenterID"
+          ]
+        }
+      },
+      {
+        "tableName": "MstComboBox_N",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`ID` INTEGER NOT NULL, `Value` TEXT, `Flag` INTEGER NOT NULL, `lang` TEXT, `IsDeleted` INTEGER, PRIMARY KEY(`ID`, `Flag`))",
+        "fields": [
+          {
+            "fieldPath": "ID",
+            "columnName": "ID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "Value",
+            "columnName": "Value",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "Flag",
+            "columnName": "Flag",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "lang",
+            "columnName": "lang",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "IsDeleted",
+            "columnName": "IsDeleted",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "ID",
+            "Flag"
+          ]
+        }
+      },
+      {
+        "tableName": "MSTDistrict",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`DistrictID` INTEGER NOT NULL, `StateID` INTEGER, `District` TEXT, `IsDeleted` INTEGER, PRIMARY KEY(`DistrictID`))",
+        "fields": [
+          {
+            "fieldPath": "DistrictID",
+            "columnName": "DistrictID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "StateID",
+            "columnName": "StateID",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "District",
+            "columnName": "District",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "IsDeleted",
+            "columnName": "IsDeleted",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "DistrictID"
+          ]
+        }
+      },
+      {
+        "tableName": "MSTLoanOfficer",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`LoanOfficerID` TEXT NOT NULL, `LoanOfficerName` TEXT, PRIMARY KEY(`LoanOfficerID`))",
+        "fields": [
+          {
+            "fieldPath": "LoanOfficerID",
+            "columnName": "LoanOfficerID",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "LoanOfficerName",
+            "columnName": "LoanOfficerName",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "LoanOfficerID"
+          ]
+        }
+      },
+      {
+        "tableName": "MSTLoanProduct",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`LoanProductID` INTEGER NOT NULL, `LoanProduct` REAL, `LoanTypeID` INTEGER, `InterestRate` REAL, `InsuranceAmount` REAL, `LoanPaymentWeeks` INTEGER, `LoanCloserMinWeek` INTEGER, `UpdateBy` TEXT, `UpdatedDate` TEXT, `IsDeleted` INTEGER, `Tenure` INTEGER, `MonthlyInstallment` INTEGER, `TotalInterest` INTEGER, `ProcessingFee` INTEGER, `ProcessingSaving` INTEGER, `InsuranceFee` INTEGER, `InsuranceSaving` INTEGER, `TotalInsurance` INTEGER, `IsActive` INTEGER, PRIMARY KEY(`LoanProductID`))",
+        "fields": [
+          {
+            "fieldPath": "LoanProductID",
+            "columnName": "LoanProductID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "LoanProduct",
+            "columnName": "LoanProduct",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "LoanTypeID",
+            "columnName": "LoanTypeID",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "InterestRate",
+            "columnName": "InterestRate",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "InsuranceAmount",
+            "columnName": "InsuranceAmount",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "LoanPaymentWeeks",
+            "columnName": "LoanPaymentWeeks",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "LoanCloserMinWeek",
+            "columnName": "LoanCloserMinWeek",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "UpdateBy",
+            "columnName": "UpdateBy",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "UpdatedDate",
+            "columnName": "UpdatedDate",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "IsDeleted",
+            "columnName": "IsDeleted",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "Tenure",
+            "columnName": "Tenure",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "MonthlyInstallment",
+            "columnName": "MonthlyInstallment",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "TotalInterest",
+            "columnName": "TotalInterest",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "ProcessingFee",
+            "columnName": "ProcessingFee",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "ProcessingSaving",
+            "columnName": "ProcessingSaving",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "InsuranceFee",
+            "columnName": "InsuranceFee",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "InsuranceSaving",
+            "columnName": "InsuranceSaving",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "TotalInsurance",
+            "columnName": "TotalInsurance",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "IsActive",
+            "columnName": "IsActive",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "LoanProductID"
+          ]
+        }
+      },
+      {
+        "tableName": "MSTLoanType",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`LoanTypeID` INTEGER NOT NULL, `LoanType` TEXT, `IsDeleted` INTEGER, PRIMARY KEY(`LoanTypeID`))",
+        "fields": [
+          {
+            "fieldPath": "LoanTypeID",
+            "columnName": "LoanTypeID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "LoanType",
+            "columnName": "LoanType",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "IsDeleted",
+            "columnName": "IsDeleted",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "LoanTypeID"
+          ]
+        }
+      },
+      {
+        "tableName": "mstMFILoanProduct",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`MFILoanProductID` INTEGER NOT NULL, `MFIID` INTEGER, `LoanProductAmount` INTEGER, `LoanProduct` TEXT, `Sequence` INTEGER, `IsDeleted` INTEGER, PRIMARY KEY(`MFILoanProductID`))",
+        "fields": [
+          {
+            "fieldPath": "MFILoanProductID",
+            "columnName": "MFILoanProductID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "MFIID",
+            "columnName": "MFIID",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "LoanProductAmount",
+            "columnName": "LoanProductAmount",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "LoanProduct",
+            "columnName": "LoanProduct",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "Sequence",
+            "columnName": "Sequence",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "IsDeleted",
+            "columnName": "IsDeleted",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "MFILoanProductID"
+          ]
+        }
+      },
+      {
+        "tableName": "MstMonthlyIncomeMarks",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`MIMID` INTEGER NOT NULL, `MinIncome` INTEGER, `MaxIncome` INTEGER, `Marks` INTEGER, PRIMARY KEY(`MIMID`))",
+        "fields": [
+          {
+            "fieldPath": "MIMID",
+            "columnName": "MIMID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "MinIncome",
+            "columnName": "MinIncome",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "MaxIncome",
+            "columnName": "MaxIncome",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "Marks",
+            "columnName": "Marks",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "MIMID"
+          ]
+        }
+      },
+      {
+        "tableName": "MSTPovertyStatus",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`PID` INTEGER NOT NULL, `MinValue` INTEGER, `MaxValue` INTEGER, `Status` TEXT, PRIMARY KEY(`PID`))",
+        "fields": [
+          {
+            "fieldPath": "PID",
+            "columnName": "PID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "MinValue",
+            "columnName": "MinValue",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "MaxValue",
+            "columnName": "MaxValue",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "Status",
+            "columnName": "Status",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "PID"
+          ]
+        }
+      },
+      {
+        "tableName": "MSTState",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`StateID` INTEGER NOT NULL, `State` TEXT, PRIMARY KEY(`StateID`))",
+        "fields": [
+          {
+            "fieldPath": "StateID",
+            "columnName": "StateID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "State",
+            "columnName": "State",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "StateID"
+          ]
+        }
+      },
+      {
+        "tableName": "MSTVillage",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`VillageID` INTEGER NOT NULL, `BranchID` INTEGER, `Village` TEXT, `PinCode` TEXT, `IsDeleted` INTEGER, `VillageCode` TEXT, `DistrictCode` INTEGER, PRIMARY KEY(`VillageID`))",
+        "fields": [
+          {
+            "fieldPath": "VillageID",
+            "columnName": "VillageID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "BranchID",
+            "columnName": "BranchID",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "Village",
+            "columnName": "Village",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "PinCode",
+            "columnName": "PinCode",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "IsDeleted",
+            "columnName": "IsDeleted",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "VillageCode",
+            "columnName": "VillageCode",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "DistrictCode",
+            "columnName": "DistrictCode",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "VillageID"
+          ]
+        }
+      },
+      {
+        "tableName": "TabletMenu",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`TabletMenuID` INTEGER NOT NULL, `TabletMenuName` TEXT, PRIMARY KEY(`TabletMenuID`))",
+        "fields": [
+          {
+            "fieldPath": "TabletMenuID",
+            "columnName": "TabletMenuID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "TabletMenuName",
+            "columnName": "TabletMenuName",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "TabletMenuID"
+          ]
+        }
+      },
+      {
+        "tableName": "TabletMenuRole",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`TableMenuID` INTEGER NOT NULL, `RoleID` TEXT, PRIMARY KEY(`TableMenuID`))",
+        "fields": [
+          {
+            "fieldPath": "TableMenuID",
+            "columnName": "TableMenuID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "RoleID",
+            "columnName": "RoleID",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "TableMenuID"
+          ]
+        }
+      },
+      {
+        "tableName": "UserBranch",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`UserBranchID` TEXT NOT NULL, `UserID` TEXT, `BranchID` INTEGER, PRIMARY KEY(`UserBranchID`))",
+        "fields": [
+          {
+            "fieldPath": "UserBranchID",
+            "columnName": "UserBranchID",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "UserID",
+            "columnName": "UserID",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "BranchID",
+            "columnName": "BranchID",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "UserBranchID"
+          ]
+        }
+      },
+      {
+        "tableName": "Users",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`UserId` TEXT NOT NULL, `UserName` TEXT, `Password` TEXT, `RoleId` TEXT, `Name` TEXT, `IsUserDisabled` INTEGER, PRIMARY KEY(`UserId`))",
+        "fields": [
+          {
+            "fieldPath": "UserId",
+            "columnName": "UserId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "UserName",
+            "columnName": "UserName",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "Password",
+            "columnName": "Password",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "RoleId",
+            "columnName": "RoleId",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "Name",
+            "columnName": "Name",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "IsUserDisabled",
+            "columnName": "IsUserDisabled",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "UserId"
+          ]
+        }
+      },
+      {
+        "tableName": "KYCDocCategory",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`KYCCatID` INTEGER NOT NULL, `KYCCatName` TEXT, PRIMARY KEY(`KYCCatID`))",
+        "fields": [
+          {
+            "fieldPath": "KYCCatID",
+            "columnName": "KYCCatID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "KYCCatName",
+            "columnName": "KYCCatName",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "KYCCatID"
+          ]
+        }
+      },
+      {
+        "tableName": "KYCDocConfiguration",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`KYCDocConfigID` INTEGER NOT NULL, `KYCDocID` INTEGER, `POI` INTEGER, `POA` INTEGER, `RC` INTEGER, `BD` INTEGER, PRIMARY KEY(`KYCDocConfigID`))",
+        "fields": [
+          {
+            "fieldPath": "KYCDocConfigID",
+            "columnName": "KYCDocConfigID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "KYCDocID",
+            "columnName": "KYCDocID",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "POI",
+            "columnName": "POI",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "POA",
+            "columnName": "POA",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "RC",
+            "columnName": "RC",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "BD",
+            "columnName": "BD",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "KYCDocConfigID"
+          ]
+        }
+      },
+      {
+        "tableName": "KYCDocument",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`KYCDocID` INTEGER NOT NULL, `KYCDocName` TEXT, `KYCDocDBFieldName` TEXT, PRIMARY KEY(`KYCDocID`))",
+        "fields": [
+          {
+            "fieldPath": "KYCDocID",
+            "columnName": "KYCDocID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "KYCDocName",
+            "columnName": "KYCDocName",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "KYCDocDBFieldName",
+            "columnName": "KYCDocDBFieldName",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "KYCDocID"
+          ]
+        }
+      },
+      {
+        "tableName": "KYCStatus",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`KYCStatusID` INTEGER NOT NULL, `KYCStatus` TEXT, `ColorCode` TEXT, `KYCCode` TEXT, PRIMARY KEY(`KYCStatusID`))",
+        "fields": [
+          {
+            "fieldPath": "KYCStatusID",
+            "columnName": "KYCStatusID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "KYCStatus",
+            "columnName": "KYCStatus",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "ColorCode",
+            "columnName": "ColorCode",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "KYCCode",
+            "columnName": "KYCCode",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "KYCStatusID"
+          ]
+        }
+      },
+      {
+        "tableName": "KYCStatusCondition",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`KYCStatusConditionID` INTEGER NOT NULL, `KYCStatusID` INTEGER, `POI` INTEGER, `POA` INTEGER, `RC` INTEGER, `BD` INTEGER, PRIMARY KEY(`KYCStatusConditionID`))",
+        "fields": [
+          {
+            "fieldPath": "KYCStatusConditionID",
+            "columnName": "KYCStatusConditionID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "KYCStatusID",
+            "columnName": "KYCStatusID",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "POI",
+            "columnName": "POI",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "POA",
+            "columnName": "POA",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "RC",
+            "columnName": "RC",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "BD",
+            "columnName": "BD",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "KYCStatusConditionID"
+          ]
+        }
+      },
+      {
+        "tableName": "Customer",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`GUID` TEXT NOT NULL, `CustomerID` TEXT, `CustomerTypeID` INTEGER, `UserID` TEXT, `LivingStatusID` INTEGER, `MaritalStatusID` INTEGER, `FirstName` TEXT, `MiddleName` TEXT, `LastName` TEXT, `CustomerImage` TEXT, `HusbandFName` TEXT, `HusbandMName` TEXT, `HusbandLName` TEXT, `GuarantorID` INTEGER, `GurantorFName` TEXT, `GurantorMName` TEXT, `GurantorLName` TEXT, `GuarantorImage` TEXT, `DOB` TEXT, `AgeAsOnYear` INTEGER, `Age` INTEGER, `ContactNoOwner` INTEGER, `ContactNo` TEXT, `PhoneNo` TEXT, `ReligionID` INTEGER, `CasteID` INTEGER, `EducationID` INTEGER, `OccuptionID` INTEGER, `MonthlyIncomeID` INTEGER, `LoanPurposeID` INTEGER, `HouseNo` TEXT, `PlotNo` TEXT, `Gali` TEXT, `Mohalla` TEXT, `Road` TEXT, `VillageID` INTEGER, `City` TEXT, `PinCode` TEXT, `Assets_HouseEvaluation` INTEGER, `Assets_HouseStatus` INTEGER, `Assets_CeilingStatus` INTEGER, `Assets_Wall` INTEGER, `Assets_Rooms` INTEGER, `Assets_Electricity` INTEGER, `Assets_WaterSupply` INTEGER, `Assets_Sanitation` INTEGER, `Assets_LandHolding` INTEGER, `Assets_Animal_Cow` INTEGER, `Assets_Animal_Cow_Quantity` INTEGER, `Assets_Animal_Buffalo` INTEGER, `Assets_Animal_Buffalo_Quantity` INTEGER, `Assets_Animal_Goat` INTEGER, `Assets_Animal_Goat_Quantity` INTEGER, `Assets_Animal_Sheep` INTEGER, `Assets_Animal_Sheep_Quantity` INTEGER, `Assets_Animal_Other` INTEGER, `Assets_Animal_Other_Quantity` INTEGER, `Assets_Other_Television` INTEGER, `Assets_Other_Refrigerator` INTEGER, `Assets_Other_WaterCooler` INTEGER, `Assets_Other_WashingMachine` INTEGER, `Assets_Other_Sofa` INTEGER, `Assets_AddVehicle_Quantity` INTEGER, `Assets_AddVehicle` INTEGER, `Assets_PrimaryVehicle_Quantity` INTEGER, `Assets_PrimaryVehicle` INTEGER, `CKYC_UID` TEXT, `CKYC_UID_Image` TEXT, `CKYC_UID_Image2` TEXT, `CKYC_VoterCard` TEXT, `CKYC_VoterCard_Image` TEXT, `CKYC_VoterCard_Image2` TEXT, `CKYC_Passport` TEXT, `CKYC_Passport_Image` TEXT, `CKYC_Passport_Image2` TEXT, `CKYC_DL` TEXT, `CKYC_DL_Image` TEXT, `CKYC_PANCard` TEXT, `CKYC_PANCard_Image` TEXT, `CKYC_OtherID` TEXT, `CKYC_OtherID_Image` TEXT, `CKYC_ElectricityBill` TEXT, `CKYC_ElectricityBillRelationID` INTEGER, `CKYC_ElectricityBill_Image` TEXT, `CKYC_ElectricityBill_Name` TEXT, `CKYC_WaterBill` TEXT, `CKYC_WaterBillRelationID` INTEGER, `CKYC_WaterBill_Image` TEXT, `CKYC_WaterBill_Name` TEXT, `CKYC_JobCard` TEXT, `CKYC_JobCardRelationID` INTEGER, `CKYC_JobCard_Image` TEXT, `CKYC_JobCard_Name` TEXT, `CKYC_OtherAP` TEXT, `CKYC_OtherAP_RelationID` INTEGER, `CKYC_OtherAP_Image` TEXT, `CKYC_OtherAP_Name` TEXT, `CKYC_RationCard` TEXT, `CKYC_RationCard_Image` TEXT, `CKYC_Bank` INTEGER, `CKYC_BankAccountNumber` TEXT, `CKYC_Bank_Image` TEXT, `GKYC_UID` TEXT, `GKYC_UID_Image` TEXT, `GKYC_UID_Image2` TEXT, `GKYC_VoterCard` TEXT, `GKYC_VoterCard_Image` TEXT, `GKYC_VoterCard_Image2` TEXT, `GKYC_Passport` TEXT, `GKYC_Passport_Image` TEXT, `GKYC_Passport_Image2` TEXT, `GKYC_DL` TEXT, `GKYC_DL_Image` TEXT, `GKYC_PANCard` TEXT, `GKYC_PANCard_Image` TEXT, `GKYC_OtherID` TEXT, `GKYC_OtherID_Image` TEXT, `GKYC_ElectricityBill` TEXT, `GKYC_ElectricityBillRelationID` INTEGER, `GKYC_ElectricityBill_Image` TEXT, `GKYC_ElectricityBill_Name` TEXT, `GKYC_WaterBill` TEXT, `GKYC_WaterBilRelationID` INTEGER, `GKYC_WaterBill_Image` TEXT, `GKYC_WaterBill_Name` TEXT, `GKYC_JobCard` TEXT, `GKYC_JobCardRelationID` INTEGER, `GKYC_JobCard_Image` TEXT, `GKYC_JobCard_Name` TEXT, `GKYC_OtherAP` TEXT, `GKYC_OtherAP_RelationID` INTEGER, `GKYC_OtherAP_Image` TEXT, `GKYC_OtherAP_Name` TEXT, `GKYC_RationCard` TEXT, `GKYC_RationCard_Image` TEXT, `GKYC_Bank` INTEGER, `GKYC_BankAccountNumber` TEXT, `GKYC_Bank_Image` TEXT, `TotalMFI` INTEGER, `ToatalActiveMFI` INTEGER, `DisbursedAmtMFI` INTEGER, `LoanMFIOutstandingSelf` INTEGER, `LoanMFIOutstandingCreditEnquiry` INTEGER, `CreditEnquiryRemarks` TEXT, `PovertyStatus` TEXT, `KYCStatus` TEXT, `CGTMarks` INTEGER, `GRTDate` TEXT, `GRTPlace` TEXT, `CutomerStatusID` INTEGER, `RegistrationStatusID` INTEGER, `RegistrationDate` TEXT, `LoanAppliedID` INTEGER, `LoanSanctionedID` INTEGER, `LoanDisbursedID` INTEGER, `LoanDisbursedDate` TEXT, `LoanDisbRemarks` TEXT, `LoanEMIDate` TEXT, `LoanApprovedID` INTEGER, `LoanApprovalDate` TEXT, `LoanChequeBankID` INTEGER, `LoanChequeNo` TEXT, `LoanApprovedAmt` INTEGER, `LoanApprovedInterestRate` REAL, `LoanApprovedInsuranceAmt` INTEGER, `LoanApprovedFeesAmt` INTEGER, `LoanApprovedInstallmentAmt` INTEGER, `LoanApprovedPaymentWeeks` INTEGER, `LoanApprovedCloserMinWeeks` INTEGER, `LoanApprovedRemarks` TEXT, `IsLoanClosed` INTEGER, `TabletID` TEXT, `FundSourceID` INTEGER, `CreatedBy` TEXT, `CreatedOn` TEXT, `UpdatedBy` TEXT, `UpdatedOn` TEXT, `IsDeleted` INTEGER, `LoanApprovalDoneBy` TEXT, `LoanDisbursalDoneBy` TEXT, `GRTDoneBy` TEXT, `CreditEnquiryDoneBy` TEXT, `CGTDoneBy` TEXT, `ExistingLoanAmount` INTEGER, `ExistingLoanCurrentOutstanding` INTEGER, `ExistingLoanCurrentWeek` INTEGER, `CKYC_JobCard_Image2` TEXT, `CKYC_RationCard_Image2` TEXT, `GKYC_JobCard_Image2` TEXT, `GRTLat` TEXT, `GRTLong` TEXT, `RegPlace` TEXT, `RegLat` TEXT, `RegLong` TEXT, `IsOldCustomer` INTEGER, `CustomerNickName` TEXT, `IsMobileNoValidated` INTEGER, `GurantorAge` INTEGER, `Assets_Other_Gas` INTEGER, `KElectricNumber` TEXT, `GurantorKElectricNumber` TEXT, `CustomerBankNameEditable` TEXT, `IsWriteOff` INTEGER, `LoanCycle` INTEGER, `CreditEquiryPDF` TEXT, `CustomerBankIFSCCode` TEXT, `MandatePrint` INTEGER, `MandateStartDate` TEXT, `MandateEndDate` TEXT, `MandateApproved` INTEGER, `MandateRemark` INTEGER, `HouseHoldAssesment_Image` TEXT, `TabletVersionName` TEXT, `GKYC_IFSCCode` TEXT, `GKYC_BankNameEditable` TEXT, `Duplicate_Customer_Remark` TEXT, `GuarantorDOB` TEXT, `UploadedOn` TEXT, `Remarks` TEXT, `IsEdited` INTEGER, `OTPCODE` TEXT, `IsUpload` INTEGER, `FamilyMonthlyIncome` INTEGER, `GKYC_OtherID_Image2` TEXT, PRIMARY KEY(`GUID`))",
+        "fields": [
+          {
+            "fieldPath": "GUID",
+            "columnName": "GUID",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "CustomerID",
+            "columnName": "CustomerID",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CustomerTypeID",
+            "columnName": "CustomerTypeID",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "UserID",
+            "columnName": "UserID",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "LivingStatusID",
+            "columnName": "LivingStatusID",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "MaritalStatusID",
+            "columnName": "MaritalStatusID",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "FirstName",
+            "columnName": "FirstName",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "MiddleName",
+            "columnName": "MiddleName",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "LastName",
+            "columnName": "LastName",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CustomerImage",
+            "columnName": "CustomerImage",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "HusbandFName",
+            "columnName": "HusbandFName",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "HusbandMName",
+            "columnName": "HusbandMName",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "HusbandLName",
+            "columnName": "HusbandLName",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GuarantorID",
+            "columnName": "GuarantorID",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "GurantorFName",
+            "columnName": "GurantorFName",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GurantorMName",
+            "columnName": "GurantorMName",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GurantorLName",
+            "columnName": "GurantorLName",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GuarantorImage",
+            "columnName": "GuarantorImage",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "DOB",
+            "columnName": "DOB",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "AgeAsOnYear",
+            "columnName": "AgeAsOnYear",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "Age",
+            "columnName": "Age",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "ContactNoOwner",
+            "columnName": "ContactNoOwner",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "ContactNo",
+            "columnName": "ContactNo",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "PhoneNo",
+            "columnName": "PhoneNo",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "ReligionID",
+            "columnName": "ReligionID",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "CasteID",
+            "columnName": "CasteID",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "EducationID",
+            "columnName": "EducationID",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "OccuptionID",
+            "columnName": "OccuptionID",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "MonthlyIncomeID",
+            "columnName": "MonthlyIncomeID",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "LoanPurposeID",
+            "columnName": "LoanPurposeID",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "HouseNo",
+            "columnName": "HouseNo",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "PlotNo",
+            "columnName": "PlotNo",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "Gali",
+            "columnName": "Gali",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "Mohalla",
+            "columnName": "Mohalla",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "Road",
+            "columnName": "Road",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "VillageID",
+            "columnName": "VillageID",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "City",
+            "columnName": "City",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "PinCode",
+            "columnName": "PinCode",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "Assets_HouseEvaluation",
+            "columnName": "Assets_HouseEvaluation",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "Assets_HouseStatus",
+            "columnName": "Assets_HouseStatus",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "Assets_CeilingStatus",
+            "columnName": "Assets_CeilingStatus",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "Assets_Wall",
+            "columnName": "Assets_Wall",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "Assets_Rooms",
+            "columnName": "Assets_Rooms",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "Assets_Electricity",
+            "columnName": "Assets_Electricity",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "Assets_WaterSupply",
+            "columnName": "Assets_WaterSupply",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "Assets_Sanitation",
+            "columnName": "Assets_Sanitation",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "Assets_LandHolding",
+            "columnName": "Assets_LandHolding",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "Assets_Animal_Cow",
+            "columnName": "Assets_Animal_Cow",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "Assets_Animal_Cow_Quantity",
+            "columnName": "Assets_Animal_Cow_Quantity",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "Assets_Animal_Buffalo",
+            "columnName": "Assets_Animal_Buffalo",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "Assets_Animal_Buffalo_Quantity",
+            "columnName": "Assets_Animal_Buffalo_Quantity",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "Assets_Animal_Goat",
+            "columnName": "Assets_Animal_Goat",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "Assets_Animal_Goat_Quantity",
+            "columnName": "Assets_Animal_Goat_Quantity",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "Assets_Animal_Sheep",
+            "columnName": "Assets_Animal_Sheep",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "Assets_Animal_Sheep_Quantity",
+            "columnName": "Assets_Animal_Sheep_Quantity",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "Assets_Animal_Other",
+            "columnName": "Assets_Animal_Other",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "Assets_Animal_Other_Quantity",
+            "columnName": "Assets_Animal_Other_Quantity",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "Assets_Other_Television",
+            "columnName": "Assets_Other_Television",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "Assets_Other_Refrigerator",
+            "columnName": "Assets_Other_Refrigerator",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "Assets_Other_WaterCooler",
+            "columnName": "Assets_Other_WaterCooler",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "Assets_Other_WashingMachine",
+            "columnName": "Assets_Other_WashingMachine",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "Assets_Other_Sofa",
+            "columnName": "Assets_Other_Sofa",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "Assets_AddVehicle_Quantity",
+            "columnName": "Assets_AddVehicle_Quantity",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "Assets_AddVehicle",
+            "columnName": "Assets_AddVehicle",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "Assets_PrimaryVehicle_Quantity",
+            "columnName": "Assets_PrimaryVehicle_Quantity",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "Assets_PrimaryVehicle",
+            "columnName": "Assets_PrimaryVehicle",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "CKYC_UID",
+            "columnName": "CKYC_UID",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CKYC_UID_Image",
+            "columnName": "CKYC_UID_Image",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CKYC_UID_Image2",
+            "columnName": "CKYC_UID_Image2",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CKYC_VoterCard",
+            "columnName": "CKYC_VoterCard",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CKYC_VoterCard_Image",
+            "columnName": "CKYC_VoterCard_Image",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CKYC_VoterCard_Image2",
+            "columnName": "CKYC_VoterCard_Image2",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CKYC_Passport",
+            "columnName": "CKYC_Passport",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CKYC_Passport_Image",
+            "columnName": "CKYC_Passport_Image",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CKYC_Passport_Image2",
+            "columnName": "CKYC_Passport_Image2",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CKYC_DL",
+            "columnName": "CKYC_DL",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CKYC_DL_Image",
+            "columnName": "CKYC_DL_Image",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CKYC_PANCard",
+            "columnName": "CKYC_PANCard",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CKYC_PANCard_Image",
+            "columnName": "CKYC_PANCard_Image",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CKYC_OtherID",
+            "columnName": "CKYC_OtherID",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CKYC_OtherID_Image",
+            "columnName": "CKYC_OtherID_Image",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CKYC_ElectricityBill",
+            "columnName": "CKYC_ElectricityBill",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CKYC_ElectricityBillRelationID",
+            "columnName": "CKYC_ElectricityBillRelationID",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "CKYC_ElectricityBill_Image",
+            "columnName": "CKYC_ElectricityBill_Image",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CKYC_ElectricityBill_Name",
+            "columnName": "CKYC_ElectricityBill_Name",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CKYC_WaterBill",
+            "columnName": "CKYC_WaterBill",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CKYC_WaterBillRelationID",
+            "columnName": "CKYC_WaterBillRelationID",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "CKYC_WaterBill_Image",
+            "columnName": "CKYC_WaterBill_Image",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CKYC_WaterBill_Name",
+            "columnName": "CKYC_WaterBill_Name",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CKYC_JobCard",
+            "columnName": "CKYC_JobCard",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CKYC_JobCardRelationID",
+            "columnName": "CKYC_JobCardRelationID",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "CKYC_JobCard_Image",
+            "columnName": "CKYC_JobCard_Image",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CKYC_JobCard_Name",
+            "columnName": "CKYC_JobCard_Name",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CKYC_OtherAP",
+            "columnName": "CKYC_OtherAP",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CKYC_OtherAP_RelationID",
+            "columnName": "CKYC_OtherAP_RelationID",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "CKYC_OtherAP_Image",
+            "columnName": "CKYC_OtherAP_Image",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CKYC_OtherAP_Name",
+            "columnName": "CKYC_OtherAP_Name",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CKYC_RationCard",
+            "columnName": "CKYC_RationCard",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CKYC_RationCard_Image",
+            "columnName": "CKYC_RationCard_Image",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CKYC_Bank",
+            "columnName": "CKYC_Bank",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "CKYC_BankAccountNumber",
+            "columnName": "CKYC_BankAccountNumber",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CKYC_Bank_Image",
+            "columnName": "CKYC_Bank_Image",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GKYC_UID",
+            "columnName": "GKYC_UID",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GKYC_UID_Image",
+            "columnName": "GKYC_UID_Image",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GKYC_UID_Image2",
+            "columnName": "GKYC_UID_Image2",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GKYC_VoterCard",
+            "columnName": "GKYC_VoterCard",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GKYC_VoterCard_Image",
+            "columnName": "GKYC_VoterCard_Image",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GKYC_VoterCard_Image2",
+            "columnName": "GKYC_VoterCard_Image2",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GKYC_Passport",
+            "columnName": "GKYC_Passport",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GKYC_Passport_Image",
+            "columnName": "GKYC_Passport_Image",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GKYC_Passport_Image2",
+            "columnName": "GKYC_Passport_Image2",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GKYC_DL",
+            "columnName": "GKYC_DL",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GKYC_DL_Image",
+            "columnName": "GKYC_DL_Image",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GKYC_PANCard",
+            "columnName": "GKYC_PANCard",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GKYC_PANCard_Image",
+            "columnName": "GKYC_PANCard_Image",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GKYC_OtherID",
+            "columnName": "GKYC_OtherID",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GKYC_OtherID_Image",
+            "columnName": "GKYC_OtherID_Image",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GKYC_ElectricityBill",
+            "columnName": "GKYC_ElectricityBill",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GKYC_ElectricityBillRelationID",
+            "columnName": "GKYC_ElectricityBillRelationID",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "GKYC_ElectricityBill_Image",
+            "columnName": "GKYC_ElectricityBill_Image",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GKYC_ElectricityBill_Name",
+            "columnName": "GKYC_ElectricityBill_Name",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GKYC_WaterBill",
+            "columnName": "GKYC_WaterBill",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GKYC_WaterBilRelationID",
+            "columnName": "GKYC_WaterBilRelationID",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "GKYC_WaterBill_Image",
+            "columnName": "GKYC_WaterBill_Image",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GKYC_WaterBill_Name",
+            "columnName": "GKYC_WaterBill_Name",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GKYC_JobCard",
+            "columnName": "GKYC_JobCard",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GKYC_JobCardRelationID",
+            "columnName": "GKYC_JobCardRelationID",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "GKYC_JobCard_Image",
+            "columnName": "GKYC_JobCard_Image",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GKYC_JobCard_Name",
+            "columnName": "GKYC_JobCard_Name",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GKYC_OtherAP",
+            "columnName": "GKYC_OtherAP",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GKYC_OtherAP_RelationID",
+            "columnName": "GKYC_OtherAP_RelationID",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "GKYC_OtherAP_Image",
+            "columnName": "GKYC_OtherAP_Image",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GKYC_OtherAP_Name",
+            "columnName": "GKYC_OtherAP_Name",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GKYC_RationCard",
+            "columnName": "GKYC_RationCard",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GKYC_RationCard_Image",
+            "columnName": "GKYC_RationCard_Image",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GKYC_Bank",
+            "columnName": "GKYC_Bank",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "GKYC_BankAccountNumber",
+            "columnName": "GKYC_BankAccountNumber",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GKYC_Bank_Image",
+            "columnName": "GKYC_Bank_Image",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "TotalMFI",
+            "columnName": "TotalMFI",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "ToatalActiveMFI",
+            "columnName": "ToatalActiveMFI",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "DisbursedAmtMFI",
+            "columnName": "DisbursedAmtMFI",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "LoanMFIOutstandingSelf",
+            "columnName": "LoanMFIOutstandingSelf",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "LoanMFIOutstandingCreditEnquiry",
+            "columnName": "LoanMFIOutstandingCreditEnquiry",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "CreditEnquiryRemarks",
+            "columnName": "CreditEnquiryRemarks",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "PovertyStatus",
+            "columnName": "PovertyStatus",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "KYCStatus",
+            "columnName": "KYCStatus",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CGTMarks",
+            "columnName": "CGTMarks",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "GRTDate",
+            "columnName": "GRTDate",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GRTPlace",
+            "columnName": "GRTPlace",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CutomerStatusID",
+            "columnName": "CutomerStatusID",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "RegistrationStatusID",
+            "columnName": "RegistrationStatusID",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "RegistrationDate",
+            "columnName": "RegistrationDate",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "LoanAppliedID",
+            "columnName": "LoanAppliedID",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "LoanSanctionedID",
+            "columnName": "LoanSanctionedID",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "LoanDisbursedID",
+            "columnName": "LoanDisbursedID",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "LoanDisbursedDate",
+            "columnName": "LoanDisbursedDate",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "LoanDisbRemarks",
+            "columnName": "LoanDisbRemarks",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "LoanEMIDate",
+            "columnName": "LoanEMIDate",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "LoanApprovedID",
+            "columnName": "LoanApprovedID",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "LoanApprovalDate",
+            "columnName": "LoanApprovalDate",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "LoanChequeBankID",
+            "columnName": "LoanChequeBankID",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "LoanChequeNo",
+            "columnName": "LoanChequeNo",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "LoanApprovedAmt",
+            "columnName": "LoanApprovedAmt",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "LoanApprovedInterestRate",
+            "columnName": "LoanApprovedInterestRate",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "LoanApprovedInsuranceAmt",
+            "columnName": "LoanApprovedInsuranceAmt",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "LoanApprovedFeesAmt",
+            "columnName": "LoanApprovedFeesAmt",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "LoanApprovedInstallmentAmt",
+            "columnName": "LoanApprovedInstallmentAmt",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "LoanApprovedPaymentWeeks",
+            "columnName": "LoanApprovedPaymentWeeks",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "LoanApprovedCloserMinWeeks",
+            "columnName": "LoanApprovedCloserMinWeeks",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "LoanApprovedRemarks",
+            "columnName": "LoanApprovedRemarks",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "IsLoanClosed",
+            "columnName": "IsLoanClosed",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "TabletID",
+            "columnName": "TabletID",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "FundSourceID",
+            "columnName": "FundSourceID",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "CreatedBy",
+            "columnName": "CreatedBy",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CreatedOn",
+            "columnName": "CreatedOn",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "UpdatedBy",
+            "columnName": "UpdatedBy",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "UpdatedOn",
+            "columnName": "UpdatedOn",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "IsDeleted",
+            "columnName": "IsDeleted",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "LoanApprovalDoneBy",
+            "columnName": "LoanApprovalDoneBy",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "LoanDisbursalDoneBy",
+            "columnName": "LoanDisbursalDoneBy",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GRTDoneBy",
+            "columnName": "GRTDoneBy",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CreditEnquiryDoneBy",
+            "columnName": "CreditEnquiryDoneBy",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CGTDoneBy",
+            "columnName": "CGTDoneBy",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "ExistingLoanAmount",
+            "columnName": "ExistingLoanAmount",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "ExistingLoanCurrentOutstanding",
+            "columnName": "ExistingLoanCurrentOutstanding",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "ExistingLoanCurrentWeek",
+            "columnName": "ExistingLoanCurrentWeek",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "CKYC_JobCard_Image2",
+            "columnName": "CKYC_JobCard_Image2",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CKYC_RationCard_Image2",
+            "columnName": "CKYC_RationCard_Image2",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GKYC_JobCard_Image2",
+            "columnName": "GKYC_JobCard_Image2",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GRTLat",
+            "columnName": "GRTLat",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GRTLong",
+            "columnName": "GRTLong",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "RegPlace",
+            "columnName": "RegPlace",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "RegLat",
+            "columnName": "RegLat",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "RegLong",
+            "columnName": "RegLong",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "IsOldCustomer",
+            "columnName": "IsOldCustomer",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "CustomerNickName",
+            "columnName": "CustomerNickName",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "IsMobileNoValidated",
+            "columnName": "IsMobileNoValidated",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "GurantorAge",
+            "columnName": "GurantorAge",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "Assets_Other_Gas",
+            "columnName": "Assets_Other_Gas",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "KElectricNumber",
+            "columnName": "KElectricNumber",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GurantorKElectricNumber",
+            "columnName": "GurantorKElectricNumber",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CustomerBankNameEditable",
+            "columnName": "CustomerBankNameEditable",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "IsWriteOff",
+            "columnName": "IsWriteOff",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "LoanCycle",
+            "columnName": "LoanCycle",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "CreditEquiryPDF",
+            "columnName": "CreditEquiryPDF",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CustomerBankIFSCCode",
+            "columnName": "CustomerBankIFSCCode",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "MandatePrint",
+            "columnName": "MandatePrint",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "MandateStartDate",
+            "columnName": "MandateStartDate",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "MandateEndDate",
+            "columnName": "MandateEndDate",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "MandateApproved",
+            "columnName": "MandateApproved",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "MandateRemark",
+            "columnName": "MandateRemark",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "HouseHoldAssesment_Image",
+            "columnName": "HouseHoldAssesment_Image",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "TabletVersionName",
+            "columnName": "TabletVersionName",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GKYC_IFSCCode",
+            "columnName": "GKYC_IFSCCode",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GKYC_BankNameEditable",
+            "columnName": "GKYC_BankNameEditable",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "Duplicate_Customer_Remark",
+            "columnName": "Duplicate_Customer_Remark",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GuarantorDOB",
+            "columnName": "GuarantorDOB",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "UploadedOn",
+            "columnName": "UploadedOn",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "Remarks",
+            "columnName": "Remarks",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "IsEdited",
+            "columnName": "IsEdited",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "OTPCODE",
+            "columnName": "OTPCODE",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "IsUpload",
+            "columnName": "IsUpload",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "FamilyMonthlyIncome",
+            "columnName": "FamilyMonthlyIncome",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "GKYC_OtherID_Image2",
+            "columnName": "GKYC_OtherID_Image2",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "GUID"
+          ]
+        }
+      },
+      {
+        "tableName": "CustomerExistingLoanDetail",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`MFIGUID` TEXT NOT NULL, `GUID` TEXT, `ExistingLoanID` INTEGER, `LoanAmount` INTEGER, `LoanPurposeID` INTEGER, `MFIID` INTEGER, `OutStandingAmount` INTEGER, `IsUpload` INTEGER, `MemberName` TEXT, `EMI` INTEGER, `IsEdited` INTEGER, `IsDeleted` INTEGER, PRIMARY KEY(`MFIGUID`))",
+        "fields": [
+          {
+            "fieldPath": "MFIGUID",
+            "columnName": "MFIGUID",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "GUID",
+            "columnName": "GUID",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "ExistingLoanID",
+            "columnName": "ExistingLoanID",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "LoanAmount",
+            "columnName": "LoanAmount",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "LoanPurposeID",
+            "columnName": "LoanPurposeID",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "MFIID",
+            "columnName": "MFIID",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "OutStandingAmount",
+            "columnName": "OutStandingAmount",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "IsUpload",
+            "columnName": "IsUpload",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "MemberName",
+            "columnName": "MemberName",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "EMI",
+            "columnName": "EMI",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "IsEdited",
+            "columnName": "IsEdited",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "IsDeleted",
+            "columnName": "IsDeleted",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "MFIGUID"
+          ]
+        }
+      },
+      {
+        "tableName": "CustomerFamilyMemberDetails",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`GUID` TEXT NOT NULL, `MemberID` INTEGER, `MFirstName` TEXT, `MMiddleName` TEXT, `MLastName` TEXT, `RelationID` INTEGER, `Age` INTEGER, `IsSchooling` INTEGER, `EducationID` INTEGER, `IsEarning` INTEGER, `OccupationID` INTEGER, `MonthlyIncomeID` INTEGER, `Gender` TEXT, `IsOld` INTEGER, `MonthlyIncome` INTEGER, `IsUpload` INTEGER, PRIMARY KEY(`GUID`))",
+        "fields": [
+          {
+            "fieldPath": "GUID",
+            "columnName": "GUID",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "MemberID",
+            "columnName": "MemberID",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "MFirstName",
+            "columnName": "MFirstName",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "MMiddleName",
+            "columnName": "MMiddleName",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "MLastName",
+            "columnName": "MLastName",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "RelationID",
+            "columnName": "RelationID",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "Age",
+            "columnName": "Age",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "IsSchooling",
+            "columnName": "IsSchooling",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "EducationID",
+            "columnName": "EducationID",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "IsEarning",
+            "columnName": "IsEarning",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "OccupationID",
+            "columnName": "OccupationID",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "MonthlyIncomeID",
+            "columnName": "MonthlyIncomeID",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "Gender",
+            "columnName": "Gender",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "IsOld",
+            "columnName": "IsOld",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "MonthlyIncome",
+            "columnName": "MonthlyIncome",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "IsUpload",
+            "columnName": "IsUpload",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "GUID"
+          ]
+        }
+      },
+      {
+        "tableName": "LoanClouser",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`GUID` TEXT NOT NULL, `CenterID` INTEGER, `CustomerID` TEXT, `CustomerName` TEXT, `SpouseName` TEXT, `DisbursementAmount` REAL, `DisbursementDate` TEXT, `GroupName` TEXT, `LW` INTEGER, `LoanOutstandingAsOnDate` REAL, `WeekInArrear` REAL, `PastDue` REAL, `CurrentDue` REAL, `TotalDueAsOnDate` REAL, `Advance` REAL, `TotalClosureAmount` REAL, `IsEdited` INTEGER, `EMIDueDate` TEXT, `LCMW` TEXT, `WorkingDate` TEXT, `MandateApproved` INTEGER, `PaidDate` TEXT, `IsLoanClosed` INTEGER, `LoanPlace` TEXT, `LoanLat` REAL, `LoanLong` REAL, `IsUploaded` INTEGER, PRIMARY KEY(`GUID`))",
+        "fields": [
+          {
+            "fieldPath": "GUID",
+            "columnName": "GUID",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "CenterID",
+            "columnName": "CenterID",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "CustomerID",
+            "columnName": "CustomerID",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CustomerName",
+            "columnName": "CustomerName",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "SpouseName",
+            "columnName": "SpouseName",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "DisbursementAmount",
+            "columnName": "DisbursementAmount",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "DisbursementDate",
+            "columnName": "DisbursementDate",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GroupName",
+            "columnName": "GroupName",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "LW",
+            "columnName": "LW",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "LoanOutstandingAsOnDate",
+            "columnName": "LoanOutstandingAsOnDate",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "WeekInArrear",
+            "columnName": "WeekInArrear",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "PastDue",
+            "columnName": "PastDue",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "CurrentDue",
+            "columnName": "CurrentDue",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "TotalDueAsOnDate",
+            "columnName": "TotalDueAsOnDate",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "Advance",
+            "columnName": "Advance",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "TotalClosureAmount",
+            "columnName": "TotalClosureAmount",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "IsEdited",
+            "columnName": "IsEdited",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "EMIDueDate",
+            "columnName": "EMIDueDate",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "LCMW",
+            "columnName": "LCMW",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "WorkingDate",
+            "columnName": "WorkingDate",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "MandateApproved",
+            "columnName": "MandateApproved",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "PaidDate",
+            "columnName": "PaidDate",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "IsLoanClosed",
+            "columnName": "IsLoanClosed",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "LoanPlace",
+            "columnName": "LoanPlace",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "LoanLat",
+            "columnName": "LoanLat",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "LoanLong",
+            "columnName": "LoanLong",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "IsUploaded",
+            "columnName": "IsUploaded",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "GUID"
+          ]
+        }
+      },
+      {
+        "tableName": "LoanRepayment",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`GUID` TEXT NOT NULL, `CenterID` INTEGER, `CustomerID` TEXT, `CustomerName` TEXT, `SpouseName` TEXT, `DisbursementAmount` REAL, `DisbursementDate` TEXT, `GroupName` TEXT, `LW` INTEGER, `LoanOutstandingAsOnDate` REAL, `WeekInArrear` REAL, `PastDue` REAL, `CurrentDue` REAL, `Due` REAL, `Advance` REAL, `Total` REAL, `WorkingDate` TEXT, `EMIDueDate` TEXT, `EMI` REAL, `MaxPayment` REAL, `MandateApproved` INTEGER, `LoanCollectionFrequency` INTEGER, `PaymentType` INTEGER, `NACHStatus` INTEGER, `MobileNo` TEXT, `IsUploaded` INTEGER, `IsEdited` INTEGER, `PaidDate` TEXT, `IsEmiReceived` INTEGER, `LoanPlace` TEXT, `LoanLat` REAL, `LoanLong` REAL, PRIMARY KEY(`GUID`))",
+        "fields": [
+          {
+            "fieldPath": "GUID",
+            "columnName": "GUID",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "CenterID",
+            "columnName": "CenterID",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "CustomerID",
+            "columnName": "CustomerID",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CustomerName",
+            "columnName": "CustomerName",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "SpouseName",
+            "columnName": "SpouseName",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "DisbursementAmount",
+            "columnName": "DisbursementAmount",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "DisbursementDate",
+            "columnName": "DisbursementDate",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GroupName",
+            "columnName": "GroupName",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "LW",
+            "columnName": "LW",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "LoanOutstandingAsOnDate",
+            "columnName": "LoanOutstandingAsOnDate",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "WeekInArrear",
+            "columnName": "WeekInArrear",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "PastDue",
+            "columnName": "PastDue",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "CurrentDue",
+            "columnName": "CurrentDue",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "Due",
+            "columnName": "Due",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "Advance",
+            "columnName": "Advance",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "Total",
+            "columnName": "Total",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "WorkingDate",
+            "columnName": "WorkingDate",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "EMIDueDate",
+            "columnName": "EMIDueDate",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "EMI",
+            "columnName": "EMI",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "MaxPayment",
+            "columnName": "MaxPayment",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "MandateApproved",
+            "columnName": "MandateApproved",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "LoanCollectionFrequency",
+            "columnName": "LoanCollectionFrequency",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "PaymentType",
+            "columnName": "PaymentType",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "NACHStatus",
+            "columnName": "NACHStatus",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "MobileNo",
+            "columnName": "MobileNo",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "IsUploaded",
+            "columnName": "IsUploaded",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "IsEdited",
+            "columnName": "IsEdited",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "PaidDate",
+            "columnName": "PaidDate",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "IsEmiReceived",
+            "columnName": "IsEmiReceived",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "LoanPlace",
+            "columnName": "LoanPlace",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "LoanLat",
+            "columnName": "LoanLat",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "LoanLong",
+            "columnName": "LoanLong",
+            "affinity": "REAL"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "GUID"
+          ]
+        }
+      },
+      {
+        "tableName": "CustomerLoanSchedule",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`GUID` TEXT NOT NULL, `CustomerLoanID` INTEGER NOT NULL, `RowNumber` INTEGER, `LoanWeek` INTEGER, `EMIDueDate` TEXT, `Principal` REAL, `Interest` REAL, `EMI` INTEGER, `Balance` REAL, `ReceiptFlag` INTEGER, `PaidDate` TEXT, `SubmitDate` TEXT, `ConfirmationDate` TEXT, `CanceledBy` TEXT, `CanceledDate` TEXT, `IsWorkingDayClosed` INTEGER, `WorkingDate` TEXT, `IsNotEdited` INTEGER, `Advance` REAL, `IsPaidFromWeb` INTEGER, `LoanPlace` TEXT, `LoanLat` TEXT, `LoanLong` TEXT, `UserID` TEXT, `InterestPart` REAL, `ContributionPart` REAL, `PaymentType` TEXT, `GroupName` TEXT, `Center` TEXT, `balance_Amount` REAL, `DayOfDelay` INTEGER, `LPaymentWeek` INTEGER, `CutomerStatusID` INTEGER, PRIMARY KEY(`GUID`, `CustomerLoanID`))",
+        "fields": [
+          {
+            "fieldPath": "GUID",
+            "columnName": "GUID",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "CustomerLoanID",
+            "columnName": "CustomerLoanID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "RowNumber",
+            "columnName": "RowNumber",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "LoanWeek",
+            "columnName": "LoanWeek",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "EMIDueDate",
+            "columnName": "EMIDueDate",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "Principal",
+            "columnName": "Principal",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "Interest",
+            "columnName": "Interest",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "EMI",
+            "columnName": "EMI",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "Balance",
+            "columnName": "Balance",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "ReceiptFlag",
+            "columnName": "ReceiptFlag",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "PaidDate",
+            "columnName": "PaidDate",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "SubmitDate",
+            "columnName": "SubmitDate",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "ConfirmationDate",
+            "columnName": "ConfirmationDate",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CanceledBy",
+            "columnName": "CanceledBy",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CanceledDate",
+            "columnName": "CanceledDate",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "IsWorkingDayClosed",
+            "columnName": "IsWorkingDayClosed",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "WorkingDate",
+            "columnName": "WorkingDate",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "IsNotEdited",
+            "columnName": "IsNotEdited",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "Advance",
+            "columnName": "Advance",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "IsPaidFromWeb",
+            "columnName": "IsPaidFromWeb",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "LoanPlace",
+            "columnName": "LoanPlace",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "LoanLat",
+            "columnName": "LoanLat",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "LoanLong",
+            "columnName": "LoanLong",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "UserID",
+            "columnName": "UserID",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "InterestPart",
+            "columnName": "InterestPart",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "ContributionPart",
+            "columnName": "ContributionPart",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "PaymentType",
+            "columnName": "PaymentType",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GroupName",
+            "columnName": "GroupName",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "Center",
+            "columnName": "Center",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "balance_Amount",
+            "columnName": "balance_Amount",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "DayOfDelay",
+            "columnName": "DayOfDelay",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "LPaymentWeek",
+            "columnName": "LPaymentWeek",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "CutomerStatusID",
+            "columnName": "CutomerStatusID",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "GUID",
+            "CustomerLoanID"
+          ]
+        }
+      },
+      {
+        "tableName": "CustomerLoanDisbursement",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`CustomerLoanDisbursementID` INTEGER NOT NULL, `GUID` TEXT, `WorkingDate` TEXT, `LoanAmount` INTEGER, `LoanInsuranceFee` INTEGER, `LoanFees` INTEGER, `ReceiptFlag` INTEGER, `IsWorkingDayClosed` INTEGER, `IsDeleted` INTEGER, PRIMARY KEY(`CustomerLoanDisbursementID`))",
+        "fields": [
+          {
+            "fieldPath": "CustomerLoanDisbursementID",
+            "columnName": "CustomerLoanDisbursementID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "GUID",
+            "columnName": "GUID",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "WorkingDate",
+            "columnName": "WorkingDate",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "LoanAmount",
+            "columnName": "LoanAmount",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "LoanInsuranceFee",
+            "columnName": "LoanInsuranceFee",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "LoanFees",
+            "columnName": "LoanFees",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "ReceiptFlag",
+            "columnName": "ReceiptFlag",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "IsWorkingDayClosed",
+            "columnName": "IsWorkingDayClosed",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "IsDeleted",
+            "columnName": "IsDeleted",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "CustomerLoanDisbursementID"
+          ]
+        }
+      },
+      {
+        "tableName": "ImageTrackingRecord",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`GUID` TEXT NOT NULL, `RefFieldName` TEXT NOT NULL, `ImageName` TEXT, `ImageFieldName` TEXT, `RenameImage` TEXT, `IsEdited` INTEGER, `IsDeleted` INTEGER, `IsUpload` INTEGER, PRIMARY KEY(`GUID`, `RefFieldName`))",
+        "fields": [
+          {
+            "fieldPath": "GUID",
+            "columnName": "GUID",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "RefFieldName",
+            "columnName": "RefFieldName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "ImageName",
+            "columnName": "ImageName",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "ImageFieldName",
+            "columnName": "ImageFieldName",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "RenameImage",
+            "columnName": "RenameImage",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "IsEdited",
+            "columnName": "IsEdited",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "IsDeleted",
+            "columnName": "IsDeleted",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "IsUpload",
+            "columnName": "IsUpload",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "GUID",
+            "RefFieldName"
+          ]
+        }
+      },
+      {
+        "tableName": "ImageDetail",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`RefFieldName` INTEGER NOT NULL, `ImageFieldName` TEXT, `RenameImage` TEXT, `IsDeleted` INTEGER, PRIMARY KEY(`RefFieldName`))",
+        "fields": [
+          {
+            "fieldPath": "RefFieldName",
+            "columnName": "RefFieldName",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "ImageFieldName",
+            "columnName": "ImageFieldName",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "RenameImage",
+            "columnName": "RenameImage",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "IsDeleted",
+            "columnName": "IsDeleted",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "RefFieldName"
+          ]
+        }
+      },
+      {
+        "tableName": "UserResponse",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`CreatedBy` TEXT NOT NULL DEFAULT '', `UserID` TEXT, `Username` TEXT, `RoleId` TEXT, `Contact` TEXT, `OTP` TEXT, `IsDeleted` INTEGER, PRIMARY KEY(`CreatedBy`))",
+        "fields": [
+          {
+            "fieldPath": "CreatedBy",
+            "columnName": "CreatedBy",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "''"
+          },
+          {
+            "fieldPath": "UserID",
+            "columnName": "UserID",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "Username",
+            "columnName": "Username",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "RoleId",
+            "columnName": "RoleId",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "Contact",
+            "columnName": "Contact",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "OTP",
+            "columnName": "OTP",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "IsDeleted",
+            "columnName": "IsDeleted",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "CreatedBy"
+          ]
+        }
+      },
+      {
+        "tableName": "CustomerDefault",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`GUID` TEXT NOT NULL, `UserID` TEXT, `CustomerID` TEXT, `CutomerStatusID` INTEGER, `ContactNo` TEXT, `MaritalStatusID` INTEGER, `FirstName` TEXT, `MiddleName` TEXT, `LastName` TEXT, `CustomerImage` TEXT, `GurantorFName` TEXT, `GurantorMName` TEXT, `GurantorLName` TEXT, `GuarantorImage` TEXT, `DOB` TEXT, `Age` INTEGER, `VillageID` INTEGER, `PinCode` TEXT, `GurantorAge` INTEGER, `GuarantorDOB` TEXT, `CKYC_UID` TEXT, `CKYC_UID_Image` TEXT, `CKYC_UID_Image2` TEXT, `CKYC_VoterCard` TEXT, `CKYC_VoterCard_Image` TEXT, `CKYC_VoterCard_Image2` TEXT, `CKYC_ElectricityBill` TEXT, `CKYC_ElectricityBillRelationID` INTEGER, `CKYC_ElectricityBill_Image` TEXT, `CKYC_ElectricityBill_Name` TEXT, `KElectricNumber` TEXT, `CKYC_JobCard` TEXT, `CKYC_JobCardRelationID` INTEGER, `CKYC_JobCard_Image` TEXT, `CKYC_JobCard_Name` TEXT, `CKYC_JobCard_Image2` TEXT, `GKYC_UID` TEXT, `GKYC_UID_Image` TEXT, `GKYC_UID_Image2` TEXT, `CreatedBy` TEXT, `CreatedOn` TEXT, `UpdatedBy` TEXT, `UpdatedOn` TEXT, `IsEdited` INTEGER, `IsDeleted` INTEGER, `IsUpload` INTEGER, `HusbandFName` TEXT, `HusbandMName` TEXT, `HusbandLName` TEXT, `GKYC_OtherID` TEXT, `GKYC_OtherID_Image` TEXT, `GKYC_OtherID_Image2` TEXT, `CKYC_RationCard` TEXT, `CKYC_RationCard_Image` TEXT, `CKYC_RationCard_Image2` TEXT, `CKYC_Bank` INTEGER, `CKYC_BankAccountNumber` TEXT, `CKYC_Bank_Image` TEXT, `CustomerBankIFSCCode` TEXT, `CustomerBankNameEditable` TEXT, `IsOldCustomer` INTEGER, `CasteID` INTEGER, `CustomerNickName` TEXT, `EducationID` INTEGER, `ReligionID` INTEGER, `CKYC_PANCard` TEXT, `CKYC_PANCard_Image` TEXT, `CKYC_DL` TEXT, `CKYC_DL_Image` TEXT, `CKYC_Passport` TEXT, `CKYC_Passport_Image` TEXT, `CKYC_Passport_Image2` TEXT, `CKYC_OtherID` TEXT, `CKYC_OtherID_Image` TEXT, `GKYC_VoterCard` TEXT, `GKYC_VoterCard_Image` TEXT, `GKYC_VoterCard_Image2` TEXT, `GKYC_Passport` TEXT, `GKYC_Passport_Image` TEXT, `GKYC_Passport_Image2` TEXT, `GKYC_DL` TEXT, `GKYC_DL_Image` TEXT, `GKYC_PANCard` TEXT, `GKYC_PANCard_Image` TEXT, `CKYC_OtherAP` TEXT, `CKYC_OtherAP_Image` TEXT, `GKYC_Bank` INTEGER, `GKYC_BankAccountNumber` TEXT, `GKYC_Bank_Image` TEXT, `GKYC_BankNameEditable` TEXT, `GKYC_IFSCCode` TEXT, `HouseNo` TEXT, `ContactNoOwner` INTEGER, `GuarantorID` INTEGER, `Mohalla` TEXT, PRIMARY KEY(`GUID`))",
+        "fields": [
+          {
+            "fieldPath": "GUID",
+            "columnName": "GUID",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "UserID",
+            "columnName": "UserID",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CustomerID",
+            "columnName": "CustomerID",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CutomerStatusID",
+            "columnName": "CutomerStatusID",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "ContactNo",
+            "columnName": "ContactNo",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "MaritalStatusID",
+            "columnName": "MaritalStatusID",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "FirstName",
+            "columnName": "FirstName",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "MiddleName",
+            "columnName": "MiddleName",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "LastName",
+            "columnName": "LastName",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CustomerImage",
+            "columnName": "CustomerImage",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GurantorFName",
+            "columnName": "GurantorFName",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GurantorMName",
+            "columnName": "GurantorMName",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GurantorLName",
+            "columnName": "GurantorLName",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GuarantorImage",
+            "columnName": "GuarantorImage",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "DOB",
+            "columnName": "DOB",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "Age",
+            "columnName": "Age",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "VillageID",
+            "columnName": "VillageID",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "PinCode",
+            "columnName": "PinCode",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GurantorAge",
+            "columnName": "GurantorAge",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "GuarantorDOB",
+            "columnName": "GuarantorDOB",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CKYC_UID",
+            "columnName": "CKYC_UID",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CKYC_UID_Image",
+            "columnName": "CKYC_UID_Image",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CKYC_UID_Image2",
+            "columnName": "CKYC_UID_Image2",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CKYC_VoterCard",
+            "columnName": "CKYC_VoterCard",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CKYC_VoterCard_Image",
+            "columnName": "CKYC_VoterCard_Image",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CKYC_VoterCard_Image2",
+            "columnName": "CKYC_VoterCard_Image2",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CKYC_ElectricityBill",
+            "columnName": "CKYC_ElectricityBill",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CKYC_ElectricityBillRelationID",
+            "columnName": "CKYC_ElectricityBillRelationID",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "CKYC_ElectricityBill_Image",
+            "columnName": "CKYC_ElectricityBill_Image",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CKYC_ElectricityBill_Name",
+            "columnName": "CKYC_ElectricityBill_Name",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "KElectricNumber",
+            "columnName": "KElectricNumber",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CKYC_JobCard",
+            "columnName": "CKYC_JobCard",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CKYC_JobCardRelationID",
+            "columnName": "CKYC_JobCardRelationID",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "CKYC_JobCard_Image",
+            "columnName": "CKYC_JobCard_Image",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CKYC_JobCard_Name",
+            "columnName": "CKYC_JobCard_Name",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CKYC_JobCard_Image2",
+            "columnName": "CKYC_JobCard_Image2",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GKYC_UID",
+            "columnName": "GKYC_UID",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GKYC_UID_Image",
+            "columnName": "GKYC_UID_Image",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GKYC_UID_Image2",
+            "columnName": "GKYC_UID_Image2",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CreatedBy",
+            "columnName": "CreatedBy",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CreatedOn",
+            "columnName": "CreatedOn",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "UpdatedBy",
+            "columnName": "UpdatedBy",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "UpdatedOn",
+            "columnName": "UpdatedOn",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "IsEdited",
+            "columnName": "IsEdited",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "IsDeleted",
+            "columnName": "IsDeleted",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "IsUpload",
+            "columnName": "IsUpload",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "HusbandFName",
+            "columnName": "HusbandFName",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "HusbandMName",
+            "columnName": "HusbandMName",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "HusbandLName",
+            "columnName": "HusbandLName",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GKYC_OtherID",
+            "columnName": "GKYC_OtherID",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GKYC_OtherID_Image",
+            "columnName": "GKYC_OtherID_Image",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GKYC_OtherID_Image2",
+            "columnName": "GKYC_OtherID_Image2",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CKYC_RationCard",
+            "columnName": "CKYC_RationCard",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CKYC_RationCard_Image",
+            "columnName": "CKYC_RationCard_Image",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CKYC_RationCard_Image2",
+            "columnName": "CKYC_RationCard_Image2",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CKYC_Bank",
+            "columnName": "CKYC_Bank",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "CKYC_BankAccountNumber",
+            "columnName": "CKYC_BankAccountNumber",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CKYC_Bank_Image",
+            "columnName": "CKYC_Bank_Image",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CustomerBankIFSCCode",
+            "columnName": "CustomerBankIFSCCode",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CustomerBankNameEditable",
+            "columnName": "CustomerBankNameEditable",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "IsOldCustomer",
+            "columnName": "IsOldCustomer",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "CasteID",
+            "columnName": "CasteID",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "CustomerNickName",
+            "columnName": "CustomerNickName",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "EducationID",
+            "columnName": "EducationID",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "ReligionID",
+            "columnName": "ReligionID",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "CKYC_PANCard",
+            "columnName": "CKYC_PANCard",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CKYC_PANCard_Image",
+            "columnName": "CKYC_PANCard_Image",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CKYC_DL",
+            "columnName": "CKYC_DL",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CKYC_DL_Image",
+            "columnName": "CKYC_DL_Image",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CKYC_Passport",
+            "columnName": "CKYC_Passport",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CKYC_Passport_Image",
+            "columnName": "CKYC_Passport_Image",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CKYC_Passport_Image2",
+            "columnName": "CKYC_Passport_Image2",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CKYC_OtherID",
+            "columnName": "CKYC_OtherID",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CKYC_OtherID_Image",
+            "columnName": "CKYC_OtherID_Image",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GKYC_VoterCard",
+            "columnName": "GKYC_VoterCard",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GKYC_VoterCard_Image",
+            "columnName": "GKYC_VoterCard_Image",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GKYC_VoterCard_Image2",
+            "columnName": "GKYC_VoterCard_Image2",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GKYC_Passport",
+            "columnName": "GKYC_Passport",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GKYC_Passport_Image",
+            "columnName": "GKYC_Passport_Image",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GKYC_Passport_Image2",
+            "columnName": "GKYC_Passport_Image2",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GKYC_DL",
+            "columnName": "GKYC_DL",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GKYC_DL_Image",
+            "columnName": "GKYC_DL_Image",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GKYC_PANCard",
+            "columnName": "GKYC_PANCard",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GKYC_PANCard_Image",
+            "columnName": "GKYC_PANCard_Image",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CKYC_OtherAP",
+            "columnName": "CKYC_OtherAP",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CKYC_OtherAP_Image",
+            "columnName": "CKYC_OtherAP_Image",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GKYC_Bank",
+            "columnName": "GKYC_Bank",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "GKYC_BankAccountNumber",
+            "columnName": "GKYC_BankAccountNumber",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GKYC_Bank_Image",
+            "columnName": "GKYC_Bank_Image",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GKYC_BankNameEditable",
+            "columnName": "GKYC_BankNameEditable",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GKYC_IFSCCode",
+            "columnName": "GKYC_IFSCCode",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "HouseNo",
+            "columnName": "HouseNo",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "ContactNoOwner",
+            "columnName": "ContactNoOwner",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "GuarantorID",
+            "columnName": "GuarantorID",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "Mohalla",
+            "columnName": "Mohalla",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "GUID"
+          ]
+        }
+      },
+      {
+        "tableName": "MSTLoanDetails",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`LoanProductID` INTEGER NOT NULL, `LoanProduct` REAL, `Tenure` INTEGER, `MonthlyInstallment` INTEGER, `TotalInterest` INTEGER, `ProcessingFee` INTEGER, `ProcessingSaving` INTEGER, `InsuranceFee` INTEGER, `InsuranceSaving` INTEGER, `TotalInsurance` INTEGER, `IsDeleted` INTEGER, PRIMARY KEY(`LoanProductID`))",
+        "fields": [
+          {
+            "fieldPath": "LoanProductID",
+            "columnName": "LoanProductID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "LoanProduct",
+            "columnName": "LoanProduct",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "Tenure",
+            "columnName": "Tenure",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "MonthlyInstallment",
+            "columnName": "MonthlyInstallment",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "TotalInterest",
+            "columnName": "TotalInterest",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "ProcessingFee",
+            "columnName": "ProcessingFee",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "ProcessingSaving",
+            "columnName": "ProcessingSaving",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "InsuranceFee",
+            "columnName": "InsuranceFee",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "InsuranceSaving",
+            "columnName": "InsuranceSaving",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "TotalInsurance",
+            "columnName": "TotalInsurance",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "IsDeleted",
+            "columnName": "IsDeleted",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "LoanProductID"
+          ]
+        }
+      },
+      {
+        "tableName": "RegistrationStatus",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`RegistrationStatusID` INTEGER NOT NULL, `RegistrationStatus` TEXT, `IsDeleted` INTEGER, PRIMARY KEY(`RegistrationStatusID`))",
+        "fields": [
+          {
+            "fieldPath": "RegistrationStatusID",
+            "columnName": "RegistrationStatusID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "RegistrationStatus",
+            "columnName": "RegistrationStatus",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "IsDeleted",
+            "columnName": "IsDeleted",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "RegistrationStatusID"
+          ]
+        }
+      },
+      {
+        "tableName": "CustomerTransactionData",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`CTGUID` TEXT NOT NULL, `GUID` TEXT, `ID` INTEGER, `CustomerID` TEXT, `ContactNo` TEXT, `TransactionOn` TEXT, `Success` TEXT, `Code` TEXT, `Message` TEXT, `MerchantID` TEXT, `MerchantTransactionID` TEXT, `TransactionID` TEXT, `Amount` TEXT, `PaymentState` TEXT, `PayResponseCode` TEXT, `PaymentInstrumentType` TEXT, `PaymentInstrumentUtr` TEXT, `CreatedBy` TEXT, `CreatedOn` TEXT, `IsEdited` INTEGER, `IsDeleted` INTEGER, `IsUpload` INTEGER, `upiTransactionId` TEXT, `AccountHolderName` TEXT, `FlagAPI` TEXT, PRIMARY KEY(`CTGUID`))",
+        "fields": [
+          {
+            "fieldPath": "CTGUID",
+            "columnName": "CTGUID",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "GUID",
+            "columnName": "GUID",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "ID",
+            "columnName": "ID",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "CustomerID",
+            "columnName": "CustomerID",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "ContactNo",
+            "columnName": "ContactNo",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "TransactionOn",
+            "columnName": "TransactionOn",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "Success",
+            "columnName": "Success",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "Code",
+            "columnName": "Code",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "Message",
+            "columnName": "Message",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "MerchantID",
+            "columnName": "MerchantID",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "MerchantTransactionID",
+            "columnName": "MerchantTransactionID",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "TransactionID",
+            "columnName": "TransactionID",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "Amount",
+            "columnName": "Amount",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "PaymentState",
+            "columnName": "PaymentState",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "PayResponseCode",
+            "columnName": "PayResponseCode",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "PaymentInstrumentType",
+            "columnName": "PaymentInstrumentType",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "PaymentInstrumentUtr",
+            "columnName": "PaymentInstrumentUtr",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CreatedBy",
+            "columnName": "CreatedBy",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CreatedOn",
+            "columnName": "CreatedOn",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "IsEdited",
+            "columnName": "IsEdited",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "IsDeleted",
+            "columnName": "IsDeleted",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "IsUpload",
+            "columnName": "IsUpload",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "upiTransactionId",
+            "columnName": "upiTransactionId",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "AccountHolderName",
+            "columnName": "AccountHolderName",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "FlagAPI",
+            "columnName": "FlagAPI",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "CTGUID"
+          ]
+        }
+      },
+      {
+        "tableName": "CustomerTransactionsDetails",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`order_id` TEXT NOT NULL, `CustomerGUID` TEXT, `tracking_id` TEXT, `bank_ref_no` TEXT, `order_status` TEXT, `failure_message` TEXT, `payment_mode` TEXT, `card_name` TEXT, `status_code` TEXT, `status_message` TEXT, `currency` TEXT, `amount` REAL, `billing_name` TEXT, `billing_address` TEXT, `billing_city` TEXT, `billing_state` TEXT, `billing_zip` TEXT, `billing_country` TEXT, `billing_tel` TEXT, `billing_email` TEXT, `delivery_name` TEXT, `delivery_address` TEXT, `delivery_city` TEXT, `delivery_state` TEXT, `delivery_zip` TEXT, `delivery_country` TEXT, `delivery_tel` TEXT, `merchant_param1` TEXT, `merchant_param2` TEXT, `merchant_param3` TEXT, `merchant_param4` TEXT, `merchant_param5` TEXT, `vault` TEXT, `offer_type` TEXT, `offer_code` TEXT, `discount_value` REAL, `mer_amount` REAL, `eci_value ` TEXT, `retry ` TEXT, `billing_notes` TEXT, `trans_date` TEXT, `bin_country` TEXT, PRIMARY KEY(`order_id`))",
+        "fields": [
+          {
+            "fieldPath": "order_id",
+            "columnName": "order_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "CustomerGUID",
+            "columnName": "CustomerGUID",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "tracking_id",
+            "columnName": "tracking_id",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "bank_ref_no",
+            "columnName": "bank_ref_no",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "order_status",
+            "columnName": "order_status",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "failure_message",
+            "columnName": "failure_message",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "payment_mode",
+            "columnName": "payment_mode",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "card_name",
+            "columnName": "card_name",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "status_code",
+            "columnName": "status_code",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "status_message",
+            "columnName": "status_message",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "currency",
+            "columnName": "currency",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "amount",
+            "columnName": "amount",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "billing_name",
+            "columnName": "billing_name",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "billing_address",
+            "columnName": "billing_address",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "billing_city",
+            "columnName": "billing_city",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "billing_state",
+            "columnName": "billing_state",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "billing_zip",
+            "columnName": "billing_zip",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "billing_country",
+            "columnName": "billing_country",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "billing_tel",
+            "columnName": "billing_tel",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "billing_email",
+            "columnName": "billing_email",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "delivery_name",
+            "columnName": "delivery_name",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "delivery_address",
+            "columnName": "delivery_address",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "delivery_city",
+            "columnName": "delivery_city",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "delivery_state",
+            "columnName": "delivery_state",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "delivery_zip",
+            "columnName": "delivery_zip",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "delivery_country",
+            "columnName": "delivery_country",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "delivery_tel",
+            "columnName": "delivery_tel",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "merchant_param1",
+            "columnName": "merchant_param1",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "merchant_param2",
+            "columnName": "merchant_param2",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "merchant_param3",
+            "columnName": "merchant_param3",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "merchant_param4",
+            "columnName": "merchant_param4",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "merchant_param5",
+            "columnName": "merchant_param5",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "vault",
+            "columnName": "vault",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "offer_type",
+            "columnName": "offer_type",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "offer_code",
+            "columnName": "offer_code",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "discount_value",
+            "columnName": "discount_value",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "mer_amount",
+            "columnName": "mer_amount",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "eci_value",
+            "columnName": "eci_value ",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "retry",
+            "columnName": "retry ",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "billing_notes",
+            "columnName": "billing_notes",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "trans_date",
+            "columnName": "trans_date",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "bin_country",
+            "columnName": "bin_country",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "order_id"
+          ]
+        }
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '44545f192fe3fb4ab5bef8dc7c5bd43d')"
+    ]
+  }
+}

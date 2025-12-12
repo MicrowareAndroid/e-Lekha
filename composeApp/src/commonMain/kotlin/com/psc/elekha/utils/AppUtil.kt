@@ -41,6 +41,7 @@ import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.CameraAlt
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -103,6 +104,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import coil3.Uri
 import coil3.compose.rememberAsyncImagePainter
+import com.psc.elekha.model.SliderItem
 import com.psc.elekha.ui.screen.gtrlist.CustomerData
 import com.psc.elekha.ui.screen.gtrlist.GroupCardData
 import com.psc.elekha.ui.theme.CardColor
@@ -129,6 +131,7 @@ import com.psc.elekha.ui.theme.textview_color
 import com.psc.elekha.ui.theme.toolbar_color
 import com.psc.elekha.ui.theme.white
 import e_lekha.composeapp.generated.resources.Res
+import e_lekha.composeapp.generated.resources.age
 import e_lekha.composeapp.generated.resources.annual
 import e_lekha.composeapp.generated.resources.app_name
 import e_lekha.composeapp.generated.resources.back
@@ -137,22 +140,30 @@ import e_lekha.composeapp.generated.resources.cancel
 import e_lekha.composeapp.generated.resources.close
 import e_lekha.composeapp.generated.resources.dd_mm_yy
 import e_lekha.composeapp.generated.resources.document_icon
+import e_lekha.composeapp.generated.resources.education
 import e_lekha.composeapp.generated.resources.enter_here
 import e_lekha.composeapp.generated.resources.enter_otp
 import e_lekha.composeapp.generated.resources.existing_customer
+import e_lekha.composeapp.generated.resources.gender
 import e_lekha.composeapp.generated.resources.gtr_add
 import e_lekha.composeapp.generated.resources.gtr_save
 import e_lekha.composeapp.generated.resources.hh_mm
 import e_lekha.composeapp.generated.resources.ic_arrow_drop_down
 import e_lekha.composeapp.generated.resources.ic_close
+import e_lekha.composeapp.generated.resources.income
 import e_lekha.composeapp.generated.resources.login_subtitle
 import e_lekha.composeapp.generated.resources.mobile_number
 import e_lekha.composeapp.generated.resources.movable_assets
+import e_lekha.composeapp.generated.resources.name
 import e_lekha.composeapp.generated.resources.new_registration
 import e_lekha.composeapp.generated.resources.next
+import e_lekha.composeapp.generated.resources.occupation
 import e_lekha.composeapp.generated.resources.ok
 import e_lekha.composeapp.generated.resources.password
 import e_lekha.composeapp.generated.resources.purpose
+import e_lekha.composeapp.generated.resources.relation
+import e_lekha.composeapp.generated.resources.religion
+import e_lekha.composeapp.generated.resources.remarks
 import e_lekha.composeapp.generated.resources.roboto_medium
 import e_lekha.composeapp.generated.resources.save
 import e_lekha.composeapp.generated.resources.select_center
@@ -726,13 +737,13 @@ fun FormFieldCompact(
     isEnable: Boolean = true,
     isReadable: Boolean = false,
     labelColor: Color = toolbar_color,
-    placeholderColor: Color = Color(0xFF212121),
+    placeholderColor: Color = Color.Black,
     backgroundColor: Color = text_fiiled_color,
     borderColor: Color = boderColor,
     disabledBackgroundColor: Color = formborder,
     maxLines: Int = 1,
     modifier: Modifier = Modifier,
-    placeholderTextSize: Int = 13
+    placeholderTextSize: Int = 16
 ) {
 
     Column(modifier) {
@@ -1051,7 +1062,7 @@ fun FormDatePickerCompact(
     placeholder: String = stringResource(Res.string.dd_mm_yy),
     isEnable: Boolean = true,
     labelColor: Color = toolbar_color,
-    placeholderColor: Color = Color(0xFF212121),
+    placeholderColor: Color = Color.Black,
     backgroundColor: Color = text_fiiled_color,
     borderColor: Color = boderColor,
     modifier: Modifier = Modifier
@@ -1097,8 +1108,9 @@ fun FormDatePickerCompact(
                     if (value.isEmpty()) {
                         Text(
                             text = placeholder,
-                            fontSize = 13.sp,
-                            color = placeholderColor
+                            fontSize = 16.sp,
+                            color = placeholderColor,
+                            fontFamily = FontFamily(Font(Res.font.roboto_medium)),
                         )
                     }
 
@@ -2304,7 +2316,7 @@ fun CommonSingleButtons(
 
 @Composable
 fun TripleIconSlider(
-    items: List<Triple<Painter, Painter, Painter>>,
+    items: List<SliderItem>,
     modifier: Modifier = Modifier,
     bgColor: Color = Color(0xFFDDEFFF)
 ) {
@@ -2315,7 +2327,7 @@ fun TripleIconSlider(
 
         items(items.size) { index ->
 
-            val (leftIcon, centerIcon, rightIcon) = items[index]
+            val item = items[index]
 
             Box(
                 modifier = Modifier
@@ -2325,16 +2337,14 @@ fun TripleIconSlider(
                 contentAlignment = Alignment.Center
             ) {
 
-
                 Box(
                     modifier = Modifier
                         .size(50.dp)
                         .align(Alignment.Center),
                 ) {
 
-
                     Icon(
-                        painter = centerIcon,
+                        painter = item.center,
                         contentDescription = null,
                         tint = Color(0xFF32567A),
                         modifier = Modifier
@@ -2342,9 +2352,8 @@ fun TripleIconSlider(
                             .align(Alignment.TopCenter)
                     )
 
-
                     Icon(
-                        painter = leftIcon,
+                        painter = item.left,
                         contentDescription = null,
                         tint = Color(0xFF32567A),
                         modifier = Modifier
@@ -2352,9 +2361,8 @@ fun TripleIconSlider(
                             .align(Alignment.BottomStart)
                     )
 
-
                     Icon(
-                        painter = rightIcon,
+                        painter = item.right,
                         contentDescription = null,
                         tint = Color(0xFF32567A),
                         modifier = Modifier
@@ -2363,9 +2371,8 @@ fun TripleIconSlider(
                     )
                 }
 
-
                 Text(
-                    text = stringResource(Res.string.select_information),
+                    text = item.title,
                     color = Color.White,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier
@@ -2376,6 +2383,7 @@ fun TripleIconSlider(
         }
     }
 }
+
 
 @Composable
 fun ReusableCard(
@@ -2606,17 +2614,32 @@ fun LabelValueText(label: String, value: String,) {
     ) {
         ReusableTextViewGrayCard(
             text = label,
+<<<<<<< HEAD
             fontSize = 13
+=======
 
-            )
+            fontSize = 13,
+
+>>>>>>> 59cfe84f67d95e2384208fbd43b9703ca7558da8
+
+      )
+
+
+
+
         Spacer(modifier = Modifier.width(4.dp))
         ReusableTextViewBlackCard(
             text = value,
+<<<<<<< HEAD
             fontSize = 12
 
 
 
             )
+=======
+            fontSize = 12,
+        )
+>>>>>>> 59cfe84f67d95e2384208fbd43b9703ca7558da8
     }
 }
 
@@ -2717,6 +2740,15 @@ fun FormFieldCompacts(
 
     Column(modifier) {
 
+<<<<<<< HEAD
+=======
+
+
+
+        Spacer(Modifier.height(5.dp))
+
+
+>>>>>>> 59cfe84f67d95e2384208fbd43b9703ca7558da8
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -3161,14 +3193,15 @@ fun SelectableChip(
     }
 }
 
-@Composable
+/*@Composable
 fun CustomAlertMovableAssets(
     title: String = stringResource(Res.string.app_name),
     submitText: String = stringResource(Res.string.ok),
     cancelText: String = stringResource(Res.string.cancel),
     onSubmit: () -> Unit = {},
     onCancel: () -> Unit = {}
-) {
+)
+{
     Dialog(
         onDismissRequest = { },
     )
@@ -3211,11 +3244,12 @@ fun CustomAlertMovableAssets(
 
                 Spacer(Modifier.height(5.dp))
 
-                Row(
+                *//*Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center,
                     modifier = Modifier.fillMaxWidth()
-                ) {
+                )
+                {
                     Spacer(Modifier.weight(0.2f))
 
                     Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.Center) {
@@ -3228,11 +3262,24 @@ fun CustomAlertMovableAssets(
                     }
 
                     Spacer(Modifier.weight(0.2f))
+                }*//*
+
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
+                    FormSpinner(
+                        label = stringResource(Res.string.movable_assets),
+                        options = listOf("Car", "Bike", "Truck"),
+                        selectedOption = "",
+                        onOptionSelected = { },
+                        modifier = Modifier.weight(1f)
+                    )
                 }
 
                 Spacer(Modifier.height(5.dp))
 
-                Row(
+                *//*Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center,
                     modifier = Modifier.fillMaxWidth()
@@ -3251,6 +3298,20 @@ fun CustomAlertMovableAssets(
                     }
 
                     Spacer(Modifier.weight(0.2f))
+                }*//*
+
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
+                    FormFieldCompact(
+                        label = stringResource(Res.string.vehicle_no),
+                        value = "",
+                        onValueChange = { "" },
+                        placeholder = stringResource(Res.string.type_here),
+                        maxLength = 10,
+                        modifier = Modifier.weight(1f)
+                    )
                 }
 
                 Spacer(Modifier.height(5.dp))
@@ -3299,8 +3360,131 @@ fun CustomAlertMovableAssets(
             }
         }
     }
-}
+}*/
 
+@Composable
+fun CustomAlertMovableAssets(
+    title: String = stringResource(Res.string.app_name),
+    submitText: String = stringResource(Res.string.ok),
+    cancelText: String = stringResource(Res.string.cancel),
+    onSubmit: () -> Unit = {},
+    onCancel: () -> Unit = {}
+) {
+    var movableAssets by remember { mutableStateOf("") }
+    var vehicleNo by remember { mutableStateOf("") }
+
+    Dialog(onDismissRequest = {}) {
+
+        Box(
+            modifier = Modifier
+                .widthIn(min = 350.dp, max = 500.dp)
+                .background(lightGrey, RoundedCornerShape(16.dp))
+                .border(1.dp, lightGrey, RoundedCornerShape(16.dp))
+        ) {
+
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+
+                // --------------------- HEADER (NO MARGIN) ---------------------
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(
+                            toolbar_color,
+                            shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp)
+                        )
+                        .height(50.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    ReusableTextView(
+                        text = title,
+                        fontSize = 20,
+                        fontWeight = FontWeight.Bold,
+                        textColor = white,
+                        textAlignment = TextAlign.Center,
+                        modifier = Modifier.fillMaxWidth()   // Perfect center
+                    )
+                }
+
+                // ------------------- CONTENT AREA (WITH PADDING) -------------------
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),      // Only content has padding
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+
+                    Spacer(Modifier.height(12.dp))
+
+                    // Movable Assets Spinner
+                    FormSpinner(
+                        label = stringResource(Res.string.movable_assets),
+                        options = listOf("Car", "Bike", "Truck"),
+                        selectedOption = movableAssets,
+                        onOptionSelected = {movableAssets = it},
+                        modifier = Modifier.fillMaxWidth()
+                    )
+
+                    Spacer(Modifier.height(12.dp))
+
+                    // Vehicle Number Field
+                    FormFieldCompact(
+                        label = stringResource(Res.string.vehicle_no),
+                        value = vehicleNo,
+                        onValueChange = { vehicleNo = it },
+                        placeholder = stringResource(Res.string.type_here),
+                        maxLength = 10,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+
+                    Spacer(Modifier.height(20.dp))
+
+                    // ------------------ BUTTON ROW -------------------
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+
+                        // Cancel Button
+                        Button(
+                            onClick = onCancel,
+                            modifier = Modifier
+                                .weight(1f)
+                                .height(48.dp),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = btn_color,
+                                contentColor = Color.Black
+                            ),
+                            shape = RoundedCornerShape(15.dp)
+                        ) {
+                            Text(cancelText)
+                        }
+
+                        // Submit Button
+                        Button(
+                            onClick = onSubmit,
+                            modifier = Modifier
+                                .weight(1f)
+                                .height(48.dp),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = btn_color,
+                                contentColor = Color.Black
+                            ),
+                            shape = RoundedCornerShape(15.dp)
+                        ) {
+                            Text(submitText)
+                        }
+                    }
+
+                    Spacer(Modifier.height(10.dp))
+                }
+            }
+        }
+    }
+}
 
 fun convertDateFormatYYYYMMDD(inputDate: String): String {
     var newDate = ""
@@ -3335,6 +3519,168 @@ fun convertDateFormatDDMMYYYY(inputDate: String): String {
 
 }
 
+@Composable
+fun CustomAlertMonthlyIncome(
+    title: String = stringResource(Res.string.app_name),
+    submitText: String = stringResource(Res.string.ok),
+    cancelText: String = stringResource(Res.string.cancel),
+    onSubmit: () -> Unit = {},
+    onCancel: () -> Unit = {}
+) {
+    var name by remember { mutableStateOf("") }
+    var relation by remember { mutableStateOf("") }
+    var occupation by remember { mutableStateOf("") }
+    var income by remember { mutableStateOf("") }
+    var remarks by remember { mutableStateOf("") }
+
+    Dialog(onDismissRequest = {}) {
+
+        Box(
+            modifier = Modifier
+                .widthIn(min = 350.dp, max = 500.dp)
+                .background(lightGrey, RoundedCornerShape(16.dp))
+                .border(1.dp, lightGrey, RoundedCornerShape(16.dp))
+        ) {
+
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+
+                // ----------------------- HEADER (NO MARGIN) -----------------------
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(
+                            toolbar_color,
+                            shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp)
+                        )
+                        .height(50.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    ReusableTextView(
+                        text = title,
+                        fontSize = 20,
+                        fontWeight = FontWeight.Bold,
+                        textColor = white,
+                        textAlignment = TextAlign.Center,
+                        modifier = Modifier.fillMaxWidth()  // Perfect centering
+                    )
+                }
+
+                // ----------------------- CONTENT AREA -----------------------
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),             // Padding ONLY inside content area
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+
+                    Spacer(Modifier.height(8.dp))
+
+                    // ----------- NAME & RELATION SPINNERS -----------
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(10.dp)
+                    ) {
+                        FormSpinner(
+                            label = stringResource(Res.string.name),
+                            options = listOf("Test", "ABC", "XYZ"),
+                            selectedOption = name,
+                            onOptionSelected = {name = it},
+                            modifier = Modifier.weight(1f)
+                        )
+
+                        FormSpinner(
+                            label = stringResource(Res.string.relation),
+                            options = listOf("Brother", "Self", "Sister"),
+                            selectedOption = relation,
+                            onOptionSelected = {relation = it},
+                            modifier = Modifier.weight(1f)
+                        )
+                    }
+
+                    Spacer(Modifier.height(12.dp))
+
+                    // ----------- OCCUPATION & INCOME SPINNERS -----------
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(10.dp)
+                    ) {
+                        FormSpinner(
+                            label = stringResource(Res.string.occupation),
+                            options = listOf("Shop", "Farming", "Labour", "Other"),
+                            selectedOption = occupation,
+                            onOptionSelected = {occupation =it},
+                            modifier = Modifier.weight(1f)
+                        )
+
+                        FormSpinner(
+                            label = stringResource(Res.string.income),
+                            options = listOf("<5000", "5000-10000", "10000-20000", ">20000"),
+                            selectedOption = income,
+                            onOptionSelected = {income = it},
+                            modifier = Modifier.weight(1f)
+                        )
+                    }
+
+                    Spacer(Modifier.height(12.dp))
+
+                    // ----------- REMARKS FIELD -----------
+                    FormFieldCompact(
+                        label = stringResource(Res.string.remarks),
+                        value = remarks,
+                        onValueChange = { remarks =it },
+                        placeholder = stringResource(Res.string.type_here),
+                        maxLength = 30,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+
+                    Spacer(Modifier.height(24.dp))
+
+                    // ----------------------- BUTTONS -----------------------
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        Button(
+                            onClick = onCancel,
+                            modifier = Modifier
+                                .weight(1f)
+                                .height(48.dp),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = btn_color,
+                                contentColor = Color.Black
+                            ),
+                            shape = RoundedCornerShape(15.dp)
+                        ) {
+                            Text(cancelText)
+                        }
 
 
+
+
+
+                        Button(
+                            onClick = onSubmit,
+                            modifier = Modifier
+                                .weight(1f)
+                                .height(48.dp),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = btn_color,
+                                contentColor = Color.Black
+                            ),
+                            shape = RoundedCornerShape(15.dp)
+                        ) {
+                            Text(submitText)
+                        }
+                    }
+
+                    Spacer(Modifier.height(10.dp))
+                }
+            }
+        }
+    }
+}
 

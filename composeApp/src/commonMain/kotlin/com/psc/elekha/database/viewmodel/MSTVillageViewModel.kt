@@ -19,7 +19,7 @@ class MSTVillageViewModel(
     fun loadAllVillages() {
         viewModelScope.launch {
             val result = repository.getAllVillage()
-            _villageList.value = result ?: emptyList()
+            _villageList.value = result
         }
     }
 
@@ -27,7 +27,7 @@ class MSTVillageViewModel(
     fun loadVillagesByBranchID(branchID: Int) {
         viewModelScope.launch {
             val result = repository.getAllVillageByBranchID(branchID)
-            _villageList.value = result ?: emptyList()
+            _villageList.value = result
         }
     }
 
@@ -35,7 +35,7 @@ class MSTVillageViewModel(
     fun loadVillagesByPincode(pinCode: String) {
         viewModelScope.launch {
             val result = repository.getAllVillageByPincode(pinCode)
-            _villageList.value = result ?: emptyList()
+            _villageList.value = result
         }
     }
 
@@ -43,7 +43,7 @@ class MSTVillageViewModel(
     fun loadVillagesByCode(pinCode: String) {
         viewModelScope.launch {
             val result = repository.getAllVillageByCode(pinCode)
-            _villageList.value = result ?: emptyList()
+            _villageList.value = result
         }
     }
 
@@ -72,7 +72,7 @@ class MSTVillageViewModel(
     }
 
     // Insert list of villages
-    fun insertAllVillage(list: List<MSTVillageEntity>?) {
+    fun insertAllVillage(list: List<MSTVillageEntity>) {
         viewModelScope.launch {
             repository.insertAllVillage(list)
             loadAllVillages() // Refresh list

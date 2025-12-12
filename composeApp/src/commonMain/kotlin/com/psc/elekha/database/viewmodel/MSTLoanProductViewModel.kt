@@ -27,7 +27,7 @@ class MSTLoanProductViewModel(
     fun loadAllLoanProducts(loanProductID: Int) {
         viewModelScope.launch {
             val result = repository.getAllLoanProduct(loanProductID)
-            _loanProductList.value = result ?: emptyList()
+            _loanProductList.value = result
         }
     }
 
@@ -35,7 +35,7 @@ class MSTLoanProductViewModel(
     fun loadLoanAmount() {
         viewModelScope.launch {
             val result = repository.getLoanAmount()
-            _loanProductList.value = result ?: emptyList()
+            _loanProductList.value = result
         }
     }
 
@@ -43,7 +43,7 @@ class MSTLoanProductViewModel(
     fun loadNewLoanAmount() {
         viewModelScope.launch {
             val result = repository.getNewLoanAmount()
-            _newLoanProductList.value = result ?: emptyList()
+            _newLoanProductList.value = result
         }
     }
 
@@ -64,7 +64,7 @@ class MSTLoanProductViewModel(
     }
 
     // Insert list of loan products
-    fun insertAllLoanProduct(list: List<MSTLoanProductEntity>?) {
+    fun insertAllLoanProduct(list: List<MSTLoanProductEntity>) {
         viewModelScope.launch {
             repository.insertAllLoanProduct(list)
             list?.firstOrNull()?.let {

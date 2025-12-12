@@ -59,6 +59,7 @@ import e_lekha.composeapp.generated.resources.back_image
 import e_lekha.composeapp.generated.resources.bank_account_number
 import e_lekha.composeapp.generated.resources.bank_name
 import e_lekha.composeapp.generated.resources.branch_name
+import e_lekha.composeapp.generated.resources.camera
 import e_lekha.composeapp.generated.resources.customer_bank_details
 import e_lekha.composeapp.generated.resources.customer_details
 import e_lekha.composeapp.generated.resources.customer_name
@@ -113,6 +114,11 @@ import org.jetbrains.compose.resources.stringResource
 @Composable
 fun BankDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = {}) {
     var passbookImage by remember { mutableStateOf<Uri?>(null) }
+    var nameOnAccount by remember { mutableStateOf("") }
+    var AccountNo by remember { mutableStateOf("") }
+    var bankName by remember { mutableStateOf("") }
+    var branchName by remember { mutableStateOf("") }
+    var ifscCode by remember { mutableStateOf("") }
 
 
     LaunchedEffect(Unit) {
@@ -144,9 +150,9 @@ fun BankDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = {}) 
 
                 FormFieldCompact(
                     label = stringResource(Res.string.customer_name_in_bank_dairy),
-                    value = "",
+                    value = nameOnAccount,
                     placeholder = stringResource(Res.string.type_here),
-                    onValueChange = { "" },
+                    onValueChange = { nameOnAccount = it},
                     maxLength = 30
                 )
 
@@ -154,9 +160,9 @@ fun BankDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = {}) 
 
                 FormFieldCompact(
                     label = stringResource(Res.string.bank_account_number),
-                    value = "",
+                    value = AccountNo,
                     placeholder = stringResource(Res.string.type_here),
-                    onValueChange = { "" },
+                    onValueChange = { AccountNo = it },
                     maxLength = 18,
                     inputType = KeyboardType.Number
                 )
@@ -166,8 +172,8 @@ fun BankDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = {}) 
                 FormSpinner(
                     label = stringResource(Res.string.bank_name),
                     options = listOf("SBI", "HDFC", "AXIS"),
-                    selectedOption = "",
-                    onOptionSelected = { }
+                    selectedOption = bankName,
+                    onOptionSelected = { bankName = it}
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -175,45 +181,51 @@ fun BankDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = {}) 
                 FormSpinner(
                     label = stringResource(Res.string.branch_name),
                     options = listOf("SBI Delhi","SBI Gurgaon", "HDFC Delhi","HDFC Gurgaon", "AXIS Delhi","AXIS Gurgaon"),
-                    selectedOption = "",
-                    onOptionSelected = { }
+                    selectedOption = branchName,
+                    onOptionSelected = {branchName = it }
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
 
                 FormFieldCompact(
                     label = stringResource(Res.string.ifsc_code),
-                    value = "",
+                    value = ifscCode,
                     placeholder = stringResource(Res.string.type_here),
-                    onValueChange = { "" },
+                    onValueChange = { ifscCode = it},
                 )
 
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(10.dp))
 
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(10.dp),
-                    verticalAlignment = Alignment.CenterVertically
+                    horizontalArrangement = Arrangement.Center
                 ) {
-                    Box(
-                        modifier = Modifier
-                            .weight(1f)
-                            .fillMaxHeight(),      // Make text area match the height of right side
-                        contentAlignment = Alignment.CenterStart        // Center vertically
+                    // Front Image Box
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally
                     ) {
+                        Box(
+                            modifier = Modifier
+                                .size(120.dp)
+                                .background(Color(0xFFE8E8E8)), // Light Grey Box
+                            contentAlignment = Alignment.Center
+                        ) {
+                            // Preview can go here
+                        }
+                        Spacer(modifier = Modifier.height(6.dp))
+                        Icon(
+                            painter = painterResource(Res.drawable.camera),
+                            contentDescription = "",
+                            tint = Color.Black,
+                            modifier = Modifier.size(28.dp)
+                        )
+                        Spacer(modifier = Modifier.height(4.dp))
                         ReusableTextView(
                             text = stringResource(Res.string.passbook_image),
                             fontSize = 14,
                             textColor = textview_color
                         )
                     }
-
-                    CameraPreviewField(
-                        image = passbookImage,
-                        onClick = { },
-                        placeholderRes = Res.drawable.voter_id,
-                        modifier = Modifier.weight(1f)
-                    )
                 }
 
 

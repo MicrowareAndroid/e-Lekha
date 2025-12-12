@@ -20,7 +20,7 @@ class MSTMonthlyIncomeMarksViewModel(
     fun loadAllMonthlyIncomeMarks() {
         viewModelScope.launch {
             val result = repository.getAllMonthlyIncomeMarks()
-            _monthlyIncomeMarksList.value = result ?: emptyList()
+            _monthlyIncomeMarksList.value = result
         }
     }
 
@@ -33,7 +33,7 @@ class MSTMonthlyIncomeMarksViewModel(
     }
 
     // Insert list of records
-    fun insertAllMonthlyIncomeMarks(list: List<MSTMonthlyIncomeMarksEntity>?) {
+    fun insertAllMonthlyIncomeMarks(list: List<MSTMonthlyIncomeMarksEntity>) {
         viewModelScope.launch {
             repository.insertAllMonthlyIncomeMarks(list)
             loadAllMonthlyIncomeMarks() // Refresh list

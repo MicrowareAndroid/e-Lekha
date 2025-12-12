@@ -39,7 +39,7 @@ class CustomerLoanDisbursementViewModel(
     // ---------------------------------------------------------
     fun loadAllLoanDisbursement() {
         viewModelScope.launch(Dispatchers.IO) {
-            val data = repository.getAllLoanDisbursement() ?: emptyList()
+            val data = repository.getAllLoanDisbursement()
             _allLoanDisbursement.value = data
         }
     }
@@ -49,7 +49,7 @@ class CustomerLoanDisbursementViewModel(
     // ---------------------------------------------------------
     fun loadLoanDisbursementData() {
         viewModelScope.launch(Dispatchers.IO) {
-            val result = repository.getLoanDisbursementData() ?: emptyList()
+            val result = repository.getLoanDisbursementData()
             _loanDisbursementData.value = result
         }
     }
@@ -59,7 +59,7 @@ class CustomerLoanDisbursementViewModel(
     // ---------------------------------------------------------
     fun loadLoanDisbursementDataByStatus(statusId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            val result = repository.getLoanDisbursementDataByStatus(statusId) ?: emptyList()
+            val result = repository.getLoanDisbursementDataByStatus(statusId)
             _loanDisbursementByStatus.value = result
         }
     }

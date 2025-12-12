@@ -18,17 +18,17 @@ class LoanRepaymentRepository(
     }
 
     // Get all loan repayments
-    suspend fun getAllLoanRepayment(): List<LoanRepaymentEntity>? {
+    suspend fun getAllLoanRepayment(): List<LoanRepaymentEntity> {
         return dao.getAllLoanRepayment()
     }
 
     // Get loan repayment by GUID
-    suspend fun getLoanRepaymentByGUID(GUID: String): LoanRepaymentEntity? {
+    suspend fun getLoanRepaymentByGUID(GUID: String): LoanRepaymentEntity {
         return dao.getLoanRepaymentByGUID(GUID)
     }
 
     // Get loan repayments to upload
-    suspend fun getLoanRepaymentUploadData(): List<LoanRepaymentEntity>? {
+    suspend fun getLoanRepaymentUploadData(): List<LoanRepaymentEntity> {
         return dao.getLoanRepaymentUploadData()
     }
 

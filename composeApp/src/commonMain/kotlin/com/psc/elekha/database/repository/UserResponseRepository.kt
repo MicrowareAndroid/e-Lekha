@@ -13,12 +13,12 @@ class UserResponseRepository(
     }
 
     // Insert list of users
-    suspend fun insertAllUsers(list: List<UserResponseEntity>?) {
+    suspend fun insertAllUsers(list: List<UserResponseEntity>) {
         userResponseDao.insertAllUsers(list)
     }
 
     // Get all users
-    suspend fun getAllUsers(): List<UserResponseEntity>? {
+    suspend fun getAllUsers(): List<UserResponseEntity> {
         return userResponseDao.getAllUsers()
     }
 
@@ -28,7 +28,7 @@ class UserResponseRepository(
     }
 
     // Get user details by contact
-    suspend fun getUserDetails(contact: String): List<UserResponseEntity>? {
+    suspend fun getUserDetails(contact: String): List<UserResponseEntity> {
         return userResponseDao.getUserDetails(contact)
     }
 

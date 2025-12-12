@@ -19,7 +19,7 @@ class MSTAssetsValuationViewModel(
     fun loadAssetsValuation() {
         viewModelScope.launch {
             val result = repository.getAllAssetsValuation()
-            _assetsValuationList.value = result ?: emptyList()
+            _assetsValuationList.value = result
         }
     }
 
@@ -32,7 +32,7 @@ class MSTAssetsValuationViewModel(
     }
 
     // Insert list
-    fun insertAllAssetsValuation(list: List<MSTAssetsValuationEntity>?) {
+    fun insertAllAssetsValuation(list: List<MSTAssetsValuationEntity>) {
         viewModelScope.launch {
             repository.insertAllAssetsValuation(list)
             loadAssetsValuation() // refresh list

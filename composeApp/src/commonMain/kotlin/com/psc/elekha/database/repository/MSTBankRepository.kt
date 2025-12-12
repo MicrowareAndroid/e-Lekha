@@ -13,12 +13,12 @@ class MSTBankRepository(
     }
 
     // Insert list of banks
-    suspend fun insertAllBank(list: List<MSTBankEntity>?) {
+    suspend fun insertAllBank(list: List<MSTBankEntity>) {
         bankDao.insertAllBank(list)
     }
 
     // Get all banks (IsDeleted = 0)
-    suspend fun getAllBank(): List<MSTBankEntity>? {
+    suspend fun getAllBank(): List<MSTBankEntity>{
         return bankDao.getAllBank()
     }
 

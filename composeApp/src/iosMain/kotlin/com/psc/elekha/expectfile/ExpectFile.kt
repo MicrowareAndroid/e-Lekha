@@ -1,15 +1,15 @@
-package com.psc.elekha.database.appdatabase
+package com.psc.elekha.expectfile
+
 
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.room.RoomDatabaseConstructor
+import com.psc.elekha.database.appdatabase.AppDatabase
+import com.psc.elekha.database.appdatabase.dbFileName
 import platform.Foundation.NSHomeDirectory
 
-actual object AppDatabaseConstructor : RoomDatabaseConstructor<AppDatabase> {
-    actual override fun initialize(): AppDatabase {
-        val dbFilePath = NSHomeDirectory() + "/$dbFileName"
-        return Room.databaseBuilder<AppDatabase>(
-            name = dbFilePath
-        ).build()
-    }
+actual fun getDatabaseBuilder(): RoomDatabase.Builder<AppDatabase> {
+    val dbFilePath = NSHomeDirectory() + "/${dbFileName}"
+    return Room.databaseBuilder<AppDatabase>(
+        name = dbFilePath,
+    )
 }

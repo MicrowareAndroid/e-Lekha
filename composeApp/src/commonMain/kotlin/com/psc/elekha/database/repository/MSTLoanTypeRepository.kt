@@ -13,12 +13,12 @@ class MSTLoanTypeRepository(
     }
 
     // Insert list of loan types
-    suspend fun insertAllLoanType(list: List<MSTLoanTypeEntity>?) {
+    suspend fun insertAllLoanType(list: List<MSTLoanTypeEntity>) {
         loanTypeDao.insertAllLoanType(list)
     }
 
     // Get all loan types
-    suspend fun getAllLoanType(): List<MSTLoanTypeEntity>? {
+    suspend fun getAllLoanType(): List<MSTLoanTypeEntity> {
         return loanTypeDao.getAllLoanType()
     }
 

@@ -35,6 +35,7 @@ fun FamilyDetailListScreen(
     onCancelTab: () -> Unit = {},
     navController: NavController
 ) {
+
     var showDialog by remember { mutableStateOf(false) }
 
     var familyDetailModel by rememberSaveable {
@@ -110,7 +111,7 @@ fun FamilyDetailListScreen(
                 //just icon
                 FloatingActionButton(
                     onClick = {
-                        navController.navigate(RouteName.family_detail_form_screen)
+                        showDialog = true
                     },
                     containerColor = btn_color,
                     shape = CircleShape,
@@ -127,6 +128,17 @@ fun FamilyDetailListScreen(
                         painter = painterResource(Res.drawable.ic_add),
                         contentDescription = stringResource(Res.string.add),
                         tint = black
+                    )
+                }
+
+                if (showDialog) {
+                    CustomAlertFamilyDetails(
+                        onSubmit = {
+                            showDialog = false
+                        },
+                        onCancel = {
+                            showDialog = false
+                        }
                     )
                 }
             }

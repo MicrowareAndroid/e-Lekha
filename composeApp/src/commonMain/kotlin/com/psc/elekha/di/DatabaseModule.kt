@@ -10,7 +10,6 @@ import org.koin.dsl.module
 
 val databaseModule = module {
     single { getRoomDatabase(getDatabaseBuilder()) }
-    single { get<AppDatabase>().userDao() }
     single { get<AppDatabase>().customerDao() }
     single { get<AppDatabase>().customerDefaultDao() }
     single { get<AppDatabase>().customerExistingLoanDetailDao() }

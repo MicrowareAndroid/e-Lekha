@@ -19,7 +19,7 @@ class MSTStateViewModel(
     fun loadAllStates() {
         viewModelScope.launch {
             val result = repository.getAllState()
-            _stateList.value = result ?: emptyList()
+            _stateList.value = result
         }
     }
 
@@ -32,7 +32,7 @@ class MSTStateViewModel(
     }
 
     // Insert list of states
-    fun insertAllState(list: List<MSTStateEntity>?) {
+    fun insertAllState(list: List<MSTStateEntity>) {
         viewModelScope.launch {
             repository.insertAllState(list)
             loadAllStates() // Refresh list

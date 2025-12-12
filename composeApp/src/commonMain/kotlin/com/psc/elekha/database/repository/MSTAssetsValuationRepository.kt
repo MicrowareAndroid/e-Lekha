@@ -13,12 +13,12 @@ class MSTAssetsValuationRepository(
     }
 
     // Insert list
-    suspend fun insertAllAssetsValuation(list: List<MSTAssetsValuationEntity>?) {
+    suspend fun insertAllAssetsValuation(list: List<MSTAssetsValuationEntity>) {
         assetsValuationDao.insertAllAssetsValuation(list)
     }
 
     // Get all records
-    suspend fun getAllAssetsValuation(): List<MSTAssetsValuationEntity>? {
+    suspend fun getAllAssetsValuation(): List<MSTAssetsValuationEntity> {
         return assetsValuationDao.getAllAssetsValuation()
     }
 

@@ -13,12 +13,12 @@ class MSTBranchRepository(
     }
 
     // Insert list of branches
-    suspend fun insertAllBranch(list: List<MSTBranchEntity>?) {
+    suspend fun insertAllBranch(list: List<MSTBranchEntity>) {
         branchDao.insertAllBranch(list)
     }
 
     // Get all branches
-    suspend fun getAllBranch(): List<MSTBranchEntity>? {
+    suspend fun getAllBranch(): List<MSTBranchEntity> {
         return branchDao.getAllBranch()
     }
 

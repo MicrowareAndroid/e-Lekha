@@ -57,7 +57,7 @@ class ImageDetailViewModel(
     // --------------------------------------------------------
     fun loadAllImages() {
         viewModelScope.launch(Dispatchers.IO) {
-            _allImages.value = repository.getAllImageDetail() ?: emptyList()
+            _allImages.value = repository.getAllImageDetail()
         }
     }
 
@@ -66,7 +66,7 @@ class ImageDetailViewModel(
     // --------------------------------------------------------
     fun loadImageDetails(refFieldName: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            _imageDetails.value = repository.getImageDetail(refFieldName) ?: emptyList()
+            _imageDetails.value = repository.getImageDetail(refFieldName)
         }
     }
 

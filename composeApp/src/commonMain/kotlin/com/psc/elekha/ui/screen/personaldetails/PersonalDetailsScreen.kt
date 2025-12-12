@@ -1,5 +1,6 @@
 package com.psc.elekha.ui.screen.personaldetails
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -13,6 +14,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -27,6 +29,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -58,13 +61,18 @@ import e_lekha.composeapp.generated.resources.district
 import e_lekha.composeapp.generated.resources.education
 import e_lekha.composeapp.generated.resources.enter_otp
 import e_lekha.composeapp.generated.resources.enter_your_personal_details
+import e_lekha.composeapp.generated.resources.father_name
 import e_lekha.composeapp.generated.resources.guarantor_image
 import e_lekha.composeapp.generated.resources.guarantor_mobile_number
 import e_lekha.composeapp.generated.resources.guarantor_name
 import e_lekha.composeapp.generated.resources.husband_name
+import e_lekha.composeapp.generated.resources.ic_customer
+import e_lekha.composeapp.generated.resources.ic_gurantor
 import e_lekha.composeapp.generated.resources.image
 import e_lekha.composeapp.generated.resources.landmark
 import e_lekha.composeapp.generated.resources.marital_status
+import e_lekha.composeapp.generated.resources.maternal_address
+import e_lekha.composeapp.generated.resources.maternal_mob_no
 import e_lekha.composeapp.generated.resources.mobile_number
 import e_lekha.composeapp.generated.resources.next
 import e_lekha.composeapp.generated.resources.not_same_as_customer_mobile_number
@@ -157,62 +165,51 @@ viewModel.loadSavedData()
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
 
-                        Box(
-                            modifier = Modifier
-                                .size(120.dp)
-                                .background(Color(0xFFE8E8E8)),  // Light Grey Box
-                            contentAlignment = Alignment.Center
-                        ) {
-
-                        }
-
                         Spacer(modifier = Modifier.height(6.dp))
 
+                        Image(
+                            painter = painterResource(Res.drawable.ic_customer),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .size(120.dp)
+                                .background(
+                                    Color(0xFFE8E8E8),
+                                    shape = RoundedCornerShape(8.dp)   // optional, looks better
+                                )
+                                .padding(4.dp),   // optional
+                            contentScale = ContentScale.Crop
+                        )
                         ReusableTextView(
                             text = stringResource(Res.string.customer_image)
                         )
 
-                        Spacer(modifier = Modifier.height(6.dp))
-
-                        Icon(
-                            painter = painterResource(Res.drawable.camera),
-                            contentDescription = null,
-                            tint = Color.Black,
-                            modifier = Modifier.size(28.dp)
-                        )
                     }
-
 
                     Column(
                         modifier = Modifier.weight(1f),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
 
-                        Box(
-                            modifier = Modifier
-                                .size(120.dp)
-                                .background(Color(0xFFE8E8E8)),  // Light Grey Box
-                            contentAlignment = Alignment.Center
-                        ) {
-
-                        }
-
                         Spacer(modifier = Modifier.height(6.dp))
 
+                        Image(
+                            painter = painterResource(Res.drawable.ic_gurantor),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .size(120.dp)
+                                .background(
+                                    Color(0xFFE8E8E8),
+                                    shape = RoundedCornerShape(8.dp)   // optional, looks better
+                                )
+                                .padding(4.dp),   // optional
+                            contentScale = ContentScale.Crop
+                        )
                         ReusableTextView(
                             text = stringResource(Res.string.your_photo_with_guarantor)
                         )
-                        Spacer(modifier = Modifier.height(6.dp))
 
-                        Icon(
-                            painter = painterResource(Res.drawable.camera),
-                            contentDescription = null,
-                            tint = Color.Black,
-                            modifier = Modifier.size(28.dp)
-                        )
                     }
                 }
-
 
                 Spacer(modifier = Modifier.height(8.dp))
 
@@ -287,7 +284,7 @@ viewModel.loadSavedData()
                         modifier = Modifier.weight(1f)
                     )
                 }
-
+                Spacer(modifier = Modifier.height(8.dp))
                 FormSpinner(
                     label = stringResource(Res.string.purpose),
                     options = listOf("Business", "Study Loan", "Home Loan"),
@@ -506,6 +503,55 @@ viewModel.loadSavedData()
                         value = "",
                         onValueChange = { "" },
                         placeholder = stringResource(Res.string.type_here),
+                        modifier = Modifier.weight(1f)
+                    )
+                }
+                Spacer(modifier = Modifier.height(8.dp))
+                FormFieldCompact(
+                    label = stringResource(Res.string.maternal_address),
+                    value = "",
+                    placeholder = stringResource(Res.string.type_here),
+                    onValueChange = { "" },
+                    maxLength = 20
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
+                    FormFieldCompact(
+                        label = stringResource(Res.string.village_name),
+                        value = "",
+                        onValueChange = { "" },
+                        placeholder = stringResource(Res.string.type_here),
+                        modifier = Modifier.weight(1f)
+                    )
+
+                    FormFieldCompact(
+                        label = stringResource(Res.string.maternal_mob_no),
+                        value = "",
+                        onValueChange = { "" },
+                        placeholder = stringResource(Res.string.type_here),
+                        modifier = Modifier.weight(1f)
+                    )
+                }
+                Spacer(modifier = Modifier.height(8.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
+                    FormFieldCompact(
+                        label = stringResource(Res.string.father_name),
+                        value = "",
+                        onValueChange = { "" },
+                        placeholder = stringResource(Res.string.type_here),
+                        modifier = Modifier.weight(1f)
+                    )
+                    FormSpinner(
+                        label = stringResource(Res.string.state),
+                        options = listOf("Delhi", "Punjab"),
+                        selectedOption = "",
+                        onOptionSelected = { },
                         modifier = Modifier.weight(1f)
                     )
                 }

@@ -10,10 +10,10 @@ interface TabletMenuDao {
     suspend  fun insertTabletMenu(tabletMenuEntity: TabletMenuEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-     suspend fun insertAllTabletMenu(tabletMenuEntity: List<TabletMenuEntity>?)
+     suspend fun insertAllTabletMenu(tabletMenuEntity: List<TabletMenuEntity>)
 
     @Query("Select * from TabletMenu")
-    suspend fun getAllTabletMenu(): List<TabletMenuEntity>?
+    suspend fun getAllTabletMenu(): List<TabletMenuEntity>
 
     @Query("Delete from TabletMenu")
     suspend fun deleteAllTabletMenu()

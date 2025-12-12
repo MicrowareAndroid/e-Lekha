@@ -10,13 +10,13 @@ interface MSTBankBranchDao {
     suspend fun insertBankBranch(mSTBankBranchEntity: MSTBankBranchEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAllBankBranch(mSTBankBranchEntity: List<MSTBankBranchEntity>?)
+    suspend fun insertAllBankBranch(mSTBankBranchEntity: List<MSTBankBranchEntity>)
 
     @Query("Select * from MSTBankBranch")
-    suspend fun getAllBankBranch(): List<MSTBankBranchEntity>?
+    suspend fun getAllBankBranch(): List<MSTBankBranchEntity>
 
     @Query("select * from MSTBankBranch where BankID =:BankID order by BranchName")
-    suspend fun getBankBranchByBankID(BankID: Int): List<MSTBankBranchEntity>?
+    suspend fun getBankBranchByBankID(BankID: Int): List<MSTBankBranchEntity>
 
     @Query("select IFSCCode from MSTBankBranch where BankID=:BankID and BranchID=:BranchID")
     suspend  fun getIFSCCode(BankID: Int,BranchID:Int): String

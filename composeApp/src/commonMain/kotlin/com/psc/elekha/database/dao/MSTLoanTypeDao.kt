@@ -10,10 +10,10 @@ interface MSTLoanTypeDao {
     suspend  fun insertLoanType(mSTLoanTypeEntity: MSTLoanTypeEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend  fun insertAllLoanType(mSTLoanTypeEntity: List<MSTLoanTypeEntity>?)
+    suspend  fun insertAllLoanType(mSTLoanTypeEntity: List<MSTLoanTypeEntity>)
 
     @Query("Select * from MSTLoanType")
-    suspend  fun getAllLoanType(): List<MSTLoanTypeEntity>?
+    suspend  fun getAllLoanType(): List<MSTLoanTypeEntity>
 
     @Query("Delete from MSTLoanType")
     suspend fun deleteAllLoanType()

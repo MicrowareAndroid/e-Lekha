@@ -1,6 +1,8 @@
 package com.psc.elekha
 
 import android.app.Application
+import android.util.Log
+import com.psc.elekha.database.appdatabase.AppDatabase
 import com.psc.elekha.utils.AppPreferences
 import com.psc.elekha.utils.VersionInfo
 import com.psc.elekha.di.initKoin
@@ -29,8 +31,6 @@ class MyApp : Application(), KoinComponent {
             androidLogger()
             androidContext(this@MyApp)
         }
-
-
     }
 
 

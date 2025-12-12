@@ -22,7 +22,7 @@ class KYCDocCategoryViewModel(
     // -------------------------------
     fun loadAllCategories() {
         viewModelScope.launch(Dispatchers.IO) {
-            _allCategories.value = repository.getAllKYCDocCategory() ?: emptyList()
+            _allCategories.value = repository.getAllKYCDocCategory()
         }
     }
 

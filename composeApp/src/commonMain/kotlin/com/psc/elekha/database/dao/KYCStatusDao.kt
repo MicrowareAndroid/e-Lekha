@@ -10,10 +10,10 @@ interface KYCStatusDao {
     suspend fun insertKYCStatus(kYCStatusEntity: KYCStatusEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAllKYCStatus(kYCStatusEntity: List<KYCStatusEntity>?)
+    suspend fun insertAllKYCStatus(kYCStatusEntity: List<KYCStatusEntity>)
 
     @Query("Select * from KYCStatus")
-    suspend fun getAllKYCStatus(): List<KYCStatusEntity>?
+    suspend fun getAllKYCStatus(): List<KYCStatusEntity>
 
     @Query("Delete from KYCStatus")
     suspend fun deleteAllKYCStatus()

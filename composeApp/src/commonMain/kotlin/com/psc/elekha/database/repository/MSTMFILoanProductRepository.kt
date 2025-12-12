@@ -13,17 +13,17 @@ class MSTMFILoanProductRepository(
     }
 
     // Insert list of MFI loan products
-    suspend fun insertAllMFILoanProduct(list: List<MSTMFILoanProductEntity>?) {
+    suspend fun insertAllMFILoanProduct(list: List<MSTMFILoanProductEntity>) {
         mfiLoanProductDao.insertAllMFILoanProduct(list)
     }
 
     // Get all MFI loan products
-    suspend fun getAllMFILoanProduct(): List<MSTMFILoanProductEntity>? {
+    suspend fun getAllMFILoanProduct(): List<MSTMFILoanProductEntity> {
         return mfiLoanProductDao.getAllMFILoanProduct()
     }
 
     // Get MFI loan products by MFIID
-    suspend fun getMFILoanProductByMFIID(MFIID: Int): List<MSTMFILoanProductEntity>? {
+    suspend fun getMFILoanProductByMFIID(MFIID: Int): List<MSTMFILoanProductEntity> {
         return mfiLoanProductDao.getMFILoanProductBYMFIID(MFIID)
     }
 

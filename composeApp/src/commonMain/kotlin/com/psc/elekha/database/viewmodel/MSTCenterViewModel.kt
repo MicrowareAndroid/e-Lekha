@@ -19,7 +19,7 @@ class MSTCenterViewModel(
     fun loadAllCenters() {
         viewModelScope.launch {
             val result = repository.getAllCenter()
-            _centerList.value = result ?: emptyList()
+            _centerList.value = result
         }
     }
 
@@ -32,7 +32,7 @@ class MSTCenterViewModel(
     }
 
     // Insert list of centers
-    fun insertAllCenter(list: List<MSTCenterEntity>?) {
+    fun insertAllCenter(list: List<MSTCenterEntity>) {
         viewModelScope.launch {
             repository.insertAllCenter(list)
             loadAllCenters() // Refresh list

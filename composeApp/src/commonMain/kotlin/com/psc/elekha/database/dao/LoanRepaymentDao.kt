@@ -10,16 +10,16 @@ interface LoanRepaymentDao {
     suspend fun insertLoanRepayment(loanRepaymentEntity: LoanRepaymentEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAllLoanRepayment(loanRepaymentEntity: List<LoanRepaymentEntity>?)
+    suspend fun insertAllLoanRepayment(loanRepaymentEntity: List<LoanRepaymentEntity>)
 
     @Query("Select * from LoanRepayment")
-    suspend fun getAllLoanRepayment(): List<LoanRepaymentEntity>?
+    suspend fun getAllLoanRepayment(): List<LoanRepaymentEntity>
 
     @Query("Select * from LoanRepayment where GUID=:GUID")
-    suspend fun getLoanRepaymentByGUID(GUID: String): LoanRepaymentEntity?
+    suspend fun getLoanRepaymentByGUID(GUID: String): LoanRepaymentEntity
 
     @Query("Select * from LoanRepayment Where IsEdited = 1")
-    suspend  fun getLoanRepaymentUploadData(): List<LoanRepaymentEntity>?
+    suspend  fun getLoanRepaymentUploadData(): List<LoanRepaymentEntity>
 
     @Query("Select Count(*) from LoanRepayment Where IsEdited = 1")
     suspend fun getLoanRepaymentUploadDataCount(): Int

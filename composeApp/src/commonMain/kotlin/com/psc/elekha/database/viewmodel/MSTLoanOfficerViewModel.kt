@@ -19,7 +19,7 @@ class MSTLoanOfficerViewModel(
     fun loadAllLoanOfficers() {
         viewModelScope.launch {
             val result = repository.getAllLoanOfficer()
-            _loanOfficerList.value = result ?: emptyList()
+            _loanOfficerList.value = result
         }
     }
 
@@ -32,7 +32,7 @@ class MSTLoanOfficerViewModel(
     }
 
     // Insert list of loan officers
-    fun insertAllLoanOfficer(list: List<MSTLoanOfficerEntity>?) {
+    fun insertAllLoanOfficer(list: List<MSTLoanOfficerEntity>) {
         viewModelScope.launch {
             repository.insertAllLoanOfficer(list)
             loadAllLoanOfficers() // Refresh list

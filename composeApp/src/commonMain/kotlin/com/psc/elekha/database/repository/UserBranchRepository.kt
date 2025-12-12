@@ -13,12 +13,12 @@ class UserBranchRepository(
     }
 
     // Insert list of user branches
-    suspend fun insertAllUserBranch(list: List<UserBranchEntity>?) {
+    suspend fun insertAllUserBranch(list: List<UserBranchEntity>) {
         userBranchDao.insertAllUserBranch(list)
     }
 
     // Get all user branches
-    suspend fun getAllUserBranch(): List<UserBranchEntity>? {
+    suspend fun getAllUserBranch(): List<UserBranchEntity> {
         return userBranchDao.getAllUserBranch()
     }
 
