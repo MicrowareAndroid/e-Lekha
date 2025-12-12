@@ -7,15 +7,15 @@ import com.psc.elekha.database.entity.KYCStatusEntity
 interface KYCStatusDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertKYCStatus(kYCStatusEntity: KYCStatusEntity)
+    suspend fun insertKYCStatus(kYCStatusEntity: KYCStatusEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAllKYCStatus(kYCStatusEntity: List<KYCStatusEntity>?)
+    suspend fun insertAllKYCStatus(kYCStatusEntity: List<KYCStatusEntity>?)
 
     @Query("Select * from KYCStatus")
-    fun getAllKYCStatus(): List<KYCStatusEntity>?
+    suspend fun getAllKYCStatus(): List<KYCStatusEntity>?
 
     @Query("Delete from KYCStatus")
-    fun deleteAllKYCStatus()
+    suspend fun deleteAllKYCStatus()
 
 }
