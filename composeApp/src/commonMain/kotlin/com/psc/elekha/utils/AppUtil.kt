@@ -2172,8 +2172,8 @@ fun SimpleOtp(
                 colors = OutlinedTextFieldDefaults.colors(
                     unfocusedContainerColor = Color.White,
                     focusedContainerColor = Color.White,
-                    unfocusedBorderColor = Color.Gray,
-                    focusedBorderColor = Color.Gray,
+                    unfocusedBorderColor = Color.White,
+                    focusedBorderColor = Color.White,
                     cursorColor = Color.Black
                 ),
                 singleLine = true,
@@ -2617,24 +2617,12 @@ fun LabelValueText(label: String, value: String,) {
     ) {
         ReusableTextViewGrayCard(
             text = label,
-
-
-
-            fontSize = 13,
-
-
+            fontSize = 13
       )
-
-
-
-
         Spacer(modifier = Modifier.width(4.dp))
         ReusableTextViewBlackCard(
             text = value,
-            fontSize = 12,
-
-
-
+            fontSize = 12
             )
 
     }
@@ -2737,11 +2725,7 @@ fun FormFieldCompacts(
 
     Column(modifier) {
 
-
-
-
         Spacer(Modifier.height(5.dp))
-
 
         Box(
             modifier = Modifier
