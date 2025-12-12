@@ -119,11 +119,14 @@ import com.psc.elekha.ui.theme.bgColor
 import com.psc.elekha.ui.theme.black
 import com.psc.elekha.ui.theme.boderColor
 import com.psc.elekha.ui.theme.btn_color
+import com.psc.elekha.ui.theme.darkBluishGrey
 import com.psc.elekha.ui.theme.desire_orange
 import com.psc.elekha.ui.theme.editext_bg_color
 import com.psc.elekha.ui.theme.formborder
+import com.psc.elekha.ui.theme.hintColor
 import com.psc.elekha.ui.theme.lightGrey
 import com.psc.elekha.ui.theme.lightgreens
+import com.psc.elekha.ui.theme.loginTitle
 import com.psc.elekha.ui.theme.repaymentColor
 import com.psc.elekha.ui.theme.teal700
 import com.psc.elekha.ui.theme.text_fiiled_color
@@ -165,6 +168,7 @@ import e_lekha.composeapp.generated.resources.relation
 import e_lekha.composeapp.generated.resources.religion
 import e_lekha.composeapp.generated.resources.remarks
 import e_lekha.composeapp.generated.resources.roboto_medium
+import e_lekha.composeapp.generated.resources.roboto_regular
 import e_lekha.composeapp.generated.resources.save
 import e_lekha.composeapp.generated.resources.select_center
 import e_lekha.composeapp.generated.resources.select_customer
@@ -207,7 +211,7 @@ fun ReusableTextView(
     textColor: Color = Color.Black,
     fontSize: Int = 16,
     fontWeight: FontWeight = FontWeight.Normal,
-    fontFamily: FontFamily = FontFamily(Font(Res.font.roboto_medium)),
+    fontFamily: FontFamily = FontFamily(Font(Res.font.roboto_regular)),
     backgroundColor: Color = Color.Transparent,
     cornerRadius: Dp = 0.dp,
     padding: Dp = 0.dp,
@@ -2029,7 +2033,7 @@ fun UsernameField(
     maxLength: Int = 50
 ) {
     Column(modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp)) {
-        Text(text = label, fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Color.White)
+        Text(text = label, fontSize = 16.sp, fontWeight = FontWeight.Thin, color = Color.White)
         Spacer(modifier = Modifier.height(8.dp))
         OutlinedTextField(
             value = value,
@@ -2042,17 +2046,17 @@ fun UsernameField(
                 )
                 onValueChange(updated)
             },
-            placeholder = { Text(stringResource(Res.string.enter_here), color = Color.White) },
+            placeholder = { Text(stringResource(Res.string.enter_here), color = hintColor) },
             modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(16.dp),
+            shape = RoundedCornerShape(3.dp),
             colors = OutlinedTextFieldDefaults.colors(
                 unfocusedContainerColor = LoginTextBox,
                 focusedContainerColor = LoginTextBox,
                 unfocusedBorderColor = LoginTextBox,
                 focusedBorderColor = LoginTextBox,
-                cursorColor = Color.White
+                cursorColor = loginTitle
             ),
-            textStyle = TextStyle(color = Color.White),
+            textStyle = TextStyle(color = black),
             keyboardOptions = KeyboardOptions.Default.copy(
                 keyboardType = KeyboardType.Text
             )
@@ -2069,7 +2073,7 @@ fun PasswordField(
 ) {
     var passwordVisible by remember { mutableStateOf(false) }
     Column(modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp)) {
-        Text(text = label, fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Color.White)
+        Text(text = label, fontSize = 16.sp, fontWeight = FontWeight.Thin, color = Color.White)
         Spacer(modifier = Modifier.height(8.dp))
         OutlinedTextField(
             value = password,
@@ -2080,15 +2084,15 @@ fun PasswordField(
                 onPasswordChange(limited)
 
             },
-            placeholder = { Text(stringResource(Res.string.enter_here), color = Color.White) },
+            placeholder = { Text(stringResource(Res.string.enter_here), color = hintColor) },
             modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(16.dp),
+            shape = RoundedCornerShape(3.dp),
             colors = OutlinedTextFieldDefaults.colors(
                 unfocusedContainerColor = LoginTextBox,
                 focusedContainerColor = LoginTextBox,
                 unfocusedBorderColor = LoginTextBox,
                 focusedBorderColor = LoginTextBox,
-                cursorColor = Color.White
+                cursorColor = loginTitle
             ),
             visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
             trailingIcon = {
@@ -2099,12 +2103,12 @@ fun PasswordField(
                         else
                             Icons.Default.VisibilityOff,
                         contentDescription = if (passwordVisible) "Hide password" else "Show password",
-                        tint = Color.White
+                        tint = Color.Black
                     )
                 }
             },
 //            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Password)
-            textStyle = TextStyle(color = Color.White),
+            textStyle = TextStyle(color = black),
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Password
             )
@@ -2120,13 +2124,13 @@ fun SimpleOtp(
     val focusRequesters = remember { List(4) { FocusRequester() } }
 
     LaunchedEffect(Unit) {
-        focusRequesters[0].requestFocus()   // Auto focus first box
+        focusRequesters[0].requestFocus()
     }
 
-    Text(
+    ReusableTextView(
         text = stringResource(Res.string.enter_otp),
         style = MaterialTheme.typography.headlineLarge.copy(
-            fontWeight = FontWeight.Bold,
+            fontWeight = FontWeight.Thin,
             color = Color.White,
             fontSize = 18.sp
         ),
@@ -2220,7 +2224,6 @@ fun DashboardCardItem(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
         // CARD + ICON Group
         Box(
             modifier = Modifier.size(75.dp),

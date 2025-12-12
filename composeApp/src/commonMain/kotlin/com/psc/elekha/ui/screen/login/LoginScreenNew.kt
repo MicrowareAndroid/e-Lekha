@@ -15,6 +15,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -24,6 +25,7 @@ import com.psc.elekha.getAppVersion
 
 import com.psc.elekha.ui.theme.*
 import com.psc.elekha.utils.PasswordField
+import com.psc.elekha.utils.ReusableTextView
 import com.psc.elekha.utils.RouteName
 import com.psc.elekha.utils.SimpleOtp
 import com.psc.elekha.utils.UsernameField
@@ -42,14 +44,12 @@ fun LoginScreenNew(navController: NavController) {
     var otp by remember { mutableStateOf("") }
     var showOtpField by remember { mutableStateOf(false) }
     val versionName = getAppVersion()
-//    val mstComboBox_NViewModel = koinViewModel<MSTComboBox_NViewModel>()
+
 
     Box(
         modifier = Modifier
             .fillMaxSize()
     ) {
-
-
         Image(
             painter = painterResource(Res.drawable.background),
             contentDescription = null,
@@ -61,8 +61,6 @@ fun LoginScreenNew(navController: NavController) {
             modifier = Modifier.fillMaxSize(),
             containerColor = Color.Transparent,
             bottomBar = {
-
-
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -112,35 +110,37 @@ fun LoginScreenNew(navController: NavController) {
 
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalAlignment = Alignment.CenterVertically,
+
                 ) {
                     Image(
                         painter = painterResource(Res.drawable.logo),
                         contentDescription = "Logo",
                         modifier = Modifier
-                            .size(140.dp)
+                            .size(160.dp)
                     )
                 }
 
                 Spacer(modifier = Modifier.height(13.dp))
-
-
-                Text(
-                    text = stringResource(Res.string.planned_social_concern),
-                    style = MaterialTheme.typography.headlineMedium.copy(
-                        fontWeight = FontWeight.Bold,
-                        color = PrimaryDark,
-                        fontSize = 36.sp
-                    ),
-                    modifier = Modifier.padding(start = 4.dp)
-                )
-
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    ReusableTextView(
+                        text = stringResource(Res.string.planned_social_concern),
+                        textColor = loginTitle,
+                        fontSize = 36,
+                        textAlignment = TextAlign.Center
+                    )
+                }
                 Spacer(modifier = Modifier.height(7.dp))
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
+                        .padding(horizontal = 5.dp)
                         .verticalScroll(rememberScrollState())
-                        .padding(bottom = 30.dp)
+                        .padding(bottom = 20.dp)
                 ) {
 
                     Card(
@@ -150,12 +150,12 @@ fun LoginScreenNew(navController: NavController) {
                             .padding(16.dp)
                             .border(
                                 width = 2.dp,
-                                color = LightBlue,
-                                shape = RoundedCornerShape(20.dp)
+                                color = loginSmallBg,
+                                shape = RoundedCornerShape(3.dp)
                             ),
                         elevation = CardDefaults.cardElevation(defaultElevation = 10.dp),
-                        shape = RoundedCornerShape(20.dp),
-                        colors = CardDefaults.cardColors(containerColor = MediumLightBlue)
+                        shape = RoundedCornerShape(3.dp),
+                        colors = CardDefaults.cardColors(containerColor = loginSmallBg)
                     ) {
 
                         Column(
@@ -165,12 +165,11 @@ fun LoginScreenNew(navController: NavController) {
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
 
-                            Text(
+                            ReusableTextView(
                                 text = stringResource(Res.string.log_in),
-                                style = MaterialTheme.typography.headlineMedium.copy(
-                                    fontWeight = FontWeight.Bold,
-                                    color = Color.White
-                                )
+                                textColor = white,
+                                fontSize = 30
+
                             )
 
                             Spacer(modifier = Modifier.height(8.dp))
@@ -197,31 +196,31 @@ fun LoginScreenNew(navController: NavController) {
                                     if (!showOtpField) {
                                         showOtpField = true
                                     } else {
-//                                        val values = MSTComboBox_NEntity(1, "Sudeep", 1, "1", true)
-//                                        mstComboBox_NViewModel.insertComboBox(values)
                                         navController.navigate(RouteName.home)
                                     }
                                 },
                                 modifier = Modifier
                                     .width(200.dp)
-                                    .height(56.dp)
-                                    .background(
-                                        brush = Brush.horizontalGradient(
-                                            listOf(WhitishYellow, BrightYellow)
-                                        ),
-                                        shape = RoundedCornerShape(12.dp)
-                                    ),
+                                    .height(50.dp),
+                                shape = RoundedCornerShape(3.dp),
+                                elevation = ButtonDefaults.buttonElevation(
+                                    defaultElevation = 4.dp,
+                                    pressedElevation = 6.dp,
+                                    focusedElevation = 4.dp
+                                ),
                                 colors = ButtonDefaults.buttonColors(
-                                    containerColor = Color.Transparent
+                                    containerColor = btnYellow,
+                                    contentColor = Color.White
                                 )
                             ) {
-                                Text(
+                                ReusableTextView(
                                     text = if (showOtpField) stringResource(Res.string.proceed)
                                     else stringResource(Res.string.send_otp),
-                                    color = Color.White,
-                                    fontSize = 20.sp
+                                    textColor = Color.White,
+                                    fontSize = 20
                                 )
                             }
+
                         }
                     }
                 }
