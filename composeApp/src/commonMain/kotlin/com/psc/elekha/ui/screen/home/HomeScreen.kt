@@ -105,7 +105,7 @@ fun HomeScreen(
                     Icon(
                         painter = painterResource(Res.drawable.ic_menu),
                         contentDescription = null,
-                        tint = lightgreens,
+
                         modifier = Modifier
                             .size(25.dp)
                             .clickable { onMenuClick() }
@@ -148,7 +148,7 @@ fun HomeScreen(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(horizontal = 25.dp)
-                                .height(220.dp),   // ⭐ FIXED HEIGHT PREVENTS CRASH
+                                .height(220.dp),
                             horizontalArrangement = Arrangement.spacedBy(12.dp),
                             verticalArrangement = Arrangement.spacedBy(12.dp),
                             userScrollEnabled = false

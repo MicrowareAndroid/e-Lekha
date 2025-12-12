@@ -32,7 +32,7 @@ val MediumLightBlue = Color(0xff40ca9e)
 val LightBlue = Color(0xff6cfdcf)
 val YellowButton = Color(0xFFFFEB3B)
 
-val LoginTextBox = Color(0xff208767)
+val LoginTextBox = Color(0xffffffff)
 val TextGray = Color(0xFF888888)
 
 val WhitishYellow = Color(0xfff3eb6b)   // soft pale yellow
@@ -59,6 +59,7 @@ val toolbar_color = Color(0xFF02435A)
 
 val blue =Color(0xFF527BC0)
 
+
 fun blendColors(color1: Color, color2: Color, ratio: Float): Color {
     val inverseRatio = 1 - ratio
     return Color(
@@ -70,4 +71,15 @@ fun blendColors(color1: Color, color2: Color, ratio: Float): Color {
 }
 
 val MixedYellow = blendColors(WhitishYellow, BrightYellow, 0.5f)
+val loginBg =Color(0xFFE2F1FA)
+val loginTitle =Color(0xFF234576)
+val loginSmallBg =Color(0xFF63B4CD)
+val btnYellow =Color(0xFFE6BC31)
+val hintColor =Color(0xFFA9A9A9)
+
+
+
+
+
+
 

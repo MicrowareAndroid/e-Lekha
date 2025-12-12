@@ -53,6 +53,7 @@ import com.psc.elekha.ui.theme.bgColor
 import com.psc.elekha.ui.theme.black
 import com.psc.elekha.ui.theme.darkBluishGrey
 import com.psc.elekha.ui.theme.desire_orange
+import com.psc.elekha.ui.theme.loginBg
 import com.psc.elekha.ui.theme.white
 import com.psc.elekha.utils.CustomAlertDialog
 import com.psc.elekha.utils.ProgressDialog
@@ -124,7 +125,7 @@ fun LoginScreen(navController: NavController) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(bgColor)
+            .background(loginBg)
             .statusBarsPadding(),
         contentAlignment = Alignment.TopCenter
     ) {
