@@ -121,7 +121,7 @@ fun GtrListDataScreen(
                         ) {
                             ReusableTextView(
                                 text = stringResource(Res.string.home_user),
-                                textColor = PrimaryDark
+                                textColor = toolbar_color
                             )
                             Spacer(Modifier.width(6.dp))
                             ReusableTextView(text = "Vikash", textColor = Color.Black)
@@ -144,7 +144,7 @@ fun GtrListDataScreen(
                             {
                                 ReusableTextView(
                                     text = stringResource(Res.string.home_time),
-                                    textColor = PrimaryDark
+                                    textColor = toolbar_color
                                 )
                                 Spacer(Modifier.width(6.dp))
                                 ReusableTextView(text = "10:45 AM", textColor = Color.Black)
@@ -156,7 +156,7 @@ fun GtrListDataScreen(
                             ) {
                                 ReusableTextView(
                                     text = stringResource(Res.string.home_date),
-                                    textColor = PrimaryDark
+                                    textColor = toolbar_color
                                 )
                                 Spacer(Modifier.width(6.dp))
                                 ReusableTextView(text = "04/12/2025", textColor = Color.Black)
