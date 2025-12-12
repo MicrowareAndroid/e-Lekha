@@ -16,10 +16,13 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -34,14 +37,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
 import coil3.Uri
 import coil3.compose.LocalPlatformContext
 import coil3.compose.rememberAsyncImagePainter
+import com.psc.elekha.ui.theme.btn_color
+import com.psc.elekha.ui.theme.lightGrey
 import com.psc.elekha.ui.theme.textview_color
+import com.psc.elekha.ui.theme.toolbar_color
 import com.psc.elekha.ui.theme.white
 import com.psc.elekha.utils.CameraPreviewField
 import com.psc.elekha.utils.CommonDivider
@@ -59,10 +67,12 @@ import com.psc.elekha.utils.pickDate
 import e_lekha.composeapp.generated.resources.Res
 import e_lekha.composeapp.generated.resources.aadhaar_card
 import e_lekha.composeapp.generated.resources.age
+import e_lekha.composeapp.generated.resources.app_name
 import e_lekha.composeapp.generated.resources.back_image
 import e_lekha.composeapp.generated.resources.bank_account_number
 import e_lekha.composeapp.generated.resources.bank_name
 import e_lekha.composeapp.generated.resources.branch_name
+import e_lekha.composeapp.generated.resources.cancel
 import e_lekha.composeapp.generated.resources.customer_bank_details
 import e_lekha.composeapp.generated.resources.customer_details
 import e_lekha.composeapp.generated.resources.customer_name
@@ -97,6 +107,7 @@ import e_lekha.composeapp.generated.resources.name
 import e_lekha.composeapp.generated.resources.next
 import e_lekha.composeapp.generated.resources.not_same_as_customer_mobile_number
 import e_lekha.composeapp.generated.resources.occupation
+import e_lekha.composeapp.generated.resources.ok
 import e_lekha.composeapp.generated.resources.passbook_image
 import e_lekha.composeapp.generated.resources.pin_code
 import e_lekha.composeapp.generated.resources.purpose
@@ -234,3 +245,173 @@ fun FamilyDetailFormScreen(navController: NavController) {
         }
     }
 }
+@Composable
+fun CustomAlertFamilyDetails(
+    title: String = stringResource(Res.string.app_name),
+    submitText: String = stringResource(Res.string.ok),
+    cancelText: String = stringResource(Res.string.cancel),
+    onSubmit: () -> Unit = {},
+    onCancel: () -> Unit = {}
+) {
+    var name by remember { mutableStateOf("") }
+    var gender by remember { mutableStateOf("") }
+    var age by remember { mutableStateOf("") }
+    var relation by remember { mutableStateOf("") }
+    var education by remember { mutableStateOf("") }
+    var occupation by remember { mutableStateOf("") }
+    Dialog(onDismissRequest = {}) {
+
+        Box(
+            modifier = Modifier
+                .widthIn(min = 350.dp, max = 500.dp)
+                .background(lightGrey, RoundedCornerShape(16.dp))
+                .border(1.dp, lightGrey, RoundedCornerShape(16.dp))
+        ) {
+
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+
+                // ----------------------- HEADER (NO MARGIN) -----------------------
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(
+                            toolbar_color,
+                            shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp)
+                        )
+                        .height(50.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    ReusableTextView(
+                        text = title,
+                        fontSize = 20,
+                        fontWeight = FontWeight.Bold,
+                        textColor = white,
+                        textAlignment = TextAlign.Center,
+                        modifier = Modifier.fillMaxWidth()  // Perfect centering
+                    )
+                }
+
+                // ----------------------- CONTENT AREA -----------------------
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),             // Padding ONLY inside content area
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+
+                    Spacer(Modifier.height(8.dp))
+
+                    // ----------- NAME & RELATION SPINNERS -----------
+                    FormFieldCompact(
+                        label = stringResource(Res.string.name),
+                        value = name,
+                        placeholder = stringResource(Res.string.type_here),
+                        onValueChange = {name = it },
+
+                        )
+                    Spacer(Modifier.height(12.dp))
+                    FormSpinner(
+                        label = stringResource(Res.string.gender),
+                        options = listOf("Male", "Female", "Other"),
+                        selectedOption = gender,
+                        onOptionSelected = {gender = it },
+                    )
+
+                    Spacer(Modifier.height(12.dp))
+
+                    // ----------- OCCUPATION & INCOME SPINNERS -----------
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(10.dp)
+                    ) {
+                        FormFieldCompact(
+                            label = stringResource(Res.string.age),
+                            value = age,
+                            onValueChange = { age = it },
+                            placeholder = stringResource(Res.string.type_here),
+                            maxLength = 2,
+                            inputType = KeyboardType.Number,
+                            modifier = Modifier.weight(1f)
+
+                        )
+
+                        FormSpinner(
+                            label = stringResource(Res.string.relation),
+                            options = listOf("Brother", "Husband"),
+                            selectedOption = relation,
+                            onOptionSelected = { relation = it},
+                            modifier = Modifier.weight(1f)
+                        )
+                    }
+
+                    Spacer(Modifier.height(12.dp))
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(10.dp)
+                    ) {
+
+                        FormSpinner(
+                            label = stringResource(Res.string.education),
+                            options = listOf("Graduation", "Post Graduation", "12th"),
+                            selectedOption = education,
+                            onOptionSelected = { education = it},
+                            modifier = Modifier.weight(1f)
+
+                        )
+                        FormSpinner(
+                            label = stringResource(Res.string.occupation),
+                            options = listOf("Doctor", "Teacher", "Driver"),
+                            selectedOption = occupation,
+                            onOptionSelected = {occupation = it },
+                            modifier = Modifier.weight(1f)
+                        )
+                    }
+                    // ----------- REMARKS FIELD -----------
+                    Spacer(Modifier.height(24.dp))
+                    // ----------------------- BUTTONS -----------------------
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        Button(
+                            onClick = onCancel,
+                            modifier = Modifier
+                                .weight(1f)
+                                .height(48.dp),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = btn_color,
+                                contentColor = Color.Black
+                            ),
+                            shape = RoundedCornerShape(15.dp)
+                        ) {
+                            Text(cancelText)
+                        }
+                        Button(
+                            onClick = onSubmit,
+                            modifier = Modifier
+                                .weight(1f)
+                                .height(48.dp),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = btn_color,
+                                contentColor = Color.Black
+                            ),
+                            shape = RoundedCornerShape(15.dp)
+                        ) {
+                            Text(submitText)
+                        }
+                    }
+                    Spacer(Modifier.height(10.dp))
+                }
+            }
+        }
+    }
+}
+
+
+
+
+

@@ -2615,7 +2615,7 @@ fun LabelValueText(label: String, value: String) {
 
       )
 
-            
+
 
 
         Spacer(modifier = Modifier.width(4.dp))
@@ -3358,6 +3358,9 @@ fun CustomAlertMovableAssets(
     onSubmit: () -> Unit = {},
     onCancel: () -> Unit = {}
 ) {
+    var movableAssets by remember { mutableStateOf("") }
+    var vehicleNo by remember { mutableStateOf("") }
+
     Dialog(onDismissRequest = {}) {
 
         Box(
@@ -3408,8 +3411,8 @@ fun CustomAlertMovableAssets(
                     FormSpinner(
                         label = stringResource(Res.string.movable_assets),
                         options = listOf("Car", "Bike", "Truck"),
-                        selectedOption = "",
-                        onOptionSelected = {},
+                        selectedOption = movableAssets,
+                        onOptionSelected = {movableAssets = it},
                         modifier = Modifier.fillMaxWidth()
                     )
 
@@ -3418,8 +3421,8 @@ fun CustomAlertMovableAssets(
                     // Vehicle Number Field
                     FormFieldCompact(
                         label = stringResource(Res.string.vehicle_no),
-                        value = "",
-                        onValueChange = { "" },
+                        value = vehicleNo,
+                        onValueChange = { vehicleNo = it },
                         placeholder = stringResource(Res.string.type_here),
                         maxLength = 10,
                         modifier = Modifier.fillMaxWidth()
@@ -3512,6 +3515,12 @@ fun CustomAlertMonthlyIncome(
     onSubmit: () -> Unit = {},
     onCancel: () -> Unit = {}
 ) {
+    var name by remember { mutableStateOf("") }
+    var relation by remember { mutableStateOf("") }
+    var occupation by remember { mutableStateOf("") }
+    var income by remember { mutableStateOf("") }
+    var remarks by remember { mutableStateOf("") }
+
     Dialog(onDismissRequest = {}) {
 
         Box(
@@ -3566,16 +3575,16 @@ fun CustomAlertMonthlyIncome(
                         FormSpinner(
                             label = stringResource(Res.string.name),
                             options = listOf("Test", "ABC", "XYZ"),
-                            selectedOption = "",
-                            onOptionSelected = {},
+                            selectedOption = name,
+                            onOptionSelected = {name = it},
                             modifier = Modifier.weight(1f)
                         )
 
                         FormSpinner(
                             label = stringResource(Res.string.relation),
                             options = listOf("Brother", "Self", "Sister"),
-                            selectedOption = "",
-                            onOptionSelected = {},
+                            selectedOption = relation,
+                            onOptionSelected = {relation = it},
                             modifier = Modifier.weight(1f)
                         )
                     }
@@ -3590,16 +3599,16 @@ fun CustomAlertMonthlyIncome(
                         FormSpinner(
                             label = stringResource(Res.string.occupation),
                             options = listOf("Shop", "Farming", "Labour", "Other"),
-                            selectedOption = "",
-                            onOptionSelected = {},
+                            selectedOption = occupation,
+                            onOptionSelected = {occupation =it},
                             modifier = Modifier.weight(1f)
                         )
 
                         FormSpinner(
                             label = stringResource(Res.string.income),
                             options = listOf("<5000", "5000-10000", "10000-20000", ">20000"),
-                            selectedOption = "",
-                            onOptionSelected = {},
+                            selectedOption = income,
+                            onOptionSelected = {income = it},
                             modifier = Modifier.weight(1f)
                         )
                     }
@@ -3609,8 +3618,8 @@ fun CustomAlertMonthlyIncome(
                     // ----------- REMARKS FIELD -----------
                     FormFieldCompact(
                         label = stringResource(Res.string.remarks),
-                        value = "",
-                        onValueChange = { "" },
+                        value = remarks,
+                        onValueChange = { remarks =it },
                         placeholder = stringResource(Res.string.type_here),
                         maxLength = 30,
                         modifier = Modifier.fillMaxWidth()
@@ -3662,168 +3671,4 @@ fun CustomAlertMonthlyIncome(
         }
     }
 }
-
-@Composable
-fun CustomAlertFamilyDetails(
-    title: String = stringResource(Res.string.app_name),
-    submitText: String = stringResource(Res.string.ok),
-    cancelText: String = stringResource(Res.string.cancel),
-    onSubmit: () -> Unit = {},
-    onCancel: () -> Unit = {}
-) {
-    Dialog(onDismissRequest = {}) {
-
-        Box(
-            modifier = Modifier
-                .widthIn(min = 350.dp, max = 500.dp)
-                .background(lightGrey, RoundedCornerShape(16.dp))
-                .border(1.dp, lightGrey, RoundedCornerShape(16.dp))
-        ) {
-
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-
-                // ----------------------- HEADER (NO MARGIN) -----------------------
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(
-                            toolbar_color,
-                            shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp)
-                        )
-                        .height(50.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    ReusableTextView(
-                        text = title,
-                        fontSize = 20,
-                        fontWeight = FontWeight.Bold,
-                        textColor = white,
-                        textAlignment = TextAlign.Center,
-                        modifier = Modifier.fillMaxWidth()  // Perfect centering
-                    )
-                }
-
-                // ----------------------- CONTENT AREA -----------------------
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),             // Padding ONLY inside content area
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-
-                    Spacer(Modifier.height(8.dp))
-
-                    // ----------- NAME & RELATION SPINNERS -----------
-                        FormFieldCompact(
-                            label = stringResource(Res.string.name),
-                            value = "",
-                            placeholder = stringResource(Res.string.type_here),
-                            onValueChange = { "" },
-
-                        )
-                    Spacer(Modifier.height(12.dp))
-                        FormSpinner(
-                            label = stringResource(Res.string.gender),
-                            options = listOf("Male", "Female", "Other"),
-                            selectedOption = "",
-                            onOptionSelected = { },
-                        )
-
-                    Spacer(Modifier.height(12.dp))
-
-                    // ----------- OCCUPATION & INCOME SPINNERS -----------
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(10.dp)
-                    ) {
-                        FormFieldCompact(
-                            label = stringResource(Res.string.age),
-                            value = "",
-                            onValueChange = { "" },
-                            placeholder = stringResource(Res.string.type_here),
-                            maxLength = 2,
-                            inputType = KeyboardType.Number,
-                            modifier = Modifier.weight(1f)
-
-                        )
-
-                        FormSpinner(
-                            label = stringResource(Res.string.relation),
-                            options = listOf("Brother", "Husband"),
-                            selectedOption = "",
-                            onOptionSelected = { },
-                            modifier = Modifier.weight(1f)
-                        )
-                    }
-
-                    Spacer(Modifier.height(12.dp))
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(10.dp)
-                    ) {
-
-                        FormSpinner(
-                            label = stringResource(Res.string.education),
-                            options = listOf("Graduation", "Post Graduation", "12th"),
-                            selectedOption = "",
-                            onOptionSelected = { },
-                            modifier = Modifier.weight(1f)
-
-                        )
-                        FormSpinner(
-                            label = stringResource(Res.string.occupation),
-                            options = listOf("Doctor", "Teacher", "Driver"),
-                            selectedOption = "",
-                            onOptionSelected = { },
-                            modifier = Modifier.weight(1f)
-                        )
-                    }
-                    // ----------- REMARKS FIELD -----------
-                    Spacer(Modifier.height(24.dp))
-                    // ----------------------- BUTTONS -----------------------
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(12.dp)
-                    ) {
-                        Button(
-                            onClick = onCancel,
-                            modifier = Modifier
-                                .weight(1f)
-                                .height(48.dp),
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = btn_color,
-                                contentColor = Color.Black
-                            ),
-                            shape = RoundedCornerShape(15.dp)
-                        ) {
-                            Text(cancelText)
-                        }
-                        Button(
-                            onClick = onSubmit,
-                            modifier = Modifier
-                                .weight(1f)
-                                .height(48.dp),
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = btn_color,
-                                contentColor = Color.Black
-                            ),
-                            shape = RoundedCornerShape(15.dp)
-                        ) {
-                            Text(submitText)
-                        }
-                    }
-                    Spacer(Modifier.height(10.dp))
-                }
-            }
-        }
-    }
-}
-
-
-
-
 

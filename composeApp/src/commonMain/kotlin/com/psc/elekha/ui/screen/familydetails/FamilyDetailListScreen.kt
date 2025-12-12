@@ -18,7 +18,6 @@ import com.psc.elekha.model.FamilyDetailModel
 import com.psc.elekha.ui.theme.black
 import com.psc.elekha.ui.theme.btn_color
 import com.psc.elekha.utils.CustomAlertDialogRegistrationExisting
-import com.psc.elekha.utils.CustomAlertFamilyDetails
 import com.psc.elekha.utils.ReusableTopBar
 import com.psc.elekha.utils.RouteName
 import e_lekha.composeapp.generated.resources.Res
