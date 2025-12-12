@@ -104,6 +104,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import coil3.Uri
 import coil3.compose.rememberAsyncImagePainter
+import com.psc.elekha.model.SliderItem
 import com.psc.elekha.ui.screen.gtrlist.CustomerData
 import com.psc.elekha.ui.screen.gtrlist.GroupCardData
 import com.psc.elekha.ui.theme.CardColor
@@ -2315,7 +2316,7 @@ fun CommonSingleButtons(
 
 @Composable
 fun TripleIconSlider(
-    items: List<Triple<Painter, Painter, Painter>>,
+    items: List<SliderItem>,
     modifier: Modifier = Modifier,
     bgColor: Color = Color(0xFFDDEFFF)
 ) {
@@ -2326,7 +2327,7 @@ fun TripleIconSlider(
 
         items(items.size) { index ->
 
-            val (leftIcon, centerIcon, rightIcon) = items[index]
+            val item = items[index]
 
             Box(
                 modifier = Modifier
@@ -2336,16 +2337,14 @@ fun TripleIconSlider(
                 contentAlignment = Alignment.Center
             ) {
 
-
                 Box(
                     modifier = Modifier
                         .size(50.dp)
                         .align(Alignment.Center),
                 ) {
 
-
                     Icon(
-                        painter = centerIcon,
+                        painter = item.center,
                         contentDescription = null,
                         tint = Color(0xFF32567A),
                         modifier = Modifier
@@ -2353,9 +2352,8 @@ fun TripleIconSlider(
                             .align(Alignment.TopCenter)
                     )
 
-
                     Icon(
-                        painter = leftIcon,
+                        painter = item.left,
                         contentDescription = null,
                         tint = Color(0xFF32567A),
                         modifier = Modifier
@@ -2363,9 +2361,8 @@ fun TripleIconSlider(
                             .align(Alignment.BottomStart)
                     )
 
-
                     Icon(
-                        painter = rightIcon,
+                        painter = item.right,
                         contentDescription = null,
                         tint = Color(0xFF32567A),
                         modifier = Modifier
@@ -2374,9 +2371,8 @@ fun TripleIconSlider(
                     )
                 }
 
-
                 Text(
-                    text = stringResource(Res.string.select_information),
+                    text = item.title,
                     color = Color.White,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier
@@ -2387,6 +2383,7 @@ fun TripleIconSlider(
         }
     }
 }
+
 
 @Composable
 fun ReusableCard(
