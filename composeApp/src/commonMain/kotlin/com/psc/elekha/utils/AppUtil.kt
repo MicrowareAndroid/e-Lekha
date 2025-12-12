@@ -604,7 +604,7 @@ fun CommonSingleButtonsBottomString(
 ) {
     Box(
         modifier = modifier,
-        contentAlignment = Alignment.Center   // 👈 aligns to EditText center
+        contentAlignment = Alignment.Center
     ) {
         Button(
             onClick = onOkClick,
@@ -2428,24 +2428,28 @@ fun GroupCardUI(
     item: GroupCardData,
     onCardClick: (GroupCardData) -> Unit
 ) {
-    ReusableCard(
+
+    Card(
+        shape = RoundedCornerShape(12.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        colors = CardDefaults.cardColors(containerColor = repaymentColor),
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp)
-            .clickable { onCardClick(item) },
-        backgroundColor = repaymentColor
+            .defaultMinSize(minHeight = 80.dp)
+            .clickable { onCardClick(item) }
     ) {
+
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 8.dp),
+                .padding(12.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
 
-            // LEFT COLUMN
-            Column(
-                modifier = Modifier.weight(1f)
-            ) {
+            // -------- LEFT COLUMN --------
+            Column(modifier = Modifier.weight(1f)) {
+
                 LabelValueText(
                     label = stringResource(Res.string.select_group),
                     value = item.groupName
@@ -2458,17 +2462,19 @@ fun GroupCardUI(
                     label = stringResource(Res.string.select_village),
                     value = item.village
                 )
-                LabelValueText(label = stringResource(Res.string.select_loan), value = item.officer)
+                LabelValueText(
+                    label = stringResource(Res.string.select_loan),
+                    value = item.officer
+                )
                 LabelValueText(
                     label = stringResource(Res.string.select_formation),
                     value = item.formation
                 )
             }
 
-            // RIGHT COLUMN
-            Column(
-                modifier = Modifier.weight(1f)
-            ) {
+            // -------- RIGHT COLUMN --------
+            Column(modifier = Modifier.weight(1f)) {
+
                 LabelValueText(
                     label = stringResource(Res.string.select_disbursement),
                     value = item.disbursement
@@ -2489,7 +2495,6 @@ fun GroupCardUI(
         }
     }
 }
-
 
 @Composable
 fun <T : Any> FillDynamicSpinner(
@@ -2601,12 +2606,14 @@ fun LabelValueText(label: String, value: String,) {
     ) {
         ReusableTextViewGrayCard(
             text = label,
-            fontSize = 13,
+            fontSize = 13
+
             )
         Spacer(modifier = Modifier.width(4.dp))
         ReusableTextViewBlackCard(
             text = value,
-            fontSize = 12,
+            fontSize = 12
+
 
 
             )
@@ -2689,7 +2696,6 @@ fun CustomerItemCard(
 
 @Composable
 fun FormFieldCompacts(
-
     value: String,
     onValueChange: (String) -> Unit,
     maxLength: Int = Int.MAX_VALUE,
@@ -2707,9 +2713,9 @@ fun FormFieldCompacts(
     modifier: Modifier = Modifier,
     placeholderTextSize: Int = 13
 ) {
+    var text by remember { mutableStateOf(value) }
 
     Column(modifier) {
-
 
         Box(
             modifier = Modifier
@@ -2723,16 +2729,16 @@ fun FormFieldCompacts(
                 .clickable(enabled = isEnable) { /* triggers keyboard focus */ },
             contentAlignment = Alignment.CenterStart
         ) {
-
             BasicTextField(
-                value = value,
+                value = text,
                 enabled = isEnable,
                 readOnly = isReadable,
-                onValueChange = {
-
-
+                onValueChange = { newValue ->
+                    if (newValue.length <= maxLength) {
+                        text = newValue
+                        onValueChange(newValue)
+                    }
                 },
-
                 textStyle = TextStyle(
                     fontSize = 12.sp,
                     lineHeight = 14.sp,
@@ -2740,27 +2746,21 @@ fun FormFieldCompacts(
                     fontFamily = FontFamily(Font(Res.font.roboto_medium)),
                     textAlign = TextAlign.Start
                 ),
-
                 maxLines = maxLines,
                 keyboardOptions = KeyboardOptions(keyboardType = inputType),
-
                 modifier = Modifier
                     .matchParentSize()
                     .padding(horizontal = 12.dp, vertical = 8.dp),
-
                 decorationBox = { innerTextField ->
-
                     Row(
                         modifier = Modifier.fillMaxSize(),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-
-
                         Box(
                             modifier = Modifier.weight(1f),
                             contentAlignment = Alignment.CenterStart
                         ) {
-                            if (value.isEmpty()) {
+                            if (text.isEmpty()) {
                                 ReusableTextView(
                                     text = placeholder,
                                     fontSize = placeholderTextSize,
@@ -2770,9 +2770,7 @@ fun FormFieldCompacts(
                             innerTextField()
                         }
 
-                        if (trailingIcon != null) {
-                            trailingIcon()
-                        }
+                        trailingIcon?.invoke()
                     }
                 }
             )

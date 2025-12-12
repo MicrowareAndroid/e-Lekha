@@ -58,6 +58,15 @@ fun CustomerDetailScreen(
     var selectedScreen by remember { mutableStateOf("New Customer") }
     var branchList = listOf("3000", "4000", "5000", "6000")
     var selectedBranch by remember { mutableStateOf("") }
+    var textfiledLoan by remember { mutableStateOf("") }
+    var textfiledPSC by remember { mutableStateOf("") }
+    var textfiledMFI by remember { mutableStateOf("") }
+    var textfiledLoanPurpose by remember { mutableStateOf("") }
+    var textfiledExisting by remember { mutableStateOf("") }
+    var textfiledEbill by remember { mutableStateOf("") }
+    var textfiledRemark by remember { mutableStateOf("") }
+    var textfiledRemarks by remember { mutableStateOf("") }
+
 
     var openCamera by remember { mutableStateOf(false) }
     var activeCamera by remember { mutableStateOf("") }
@@ -259,8 +268,8 @@ fun CustomerDetailScreen(
 
 
                         FormFieldCompact(
-                            value = "",
-                            onValueChange = { "" },
+                            value = textfiledPSC,
+                            onValueChange = { textfiledPSC=it },
                             placeholder = stringResource(Res.string.type_here),
                             modifier = Modifier.weight(1f),
                             maxLength = 30
@@ -281,8 +290,8 @@ fun CustomerDetailScreen(
                         )
                         Spacer(modifier = Modifier.width(8.dp))
                         FormFieldCompact(
-                            value = "",
-                            onValueChange = { "" },
+                            value = textfiledLoan,
+                            onValueChange = { textfiledLoan=it },
                             placeholder = stringResource(Res.string.type_here),
                             modifier = Modifier.weight(1f),
                             maxLength = 30
@@ -303,8 +312,8 @@ fun CustomerDetailScreen(
                         )
                         Spacer(modifier = Modifier.width(7.dp))
                         FormFieldCompact(
-                            value = "",
-                            onValueChange = { "" },
+                            value = textfiledMFI,
+                            onValueChange = { textfiledMFI=it },
                             placeholder = stringResource(Res.string.type_here),
                             modifier = Modifier.weight(1f),
                             maxLength = 30
@@ -325,8 +334,8 @@ fun CustomerDetailScreen(
                         )
                         Spacer(modifier = Modifier.width(7.dp))
                         FormFieldCompact(
-                            value = "",
-                            onValueChange = { "" },
+                            value = textfiledLoanPurpose,
+                            onValueChange = { textfiledLoanPurpose=it },
                             placeholder = stringResource(Res.string.type_here),
                             modifier = Modifier.weight(1f),
                             maxLength = 30
@@ -351,8 +360,8 @@ fun CustomerDetailScreen(
                             )
                         Spacer(modifier = Modifier.width(7.dp))
                         FormFieldCompact(
-                            value = "",
-                            onValueChange = { "" },
+                            value = textfiledExisting,
+                            onValueChange = { textfiledExisting=it },
                             placeholder = stringResource(Res.string.type_here),
                             modifier = Modifier.weight(1f),
                             maxLength = 30
@@ -374,8 +383,8 @@ fun CustomerDetailScreen(
                             )
                         Spacer(modifier = Modifier.width(7.dp))
                         FormFieldCompact(
-                            value = "",
-                            onValueChange = { "" },
+                            value = textfiledEbill,
+                            onValueChange = { textfiledEbill=it },
                             placeholder = stringResource(Res.string.user_billno),
                             modifier = Modifier.weight(1f),
                             maxLength = 30
@@ -383,8 +392,8 @@ fun CustomerDetailScreen(
                     }
                     Spacer(modifier = Modifier.height(7.dp))
                     FormFieldCompact(
-                        value = "",
-                        onValueChange = { "" },
+                        value = textfiledRemark,
+                        onValueChange = { textfiledRemark=it },
                         placeholder = stringResource(Res.string.user_remark),
                         modifier = Modifier
                             .fillMaxWidth()
@@ -531,8 +540,8 @@ fun CustomerDetailScreen(
                     }
                     Spacer(modifier = Modifier.height(12.dp))
                     FormFieldCompact(
-                        value = "",
-                        onValueChange = { "" },
+                        value = textfiledRemarks,
+                        onValueChange = { textfiledRemarks=it },
                         placeholder = stringResource(Res.string.user_remarks),
                         modifier = Modifier
                             .fillMaxWidth()

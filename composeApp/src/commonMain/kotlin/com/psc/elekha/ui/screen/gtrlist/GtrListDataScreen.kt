@@ -60,21 +60,23 @@ fun GtrListDataScreen(
                 onNavigationClick = { navController.popBackStack() }
             )
         },
-        bottomBar = {
+
+        /*bottomBar = {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(toolbar_color)
-                    .padding(horizontal = 16.dp, vertical = 10.dp)
+                    .padding(16.dp)
                     .navigationBarsPadding()
             ) {
                 CommonSingleButtonsBottomString(
                     onOkClick = {},
-                    stringResource(Res.string.gtr_save),
-                    textSize = 16
+                    text = stringResource(Res.string.gtr_save),
+                    textSize = 16,
+
+
                 )
             }
-        }
+        }*/
     ) { innerPadding ->
 
         Box(
@@ -173,7 +175,7 @@ fun GtrListDataScreen(
                     verticalAlignment = Alignment.Top
                 ) {
 
-                    Column(modifier = Modifier.weight(1f)) {
+                    Column(modifier = Modifier.weight(1f) .padding(start = 5.dp)) {
 
                         ReusableTextView(
                             text = stringResource(Res.string.gtr_customer),
@@ -244,16 +246,16 @@ fun GtrListDataScreen(
                     }
                 }
 
-                Spacer(Modifier.height(15.dp))
+                Spacer(Modifier.height(10.dp))
                 Divider(color = LightSkyBlue, thickness = 1.dp)
 
-                Spacer(Modifier.height(10.dp))
+                Spacer(Modifier.height(5.dp))
 
                 Column(
                     modifier = Modifier
                         .weight(1f)
                         .verticalScroll(rememberScrollState())
-                        .padding(bottom = 10.dp)
+                        .padding(bottom = 45.dp)
                 ) {
                     customerList.forEach { customer ->
                         val isChecked = checkedMap[customer] ?: false
@@ -269,7 +271,24 @@ fun GtrListDataScreen(
                     }
                 }
             }
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 5.dp)
+                    .align(Alignment.BottomCenter)
+
+            ) {
+                CommonSingleButtonsBottomString(
+                    onOkClick = {},
+                    text = stringResource(Res.string.gtr_save),
+                    textSize = 16,
+
+
+                    )
+            }
+
         }
+
     }
 
        if (openCamera) {

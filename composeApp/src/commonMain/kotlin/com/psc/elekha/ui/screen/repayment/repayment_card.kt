@@ -32,7 +32,8 @@ fun RepaymentItemCard(
 ) {
     var selectedPaymentMode by remember { mutableStateOf("Select") }
     val paymentOptions = listOf("Cash", "Online", "UPI")
-    var repaymentAmount by remember { mutableStateOf("") }
+
+    var repaymentAmounts by remember { mutableStateOf("") }
 
     Card(
         shape = RoundedCornerShape(12.dp),
@@ -199,8 +200,8 @@ fun RepaymentItemCard(
                 Spacer(modifier = Modifier.width(10.dp))
 
                 FormFieldCompacts(
-                    value = repaymentAmount,
-                    onValueChange = { repaymentAmount = it },
+                    value = repaymentAmounts,
+                    onValueChange = { repaymentAmounts = it },
                     placeholder = stringResource(Res.string.type_here),
                     maxLength = 10,
                     modifier = Modifier.weight(1f)
