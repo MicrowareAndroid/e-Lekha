@@ -196,4 +196,12 @@
     <string name="chose_document_type">Chosse Document Type</string>
     <string name="id_proof">ID Proof</string>
     <string name="select_id_proof">Select Id Proof</string>
+    <string name="ro_address">R.O. Address</string>
+    <string name="krishi_vihar">S15 Krishi Vihar ,S-block\nBadarwas , Jaipur Rajasthan</string>
+
+    // personal details formfield for maternal address
+    <string name="maternal_address">Your Maternal Address</string>
+    <string name="maternal_mob_no">Maternal Mobile No</string>
+    <string name="father_name">Father Name</string>
+
 </resources>

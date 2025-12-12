@@ -708,13 +708,13 @@ fun FormFieldCompact(
     isEnable: Boolean = true,
     isReadable: Boolean = false,
     labelColor: Color = toolbar_color,
-    placeholderColor: Color = Color(0xFF212121),
+    placeholderColor: Color = Color.Black,
     backgroundColor: Color = text_fiiled_color,
     borderColor: Color = boderColor,
     disabledBackgroundColor: Color = formborder,
     maxLines: Int = 1,
     modifier: Modifier = Modifier,
-    placeholderTextSize: Int = 13
+    placeholderTextSize: Int = 14
 ) {
 
     Column(modifier) {
@@ -1034,7 +1034,7 @@ fun FormDatePickerCompact(
     placeholder: String = stringResource(Res.string.dd_mm_yy),
     isEnable: Boolean = true,
     labelColor: Color = toolbar_color,
-    placeholderColor: Color = Color(0xFF212121),
+    placeholderColor: Color = Color.Black,
     backgroundColor: Color = text_fiiled_color,
     borderColor: Color = boderColor,
     modifier: Modifier = Modifier
@@ -1080,8 +1080,9 @@ fun FormDatePickerCompact(
                     if (value.isEmpty()) {
                         Text(
                             text = placeholder,
-                            fontSize = 13.sp,
-                            color = placeholderColor
+                            fontSize = 14.sp,
+                            color = placeholderColor,
+                            fontFamily = FontFamily(Font(Res.font.roboto_medium)),
                         )
                     }
 

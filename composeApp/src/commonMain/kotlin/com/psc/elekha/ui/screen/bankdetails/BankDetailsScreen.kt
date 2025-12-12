@@ -59,6 +59,7 @@ import e_lekha.composeapp.generated.resources.back_image
 import e_lekha.composeapp.generated.resources.bank_account_number
 import e_lekha.composeapp.generated.resources.bank_name
 import e_lekha.composeapp.generated.resources.branch_name
+import e_lekha.composeapp.generated.resources.camera
 import e_lekha.composeapp.generated.resources.customer_bank_details
 import e_lekha.composeapp.generated.resources.customer_details
 import e_lekha.composeapp.generated.resources.customer_name
@@ -188,32 +189,38 @@ fun BankDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = {}) 
                     onValueChange = { "" },
                 )
 
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(10.dp))
 
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(10.dp),
-                    verticalAlignment = Alignment.CenterVertically
+                    horizontalArrangement = Arrangement.Center
                 ) {
-                    Box(
-                        modifier = Modifier
-                            .weight(1f)
-                            .fillMaxHeight(),      // Make text area match the height of right side
-                        contentAlignment = Alignment.CenterStart        // Center vertically
+                    // Front Image Box
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally
                     ) {
+                        Box(
+                            modifier = Modifier
+                                .size(120.dp)
+                                .background(Color(0xFFE8E8E8)), // Light Grey Box
+                            contentAlignment = Alignment.Center
+                        ) {
+                            // Preview can go here
+                        }
+                        Spacer(modifier = Modifier.height(6.dp))
+                        Icon(
+                            painter = painterResource(Res.drawable.camera),
+                            contentDescription = "",
+                            tint = Color.Black,
+                            modifier = Modifier.size(28.dp)
+                        )
+                        Spacer(modifier = Modifier.height(4.dp))
                         ReusableTextView(
                             text = stringResource(Res.string.passbook_image),
                             fontSize = 14,
                             textColor = textview_color
                         )
                     }
-
-                    CameraPreviewField(
-                        image = passbookImage,
-                        onClick = { },
-                        placeholderRes = Res.drawable.voter_id,
-                        modifier = Modifier.weight(1f)
-                    )
                 }
 
 

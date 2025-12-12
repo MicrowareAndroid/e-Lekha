@@ -38,13 +38,17 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.psc.elekha.ui.theme.black
+import com.psc.elekha.ui.theme.blue
+import com.psc.elekha.ui.theme.btn_color
 import com.psc.elekha.ui.theme.lightgreens
 import com.psc.elekha.ui.theme.white
+import com.psc.elekha.utils.FormFieldCompact
 import com.psc.elekha.utils.ReusableOutlinedTextField
 import com.psc.elekha.utils.ReusableTextView
 import e_lekha.composeapp.generated.resources.Res
 import e_lekha.composeapp.generated.resources.background
 import e_lekha.composeapp.generated.resources.background_drawer
+import e_lekha.composeapp.generated.resources.customer_name
 import e_lekha.composeapp.generated.resources.home_date
 import e_lekha.composeapp.generated.resources.home_drawer_contact
 import e_lekha.composeapp.generated.resources.home_drawer_logout
@@ -55,10 +59,14 @@ import e_lekha.composeapp.generated.resources.home_drawer_upi
 import e_lekha.composeapp.generated.resources.home_drawer_web
 import e_lekha.composeapp.generated.resources.home_time
 import e_lekha.composeapp.generated.resources.home_user
+import e_lekha.composeapp.generated.resources.ic_logout
 import e_lekha.composeapp.generated.resources.ic_menu
 import e_lekha.composeapp.generated.resources.ic_setting
+import e_lekha.composeapp.generated.resources.krishi_vihar
 import e_lekha.composeapp.generated.resources.profile_picture
+import e_lekha.composeapp.generated.resources.ro_address
 import e_lekha.composeapp.generated.resources.scanner
+import e_lekha.composeapp.generated.resources.type_here
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
@@ -83,7 +91,7 @@ fun DrawerContent() {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(20.dp)
+                .padding(start = 40.dp)
                 .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.Start
         ) {
@@ -123,15 +131,7 @@ fun DrawerContent() {
                         textColor = black
                     )
 
-                    Column(horizontalAlignment = Alignment.End) {
-                        ReusableTextView(
-                            text = stringResource(Res.string.home_user),textColor = black
-                        )
 
-                        ReusableTextView(text = stringResource(Res.string.home_time),textColor =black)
-
-                        ReusableTextView(text = stringResource(Res.string.home_date),textColor = black)
-                    }
                 }
             }
 
@@ -163,7 +163,7 @@ fun DrawerContent() {
 
 
                 ReusableTextView(
-                    text = stringResource(Res.string.home_drawer_scan),textColor = black
+                    text = stringResource(Res.string.home_drawer_scan), textColor = black
                 )
 
                 Spacer(Modifier.height(5.dp))
@@ -173,7 +173,7 @@ fun DrawerContent() {
                     text = stringResource(Res.string.home_drawer_or),
                     fontWeight = FontWeight.Bold,
                     textAlignment = TextAlign.Center,
-                    modifier = Modifier.fillMaxWidth(0.4f),textColor = black
+                    modifier = Modifier.fillMaxWidth(0.4f), textColor = black
                 )
 
                 Spacer(Modifier.height(5.dp))
@@ -183,17 +183,17 @@ fun DrawerContent() {
                     text = stringResource(Res.string.home_drawer_upi),
                     fontWeight = FontWeight.Bold,
                     textAlignment = TextAlign.Center,
-                    modifier = Modifier.fillMaxWidth(0.4f),textColor = black
+                    modifier = Modifier.fillMaxWidth(0.4f), textColor = black
                 )
 
 
                 Spacer(Modifier.height(5.dp))
-
-                ReusableOutlinedTextField(
-                    value = username,
-                    onValueChange = { username = it },
-                    modifier = Modifier.width(130.dp)
-
+                FormFieldCompact(
+                    value = "",
+                    onValueChange = { "" },
+                    placeholder = stringResource(Res.string.type_here),
+                    modifier = Modifier.width(150.dp),
+                    maxLength = 30
                 )
 
                 Spacer(Modifier.height(5.dp))
@@ -206,11 +206,12 @@ fun DrawerContent() {
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color.White
                     ),
-                    border = BorderStroke(2.dp, lightgreens)        ) {
+                    border = BorderStroke(2.dp, lightgreens)
+                ) {
 
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
-                         modifier = Modifier
+                        modifier = Modifier
                             .width(130.dp),
                     ) {
 
@@ -238,8 +239,8 @@ fun DrawerContent() {
 
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier
-                            .width(130.dp),
+                    modifier = Modifier
+                        .width(130.dp),
                 ) {
                     Icon(
                         painter = painterResource(Res.drawable.ic_setting),
@@ -251,8 +252,8 @@ fun DrawerContent() {
                     Spacer(modifier = Modifier.width(6.dp))
 
                     ReusableTextView(
-                        text =stringResource(Res.string.home_drawer_number),
-                        fontWeight = FontWeight.Medium,textColor = black
+                        text = stringResource(Res.string.home_drawer_number),
+                        fontWeight = FontWeight.Medium, textColor = black
                     )
                 }
 
@@ -270,44 +271,67 @@ fun DrawerContent() {
 
                     Spacer(modifier = Modifier.width(6.dp))
 
-                    ReusableTextView(text = stringResource(Res.string.home_drawer_web),
-                        fontWeight = FontWeight.Medium,textColor = black
+                    ReusableTextView(
+                        text = stringResource(Res.string.home_drawer_web),
+                        fontWeight = FontWeight.Medium, textColor = black
                     )
                 }
 
                 Spacer(Modifier.height(30.dp))
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                ) {
 
+                    Text(
+                        text = stringResource(Res.string.ro_address),
+                        fontWeight = FontWeight.Bold,
+                        color = blue,
+                        fontSize = 16.sp
+                    )
+
+                    Spacer(Modifier.height(4.dp))
+
+                    Text(
+                        text = stringResource(Res.string.krishi_vihar),
+                        color = blue,
+                        fontSize = 13.sp
+                    )
+                }
+
+
+                Spacer(Modifier.height(30.dp))
                 Button(
                     onClick = {},
                     shape = RoundedCornerShape(8.dp),
-                    modifier = Modifier
-                        .width(130.dp),
+                    modifier = Modifier.width(130.dp),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = lightgreens
-                    ),
-                          ) {
-
+                        containerColor = btn_color
+                    )
+                ) {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier
-                            .width(130.dp),
+                        horizontalArrangement = Arrangement.Center
                     ) {
 
                         Text(
                             text = stringResource(Res.string.home_drawer_logout),
                             fontWeight = FontWeight.Bold,
                             color = Color.Black,
-                            fontSize = 10.sp
+                            fontSize = 13.sp
                         )
-                        Spacer(modifier = Modifier.width(12.dp))
+
+                        Spacer(modifier = Modifier.width(6.dp))
+
                         Icon(
-                            painter = painterResource(Res.drawable.ic_setting),
+                            painter = painterResource(Res.drawable.ic_logout),
                             contentDescription = null,
-                            modifier = Modifier.size(20.dp),
-                            tint = Color.Black
+                            modifier = Modifier.size(22.dp),
+                            tint = Color.White
                         )
                     }
                 }
+
 
             }
 
