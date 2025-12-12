@@ -46,6 +46,7 @@ import org.jetbrains.compose.resources.stringResource
 @Composable
 fun KycDetailsScreen(
     onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = {}
+
 ) {
 
     var selectedTab by remember { mutableStateOf(0) }
@@ -135,12 +136,18 @@ fun KycDetailsScreen(
 
 @Composable
 fun ElectricityBillForm() {
+
+    var billName by remember { mutableStateOf("") }
+    var accountNumber by remember { mutableStateOf("") }
+    var kNumber by remember { mutableStateOf("") }
     Column(    modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally) {
         FormFieldCompact(
             label = "Name on Electricity bill",
-            value = "",
-            onValueChange = {},
+            value = billName,
+            onValueChange = {
+                billName = it
+            },
             placeholder = "Type here"
         )
 
@@ -148,8 +155,10 @@ fun ElectricityBillForm() {
 
         FormFieldCompact(
             label = "Account Number",
-            value = "",
-            onValueChange = {},
+            value = accountNumber,
+            onValueChange = {
+                accountNumber = it
+            },
             placeholder = "Type here",
         )
 

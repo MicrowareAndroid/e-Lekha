@@ -109,7 +109,6 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
 //    val stateViewModel = koinViewModel<StateViewModel>()
 //    val stateList by stateViewModel.stateValue.collectAsState()
     var expanded by remember { mutableStateOf(false) }
-
 //    val lookUpValueViewModel = koinViewModel<LookUpValueViewmodel>()
 //    val viewModel = koinViewModel<CaseIdentifierViewModel>()
 
@@ -119,6 +118,33 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
 //    var message = viewModel.saveMessage
     var customerImage by remember { mutableStateOf<Uri?>(null) }
     var guarantorImage by remember { mutableStateOf<Uri?>(null) }
+    var customename by remember{mutableStateOf("")}
+    var dob by remember { mutableStateOf("") }
+    var maritalStatus by remember { mutableStateOf("") }
+    var education by remember { mutableStateOf("") }
+    var religion by remember{mutableStateOf("")}
+    var purpose by remember{mutableStateOf("")}
+    var mobile_number by remember{mutableStateOf("")}
+    var enter_otp by remember { mutableStateOf("") }
+    var husband_name by remember{mutableStateOf("")}
+    var guarantor_name by remember{mutableStateOf("")}
+    var guarantor_mobile_number by remember { mutableStateOf("") }
+    var your_full_address by remember { mutableStateOf("") }
+    var state by remember { mutableStateOf("") }
+    var district by remember { mutableStateOf("") }
+    var village_name by remember {mutableStateOf("")}
+    var landmark by remember { mutableStateOf("") }
+    var tehsil by remember {mutableStateOf("")}
+    var pin_code by remember { mutableStateOf("") }
+    var maternal_address by remember { mutableStateOf("") }
+    var maternal_mob_no by remember { mutableStateOf("") }
+    var father_name by remember { mutableStateOf("") }
+    var guarantordob by remember { mutableStateOf("") }
+    var gurantor_religion by remember{mutableStateOf("")}
+    var gurantor_enter_otp by remember { mutableStateOf("") }
+    var gurantor_village_name by remember {mutableStateOf("")}
+    var isChecked by remember { mutableStateOf(false) }
+
     /*val viewModel = koinViewModel<PersonalDetailViewModel>()*/
     val coroutineScope = rememberCoroutineScope()
   /*  LaunchedEffect(Unit) {
@@ -221,8 +247,8 @@ viewModel.loadSavedData()
                 {
                     FormFieldCompact(
                         label = stringResource(Res.string.customer_name),
-                        value = "",
-                        onValueChange = { "" },
+                        value = customename,
+                        onValueChange = { customename=it },
                         placeholder = stringResource(Res.string.type_here),
                         modifier = Modifier.weight(1f),
                         maxLength = 30
@@ -239,10 +265,12 @@ viewModel.loadSavedData()
                ) {
                    FormDatePickerCompact(
                        label = stringResource(Res.string.date_of_birth),
-                       value = "",
-                       onValueChange = {},
+                       value = dob,
+                       onValueChange = {dob=it},
                        onClick = {
-                           pickDate(context) { date -> "" }
+                           pickDate(context) { date ->
+                               dob = date
+                           }
                        },
                        trailingIcon = {
                            Icon(
@@ -258,8 +286,11 @@ viewModel.loadSavedData()
                    FormSpinner(
                        label = stringResource(Res.string.marital_status),
                        options = listOf("Married", "Unmarried", "Single"),
-                       selectedOption = "",
-                       onOptionSelected = { },
+                       selectedOption = maritalStatus,
+                       onOptionSelected = {
+                               selected ->
+                           maritalStatus = selected
+                       },
                        modifier = Modifier.weight(1f)
                    )
                }
@@ -272,15 +303,21 @@ viewModel.loadSavedData()
                     FormSpinner(
                         label = stringResource(Res.string.education),
                         options = listOf("12th", "Graduation", "Post Graduation"),
-                        selectedOption = "",
-                        onOptionSelected = { },
+                        selectedOption = education,
+                        onOptionSelected = {
+                            educations->
+                            education = educations
+                        },
                         modifier = Modifier.weight(1f)
                     )
                     FormSpinner(
                         label = stringResource(Res.string.religion),
                         options = listOf("Hindu", "Muslim"),
-                        selectedOption = "",
-                        onOptionSelected = { },
+                        selectedOption = religion,
+                        onOptionSelected = {
+                            religions->
+                            religion=religions
+                        },
                         modifier = Modifier.weight(1f)
                     )
                 }
@@ -288,8 +325,11 @@ viewModel.loadSavedData()
                 FormSpinner(
                     label = stringResource(Res.string.purpose),
                     options = listOf("Business", "Study Loan", "Home Loan"),
-                    selectedOption = "",
-                    onOptionSelected = { },
+                    selectedOption = purpose,
+                    onOptionSelected = {
+                        purposes->
+                        purpose=purposes
+                    },
                     modifier = Modifier.fillMaxWidth()
                 )
                 Spacer(modifier = Modifier.height(8.dp))
@@ -301,8 +341,10 @@ viewModel.loadSavedData()
                 ) {
                     FormFieldCompact(
                         label = stringResource(Res.string.mobile_number),
-                        value = "",
-                        onValueChange = { "" },
+                        value = mobile_number,
+                        onValueChange = { mobilenumber->
+                            mobile_number=mobilenumber
+                        },
                         placeholder = stringResource(Res.string.type_here),
                         maxLength = 10,
                         modifier = Modifier.weight(2f)
@@ -310,8 +352,11 @@ viewModel.loadSavedData()
 
                     FormFieldCompact(
                         label = stringResource(Res.string.enter_otp),
-                        value = "",
-                        onValueChange = { "" },
+                        value = enter_otp,
+                        onValueChange = {
+                            enterotp->
+                            enter_otp=enterotp
+                        },
                         placeholder = stringResource(Res.string.type_here),
                         modifier = Modifier.weight(1f)
                     )
@@ -331,9 +376,12 @@ viewModel.loadSavedData()
                 // ---------------- Form Start ----------------
                 FormFieldCompact(
                     label = stringResource(Res.string.husband_name),
-                    value = "",
+                    value = husband_name,
                     placeholder = stringResource(Res.string.type_here),
-                    onValueChange = { "" },
+                    onValueChange = {
+                        husbandname->
+                        husband_name=husbandname
+                    },
                     maxLength = 20
                 )
 
@@ -341,8 +389,12 @@ viewModel.loadSavedData()
 
                 DynamicCheckBox(
                     label = stringResource(Res.string.same_as_husband),
-                    isChecked = false,
-                    onCheckedChange = {}
+                    isChecked = isChecked,
+                    onCheckedChange = {
+                            checked ->
+                        isChecked = checked
+
+                    }
                 )
 
                 Spacer(modifier = Modifier.height(2.dp))
@@ -350,9 +402,11 @@ viewModel.loadSavedData()
                 // ---------------- Form Start ----------------
                 FormFieldCompact(
                     label = stringResource(Res.string.guarantor_name),
-                    value = "",
+                    value =guarantor_name,
                     placeholder = stringResource(Res.string.type_here),
-                    onValueChange = { "" },
+                    onValueChange = { gurantorname->
+                        guarantor_name=gurantorname
+                    },
                     maxLength = 20
                 )
                 Spacer(modifier = Modifier.height(8.dp))
@@ -364,18 +418,21 @@ viewModel.loadSavedData()
                     FormSpinner(
                         label = stringResource(Res.string.relation),
                         options = listOf("Brother", "Husband"),
-                        selectedOption = "",
-                        onOptionSelected = { },
+                        selectedOption = gurantor_religion,
+                        onOptionSelected = {
+                            religionns->
+                            gurantor_religion=religionns
+                        },
                         modifier = Modifier.weight(1f)
                     )
 
                     FormDatePickerCompact(
                         label = stringResource(Res.string.date_of_birth),
-                        value = "",
-                        onValueChange = {},
+                        value = guarantordob,
+                        onValueChange = {guarantordob=it},
                         onClick = {
                             pickDate(context) { date ->
-                                ""
+                                guarantordob = date
                             }
 
                         },
@@ -386,7 +443,7 @@ viewModel.loadSavedData()
                                 tint = Color.Unspecified
                             )
                         },
-                        isEnable = false,
+                        isEnable = true,
                         modifier = Modifier.weight(1f)
                     )
                 }
@@ -396,9 +453,12 @@ viewModel.loadSavedData()
                 // ---------------- Form Start ----------------
                 FormFieldCompact(
                     label = stringResource(Res.string.guarantor_mobile_number),
-                    value = "",
+                    value = guarantor_mobile_number,
                     placeholder = stringResource(Res.string.not_same_as_customer_mobile_number),
-                    onValueChange = { "" },
+                    onValueChange = {
+                        gurantormbno->
+                        guarantor_mobile_number=gurantormbno
+                    },
                     maxLength = 10
                 )
 
@@ -411,8 +471,9 @@ viewModel.loadSavedData()
                 ) {
                     FormFieldCompact(
                         label = stringResource(Res.string.enter_otp),
-                        value = "",
-                        onValueChange = { "" },
+                        value = gurantor_enter_otp,
+                        onValueChange = {  gurantorotp->
+                            gurantor_enter_otp =gurantorotp },
                         placeholder = stringResource(Res.string.type_here),
                         modifier = Modifier.weight(2f)
                     )
@@ -432,9 +493,12 @@ viewModel.loadSavedData()
                 // ---------------- Form Start ----------------
                 FormFieldCompact(
                     label = stringResource(Res.string.your_full_address),
-                    value = "",
+                    value = your_full_address,
                     placeholder = stringResource(Res.string.type_here),
-                    onValueChange = { "" },
+                    onValueChange = {
+                        yourfulladdress->
+                        your_full_address=yourfulladdress
+                    },
                     maxLength = 20
                 )
 
@@ -447,16 +511,22 @@ viewModel.loadSavedData()
                     FormSpinner(
                         label = stringResource(Res.string.state),
                         options = listOf("Delhi", "Punjab"),
-                        selectedOption = "",
-                        onOptionSelected = { },
+                        selectedOption = state,
+                        onOptionSelected = {
+                            states->
+                            state=states
+                        },
                         modifier = Modifier.weight(1f)
                     )
 
                     FormSpinner(
                         label = stringResource(Res.string.district),
                         options = listOf("West", "South"),
-                        selectedOption = "",
-                        onOptionSelected = { },
+                        selectedOption = district,
+                        onOptionSelected = {
+                            districts->
+                            district=districts
+                        },
                         modifier = Modifier.weight(1f)
                     )
                 }
@@ -469,16 +539,22 @@ viewModel.loadSavedData()
                 ) {
                     FormFieldCompact(
                         label = stringResource(Res.string.village_name),
-                        value = "",
-                        onValueChange = { "" },
+                        value = village_name,
+                        onValueChange = {
+                            villagename->
+                            village_name=villagename
+                        },
                         placeholder = stringResource(Res.string.type_here),
                         modifier = Modifier.weight(1f)
                     )
 
                     FormFieldCompact(
                         label = stringResource(Res.string.tehsil),
-                        value = "",
-                        onValueChange = { "" },
+                        value = tehsil,
+                        onValueChange = {
+                            tehsill->
+                            tehsil=tehsill
+                        },
                         placeholder = stringResource(Res.string.type_here),
                         modifier = Modifier.weight(1f)
                     )
@@ -492,16 +568,22 @@ viewModel.loadSavedData()
                 ) {
                     FormFieldCompact(
                         label = stringResource(Res.string.landmark),
-                        value = "",
-                        onValueChange = { "" },
+                        value = landmark,
+                        onValueChange = {
+                            landmarks->
+                            landmark=landmarks
+                        },
                         placeholder = stringResource(Res.string.type_here),
                         modifier = Modifier.weight(1f)
                     )
 
                     FormFieldCompact(
                         label = stringResource(Res.string.pin_code),
-                        value = "",
-                        onValueChange = { "" },
+                        value = pin_code,
+                        onValueChange = {
+                            pincode->
+                            pin_code=pincode
+                        },
                         placeholder = stringResource(Res.string.type_here),
                         modifier = Modifier.weight(1f)
                     )
@@ -509,10 +591,14 @@ viewModel.loadSavedData()
                 Spacer(modifier = Modifier.height(8.dp))
                 FormFieldCompact(
                     label = stringResource(Res.string.maternal_address),
-                    value = "",
+                    value = maternal_address,
                     placeholder = stringResource(Res.string.type_here),
-                    onValueChange = { "" },
-                    maxLength = 20
+                    onValueChange = {
+                        maternaladdress->
+                        maternal_address=maternaladdress
+                    },
+                    maxLength = 20,
+                    isEnable = true
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Row(
@@ -521,16 +607,21 @@ viewModel.loadSavedData()
                 ) {
                     FormFieldCompact(
                         label = stringResource(Res.string.village_name),
-                        value = "",
-                        onValueChange = { "" },
+                        value = gurantor_village_name,
+                        onValueChange = { gurantorvillagename->
+                            gurantor_village_name=gurantorvillagename
+                        },
                         placeholder = stringResource(Res.string.type_here),
                         modifier = Modifier.weight(1f)
                     )
 
                     FormFieldCompact(
                         label = stringResource(Res.string.maternal_mob_no),
-                        value = "",
-                        onValueChange = { "" },
+                        value = maternal_mob_no,
+                        onValueChange = {
+                            maternalmbno->
+                            maternal_mob_no=maternalmbno
+                        },
                         placeholder = stringResource(Res.string.type_here),
                         modifier = Modifier.weight(1f)
                     )
@@ -542,16 +633,22 @@ viewModel.loadSavedData()
                 ) {
                     FormFieldCompact(
                         label = stringResource(Res.string.father_name),
-                        value = "",
-                        onValueChange = { "" },
+                        value = father_name,
+                        onValueChange = {
+                            fathername->
+                            father_name=fathername
+                        },
                         placeholder = stringResource(Res.string.type_here),
                         modifier = Modifier.weight(1f)
                     )
                     FormSpinner(
                         label = stringResource(Res.string.state),
                         options = listOf("Delhi", "Punjab"),
-                        selectedOption = "",
-                        onOptionSelected = { },
+                        selectedOption = state,
+                        onOptionSelected = {
+                            states->
+                            state=states
+                        },
                         modifier = Modifier.weight(1f)
                     )
                 }
