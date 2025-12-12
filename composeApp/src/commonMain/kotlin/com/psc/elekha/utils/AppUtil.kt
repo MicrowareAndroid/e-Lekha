@@ -2617,31 +2617,13 @@ fun LabelValueText(label: String, value: String,) {
     ) {
         ReusableTextViewGrayCard(
             text = label,
-
             fontSize = 13
-
-
-
-
-
-
       )
-
-
-
-
         Spacer(modifier = Modifier.width(4.dp))
         ReusableTextViewBlackCard(
             text = value,
-
             fontSize = 12
-
-
-
             )
-
-
-
 
     }
 }
@@ -2743,13 +2725,7 @@ fun FormFieldCompacts(
 
     Column(modifier) {
 
-
-
-
-
         Spacer(Modifier.height(5.dp))
-
-
 
         Box(
             modifier = Modifier
