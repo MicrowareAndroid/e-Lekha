@@ -13,12 +13,12 @@ class MSTDistrictRepository(
     }
 
     // Insert list of districts
-    suspend fun insertAllDistrict(list: List<MSTDistrictEntity>?) {
+    suspend fun insertAllDistrict(list: List<MSTDistrictEntity>) {
         districtDao.insertAllDistrict(list)
     }
 
     // Get all districts
-    suspend fun getAllDistrict(): List<MSTDistrictEntity>? {
+    suspend fun getAllDistrict(): List<MSTDistrictEntity> {
         return districtDao.getAllDistrict()
     }
 

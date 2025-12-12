@@ -14,23 +14,23 @@ class CustomerDefaultRepository(private val customerDefaultDao: CustomerDefaultD
         customerDefaultDao.insertAllCustomer(customers)
     }
 
-    suspend  fun getAllCustomers(): List<CustomerDefaultEntity>? {
+    suspend  fun getAllCustomers(): List<CustomerDefaultEntity> {
         return customerDefaultDao.getAllCustomer()
     }
 
-    suspend fun getCustomerByContact(contactNo: String): List<CustomerDefaultEntity>? {
+    suspend fun getCustomerByContact(contactNo: String): List<CustomerDefaultEntity> {
         return customerDefaultDao.getCustomerByContactNumber(contactNo)
     }
 
-    suspend fun getCustomerDetails(guid: String): CustomerDefaultEntity? {
+    suspend fun getCustomerDetails(guid: String): CustomerDefaultEntity {
         return customerDefaultDao.getCustomerDetails(guid)
     }
 
-    suspend fun getCustomerDetailsForCustomer(guid: String): CustomerEntity? {
+    suspend fun getCustomerDetailsForCustomer(guid: String): CustomerEntity {
         return customerDefaultDao.getCustomerDetailsForCustomer(guid)
     }
 
-    suspend fun getAllCustomerUpload(): List<CustomerDefaultEntity>? {
+    suspend fun getAllCustomerUpload(): List<CustomerDefaultEntity> {
         return customerDefaultDao.getAllCustomerUpload()
     }
 
@@ -200,7 +200,7 @@ class CustomerDefaultRepository(private val customerDefaultDao: CustomerDefaultD
         return customerDefaultDao.getAllCustomerUploadCountNew()
     }
 
-    suspend  fun getAllCustomerUploadNew(): List<CustomerDefaultEntity>? {
+    suspend  fun getAllCustomerUploadNew(): List<CustomerDefaultEntity> {
         return customerDefaultDao.getAllCustomerUploadNew()
     }
 }

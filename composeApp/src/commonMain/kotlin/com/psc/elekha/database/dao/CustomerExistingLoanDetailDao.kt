@@ -10,10 +10,10 @@ interface CustomerExistingLoanDetailDao {
     suspend fun insertCustomerExistingLoan(customerExistingLoanDetailEntity: CustomerExistingLoanDetailEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAllCustomerExistingLoan(customerExistingLoanDetailEntity: List<CustomerExistingLoanDetailEntity>?)
+    suspend fun insertAllCustomerExistingLoan(customerExistingLoanDetailEntity: List<CustomerExistingLoanDetailEntity>)
 
     @Query("select a.* from CustomerExistingLoanDetail a left join Customer b on a.GUID = b.GUID where b.CutomerStatusID = 1 and a.GUID =:GUID")
-    suspend fun getAllCustomerExistingLoan(GUID: String): List<CustomerExistingLoanDetailEntity>?
+    suspend fun getAllCustomerExistingLoan(GUID: String): List<CustomerExistingLoanDetailEntity>
 
     @Query("Delete from CustomerExistingLoanDetail")
     suspend fun deleteAllCustomerExistingLoan()
@@ -42,7 +42,7 @@ interface CustomerExistingLoanDetailDao {
     )
 
     @Query("Select * from CustomerExistingLoanDetail where IsDeleted=0 and IsEdited=1")
-    suspend fun getAllCustomerExistingLoanUpload(): List<CustomerExistingLoanDetailEntity>?
+    suspend fun getAllCustomerExistingLoanUpload(): List<CustomerExistingLoanDetailEntity>
 
     @Query("Update CustomerExistingLoanDetail set IsEdited=0, IsUpload=1 where IsEdited=1 and IsDeleted=0")
     suspend  fun updateUploaded()

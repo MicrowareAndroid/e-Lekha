@@ -36,7 +36,7 @@ class CustomerExistingLoanDetailViewModel(
     // -------------------------------------------------
     fun loadAllLoans(guid: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            _allLoans.value = repository.getAllCustomerExistingLoan(guid) ?: emptyList()
+            _allLoans.value = repository.getAllCustomerExistingLoan(guid)
         }
     }
 
@@ -136,7 +136,7 @@ class CustomerExistingLoanDetailViewModel(
     fun loadLoanUploadList() {
         viewModelScope.launch(Dispatchers.IO) {
             _loanUploadList.value =
-                repository.getAllCustomerExistingLoanUpload() ?: emptyList()
+                repository.getAllCustomerExistingLoanUpload()
         }
     }
 

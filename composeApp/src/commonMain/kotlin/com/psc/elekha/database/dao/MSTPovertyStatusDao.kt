@@ -10,10 +10,10 @@ interface MSTPovertyStatusDao {
     suspend fun insertPovertyStatus(mSTPovertyStatusEntity: MSTPovertyStatusEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAllPovertyStatus(mSTPovertyStatusEntity: List<MSTPovertyStatusEntity>?)
+    suspend fun insertAllPovertyStatus(mSTPovertyStatusEntity: List<MSTPovertyStatusEntity>)
 
     @Query("Select * from MSTPovertyStatus")
-    suspend fun getAllPovertyStatus(): List<MSTPovertyStatusEntity>?
+    suspend fun getAllPovertyStatus(): List<MSTPovertyStatusEntity>
 
     @Query("Delete from MSTPovertyStatus")
     suspend fun deleteAllPovertyStatus()

@@ -10,10 +10,10 @@ interface MSTComboBox_NDao {
     suspend fun insertComboBox(mSTComboBox_NEntity: MSTComboBox_NEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend  fun insertAllComboBox(mSTComboBox_NEntity: List<MSTComboBox_NEntity>?)
+    suspend  fun insertAllComboBox(mSTComboBox_NEntity: List<MSTComboBox_NEntity>)
 
     @Query("Select * from MstComboBox_N Where Flag=:Flag and IsDeleted = 0 ORDER by Value")
-    suspend  fun getAllComboBox(Flag: Int): List<MSTComboBox_NEntity>?
+    suspend  fun getAllComboBox(Flag: Int): List<MSTComboBox_NEntity>
 
     @Query("Select Value from MstComboBox_N Where Flag=:Flag and ID=:ID and IsDeleted = 0")
     suspend fun getComboBoxValue(Flag: Int, ID: Int): String?

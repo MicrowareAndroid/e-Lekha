@@ -13,12 +13,12 @@ class TabletMenuRepository(
     }
 
     // Insert list of tablet menu items
-    suspend fun insertAllTabletMenu(list: List<TabletMenuEntity>?) {
+    suspend fun insertAllTabletMenu(list: List<TabletMenuEntity>) {
         tabletMenuDao.insertAllTabletMenu(list)
     }
 
     // Get all tablet menu items
-    suspend fun getAllTabletMenu(): List<TabletMenuEntity>? {
+    suspend fun getAllTabletMenu(): List<TabletMenuEntity> {
         return tabletMenuDao.getAllTabletMenu()
     }
 

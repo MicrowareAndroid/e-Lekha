@@ -13,7 +13,7 @@ class UsersRepository(
     }
 
     // Insert list of users
-    suspend fun insertAllUsers(list: List<UsersEntity>?) {
+    suspend fun insertAllUsers(list: List<UsersEntity>) {
         usersDao.insertAllUsers(list)
     }
 
@@ -28,7 +28,7 @@ class UsersRepository(
     }
 
     // Get user details by username and password
-    suspend fun getUserDetails(userName: String, password: String): List<UsersEntity>? {
+    suspend fun getUserDetails(userName: String, password: String): List<UsersEntity> {
         return usersDao.getUserDetails(userName, password)
     }
 

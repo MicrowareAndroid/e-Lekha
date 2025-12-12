@@ -26,7 +26,7 @@ class CustomerTransactionsDetailsViewModel(
     fun loadAllTransactions(GUID: String) {
 
         viewModelScope.launch(Dispatchers.IO) {
-            val data = repository.getAllCustomerTransaction(GUID) ?: emptyList()
+            val data = repository.getAllCustomerTransaction(GUID)
             _allTransactions.value = data
         }
     }

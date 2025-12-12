@@ -28,7 +28,7 @@ class LoanClosureViewModel(
     // -------------------------------
     fun loadAllLoanClosure() {
         viewModelScope.launch(Dispatchers.IO) {
-            _allLoanClosures.value = repository.getAllLoanClosure() ?: emptyList()
+            _allLoanClosures.value = repository.getAllLoanClosure()
         }
     }
 
@@ -37,7 +37,7 @@ class LoanClosureViewModel(
     // -------------------------------
     fun loadLoanClosureUploadData() {
         viewModelScope.launch(Dispatchers.IO) {
-            _loanClosureUploadData.value = repository.getLoanClosureUploadData() ?: emptyList()
+            _loanClosureUploadData.value = repository.getLoanClosureUploadData()
             _loanClosureUploadCount.value = repository.getLoanClosureUploadDataCount()
         }
     }

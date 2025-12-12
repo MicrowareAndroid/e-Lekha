@@ -10,25 +10,25 @@ interface LoanScheduleDao {
     suspend fun insertLoanSchedule(loanScheduleEntity: LoanScheduleEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend  fun insertAllLoanSchedule(loanScheduleEntity: List<LoanScheduleEntity>?)
+    suspend  fun insertAllLoanSchedule(loanScheduleEntity: List<LoanScheduleEntity>)
 
     @Query("Select * from CustomerLoanSchedule")
-    suspend fun getAllLoanSchedule(): List<LoanScheduleEntity>?
+    suspend fun getAllLoanSchedule(): List<LoanScheduleEntity>
 
     @Query("Select * from CustomerLoanSchedule where GUID=:GUID")
-    suspend fun getLoanScheduleByGUID(GUID: String): List<LoanScheduleEntity>?
+    suspend fun getLoanScheduleByGUID(GUID: String): List<LoanScheduleEntity>
 
     @Query("Select * from CustomerLoanSchedule where GUID=:GUID and PaidDate is NULL")
-    suspend  fun getLoanScheduleByGUIDAndPaidDate(GUID: String): List<LoanScheduleEntity>?
+    suspend  fun getLoanScheduleByGUIDAndPaidDate(GUID: String): List<LoanScheduleEntity>
 
     /*@Query("Select * from CustomerLoanSchedule where GUID=:GUID and (PaidDate is NULL or length(PaidDate) <= 0) LIMIT 1")
     fun getLoanScheduleByGUIDAndPaidDateWithLimit(GUID: String): List<LoanScheduleEntity>?*/
 
     @Query("Select * from CustomerLoanSchedule where GUID=:GUID and ReceiptFlag == 0 LIMIT 1")
-    suspend fun getLoanScheduleByGUIDAndPaidDateWithLimit(GUID: String): List<LoanScheduleEntity>?
+    suspend fun getLoanScheduleByGUIDAndPaidDateWithLimit(GUID: String): List<LoanScheduleEntity>
 
     @Query("Select * from CustomerLoanSchedule where GUID=:GUID and ReceiptFlag == 0 LIMIT 4")
-    suspend fun getLoanScheduleByGUIDAndPaidDateWithLimit4(GUID: String): List<LoanScheduleEntity>?
+    suspend fun getLoanScheduleByGUIDAndPaidDateWithLimit4(GUID: String): List<LoanScheduleEntity>
 
     @Query("select WorkingDate from CustomerLoanSchedule where GUID=:GUID and CutomerStatusID = 3 and (length(WorkingDate) > 0 or WorkingDate is Not NULL) Order by LoanWeek DESC LIMIT 1")
     suspend fun getWorkingDateByGUID(GUID: String): String?
@@ -37,7 +37,7 @@ interface LoanScheduleDao {
     suspend fun getEMIDueDateByGUID(GUID: String): String?
 
     @Query("Select * from CustomerLoanSchedule where GUID=:GUID and (LoanWeek % 4 = 1)")
-    suspend fun getLoanScheduleModulus(GUID: String): List<LoanScheduleEntity>?
+    suspend fun getLoanScheduleModulus(GUID: String): List<LoanScheduleEntity>
 
     /*@Query("Select * from CustomerLoanSchedule where GUID=:GUID and (LoanWeek % 4 = 0)")
     fun getLoanScheduleModulus(GUID: String): List<LoanScheduleEntity>?*/
@@ -64,7 +64,7 @@ interface LoanScheduleDao {
     suspend  fun getLoanScheduleModulusPay(
         GUID: String,
         sCurrentDate: String
-    ): List<LoanScheduleEntity>?
+    ): List<LoanScheduleEntity>
 
     /*@Query("Select * from CustomerLoanSchedule where GUID=:GUID and (LoanWeek % 4 = 1) AND substr(EMIDueDate, 7) || \"-\" || substr(EMIDueDate,4,2)  || \"-\" || substr(EMIDueDate, 1,2) BETWEEN :sLastPaidDate and :sCurrentDate")
     fun getLoanScheduleModulusPayTwoDate(
@@ -78,7 +78,7 @@ interface LoanScheduleDao {
         GUID: String,
         sLastPaidDate: String,
         sCurrentDate: String
-    ): List<LoanScheduleEntity>?
+    ): List<LoanScheduleEntity>
 
     /*@Query("select max(substr(PaidDate, 7) || \"-\" || substr(PaidDate,4,2)  || \"-\" || substr(PaidDate, 1,2)) as 'PaidDate' from CustomerLoanSchedule where GUID =:GUID and (LoanWeek % 4 = 1)")
     fun getLastPaidDate(

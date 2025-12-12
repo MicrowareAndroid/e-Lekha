@@ -23,7 +23,7 @@ class MSTComboBox_NViewModel(
     fun loadAllComboBox(flag: Int) {
         viewModelScope.launch {
             val result = repository.getAllComboBox(flag)
-            _comboList.value = result ?: emptyList()
+            _comboList.value = result
         }
     }
 
@@ -35,7 +35,7 @@ class MSTComboBox_NViewModel(
     }
 
     // Insert list of combo items
-    fun insertAllComboBox(list: List<MSTComboBox_NEntity>?) {
+    fun insertAllComboBox(list: List<MSTComboBox_NEntity>) {
         viewModelScope.launch {
             repository.insertAllComboBox(list)
         }

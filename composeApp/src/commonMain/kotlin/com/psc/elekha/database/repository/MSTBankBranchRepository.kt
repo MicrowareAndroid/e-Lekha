@@ -13,17 +13,17 @@ class MSTBankBranchRepository(
     }
 
     // Insert list
-    suspend fun insertAllBankBranch(list: List<MSTBankBranchEntity>?) {
+    suspend fun insertAllBankBranch(list: List<MSTBankBranchEntity>) {
         bankBranchDao.insertAllBankBranch(list)
     }
 
     // Get all branches
-    suspend fun getAllBankBranch(): List<MSTBankBranchEntity>? {
+    suspend fun getAllBankBranch(): List<MSTBankBranchEntity> {
         return bankBranchDao.getAllBankBranch()
     }
 
     // Get branches by BankID
-    suspend fun getBankBranchByBankID(BankID: Int): List<MSTBankBranchEntity>? {
+    suspend fun getBankBranchByBankID(BankID: Int): List<MSTBankBranchEntity> {
         return bankBranchDao.getBankBranchByBankID(BankID)
     }
 

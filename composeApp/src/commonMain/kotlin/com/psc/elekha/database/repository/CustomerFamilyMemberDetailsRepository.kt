@@ -15,7 +15,7 @@ class CustomerFamilyMemberDetailsRepository (
         dao.insertAllCustomerFamilyMember(members)
     }
     //Get All Family Members
-    suspend fun getAllCustomerFamilyMember():List<CustomerFamilyMemberDetailsEntity>?{
+    suspend fun getAllCustomerFamilyMember():List<CustomerFamilyMemberDetailsEntity>{
         return dao.getAllCustomerFamilyMember()
     }
     suspend fun deleteAllCustomer(){

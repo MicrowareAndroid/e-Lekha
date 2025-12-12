@@ -12,22 +12,22 @@ interface CustomerDefaultDao {
     suspend fun insertCustomer(customerDefaultEntity: CustomerDefaultEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAllCustomer(customerDefaultEntity: List<CustomerDefaultEntity>?)
+    suspend fun insertAllCustomer(customerDefaultEntity: List<CustomerDefaultEntity>)
 
     @Query("Select * from CustomerDefault")
-    suspend fun getAllCustomer(): List<CustomerDefaultEntity>?
+    suspend fun getAllCustomer(): List<CustomerDefaultEntity>
 
     @Query("Select * from CustomerDefault where ContactNo=:ContactNo and CutomerStatusID = 5")
-    suspend fun getCustomerByContactNumber(ContactNo: String): List<CustomerDefaultEntity>?
+    suspend fun getCustomerByContactNumber(ContactNo: String): List<CustomerDefaultEntity>
 
     @Query("Select * from CustomerDefault where GUID=:GUID")
-    suspend fun getCustomerDetails(GUID: String): CustomerDefaultEntity?
+    suspend fun getCustomerDetails(GUID: String): CustomerDefaultEntity
 
     @Query("Select * from CustomerDefault where GUID=:GUID")
-    suspend fun getCustomerDetailsForCustomer(GUID: String): CustomerEntity?
+    suspend fun getCustomerDetailsForCustomer(GUID: String): CustomerEntity
 
     @Query("Select * from CustomerDefault where IsDeleted=0 and IsEdited=1")
-    suspend fun getAllCustomerUpload(): List<CustomerDefaultEntity>?
+    suspend fun getAllCustomerUpload(): List<CustomerDefaultEntity>
 
     @Query("Select CKYC_UID from CustomerDefault where GUID =:GUID")
     suspend fun getCustomerAadhaar(GUID: String): String?
@@ -124,7 +124,7 @@ interface CustomerDefaultDao {
     suspend fun getAllCustomerUploadCountNew(): Int
 
     @Query("Select * from CustomerDefault where IsDeleted=0 and IsEdited=1 and CustomerBankIFSCCode is not null")
-    suspend fun getAllCustomerUploadNew(): List<CustomerDefaultEntity>?
+    suspend fun getAllCustomerUploadNew(): List<CustomerDefaultEntity>
 
     @Query("Update CustomerDefault set IsEdited=0, IsUpload=1 where IsEdited=1 and IsDeleted=0 and CustomerBankIFSCCode is not null")
     suspend fun updateUploadedNew()

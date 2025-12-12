@@ -15,11 +15,11 @@ class ImageTrackingRecordRepository(
         dao.insertAllImageTrackingRecord(records)
     }
 
-    suspend  fun getAllImageTrackingRecord(): List<ImageTrackingRecordEntity>? {
+    suspend  fun getAllImageTrackingRecord(): List<ImageTrackingRecordEntity> {
         return dao.getAllImageTrackingRecord()
     }
 
-    suspend fun getImageAllData(): List<ImageTrackingRecordEntity>? {
+    suspend fun getImageAllData(): List<ImageTrackingRecordEntity> {
         return dao.getImageAllData()
     }
 

@@ -10,10 +10,10 @@ interface MSTAssetsValuationDao {
   suspend  fun insertAssetsValuation(mSTAssetsValuationEntity: MSTAssetsValuationEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-   suspend fun insertAllAssetsValuation(mSTAssetsValuationEntity: List<MSTAssetsValuationEntity>?)
+   suspend fun insertAllAssetsValuation(mSTAssetsValuationEntity: List<MSTAssetsValuationEntity>)
 
     @Query("Select * from MSTAssetsValuation")
-    suspend  fun getAllAssetsValuation(): List<MSTAssetsValuationEntity>?
+    suspend  fun getAllAssetsValuation(): List<MSTAssetsValuationEntity>
 
     @Query("Delete from MSTAssetsValuation")
     suspend fun deleteAllAssetsValuation()

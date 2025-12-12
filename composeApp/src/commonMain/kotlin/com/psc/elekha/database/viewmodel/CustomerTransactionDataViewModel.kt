@@ -32,14 +32,14 @@ class CustomerTransactionDataViewModel(
     // --------------------------------
     fun loadAllTransactions(GUID: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            _allTransactions.value = repository.getAllCustomerTransactionData(GUID) ?: emptyList()
+            _allTransactions.value = repository.getAllCustomerTransactionData(GUID)
         }
     }
 
     // --------------------------------
     fun loadAllTransactionsUpload() {
         viewModelScope.launch(Dispatchers.IO) {
-            _uploadTransactions.value = repository.getAllCustomerTransactionDataUpload() ?: emptyList()
+            _uploadTransactions.value = repository.getAllCustomerTransactionDataUpload()
         }
     }
 

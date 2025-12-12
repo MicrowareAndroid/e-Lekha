@@ -10,13 +10,13 @@ interface LoanClosureDao {
     suspend  fun insertLoanClouser(loanClosureEntity: LoanClosureEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAllLoanClouser(loanClosureEntity: List<LoanClosureEntity>?)
+    suspend fun insertAllLoanClouser(loanClosureEntity: List<LoanClosureEntity>)
 
     @Query("Select * from LoanClouser")
-    suspend fun getAllLoanClouser(): List<LoanClosureEntity>?
+    suspend fun getAllLoanClouser(): List<LoanClosureEntity>
 
     @Query("Select * from LoanClouser Where IsEdited = 1")
-    suspend fun getLoanClouserUploadData(): List<LoanClosureEntity>?
+    suspend fun getLoanClouserUploadData(): List<LoanClosureEntity>
 
     @Query("Select Count(*) from LoanClouser Where IsEdited = 1")
     suspend fun getLoanClouserUploadDataCount(): Int

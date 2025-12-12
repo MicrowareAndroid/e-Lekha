@@ -22,7 +22,7 @@ class MSTMFILoanProductViewModel(
     fun loadAllMFILoanProducts() {
         viewModelScope.launch {
             val result = repository.getAllMFILoanProduct()
-            _mfiLoanProductList.value = result ?: emptyList()
+            _mfiLoanProductList.value = result
         }
     }
 
@@ -30,7 +30,7 @@ class MSTMFILoanProductViewModel(
     fun loadMFILoanProductsByMFIID(MFIID: Int) {
         viewModelScope.launch {
             val result = repository.getMFILoanProductByMFIID(MFIID)
-            _mfiLoanProductList.value = result ?: emptyList()
+            _mfiLoanProductList.value = result
         }
     }
 
@@ -51,7 +51,7 @@ class MSTMFILoanProductViewModel(
     }
 
     // Insert list of MFI loan products
-    fun insertAllMFILoanProduct(list: List<MSTMFILoanProductEntity>?) {
+    fun insertAllMFILoanProduct(list: List<MSTMFILoanProductEntity>) {
         viewModelScope.launch {
             repository.insertAllMFILoanProduct(list)
             loadAllMFILoanProducts() // Refresh list

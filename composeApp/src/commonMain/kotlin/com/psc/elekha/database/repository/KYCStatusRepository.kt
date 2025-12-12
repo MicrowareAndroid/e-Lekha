@@ -15,7 +15,7 @@ class KYCStatusRepository(
         dao.insertAllKYCStatus(statusList)
     }
 
-    suspend fun getAllKYCStatus(): List<KYCStatusEntity>? {
+    suspend fun getAllKYCStatus(): List<KYCStatusEntity> {
         return dao.getAllKYCStatus()
     }
 

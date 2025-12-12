@@ -15,7 +15,7 @@ class CustomerExistingLoanDetailRepository(
         customerExistingLoanDetailDao.insertAllCustomerExistingLoan(customers)
     }
 
-    suspend fun getAllCustomerExistingLoan(guid: String): List<CustomerExistingLoanDetailEntity>? {
+    suspend fun getAllCustomerExistingLoan(guid: String): List<CustomerExistingLoanDetailEntity> {
         return customerExistingLoanDetailDao.getAllCustomerExistingLoan(guid)
     }
 
@@ -63,7 +63,7 @@ class CustomerExistingLoanDetailRepository(
         )
     }
 
-    suspend fun getAllCustomerExistingLoanUpload(): List<CustomerExistingLoanDetailEntity>? {
+    suspend fun getAllCustomerExistingLoanUpload(): List<CustomerExistingLoanDetailEntity> {
         return customerExistingLoanDetailDao.getAllCustomerExistingLoanUpload()
     }
 

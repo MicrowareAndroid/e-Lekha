@@ -10,10 +10,10 @@ interface CustomerFamilyMemberDetailsDao {
     suspend fun insertCustomerFamilyMember(customerFamilyMemberDetailsEntity: CustomerFamilyMemberDetailsEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAllCustomerFamilyMember(customerFamilyMemberDetailsEntity: List<CustomerFamilyMemberDetailsEntity>?)
+    suspend fun insertAllCustomerFamilyMember(customerFamilyMemberDetailsEntity: List<CustomerFamilyMemberDetailsEntity>)
 
     @Query("Select * from CustomerFamilyMemberDetails")
-    suspend fun getAllCustomerFamilyMember(): List<CustomerFamilyMemberDetailsEntity>?
+    suspend fun getAllCustomerFamilyMember(): List<CustomerFamilyMemberDetailsEntity>
 
     @Query("Delete from CustomerFamilyMemberDetails")
     suspend  fun deleteAllCustomerFamilyMember()

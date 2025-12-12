@@ -12,15 +12,15 @@ class CustomerRepository(private val customerDao: CustomerDao) {
         customerDao.insertAllCustomer(customers)
     }
 
-    suspend fun getAllCustomers(): List<CustomerEntity>? {
+    suspend fun getAllCustomers(): List<CustomerEntity> {
         return customerDao.getAllCustomer()
     }
 
-    suspend fun getCustomerByContact(contactNo: String): List<CustomerEntity>? {
+    suspend fun getCustomerByContact(contactNo: String): List<CustomerEntity> {
         return customerDao.getCustomerByContactNumber(contactNo)
     }
 
-    suspend fun getCustomerDetails(guid: String): CustomerEntity? {
+    suspend fun getCustomerDetails(guid: String): CustomerEntity {
         return customerDao.getCustomerDetails(guid)
     }
 

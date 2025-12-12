@@ -31,11 +31,6 @@ class MyApp : Application(), KoinComponent {
             androidLogger()
             androidContext(this@MyApp)
         }
-
-//        val db = org.koin.java.KoinJavaComponent.getKoin().get<AppDatabase>()
-//        Log.d("DB_TEST", "DB opened: $db")
-
-
     }
 
 

@@ -19,7 +19,7 @@ class MSTBranchViewModel(
     fun loadAllBranches() {
         viewModelScope.launch {
             val result = repository.getAllBranch()
-            _branchList.value = result ?: emptyList()
+            _branchList.value = result
         }
     }
 
@@ -32,7 +32,7 @@ class MSTBranchViewModel(
     }
 
     // Insert list of branches
-    fun insertAllBranch(list: List<MSTBranchEntity>?) {
+    fun insertAllBranch(list: List<MSTBranchEntity>) {
         viewModelScope.launch {
             repository.insertAllBranch(list)
             loadAllBranches() // Refresh list

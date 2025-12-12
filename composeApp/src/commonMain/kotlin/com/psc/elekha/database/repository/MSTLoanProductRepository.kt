@@ -13,22 +13,22 @@ class MSTLoanProductRepository(
     }
 
     // Insert list of loan products
-    suspend fun insertAllLoanProduct(list: List<MSTLoanProductEntity>?) {
+    suspend fun insertAllLoanProduct(list: List<MSTLoanProductEntity>) {
         loanProductDao.insertAllLoanProduct(list)
     }
 
     // Get loan products by LoanProductID
-    suspend fun getAllLoanProduct(loanProductID: Int): List<MSTLoanProductEntity>? {
+    suspend fun getAllLoanProduct(loanProductID: Int): List<MSTLoanProductEntity> {
         return loanProductDao.getAllLoanProduct(loanProductID)
     }
 
     // Get all active loan amounts
-    suspend fun getLoanAmount(): List<MSTLoanProductEntity>? {
+    suspend fun getLoanAmount(): List<MSTLoanProductEntity> {
         return loanProductDao.getLoanAmount()
     }
 
     // Get new loan amounts (LoanProductID in 25,31)
-    suspend fun getNewLoanAmount(): List<MSTLoanProductEntity>? {
+    suspend fun getNewLoanAmount(): List<MSTLoanProductEntity> {
         return loanProductDao.getNewLoanAmount()
     }
 

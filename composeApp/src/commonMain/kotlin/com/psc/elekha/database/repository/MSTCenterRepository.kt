@@ -13,12 +13,12 @@ class MSTCenterRepository(
     }
 
     // Insert list of centers
-    suspend fun insertAllCenter(list: List<MSTCenterEntity>?) {
+    suspend fun insertAllCenter(list: List<MSTCenterEntity>) {
         centerDao.insertAllCenter(list)
     }
 
     // Get all centers
-    suspend fun getAllCenter(): List<MSTCenterEntity>? {
+    suspend fun getAllCenter(): List<MSTCenterEntity> {
         return centerDao.getAllCenter()
     }
 

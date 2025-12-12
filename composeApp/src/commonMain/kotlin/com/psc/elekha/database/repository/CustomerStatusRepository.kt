@@ -18,7 +18,7 @@ class CustomerStatusRepository(
     }
 
     // Get all customer statuses
-    suspend fun getAllCustomerStatus(): List<CustomerStatusEntity>? {
+    suspend fun getAllCustomerStatus(): List<CustomerStatusEntity> {
         return dao.getAllCustomerStatus()
     }
 
@@ -28,7 +28,7 @@ class CustomerStatusRepository(
     }
 
     // Get statuses where ID in (2,3) and IsDeleted = 0
-    suspend fun getCustomerStatusData(): List<CustomerStatusEntity>? {
+    suspend fun getCustomerStatusData(): List<CustomerStatusEntity> {
         return dao.getCustomerStatusData()
     }
 

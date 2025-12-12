@@ -19,7 +19,7 @@ class KYCStatusViewModel(
 
     fun loadAllStatus() {
         viewModelScope.launch(Dispatchers.IO) {
-            _allStatus.value = repository.getAllKYCStatus() ?: emptyList()
+            _allStatus.value = repository.getAllKYCStatus()
         }
     }
 
@@ -52,6 +52,6 @@ class KYCStatusViewModel(
     }
 
     suspend  fun getAllStatusDirect(): List<KYCStatusEntity> {
-        return repository.getAllKYCStatus() ?: emptyList()
+        return repository.getAllKYCStatus()
     }
 }

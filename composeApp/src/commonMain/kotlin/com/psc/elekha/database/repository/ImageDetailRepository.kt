@@ -18,12 +18,12 @@ class ImageDetailRepository(
     }
 
     // Get all image details
-    suspend fun getAllImageDetail(): List<ImageDetailEntity>? {
+    suspend fun getAllImageDetail(): List<ImageDetailEntity> {
         return dao.getAllImageDetail()
     }
 
     // Get image details by RefFieldName
-    suspend fun getImageDetail(refFieldName: Int): List<ImageDetailEntity>? {
+    suspend fun getImageDetail(refFieldName: Int): List<ImageDetailEntity> {
         return dao.getImageDetail(refFieldName)
     }
 

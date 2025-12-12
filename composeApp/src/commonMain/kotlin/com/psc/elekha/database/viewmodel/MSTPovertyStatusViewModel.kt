@@ -20,7 +20,7 @@ class MSTPovertyStatusViewModel(
     fun loadAllPovertyStatus() {
         viewModelScope.launch {
             val result = repository.getAllPovertyStatus()
-            _povertyStatusList.value = result ?: emptyList()
+            _povertyStatusList.value = result
         }
     }
 
@@ -33,7 +33,7 @@ class MSTPovertyStatusViewModel(
     }
 
     // Insert list of records
-    fun insertAllPovertyStatus(list: List<MSTPovertyStatusEntity>?) {
+    fun insertAllPovertyStatus(list: List<MSTPovertyStatusEntity>) {
         viewModelScope.launch {
             repository.insertAllPovertyStatus(list)
             loadAllPovertyStatus() // Refresh list

@@ -28,7 +28,7 @@ class MSTBankBranchViewModel(
     fun loadAllBankBranches() {
         viewModelScope.launch {
             val result = repository.getAllBankBranch()
-            _bankBranchList.value = result ?: emptyList()
+            _bankBranchList.value = result
         }
     }
 
@@ -36,7 +36,7 @@ class MSTBankBranchViewModel(
     fun loadBranchesByBankID(bankID: Int) {
         viewModelScope.launch {
             val result = repository.getBankBranchByBankID(bankID)
-            _filteredBranches.value = result ?: emptyList()
+            _filteredBranches.value = result
         }
     }
 
@@ -65,7 +65,7 @@ class MSTBankBranchViewModel(
     }
 
     // Insert list
-    fun insertAllBankBranch(list: List<MSTBankBranchEntity>?) {
+    fun insertAllBankBranch(list: List<MSTBankBranchEntity>) {
         viewModelScope.launch {
             repository.insertAllBankBranch(list)
             loadAllBankBranches()  // refresh list

@@ -19,7 +19,7 @@ class MSTLoanTypeViewModel(
     fun loadAllLoanTypes() {
         viewModelScope.launch {
             val result = repository.getAllLoanType()
-            _loanTypeList.value = result ?: emptyList()
+            _loanTypeList.value = result
         }
     }
 
@@ -32,7 +32,7 @@ class MSTLoanTypeViewModel(
     }
 
     // Insert list of loan types
-    fun insertAllLoanType(list: List<MSTLoanTypeEntity>?) {
+    fun insertAllLoanType(list: List<MSTLoanTypeEntity>) {
         viewModelScope.launch {
             repository.insertAllLoanType(list)
             loadAllLoanTypes() // Refresh list

@@ -22,7 +22,7 @@ class UserBranchViewModel(
     fun loadAllUserBranches() {
         viewModelScope.launch {
             val result = repository.getAllUserBranch()
-            _userBranchList.value = result ?: emptyList()
+            _userBranchList.value = result
         }
     }
 
@@ -35,7 +35,7 @@ class UserBranchViewModel(
     }
 
     // Insert list of user branches
-    fun insertAllUserBranch(list: List<UserBranchEntity>?) {
+    fun insertAllUserBranch(list: List<UserBranchEntity>) {
         viewModelScope.launch {
             repository.insertAllUserBranch(list)
             loadAllUserBranches() // Refresh list
