@@ -41,6 +41,7 @@ import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.CameraAlt
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -129,6 +130,7 @@ import com.psc.elekha.ui.theme.textview_color
 import com.psc.elekha.ui.theme.toolbar_color
 import com.psc.elekha.ui.theme.white
 import e_lekha.composeapp.generated.resources.Res
+import e_lekha.composeapp.generated.resources.age
 import e_lekha.composeapp.generated.resources.annual
 import e_lekha.composeapp.generated.resources.app_name
 import e_lekha.composeapp.generated.resources.back
@@ -141,6 +143,7 @@ import e_lekha.composeapp.generated.resources.education
 import e_lekha.composeapp.generated.resources.enter_here
 import e_lekha.composeapp.generated.resources.enter_otp
 import e_lekha.composeapp.generated.resources.existing_customer
+import e_lekha.composeapp.generated.resources.gender
 import e_lekha.composeapp.generated.resources.gtr_add
 import e_lekha.composeapp.generated.resources.gtr_save
 import e_lekha.composeapp.generated.resources.hh_mm
@@ -739,7 +742,7 @@ fun FormFieldCompact(
     disabledBackgroundColor: Color = formborder,
     maxLines: Int = 1,
     modifier: Modifier = Modifier,
-    placeholderTextSize: Int = 14
+    placeholderTextSize: Int = 16
 ) {
 
     Column(modifier) {
@@ -1104,7 +1107,7 @@ fun FormDatePickerCompact(
                     if (value.isEmpty()) {
                         Text(
                             text = placeholder,
-                            fontSize = 14.sp,
+                            fontSize = 16.sp,
                             color = placeholderColor,
                             fontFamily = FontFamily(Font(Res.font.roboto_medium)),
                         )
@@ -2616,14 +2619,12 @@ fun LabelValueText(label: String, value: String) {
       )
 
             
-        )
+
 
         Spacer(modifier = Modifier.width(4.dp))
         ReusableTextViewBlackCard(
             text = value,
             fontSize = 12,
-
-
         )
     }
 }
@@ -3658,6 +3659,166 @@ fun CustomAlertMonthlyIncome(
                         }
                     }
 
+                    Spacer(Modifier.height(10.dp))
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun CustomAlertFamilyDetails(
+    title: String = stringResource(Res.string.app_name),
+    submitText: String = stringResource(Res.string.ok),
+    cancelText: String = stringResource(Res.string.cancel),
+    onSubmit: () -> Unit = {},
+    onCancel: () -> Unit = {}
+) {
+    Dialog(onDismissRequest = {}) {
+
+        Box(
+            modifier = Modifier
+                .widthIn(min = 350.dp, max = 500.dp)
+                .background(lightGrey, RoundedCornerShape(16.dp))
+                .border(1.dp, lightGrey, RoundedCornerShape(16.dp))
+        ) {
+
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+
+                // ----------------------- HEADER (NO MARGIN) -----------------------
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(
+                            toolbar_color,
+                            shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp)
+                        )
+                        .height(50.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    ReusableTextView(
+                        text = title,
+                        fontSize = 20,
+                        fontWeight = FontWeight.Bold,
+                        textColor = white,
+                        textAlignment = TextAlign.Center,
+                        modifier = Modifier.fillMaxWidth()  // Perfect centering
+                    )
+                }
+
+                // ----------------------- CONTENT AREA -----------------------
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),             // Padding ONLY inside content area
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+
+                    Spacer(Modifier.height(8.dp))
+
+                    // ----------- NAME & RELATION SPINNERS -----------
+                        FormFieldCompact(
+                            label = stringResource(Res.string.name),
+                            value = "",
+                            placeholder = stringResource(Res.string.type_here),
+                            onValueChange = { "" },
+
+                        )
+                    Spacer(Modifier.height(12.dp))
+                        FormSpinner(
+                            label = stringResource(Res.string.gender),
+                            options = listOf("Male", "Female", "Other"),
+                            selectedOption = "",
+                            onOptionSelected = { },
+                        )
+
+                    Spacer(Modifier.height(12.dp))
+
+                    // ----------- OCCUPATION & INCOME SPINNERS -----------
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(10.dp)
+                    ) {
+                        FormFieldCompact(
+                            label = stringResource(Res.string.age),
+                            value = "",
+                            onValueChange = { "" },
+                            placeholder = stringResource(Res.string.type_here),
+                            maxLength = 2,
+                            inputType = KeyboardType.Number,
+                            modifier = Modifier.weight(1f)
+
+                        )
+
+                        FormSpinner(
+                            label = stringResource(Res.string.relation),
+                            options = listOf("Brother", "Husband"),
+                            selectedOption = "",
+                            onOptionSelected = { },
+                            modifier = Modifier.weight(1f)
+                        )
+                    }
+
+                    Spacer(Modifier.height(12.dp))
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(10.dp)
+                    ) {
+
+                        FormSpinner(
+                            label = stringResource(Res.string.education),
+                            options = listOf("Graduation", "Post Graduation", "12th"),
+                            selectedOption = "",
+                            onOptionSelected = { },
+                            modifier = Modifier.weight(1f)
+
+                        )
+                        FormSpinner(
+                            label = stringResource(Res.string.occupation),
+                            options = listOf("Doctor", "Teacher", "Driver"),
+                            selectedOption = "",
+                            onOptionSelected = { },
+                            modifier = Modifier.weight(1f)
+                        )
+                    }
+                    // ----------- REMARKS FIELD -----------
+                    Spacer(Modifier.height(24.dp))
+                    // ----------------------- BUTTONS -----------------------
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        Button(
+                            onClick = onCancel,
+                            modifier = Modifier
+                                .weight(1f)
+                                .height(48.dp),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = btn_color,
+                                contentColor = Color.Black
+                            ),
+                            shape = RoundedCornerShape(15.dp)
+                        ) {
+                            Text(cancelText)
+                        }
+                        Button(
+                            onClick = onSubmit,
+                            modifier = Modifier
+                                .weight(1f)
+                                .height(48.dp),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = btn_color,
+                                contentColor = Color.Black
+                            ),
+                            shape = RoundedCornerShape(15.dp)
+                        ) {
+                            Text(submitText)
+                        }
+                    }
                     Spacer(Modifier.height(10.dp))
                 }
             }

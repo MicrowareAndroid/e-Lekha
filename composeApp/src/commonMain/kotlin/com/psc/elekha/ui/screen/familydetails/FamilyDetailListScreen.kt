@@ -18,6 +18,7 @@ import com.psc.elekha.model.FamilyDetailModel
 import com.psc.elekha.ui.theme.black
 import com.psc.elekha.ui.theme.btn_color
 import com.psc.elekha.utils.CustomAlertDialogRegistrationExisting
+import com.psc.elekha.utils.CustomAlertFamilyDetails
 import com.psc.elekha.utils.ReusableTopBar
 import com.psc.elekha.utils.RouteName
 import e_lekha.composeapp.generated.resources.Res
@@ -35,6 +36,7 @@ fun FamilyDetailListScreen(
     onCancelTab: () -> Unit = {},
     navController: NavController
 ) {
+
     var showDialog by remember { mutableStateOf(false) }
 
     var familyDetailModel by rememberSaveable {
@@ -110,7 +112,7 @@ fun FamilyDetailListScreen(
                 //just icon
                 FloatingActionButton(
                     onClick = {
-                        navController.navigate(RouteName.family_detail_form_screen)
+                        showDialog = true
                     },
                     containerColor = btn_color,
                     shape = CircleShape,
@@ -127,6 +129,17 @@ fun FamilyDetailListScreen(
                         painter = painterResource(Res.drawable.ic_add),
                         contentDescription = stringResource(Res.string.add),
                         tint = black
+                    )
+                }
+
+                if (showDialog) {
+                    CustomAlertFamilyDetails(
+                        onSubmit = {
+                            showDialog = false
+                        },
+                        onCancel = {
+                            showDialog = false
+                        }
                     )
                 }
             }
