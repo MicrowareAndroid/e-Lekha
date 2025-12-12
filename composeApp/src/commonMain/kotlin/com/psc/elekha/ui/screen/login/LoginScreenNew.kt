@@ -18,6 +18,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.psc.elekha.database.entity.MSTComboBox_NEntity
+import com.psc.elekha.database.viewmodel.MSTComboBox_NViewModel
 import com.psc.elekha.getAppVersion
 
 import com.psc.elekha.ui.theme.*
@@ -30,6 +32,7 @@ import e_lekha.composeapp.generated.resources.Res
 import e_lekha.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun LoginScreenNew(navController: NavController) {
@@ -39,6 +42,7 @@ fun LoginScreenNew(navController: NavController) {
     var otp by remember { mutableStateOf("") }
     var showOtpField by remember { mutableStateOf(false) }
     val versionName = getAppVersion()
+//    val mstComboBox_NViewModel = koinViewModel<MSTComboBox_NViewModel>()
 
     Box(
         modifier = Modifier
@@ -69,7 +73,7 @@ fun LoginScreenNew(navController: NavController) {
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
 
-                    ) {
+                        ) {
                         Text(
                             text = stringResource(Res.string.registered_office_address),
                             style = MaterialTheme.typography.bodyMedium.copy(
@@ -192,15 +196,18 @@ fun LoginScreenNew(navController: NavController) {
                                 onClick = {
                                     if (!showOtpField) {
                                         showOtpField = true
-                                    }else
+                                    } else {
+//                                        val values = MSTComboBox_NEntity(1, "Sudeep", 1, "1", true)
+//                                        mstComboBox_NViewModel.insertComboBox(values)
                                         navController.navigate(RouteName.home)
+                                    }
                                 },
                                 modifier = Modifier
                                     .width(200.dp)
                                     .height(56.dp)
                                     .background(
                                         brush = Brush.horizontalGradient(
-                                            listOf(WhitishYellow, BrightYellow)                               
+                                            listOf(WhitishYellow, BrightYellow)
                                         ),
                                         shape = RoundedCornerShape(12.dp)
                                     ),
