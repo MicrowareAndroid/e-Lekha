@@ -37,6 +37,8 @@ import com.psc.elekha.ui.theme.btn_color
 import com.psc.elekha.ui.theme.toolbar_color
 import org.jetbrains.compose.resources.stringResource
 
+import androidx.compose.foundation.layout.BoxScope
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RepaymentList(
@@ -66,7 +68,7 @@ fun RepaymentList(
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        containerColor = Color.Transparent,
+
         topBar = {
             ReusableTopBar(
                 title = select,
@@ -74,28 +76,25 @@ fun RepaymentList(
                 onNavigationClick = { navController.popBackStack() }
             )
         },
-        bottomBar = {
-            Box(
+      /* bottomBar = {
+            CommonSingleButtonsBottomString(
+                onOkClick = {},
+                text = stringResource(Res.string.gtr_save),
+                textSize = 16,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(color = toolbar_color)
-                    .padding(horizontal = 16.dp, vertical = 10.dp)
+                    .padding(16.dp)
                     .navigationBarsPadding()
-            ) {
-                CommonSingleButtonsBottomString(
-                    onOkClick = {
+            )
+        }*/
 
-                    },
-                    stringResource(Res.string.gtr_save),
-                    textSize = 16
-                )
-            }
-        }
     ) { innerPadding ->
         Box(
-            modifier = Modifier.fillMaxSize().padding(innerPadding)
-        )
-        {
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+        ) {
+
             Image(
                 painter = painterResource(Res.drawable.background),
                 contentDescription = null,
@@ -201,8 +200,24 @@ fun RepaymentList(
                         onFilterClick = { showFilterDialog = true },
                         modifier = Modifier
                             .weight(1f)
+                            .padding(bottom = 45.dp)
 
                     )
+                }
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 5.dp)
+                        .align(Alignment.BottomCenter)
+
+                ) {
+                    CommonSingleButtonsBottomString(
+                        onOkClick = {},
+                        text = stringResource(Res.string.gtr_save),
+                        textSize = 16,
+
+
+                        )
                 }
 
 
@@ -218,8 +233,16 @@ fun RepaymentList(
                 }
             )
         }
+
+
+
     }
+
+
+
 }
+
+
 
 @Composable
 fun CollectionDetailsCard(
@@ -271,6 +294,7 @@ fun CollectionDetailsCard(
                 }
             }
         }
+
     }
 }
 
