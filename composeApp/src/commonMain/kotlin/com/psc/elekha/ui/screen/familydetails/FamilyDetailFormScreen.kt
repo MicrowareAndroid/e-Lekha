@@ -50,6 +50,7 @@ import com.psc.elekha.utils.CommonSingleButtonsBottomString
 import com.psc.elekha.utils.DynamicCheckBox
 import com.psc.elekha.utils.FormDatePicker
 import com.psc.elekha.utils.FormField
+import com.psc.elekha.utils.FormFieldCompact
 import com.psc.elekha.utils.FormSpinner
 import com.psc.elekha.utils.ReusableImageView
 import com.psc.elekha.utils.ReusableTextView
@@ -164,7 +165,7 @@ fun FamilyDetailFormScreen(navController: NavController) {
 
                         Spacer(modifier = Modifier.height(8.dp))
 
-                        FormField(
+                        FormFieldCompact(
                             label = stringResource(Res.string.name),
                             value = "",
                             placeholder = stringResource(Res.string.type_here),
@@ -183,7 +184,7 @@ fun FamilyDetailFormScreen(navController: NavController) {
 
                         Spacer(modifier = Modifier.height(8.dp))
 
-                        FormField(
+                        FormFieldCompact(
                             label = stringResource(Res.string.age),
                             value = "",
                             onValueChange = { "" },
