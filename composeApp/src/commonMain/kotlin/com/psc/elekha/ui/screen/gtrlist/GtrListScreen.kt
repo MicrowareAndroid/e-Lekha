@@ -21,6 +21,7 @@ import com.psc.elekha.ui.theme.PrimaryDark
 import com.psc.elekha.ui.theme.black
 import com.psc.elekha.ui.theme.homeRegistrationColor
 import com.psc.elekha.ui.theme.homedatareportsColor
+import com.psc.elekha.ui.theme.toolbar_color
 import com.psc.elekha.ui.theme.white
 import com.psc.elekha.utils.*
 import e_lekha.composeapp.generated.resources.Res
@@ -157,7 +158,7 @@ fun GtrListScreen(
                             ) {
                                 ReusableTextView(
                                     text = stringResource(Res.string.home_user),
-                                    textColor = PrimaryDark
+                                    textColor = toolbar_color
                                 )
                                 Spacer(Modifier.width(6.dp))
                                 ReusableTextView(text = "Vikash", textColor = Color.Black)
@@ -180,7 +181,7 @@ fun GtrListScreen(
                                 {
                                     ReusableTextView(
                                         text = stringResource(Res.string.home_time),
-                                        textColor = PrimaryDark
+                                        textColor = toolbar_color
                                     )
                                     Spacer(Modifier.width(6.dp))
                                     ReusableTextView(text = "10:45 AM", textColor = Color.Black)
@@ -192,7 +193,7 @@ fun GtrListScreen(
                                 ) {
                                     ReusableTextView(
                                         text = stringResource(Res.string.home_date),
-                                        textColor = PrimaryDark
+                                        textColor = toolbar_color
                                     )
                                     Spacer(Modifier.width(6.dp))
                                     ReusableTextView(text = "04/12/2025", textColor = Color.Black)

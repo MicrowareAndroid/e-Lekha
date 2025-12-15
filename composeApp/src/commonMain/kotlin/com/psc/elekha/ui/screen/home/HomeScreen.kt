@@ -38,7 +38,24 @@ import com.psc.elekha.utils.DashboardCardItem
 import com.psc.elekha.utils.ReusableTextView
 import com.psc.elekha.utils.RouteName
 import com.psc.elekha.utils.TripleIconSlider
-import e_lekha.composeapp.generated.resources.*
+import e_lekha.composeapp.generated.resources.Res
+import e_lekha.composeapp.generated.resources.group
+import e_lekha.composeapp.generated.resources.home_active_customer
+import e_lekha.composeapp.generated.resources.home_arrear
+import e_lekha.composeapp.generated.resources.home_case
+import e_lekha.composeapp.generated.resources.home_closed
+import e_lekha.composeapp.generated.resources.home_data
+import e_lekha.composeapp.generated.resources.home_date
+import e_lekha.composeapp.generated.resources.home_default
+import e_lekha.composeapp.generated.resources.home_gtr
+import e_lekha.composeapp.generated.resources.home_gtr_home
+import e_lekha.composeapp.generated.resources.home_registration
+import e_lekha.composeapp.generated.resources.home_registration_detail
+import e_lekha.composeapp.generated.resources.home_repayment
+import e_lekha.composeapp.generated.resources.home_time
+import e_lekha.composeapp.generated.resources.home_user
+import e_lekha.composeapp.generated.resources.ic_menu
+import e_lekha.composeapp.generated.resources.ic_setting
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 

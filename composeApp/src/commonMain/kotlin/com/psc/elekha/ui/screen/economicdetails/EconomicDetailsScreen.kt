@@ -71,6 +71,13 @@ fun EconomicDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
     var selectedChip by remember { mutableStateOf(0) }
     var showDialog by remember { mutableStateOf(false) }
     var showDialogMonthlyIncome by remember { mutableStateOf(false) }
+    var dailyexpenses by remember {mutableStateOf("")}
+    var educationexpenses by remember{mutableStateOf("")}
+    var medicalexpenses by remember { mutableStateOf("")}
+    var otherexpenses by remember { mutableStateOf("") }
+    var totalmonthlyexpenditure by remember { mutableStateOf("") }
+    var annual by remember {mutableStateOf("")}
+
 
     var economicMovableAssetsModel by rememberSaveable {
         mutableStateOf(
@@ -222,8 +229,11 @@ fun EconomicDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
                 {
                     FormFieldCompact(
                         label = stringResource(Res.string.daily_expenses),
-                        value = "",
-                        onValueChange = { "" },
+                        value = dailyexpenses,
+                        onValueChange = {
+                            dailyexpense->
+                            dailyexpenses = dailyexpense
+                        },
                         placeholder = stringResource(Res.string.type_here),
                         maxLength = 6,
                         modifier = Modifier.weight(1f),
@@ -232,8 +242,11 @@ fun EconomicDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
 
                     FormFieldCompact(
                         label = stringResource(Res.string.education_expenses),
-                        value = "",
-                        onValueChange = { "" },
+                        value = educationexpenses,
+                        onValueChange = {
+                            educationexpense->
+                            educationexpenses = educationexpense
+                        },
                         placeholder = stringResource(Res.string.type_here),
                         modifier = Modifier.weight(1f),
                         maxLength = 6,
@@ -251,8 +264,11 @@ fun EconomicDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
                 {
                     FormFieldCompact(
                         label = stringResource(Res.string.medical_expenses),
-                        value = "",
-                        onValueChange = { "" },
+                        value = medicalexpenses,
+                        onValueChange = {
+                            medicalexpense->
+                            medicalexpenses = medicalexpense
+                        },
                         placeholder = stringResource(Res.string.type_here),
                         maxLength = 6,
                         modifier = Modifier.weight(1f),
@@ -261,8 +277,11 @@ fun EconomicDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
 
                     FormFieldCompact(
                         label = stringResource(Res.string.other_expenses),
-                        value = "",
-                        onValueChange = { "" },
+                        value = otherexpenses,
+                        onValueChange = {
+                            otherexpense->
+                            otherexpenses = otherexpense
+                        },
                         placeholder = stringResource(Res.string.type_here),
                         modifier = Modifier.weight(1f),
                         maxLength = 6,
@@ -280,8 +299,10 @@ fun EconomicDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
                 {
                     FormFieldCompact(
                         label = stringResource(Res.string.total_monthly_expenditure),
-                        value = "",
-                        onValueChange = { "" },
+                        value = totalmonthlyexpenditure,
+                        onValueChange = { totalmonthlyexpenditures->
+                            totalmonthlyexpenditure = totalmonthlyexpenditures
+                        },
                         placeholder = stringResource(Res.string.type_here),
                         maxLength = 6,
                         modifier = Modifier.weight(1f),
@@ -290,8 +311,10 @@ fun EconomicDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
 
                     FormFieldCompact(
                         label = stringResource(Res.string.annual),
-                        value = "",
-                        onValueChange = { "" },
+                        value = annual,
+                        onValueChange = { annuals->
+                            annual = annuals
+                        },
                         placeholder = stringResource(Res.string.type_here),
                         modifier = Modifier.weight(1f),
                         maxLength = 6,

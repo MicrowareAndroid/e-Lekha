@@ -27,6 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import coil3.Uri
 import coil3.compose.LocalPlatformContext
@@ -342,7 +343,8 @@ viewModel.loadSavedData()
                         },
                         placeholder = stringResource(Res.string.type_here),
                         maxLength = 10,
-                        modifier = Modifier.weight(2f)
+                        modifier = Modifier.weight(2f),
+                        inputType = KeyboardType.Number
                     )
 
                     FormFieldCompact(
@@ -353,7 +355,8 @@ viewModel.loadSavedData()
                             enter_otp=enterotp
                         },
                         placeholder = stringResource(Res.string.type_here),
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier.weight(1f),
+                        inputType = KeyboardType.Number
                     )
 
                     CommonSingleButtonsBottomString(
@@ -454,7 +457,8 @@ viewModel.loadSavedData()
                         gurantormbno->
                         guarantor_mobile_number=gurantormbno
                     },
-                    maxLength = 10
+                    maxLength = 10,
+                    inputType = KeyboardType.Number
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -470,7 +474,8 @@ viewModel.loadSavedData()
                         onValueChange = {  gurantorotp->
                             gurantor_enter_otp =gurantorotp },
                         placeholder = stringResource(Res.string.type_here),
-                        modifier = Modifier.weight(2f)
+                        modifier = Modifier.weight(2f),
+                        inputType = KeyboardType.Number
                     )
 
                     CommonSingleButtonsBottomString(
@@ -580,7 +585,8 @@ viewModel.loadSavedData()
                             pin_code=pincode
                         },
                         placeholder = stringResource(Res.string.type_here),
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier.weight(1f),
+                        inputType = KeyboardType.Number
                     )
                 }
                 Spacer(modifier = Modifier.height(8.dp))
@@ -618,7 +624,8 @@ viewModel.loadSavedData()
                             maternal_mob_no=maternalmbno
                         },
                         placeholder = stringResource(Res.string.type_here),
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier.weight(1f),
+                        inputType = KeyboardType.Number
                     )
                 }
                 Spacer(modifier = Modifier.height(8.dp))

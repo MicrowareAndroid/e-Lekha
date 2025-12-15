@@ -213,9 +213,9 @@ fun ReusableTextView(
     text: String,
     modifier: Modifier = Modifier,
     textColor: Color = Color.Black,
-    fontSize: Int = 16,
-    fontWeight: FontWeight = FontWeight.Normal,
-    fontFamily: FontFamily = FontFamily(Font(Res.font.roboto_regular)),
+    fontSize: Int = 14,
+    fontWeight: FontWeight = FontWeight.SemiBold,
+    fontFamily: FontFamily = FontFamily(Font(Res.font.roboto_medium)),
     backgroundColor: Color = Color.Transparent,
     cornerRadius: Dp = 0.dp,
     padding: Dp = 0.dp,
@@ -751,7 +751,7 @@ fun FormFieldCompact(
     disabledBackgroundColor: Color = formborder,
     maxLines: Int = 1,
     modifier: Modifier = Modifier,
-    placeholderTextSize: Int = 16
+    placeholderTextSize: Int = 12
 ) {
 
     Column(modifier) {
@@ -2635,7 +2635,6 @@ fun LabelValueText(label: String, value: String,) {
             text = value,
             fontSize = 12
             )
-
     }
 }
 
@@ -2651,9 +2650,8 @@ fun CustomerItemCard(
             .fillMaxWidth()
             .padding(horizontal = 8.dp, vertical = 8.dp)
             .clickable {
-                if (checked) {
-                    onCardClick(customer)
-                }
+                onCardClick(customer)
+
             },
         backgroundColor = loginBg,
         cornerRadius = 12
@@ -3646,11 +3644,6 @@ fun CustomAlertMonthlyIncome(
                         ) {
                             Text(cancelText)
                         }
-
-
-
-
-
                         Button(
                             onClick = onSubmit,
                             modifier = Modifier

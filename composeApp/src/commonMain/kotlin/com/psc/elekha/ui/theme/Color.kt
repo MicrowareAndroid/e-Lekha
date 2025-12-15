@@ -93,6 +93,10 @@ val homemenuGreyColor =Color(0xFFBABBBC)
 
 
 
+val appleblue =Color(0xFF0A84FF)
+
+val lightblues=Color(0xFFEAF2FF)
+
 
 
 
