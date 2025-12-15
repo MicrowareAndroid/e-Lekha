@@ -23,7 +23,15 @@ import com.psc.elekha.ui.theme.LightTeal
 import com.psc.elekha.ui.theme.LightYellow
 import com.psc.elekha.ui.theme.PrimaryDark
 import com.psc.elekha.ui.theme.black
+import com.psc.elekha.ui.theme.homeRegistrationColor
+import com.psc.elekha.ui.theme.homeViewLineColor
+import com.psc.elekha.ui.theme.homedatareportsColor
+import com.psc.elekha.ui.theme.homegtrColor
+import com.psc.elekha.ui.theme.homemenuGreyColor
+import com.psc.elekha.ui.theme.homerepaymentColor
+import com.psc.elekha.ui.theme.lightGrey
 import com.psc.elekha.ui.theme.lightgreens
+import com.psc.elekha.ui.theme.loginBg
 import com.psc.elekha.ui.theme.repaymentColor
 import com.psc.elekha.utils.CommonSingleButtons
 import com.psc.elekha.utils.DashboardCardItem
@@ -101,7 +109,7 @@ fun HomeScreen(
 
         Scaffold(
             modifier = Modifier.fillMaxSize(),
-            containerColor = Color.Transparent
+            containerColor = loginBg
         ) { innerPadding ->
 
             Column(
@@ -122,6 +130,7 @@ fun HomeScreen(
                     Icon(
                         painter = painterResource(Res.drawable.ic_menu),
                         contentDescription = null,
+                        tint = homemenuGreyColor,
 
                         modifier = Modifier
                             .size(25.dp)
@@ -179,7 +188,7 @@ fun HomeScreen(
 
                     item {
                         Divider(
-                            color = lightgreens,
+                            color = homeViewLineColor,
                             thickness = 1.dp,
                             modifier = Modifier.padding(horizontal = 8.dp)
                         )
@@ -188,7 +197,7 @@ fun HomeScreen(
                     item {
                         CommonSingleButtons(
                             onOkClick = { navController.navigate(RouteName.registration_list) },
-                            backgroundColor = LightMint,
+                            backgroundColor = homeRegistrationColor,
                             text = stringResource(Res.string.home_registration_detail),
                             textColor = black
                         )
@@ -197,7 +206,7 @@ fun HomeScreen(
                     item {
                         CommonSingleButtons(
                             onOkClick = { navController.navigate(RouteName.gtr_list_screen) },
-                            backgroundColor = LightTeal,
+                            backgroundColor = homegtrColor,
                             text = stringResource(Res.string.home_gtr_home),
                             textColor = black
                         )
@@ -206,7 +215,7 @@ fun HomeScreen(
                     item {
                         CommonSingleButtons(
                             onOkClick = { navController.navigate(RouteName.replayment_list) },
-                            backgroundColor = LightYellow,
+                            backgroundColor = homerepaymentColor,
                             text = stringResource(Res.string.home_repayment),
                             textColor = black
                         )
@@ -215,7 +224,7 @@ fun HomeScreen(
                     item {
                         CommonSingleButtons(
                             onOkClick = {},
-                            backgroundColor = repaymentColor,
+                            backgroundColor = homedatareportsColor,
                             text = stringResource(Res.string.home_data),
                             textColor = black
                         )

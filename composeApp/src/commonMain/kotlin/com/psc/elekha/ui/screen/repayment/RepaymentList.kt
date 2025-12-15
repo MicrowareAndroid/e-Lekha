@@ -38,6 +38,7 @@ import com.psc.elekha.ui.theme.toolbar_color
 import org.jetbrains.compose.resources.stringResource
 
 import androidx.compose.foundation.layout.BoxScope
+import com.psc.elekha.ui.theme.homedatareportsColor
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -116,7 +117,7 @@ fun RepaymentList(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(7.dp),
-                        backgroundColor = LightTeal,
+                        backgroundColor = homedatareportsColor,
                         cornerRadius = 12
                     )
                     {

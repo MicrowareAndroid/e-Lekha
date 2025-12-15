@@ -25,6 +25,8 @@ import com.psc.elekha.ui.theme.LightMint
 import com.psc.elekha.ui.theme.black
 import com.psc.elekha.ui.theme.btn_color
 import com.psc.elekha.ui.theme.editext_bg_color
+import com.psc.elekha.ui.theme.homeTopIconsBg
+import com.psc.elekha.ui.theme.loginBg
 import com.psc.elekha.ui.theme.repaymentColor
 import com.psc.elekha.ui.theme.text_fiiled_color
 import com.psc.elekha.utils.ReusableTextView
@@ -50,7 +52,7 @@ fun RegistrationCard(
     Card(
         shape = RoundedCornerShape(12.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-        colors = CardDefaults.cardColors(containerColor = repaymentColor),
+        colors = CardDefaults.cardColors(containerColor = loginBg),
         modifier = Modifier
             .fillMaxWidth()
             .padding(4.dp)
@@ -58,7 +60,7 @@ fun RegistrationCard(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(12.dp),
+                .padding(10.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
 

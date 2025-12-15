@@ -1,4 +1,5 @@
 package com.psc.elekha.ui.screen.registrationtab
+import androidx.compose.foundation.Image
 import com.psc.elekha.ui.screen.kycdetails.KycDetailsScreen
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -24,6 +25,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -37,6 +39,7 @@ import com.psc.elekha.ui.theme.white
 import com.psc.elekha.utils.AppPreferences
 import com.psc.elekha.utils.ReusableTopBar
 import e_lekha.composeapp.generated.resources.Res
+import e_lekha.composeapp.generated.resources.background
 import e_lekha.composeapp.generated.resources.bank_details
 import e_lekha.composeapp.generated.resources.economic_details
 import e_lekha.composeapp.generated.resources.family_details
@@ -64,137 +67,151 @@ fun RegistartionTabScreen(navController: NavController, pref: AppPreferences) {
     var showAddRespondent by remember { mutableStateOf(false) }
     var showAddCounselling by remember { mutableStateOf(false) }
 
-    Scaffold(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.White),
-        topBar = {
-            ReusableTopBar(
-                title = tabs[selectedTabIndex],
-                navigationIcon = painterResource(Res.drawable.ic_back),
-                onNavigationClick = {
-                    navController.popBackStack()
-                }
-            )
-        },
-    )
-    { innerPadding ->
-        Column(
+
+    Box(
+        modifier = Modifier.fillMaxSize()
+    ) {
+
+        // ✅ BACKGROUND IMAGE (FULL SCREEN)
+        Image(
+            painter = painterResource(Res.drawable.background),
+            contentDescription = null,
+            modifier = Modifier.matchParentSize(),
+            contentScale = ContentScale.FillBounds
+        )
+        Scaffold(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding)
-                .background(Color.White)
-        ) {
-            val underlineWidth = 45.dp
-            val underlineHeight = 5.dp
-            val underlineShape = RoundedCornerShape(50)
+                .fillMaxSize(),
+            containerColor = Color.Transparent,
+            topBar = {
+                ReusableTopBar(
+                    title = tabs[selectedTabIndex],
+                    navigationIcon = painterResource(Res.drawable.ic_back),
+                    onNavigationClick = {
+                        navController.popBackStack()
+                    }
+                )
+            },
+        )
+        { innerPadding ->
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding)
+                    //.background(Color.White)
+            ) {
 
-            ScrollableTabRow(
-                selectedTabIndex = selectedTabIndex,
-                edgePadding = 0.dp,
-                containerColor = Color.White,
-                indicator = { tabPositions ->
-                    // defensive check: ensure index valid
-                    if (tabPositions.size > selectedTabIndex) {
-                        val current = tabPositions[selectedTabIndex]
+                val underlineWidth = 45.dp
+                val underlineHeight = 5.dp
+                val underlineShape = RoundedCornerShape(50)
 
-                        // `tabIndicatorOffset(current)` positions at the start (left) of the tab.
-                        // Then we offset by half the remaining space to center the underline:
-                        Box(
-                            modifier = Modifier
-                                .tabIndicatorOffset(current)
-                                .fillMaxWidth() // keep full tab width area so we can offset inside it
-                        ) {
+
+                ScrollableTabRow(
+                    selectedTabIndex = selectedTabIndex,
+                    edgePadding = 0.dp,
+                    containerColor = Color.Transparent,
+                    indicator = { tabPositions ->
+                        // defensive check: ensure index valid
+                        if (tabPositions.size > selectedTabIndex) {
+                            val current = tabPositions[selectedTabIndex]
+
+                            // `tabIndicatorOffset(current)` positions at the start (left) of the tab.
+                            // Then we offset by half the remaining space to center the underline:
                             Box(
                                 modifier = Modifier
-                                    .offset(x = (current.width - underlineWidth) / 2) // center underline
-                                    .width(underlineWidth)
-                                    .height(underlineHeight)
-                                    .clip(underlineShape)
-                                    .background(toolbar_color) // selected blue
-                            )
-                        }
-                    }
-                },
-                divider = {} // Remove full-width grey line
-            )
-            {
-
-                tabs.forEachIndexed { index, title ->
-
-                    Tab(
-                        selected = selectedTabIndex == index,
-                        onClick = { selectedTabIndex = index },
-                        selectedContentColor = Color.Black,
-                        unselectedContentColor = Color.Black
-                    ) {
-
-                        Column(
-                            modifier = Modifier.padding(horizontal = 12.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-
-                            // TAB TEXT
-                            Text(
-                                text = title,
-                                modifier = Modifier.padding(top = 8.dp, bottom = 6.dp),
-                                fontSize = 14.sp,
-                                fontWeight = if (selectedTabIndex == index)
-                                    FontWeight.Bold else FontWeight.Normal
-                            )
-
-                            // GREY UNDERLINE for unselected
-                            if (selectedTabIndex != index) {
+                                    .tabIndicatorOffset(current)
+                                    .fillMaxWidth() // keep full tab width area so we can offset inside it
+                            ) {
                                 Box(
                                     modifier = Modifier
-                                        .height(underlineHeight)
+                                        .offset(x = (current.width - underlineWidth) / 2) // center underline
                                         .width(underlineWidth)
-                                        .clip(underlineShape)   // Rounded blue underline
-                                        .background(Color(0xFFBDBDBD))
+                                        .height(underlineHeight)
+                                        .clip(underlineShape)
+                                        .background(toolbar_color) // selected blue
                                 )
+                            }
+                        }
+                    },
+                    divider = {} // Remove full-width grey line
+                )
+                {
+
+                    tabs.forEachIndexed { index, title ->
+
+                        Tab(
+                            selected = selectedTabIndex == index,
+                            onClick = { selectedTabIndex = index },
+                            selectedContentColor = Color.Black,
+                            unselectedContentColor = Color.Black
+                        ) {
+
+                            Column(
+                                modifier = Modifier.padding(horizontal = 12.dp),
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+
+                                // TAB TEXT
+                                Text(
+                                    text = title,
+                                    modifier = Modifier.padding(top = 8.dp, bottom = 6.dp),
+                                    fontSize = 14.sp,
+                                    fontWeight = if (selectedTabIndex == index)
+                                        FontWeight.Bold else FontWeight.Normal
+                                )
+
+                                // GREY UNDERLINE for unselected
+                                if (selectedTabIndex != index) {
+                                    Box(
+                                        modifier = Modifier
+                                            .height(underlineHeight)
+                                            .width(underlineWidth)
+                                            .clip(underlineShape)   // Rounded blue underline
+                                            .background(Color(0xFFBDBDBD))
+                                    )
+                                }
                             }
                         }
                     }
                 }
-            }
 
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(horizontal = 16.dp)
-                    .background(white)
-            ) {
-                when (selectedTabIndex) {
-                    0 -> PersonalDetailsScreen(
-                        onNextTab = { selectedTabIndex++ },
-                        onCancelTab = { navController.popBackStack() })
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(horizontal = 16.dp)
+                        //.background(white)
+                ) {
+                    when (selectedTabIndex) {
+                        0 -> PersonalDetailsScreen(
+                            onNextTab = { selectedTabIndex++ },
+                            onCancelTab = { navController.popBackStack() })
 
 
-                    1 -> KycDetailsScreen(
-                        onNextTab = { selectedTabIndex++ },
-                        onCancelTab = { selectedTabIndex-- })
+                        1 -> KycDetailsScreen(
+                            onNextTab = { selectedTabIndex++ },
+                            onCancelTab = { selectedTabIndex-- })
 
-                    2 -> BankDetailsScreen(
-                        onNextTab = { selectedTabIndex++ },
-                        onCancelTab = { selectedTabIndex-- })
+                        2 -> BankDetailsScreen(
+                            onNextTab = { selectedTabIndex++ },
+                            onCancelTab = { selectedTabIndex-- })
 
-                    3 -> FamilyDetailListScreen(
-                        onNextTab = { selectedTabIndex++ },
-                        onCancelTab = { selectedTabIndex-- },
-                        navController = navController
-                    )
+                        3 -> FamilyDetailListScreen(
+                            onNextTab = { selectedTabIndex++ },
+                            onCancelTab = { selectedTabIndex-- },
+                            navController = navController
+                        )
 
-                    4 -> EconomicDetailsScreen(
-                        onNextTab = { selectedTabIndex++ },
-                        onCancelTab = { selectedTabIndex-- }
-                    )
+                        4 -> EconomicDetailsScreen(
+                            onNextTab = { selectedTabIndex++ },
+                            onCancelTab = { selectedTabIndex-- }
+                        )
 
-                    /*3 -> CustomAlertDialog(
+                        /*3 -> CustomAlertDialog(
                         true,
                         message = "Hello"
                     )*/
 
-                    /*2 -> CaseCategoryScreen(onNextTab = {
+                        /*2 -> CaseCategoryScreen(onNextTab = {
                         categoryFlag = it
                         selectedTabIndex++
                     }, onCancelTab = { selectedTabIndex-- })
@@ -208,10 +225,11 @@ fun RegistartionTabScreen(navController: NavController, pref: AppPreferences) {
                             onCancelTab = { selectedTabIndex-- })
                     }*/
 
+                    }
                 }
             }
-        }
 
+        }
     }
 
 }
