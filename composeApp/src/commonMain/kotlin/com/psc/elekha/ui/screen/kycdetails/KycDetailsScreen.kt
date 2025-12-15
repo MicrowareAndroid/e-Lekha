@@ -1,3 +1,4 @@
+// Updated KycDetailsScreen.kt
 package com.psc.elekha.ui.screen.kycdetails
 
 import androidx.compose.foundation.background
@@ -19,21 +20,27 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.psc.elekha.ui.theme.blue
 import com.psc.elekha.ui.theme.appleblue
 import com.psc.elekha.ui.theme.lightblues
 import com.psc.elekha.ui.theme.white
 import com.psc.elekha.utils.CommonSaveButton
+import com.psc.elekha.utils.CustomAlertDialog
 import com.psc.elekha.utils.FormField
 import com.psc.elekha.utils.FormFieldCompact
 import com.psc.elekha.utils.ReusableTextView
@@ -56,32 +63,40 @@ import e_lekha.composeapp.generated.resources.name_on_aadhar
 import e_lekha.composeapp.generated.resources.name_on_pan
 import e_lekha.composeapp.generated.resources.name_on_vid
 import e_lekha.composeapp.generated.resources.next
+import e_lekha.composeapp.generated.resources.roboto_regular
+import org.jetbrains.compose.resources.Font
 import e_lekha.composeapp.generated.resources.pan_camera
 import e_lekha.composeapp.generated.resources.pan_number
 import e_lekha.composeapp.generated.resources.select_id_proof
 import e_lekha.composeapp.generated.resources.type_here
 import e_lekha.composeapp.generated.resources.voter_no
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.viewmodel.koinViewModel
+import kotlin.coroutines.coroutineContext
 
 @Composable
 fun KycDetailsScreen(
     onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = {}
-
 ) {
-
     var selectedTab by remember { mutableStateOf(0) }
 
     val tabs = listOf("Electricity bill", "Aadhaar Card", "Voter ID")
+    var viewModel = koinViewModel<KycDetailViewModel>()
+    val coroutineScope = rememberCoroutineScope()
+
+    LaunchedEffect(Unit) {
+        viewModel.loadSaveData()
+    }
 
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(white)
+
     ) {
-
         Column(modifier = Modifier.fillMaxSize()) {
-
             Spacer(modifier = Modifier.height(10.dp))
 
             Column(
@@ -90,7 +105,6 @@ fun KycDetailsScreen(
                     .verticalScroll(rememberScrollState())
                     .padding(bottom = 15.dp)
             ) {
-
                 ReusableTextView(
                     text = stringResource(Res.string.enter_your_kyc_details)
                 )
@@ -115,13 +129,13 @@ fun KycDetailsScreen(
                                 )
                                 .padding(horizontal = 12.dp)
                                 .clickable { selectedTab = index },
-                                    contentAlignment = Alignment.Center
-
+                            contentAlignment = Alignment.Center
                         ) {
                             Text(
                                 text = label,
                                 fontSize = 12.sp,
                                 maxLines = 1,
+                                fontFamily = FontFamily(Font(Res.font.roboto_regular)),
                                 textAlign = TextAlign.Center,
                                 color = if (selectedTab == index) Color.White else Color.Black
                             )
@@ -131,42 +145,58 @@ fun KycDetailsScreen(
 
                 Spacer(Modifier.height(20.dp))
                 when (selectedTab) {
-                    0 -> ElectricityBillForm()
-
-
-                    1 -> AadhaarCardForm()
-
-                    2 -> VidForm()
+                    0 -> ElectricityBillForm(viewModel)
+                    1 -> AadhaarCardForm(viewModel)
+                    2 -> VidForm(viewModel)
                 }
 
                 Spacer(Modifier.height(20.dp))
 
-                IdProofSection()
-
+                IdProofSection(viewModel)
             }
-            CommonSaveButton (
-                onSaveClick = {},
+            CommonSaveButton(
+                onSaveClick = {
+                    println("billNam")
+                    coroutineScope.launch {
+                        try {
+                            viewModel.SaveKyc()
+                        } catch (e: Exception) {
+                            println("Save error: ${e.message}")
+                            // Handle error: e.g., set showSaveAlert=true with error message
+                        }
+                    }
+                },
                 saveText = stringResource(Res.string.next)
             )
+            if (viewModel.showSaveAlert) {
+                CustomAlertDialog(
+                    showDialog = viewModel.showSaveAlert,
+                    message = viewModel.saveMessage,
+                    onConfirm = {
+                        if (viewModel.saveFlag == 1) {
+                            viewModel.showSaveAlert = false
+                            onNextTab()
+                        } else {
+                            viewModel.requestFocus()
+                        }
+                    }
+                )
+            }
         }
     }
 }
 
-
-
 @Composable
-fun ElectricityBillForm() {
-
-    var billName by remember { mutableStateOf("") }
-    var accountNumber by remember { mutableStateOf("") }
-    var kNumber by remember { mutableStateOf("") }
-    Column(    modifier = Modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally) {
+fun ElectricityBillForm(viewModel: KycDetailViewModel) {
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
         FormFieldCompact(
             label = stringResource(Res.string.name_electricity),
-            value = billName,
+            value = viewModel.billName,
             onValueChange = {
-                billName = it
+                viewModel.billName = it
             },
             placeholder = stringResource(Res.string.type_here)
         )
@@ -175,10 +205,12 @@ fun ElectricityBillForm() {
 
         FormFieldCompact(
             label = stringResource(Res.string.account_no),
-            value = accountNumber,
+            value = viewModel.accountNumber,
             onValueChange = {
-                accountNumber = it
+                viewModel.accountNumber = it
             },
+
+            maxLength = 10,
             placeholder = stringResource(Res.string.type_here),
             inputType = KeyboardType.Number
         )
@@ -186,17 +218,17 @@ fun ElectricityBillForm() {
         Spacer(Modifier.height(12.dp))
 
         FormFieldCompact(
+
+            maxLength = 30,
             label = stringResource(Res.string.k_number),
-            value = kNumber,
+            value = viewModel.kNumber,
             onValueChange = {
-                kno->
-                kNumber=kno
+                viewModel.kNumber = it
             },
             placeholder = stringResource(Res.string.type_here),
             inputType = KeyboardType.Number
         )
         Spacer(modifier = Modifier.height(10.dp))
-
     }
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -204,9 +236,12 @@ fun ElectricityBillForm() {
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         // Front Image Box
-        Column(modifier = Modifier.fillMaxWidth()
-            .padding(horizontal = 20.dp),
-            horizontalAlignment = Alignment.CenterHorizontally) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             Box(
                 modifier = Modifier
                     .size(120.dp)
@@ -218,6 +253,7 @@ fun ElectricityBillForm() {
             Spacer(modifier = Modifier.height(6.dp))
             Icon(
                 painter = painterResource(Res.drawable.camera),
+                tint = blue,
                 contentDescription = stringResource(Res.string.front_image),
                 tint = Color.Black,
                 modifier = Modifier.size(28.dp)
@@ -228,18 +264,14 @@ fun ElectricityBillForm() {
     }
 }
 
-
 @Composable
-fun AadhaarCardForm() {
-    var aadharno by remember { mutableStateOf("") }
-    var nameonadhar by remember { mutableStateOf("") }
+fun AadhaarCardForm(viewModel: KycDetailViewModel) {
     Column {
         FormFieldCompact(
             label = stringResource(Res.string.aadhar_no),
-            value = aadharno,
+            value = viewModel.aadharno,
             onValueChange = {
-                aadharnoo->
-                aadharno=aadharnoo
+                viewModel.aadharno = it
             },
             placeholder = stringResource(Res.string.enter_aadhar),
             maxLength = 12,
@@ -248,10 +280,9 @@ fun AadhaarCardForm() {
         Spacer(Modifier.height(12.dp))
         FormFieldCompact(
             label = stringResource(Res.string.name_on_aadhar),
-            value = nameonadhar,
+            value = viewModel.nameonadhar,
             onValueChange = {
-                nameonaadhar->
-                nameonadhar=nameonaadhar
+                viewModel.nameonadhar = it
             },
             placeholder = stringResource(Res.string.type_here)
         )
@@ -259,7 +290,8 @@ fun AadhaarCardForm() {
 
         // ------------------ FRONT & BACK IMAGE PREVIEW ------------------
         Row(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
                 .padding(horizontal = 30.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
@@ -277,8 +309,8 @@ fun AadhaarCardForm() {
                 Spacer(modifier = Modifier.height(6.dp))
                 Icon(
                     painter = painterResource(Res.drawable.camera),
+                    tint = blue,
                     contentDescription = stringResource(Res.string.front_image),
-                    tint = Color.Black,
                     modifier = Modifier.size(28.dp)
                 )
                 Spacer(modifier = Modifier.height(4.dp))
@@ -298,8 +330,8 @@ fun AadhaarCardForm() {
                 Spacer(modifier = Modifier.height(6.dp))
                 Icon(
                     painter = painterResource(Res.drawable.camera),
+                    tint = blue,
                     contentDescription = stringResource(Res.string.back_image),
-                    tint = Color.Black,
                     modifier = Modifier.size(28.dp)
                 )
                 Spacer(modifier = Modifier.height(4.dp))
@@ -309,113 +341,101 @@ fun AadhaarCardForm() {
     }
 }
 
-
-
-
 @Composable
-fun VidForm() {
-    var voterno by remember { mutableStateOf("") }
-    var nameonvid by remember { mutableStateOf("") }
-Column {
-    FormFieldCompact(
-        label = stringResource(Res.string.voter_no),
-        value = voterno,
-        onValueChange = {
-            voternoo->
-            voterno=voternoo
-        },
-        placeholder = stringResource(Res.string.enter_voter_id),
-        maxLength = 16,
-        inputType = KeyboardType.Number
-    )
-    Spacer(modifier = Modifier.height(10.dp))
+fun VidForm(viewModel: KycDetailViewModel) {
+    Column {
+        FormFieldCompact(
+            label = stringResource(Res.string.voter_no),
+            value = viewModel.voterno,
+            onValueChange = {
+                viewModel.voterno = it
+            },
+            placeholder = stringResource(Res.string.enter_voter_id),
+            maxLength = 16,
+            inputType = KeyboardType.Number
+        )
+        Spacer(modifier = Modifier.height(10.dp))
 
-    FormFieldCompact(
-        label = stringResource(Res.string.name_on_vid),
-        value = nameonvid,
-        onValueChange = {
-            nameonvidd->
-            nameonvid=nameonvidd
-        },
-        placeholder = stringResource(Res.string.enter_voter_id),
-        maxLength = 16,
-    )
-    Spacer(modifier = Modifier.height(20.dp))
+        FormFieldCompact(
+            label = stringResource(Res.string.name_on_vid),
+            value = viewModel.nameonvid,
+            onValueChange = {
+                viewModel.nameonvid = it  // Fixed: was voterno
+            },
+            placeholder = stringResource(Res.string.type_here),
+            maxLength = 16,
+        )
+        Spacer(modifier = Modifier.height(20.dp))
 
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 30.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Center
-    ) {
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 30.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Box(
+                    modifier = Modifier
+                        .size(120.dp)
+                        .background(Color(0xFFE8E8E8)),
+                    contentAlignment = Alignment.Center
+                ) { }
 
-            Box(
-                modifier = Modifier
-                    .size(120.dp)
-                    .background(Color(0xFFE8E8E8)),
-                contentAlignment = Alignment.Center
-            ) { }
+                Spacer(modifier = Modifier.height(6.dp))
 
-            Spacer(modifier = Modifier.height(6.dp))
 
             Icon(
                 painter = painterResource(Res.drawable.camera),
+                tint = blue,
                 contentDescription = stringResource(Res.string.front_image),
-                tint = Color.Black,
                 modifier = Modifier.size(28.dp)
             )
 
-            Spacer(modifier = Modifier.height(4.dp))
+                Spacer(modifier = Modifier.height(4.dp))
 
-            ReusableTextView(text = stringResource(Res.string.front_image))
+                ReusableTextView(text = stringResource(Res.string.front_image))
+            }
         }
     }
-
-}
 }
 
 @Composable
-fun IdProofSection() {
-
+fun IdProofSection(viewModel: KycDetailViewModel) {
     var selectedProof by remember { mutableStateOf(0) }
 
     val idProofTabs = listOf("Electricity bill", "Aadhaar Card", "Voter ID", "Pan Card")
 
-    Column(modifier = Modifier.fillMaxWidth(),
-
-        ) {
-
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+    ) {
         ReusableTextView(text = stringResource(Res.string.select_id_proof))
         Spacer(Modifier.height(10.dp))
 
-
         Row(
-            modifier = Modifier.fillMaxWidth()
-            .horizontalScroll(rememberScrollState()),
+            modifier = Modifier
+                .fillMaxWidth()
+                .horizontalScroll(rememberScrollState()),
             horizontalArrangement = Arrangement.spacedBy(12.dp)
-
-
-
         ) {
             idProofTabs.forEachIndexed { index, label ->
                 Box(
                     modifier = Modifier
-                         .height(40.dp)
+                        .height(40.dp)
                         .background(
                             if (selectedProof == index) Color(0xFF0A84FF) else Color(0xFFEAF2FF),
                             RoundedCornerShape(20.dp)
                         )
                         .clickable { selectedProof = index }
-                    .padding(horizontal = 20.dp),
-                contentAlignment = Alignment.Center
+                        .padding(horizontal = 20.dp),
+                    contentAlignment = Alignment.Center
                 ) {
                     Text(
                         text = label,
                         fontSize = 12.sp,
                         maxLines = 1,
                         textAlign = TextAlign.Center,
+                        fontFamily = FontFamily(Font(Res.font.roboto_regular)),
                         color = if (selectedProof == index) Color.White else Color.Black
                     )
                 }
@@ -425,28 +445,25 @@ fun IdProofSection() {
         Spacer(Modifier.height(15.dp))
 
         when (selectedProof) {
-            0 -> ElectricityBillForm()
-            1 -> AadhaarCardForm()
-            2 -> VidForm()
-            3 -> PanCardForm()
+            0 -> ElectricityBillForm(viewModel)
+            1 -> AadhaarCardForm(viewModel)
+            2 -> VidForm(viewModel)
+            3 -> PanCardForm(viewModel)
         }
     }
 }
-@Composable
-fun PanCardForm() {
-    var panNumber by remember { mutableStateOf("") }
-    var nameOnPan by remember { mutableStateOf("") }
 
+@Composable
+fun PanCardForm(viewModel: KycDetailViewModel) {
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         FormFieldCompact(
             label = stringResource(Res.string.pan_number),
-            value = panNumber,
+            value = viewModel.panNumber,
             onValueChange = {
-                pannumber->
-                panNumber=pannumber
+                viewModel.panNumber = it
             },
             placeholder = stringResource(Res.string.enter_pan),
             inputType = KeyboardType.Number
@@ -456,10 +473,9 @@ fun PanCardForm() {
 
         FormFieldCompact(
             label = stringResource(Res.string.name_on_pan),
-            value = nameOnPan,
+            value = viewModel.nameOnPan,
             onValueChange = {
-                nameonpan->
-                nameOnPan=nameonpan
+                viewModel.nameOnPan = it
             },
             placeholder = stringResource(Res.string.type_here)
         )
@@ -468,7 +484,6 @@ fun PanCardForm() {
 
         // IMAGE BOX
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-
             Box(
                 modifier = Modifier
                     .size(120.dp)
@@ -480,8 +495,8 @@ fun PanCardForm() {
 
             Icon(
                 painter = painterResource(Res.drawable.camera),
+                tint = blue,
                 contentDescription = stringResource(Res.string.pan_camera),
-                tint = Color.Black,
                 modifier = Modifier.size(28.dp)
             )
 
@@ -490,4 +505,3 @@ fun PanCardForm() {
         }
     }
 }
-

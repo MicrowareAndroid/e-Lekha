@@ -25,6 +25,7 @@ import com.psc.elekha.model.RegistrationModel
 import com.psc.elekha.ui.theme.black
 import com.psc.elekha.ui.theme.btn_color
 import com.psc.elekha.ui.theme.editext_bg_color
+import com.psc.elekha.ui.theme.loginBg
 import com.psc.elekha.ui.theme.repaymentColor
 import com.psc.elekha.utils.ReusableTextView
 import com.psc.elekha.utils.ReusableTextViewBlackCard
@@ -50,85 +51,53 @@ fun FamilyDetailCard(
 
     Card(
         shape = RoundedCornerShape(12.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-        colors = CardDefaults.cardColors(containerColor = repaymentColor),
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+        colors = CardDefaults.cardColors(containerColor = loginBg),
         modifier = Modifier
             .fillMaxWidth()
-            .padding(4.dp)
+            .padding(horizontal = 6.dp, vertical = 2.dp)
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(10.dp),
+                .padding(8.dp),
             verticalAlignment = Alignment.Top
         ) {
-            // LEFT SIDE CONTENT
+
             Column(
-                modifier = Modifier
-                    .weight(1f)
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.spacedBy(6.dp)
             ) {
 
-                // ---------- FIRST ROW ----------
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Column(modifier = Modifier.weight(1f)) {
-                        ReusableTextViewGrayCard(
-                            stringResource(Res.string.name)
-                        )
-                        Spacer(Modifier.height(4.dp))
-                        ReusableTextViewBlackCard(familyDetailModel.name)
-                    }
+                DetailRow(
+                    label = stringResource(Res.string.name),
+                    value = familyDetailModel.name
+                )
 
-                    Spacer(modifier = Modifier.width(20.dp))
+                DetailRow(
+                    label = stringResource(Res.string.relation),
+                    value = familyDetailModel.relation
+                )
 
-                    Column(modifier = Modifier.weight(1f)) {
-                        ReusableTextViewGrayCard(
-                            stringResource(Res.string.relation)
-                        )
-                        Spacer(Modifier.height(4.dp))
-                        ReusableTextViewBlackCard(familyDetailModel.relation)
-                    }
-                }
+                DetailRow(
+                    label = stringResource(Res.string.education),
+                    value = familyDetailModel.education
+                )
 
-                Spacer(modifier = Modifier.height(10.dp))
-
-                // ---------- SECOND ROW ----------
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Column(modifier = Modifier.weight(1f)) {
-                        ReusableTextViewGrayCard(
-                            stringResource(Res.string.education)
-                        )
-                        Spacer(Modifier.height(4.dp))
-                        ReusableTextViewBlackCard(familyDetailModel.education)
-                    }
-
-                    Spacer(modifier = Modifier.width(20.dp))
-
-                    Column(modifier = Modifier.weight(1f)) {
-                        ReusableTextViewGrayCard(
-                            stringResource(Res.string.occupation)
-                        )
-                        Spacer(Modifier.height(4.dp))
-                        ReusableTextViewBlackCard(familyDetailModel.occupation)
-                    }
-                }
+                DetailRow(
+                    label = stringResource(Res.string.occupation),
+                    value = familyDetailModel.occupation
+                )
             }
 
-            // RIGHT SIDE BUTTON COLUMN
             Column(
-                verticalArrangement = Arrangement.spacedBy(5.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 IconButton(onClick = onEdit) {
                     Icon(
                         painter = painterResource(Res.drawable.edit),
                         contentDescription = "Edit",
-                        modifier = Modifier.size(30.dp),
+                        modifier = Modifier.size(28.dp),
                         tint = black
                     )
                 }
@@ -136,13 +105,31 @@ fun FamilyDetailCard(
                     Icon(
                         painter = painterResource(Res.drawable.delete),
                         contentDescription = "Delete",
-                        modifier = Modifier.size(30.dp),
+                        modifier = Modifier.size(28.dp),
                         tint = black
                     )
                 }
             }
         }
     }
+}
 
-
+@Composable
+private fun DetailRow(
+    label: String,
+    value: String
+) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        ReusableTextViewGrayCard(
+            label,
+            modifier = Modifier.width(80.dp)
+        )
+        ReusableTextViewBlackCard(
+            value,
+            modifier = Modifier.weight(1f)
+        )
+    }
 }

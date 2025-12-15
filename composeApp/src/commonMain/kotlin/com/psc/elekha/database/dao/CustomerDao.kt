@@ -182,11 +182,7 @@ interface CustomerDao {
     suspend fun getAllCustomerUploadCount(): Int
 
     @Query("Select * from Customer where IsDeleted=0 and IsEdited=1 and CustomerBankIFSCCode is not null and LoanAppliedID != 0")
-<<<<<<< Updated upstream
     suspend  fun getAllCustomerUploadNew(): List<CustomerEntity>
-=======
-    suspend fun getAllCustomerUploadNew(): List<CustomerEntity>?
->>>>>>> Stashed changes
 
     @Query("Select Count(*) from Customer where IsDeleted=0 and IsEdited=1 and CustomerBankIFSCCode is not null and LoanAppliedID != 0")
     suspend fun getAllCustomerUploadCountNew(): Int

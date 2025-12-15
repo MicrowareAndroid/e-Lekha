@@ -31,6 +31,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import coil3.Uri
 import coil3.compose.LocalPlatformContext
+import com.psc.elekha.ui.theme.blue
 import com.psc.elekha.ui.theme.white
 import com.psc.elekha.utils.CommonSaveButton
 import com.psc.elekha.utils.CommonSingleButtonsBottomString
@@ -41,6 +42,8 @@ import com.psc.elekha.utils.FormSpinner
 import com.psc.elekha.utils.ReusableTextView
 import com.psc.elekha.utils.pickDate
 import e_lekha.composeapp.generated.resources.Res
+import e_lekha.composeapp.generated.resources.background
+import e_lekha.composeapp.generated.resources.camera
 import e_lekha.composeapp.generated.resources.customer_id
 import e_lekha.composeapp.generated.resources.customer_image
 import e_lekha.composeapp.generated.resources.customer_name
@@ -131,9 +134,12 @@ viewModel.loadSavedData()
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(white)
-    ) {
+            //.background(white)
+    )
+    {
+
         Column(modifier = Modifier.fillMaxSize()) {
+
 
 
 
@@ -148,9 +154,6 @@ viewModel.loadSavedData()
 
             ) {
 
-//                ReusableTextView(
-//                    text = stringResource(Res.string.enter_your_personal_details)
-//                )
                 Spacer(modifier = Modifier.height(6.dp))
                 ReusableTextView(
                     text = stringResource(Res.string.customer_id)
@@ -182,6 +185,14 @@ viewModel.loadSavedData()
                                 .padding(4.dp),   // optional
                             contentScale = ContentScale.Crop
                         )
+                        Spacer(modifier = Modifier.height(6.dp))
+                        Icon(
+                            painter = painterResource(Res.drawable.camera),
+                            contentDescription = "Back Camera",
+                            tint = blue,
+                            modifier = Modifier.size(28.dp)
+                        )
+                        Spacer(modifier = Modifier.height(4.dp))
                         ReusableTextView(
                             text = stringResource(Res.string.customer_image)
                         )
@@ -199,7 +210,7 @@ viewModel.loadSavedData()
                             painter = painterResource(Res.drawable.ic_gurantor),
                             contentDescription = null,
                             modifier = Modifier
-                                .size(120.dp)
+                                .size(160.dp,120.dp)
                                 .background(
                                     Color(0xFFE8E8E8),
                                     shape = RoundedCornerShape(8.dp)   // optional, looks better
@@ -207,6 +218,14 @@ viewModel.loadSavedData()
                                 .padding(4.dp),   // optional
                             contentScale = ContentScale.Crop
                         )
+                        Spacer(modifier = Modifier.height(6.dp))
+                        Icon(
+                            painter = painterResource(Res.drawable.camera),
+                            contentDescription = "Back Camera",
+                            tint = blue,
+                            modifier = Modifier.size(28.dp)
+                        )
+                        Spacer(modifier = Modifier.height(4.dp))
                         ReusableTextView(
                             text = stringResource(Res.string.your_photo_with_guarantor)
                         )
@@ -346,7 +365,7 @@ viewModel.loadSavedData()
                         },
                         stringResource(Res.string.send_otp),
                         modifier = Modifier.weight(1f),
-                        textSize = 11
+                        textSize = 10
                     )
                 }
 

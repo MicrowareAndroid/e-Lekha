@@ -13,7 +13,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.psc.elekha.ui.screen.repayment.model.RepaymentItem
 import com.psc.elekha.ui.theme.black
+import com.psc.elekha.ui.theme.blue
 import com.psc.elekha.ui.theme.editext_bg_color
+import com.psc.elekha.ui.theme.loginBg
 import com.psc.elekha.ui.theme.repaymentColor
 import com.psc.elekha.utils.FormFieldCompacts
 import com.psc.elekha.utils.ReusableDynamicSpinner
@@ -38,7 +40,7 @@ fun RepaymentItemCard(
     Card(
         shape = RoundedCornerShape(12.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-        colors = CardDefaults.cardColors(containerColor = repaymentColor),
+        colors = CardDefaults.cardColors(containerColor = loginBg),
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp)
@@ -162,7 +164,7 @@ fun RepaymentItemCard(
                         Icon(
                             imageVector = Icons.Default.CameraAlt,
                             contentDescription = "Camera",
-                            tint = black,
+                            tint = blue,
                             modifier = Modifier.size(28.dp)
                         )
                     }

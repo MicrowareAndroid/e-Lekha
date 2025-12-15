@@ -39,6 +39,7 @@ import androidx.compose.ui.unit.dp
 import coil3.Uri
 import coil3.compose.LocalPlatformContext
 import coil3.compose.rememberAsyncImagePainter
+import com.psc.elekha.ui.theme.blue
 import com.psc.elekha.ui.theme.textview_color
 import com.psc.elekha.ui.theme.white
 import com.psc.elekha.utils.CameraPreviewField
@@ -128,7 +129,7 @@ fun BankDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = {}) 
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(white)
+
     ) {
         Column(modifier = Modifier.fillMaxSize()) {
 
@@ -216,7 +217,7 @@ fun BankDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = {}) 
                         Icon(
                             painter = painterResource(Res.drawable.camera),
                             contentDescription = "",
-                            tint = Color.Black,
+                            tint = blue,
                             modifier = Modifier.size(28.dp)
                         )
                         Spacer(modifier = Modifier.height(4.dp))
