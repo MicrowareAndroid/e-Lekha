@@ -1,5 +1,6 @@
 package com.psc.elekha.di
 
+import FamilyMemberDetailViewModel
 import com.psc.elekha.database.viewmodel.CustomerDefaultViewModel
 import com.psc.elekha.database.viewmodel.CustomerExistingLoanDetailViewModel
 import com.psc.elekha.database.viewmodel.CustomerFamilyMemberDetailsViewModel
@@ -79,5 +80,6 @@ val viewmodelModule = module {
     viewModelOf(::UserBranchViewModel)
     viewModelOf(::UsersViewModel)
     viewModelOf(::UserResponseViewModel)
+    viewModelOf(::FamilyMemberDetailViewModel)
     viewModelOf(::KycDetailViewModel)
 }
