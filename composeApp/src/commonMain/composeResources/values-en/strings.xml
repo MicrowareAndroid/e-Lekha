@@ -234,4 +234,30 @@
     <string name="monthly_income">Monthly Income</string>
     <string name="remarks">Remarks</string>
 
+    //for kyc
+    <string name="name_electricity">Name on Electricity bill</string>
+    <string name="account_no">Account Number</string>
+    <string name="k_number">K Number</string>
+
+    <string name="aadhar_no">Aadhaar Number</string>
+    <string name="enter_aadhar">Enter Aadhaar</string>
+    <string name="name_on_aadhar">Name on Aadhaar</string>
+
+    <string name="voter_no">Voter Number</string>
+    <string name="enter_voter_id">Enter Voter ID</string>
+
+    <string name="name_on_vid">Name on VID</string>
+
+
+    <string name="pan_number">PAN Number</string>
+    <string name="enter_pan">Enter PAN</string>
+    <string name="name_on_pan">Name on PAN</string>
+
+    <string name="pan_camera">"PAN Camera"</string>
+    <string name="electricity">Electricity bill</string>
+
+    <string name="aadhar">Aadhaar Card</string>
+
+    <string name="voter">Voter ID</string>
+
 </resources>

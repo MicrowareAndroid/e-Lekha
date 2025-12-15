@@ -77,6 +77,10 @@ val loginSmallBg =Color(0xFF63B4CD)
 val btnYellow =Color(0xFFE6BC31)
 val hintColor =Color(0xFFA9A9A9)
 
+val appleblue =Color(0xFF0A84FF)
+
+val lightblues=Color(0xFFEAF2FF)
+
 
 
 
