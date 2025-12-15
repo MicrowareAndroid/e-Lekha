@@ -79,4 +79,5 @@ val viewmodelModule = module {
     viewModelOf(::UserBranchViewModel)
     viewModelOf(::UsersViewModel)
     viewModelOf(::UserResponseViewModel)
+    viewModelOf(::KycDetailViewModel)
 }
