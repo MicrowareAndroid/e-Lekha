@@ -22,6 +22,8 @@ import com.psc.elekha.ui.theme.LightSkyBlue
 import com.psc.elekha.ui.theme.LightTeal
 import com.psc.elekha.ui.theme.PrimaryDark
 import com.psc.elekha.ui.theme.black
+import com.psc.elekha.ui.theme.blue
+import com.psc.elekha.ui.theme.homedatareportsColor
 import com.psc.elekha.ui.theme.toolbar_color
 import com.psc.elekha.ui.theme.white
 import com.psc.elekha.utils.*
@@ -102,7 +104,7 @@ fun GtrListDataScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(5.dp),
-                    backgroundColor = LightTeal,
+                    backgroundColor = homedatareportsColor,
                     cornerRadius = 12
                 )
                 {
@@ -239,6 +241,7 @@ fun GtrListDataScreen(
                         Icon(
                             painter = painterResource(Res.drawable.camera),
                             contentDescription = null,
+                            tint = blue,
                             modifier = Modifier
                                 .size(35.dp)
                                 .clickable { openCamera = true }

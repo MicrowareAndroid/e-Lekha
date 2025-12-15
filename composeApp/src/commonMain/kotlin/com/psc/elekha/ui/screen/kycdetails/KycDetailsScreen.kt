@@ -25,9 +25,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.psc.elekha.ui.theme.blue
 import com.psc.elekha.ui.theme.white
 import com.psc.elekha.utils.CommonSaveButton
 import com.psc.elekha.utils.FormField
@@ -40,6 +43,8 @@ import e_lekha.composeapp.generated.resources.chose_document_type
 import e_lekha.composeapp.generated.resources.enter_your_kyc_details
 import e_lekha.composeapp.generated.resources.front_image
 import e_lekha.composeapp.generated.resources.next
+import e_lekha.composeapp.generated.resources.roboto_regular
+import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
@@ -48,7 +53,6 @@ fun KycDetailsScreen(
     onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = {}
 
 ) {
-
     var selectedTab by remember { mutableStateOf(0) }
 
     val tabs = listOf("Electricity bill", "Aadhaar Card", "Voter ID")
@@ -56,7 +60,7 @@ fun KycDetailsScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(white)
+
     ) {
 
         Column(modifier = Modifier.fillMaxSize()) {
@@ -102,6 +106,7 @@ fun KycDetailsScreen(
                                 text = label,
                                 fontSize = 12.sp,
                                 maxLines = 1,
+                                fontFamily = FontFamily(Font(Res.font.roboto_regular)),
                                 textAlign = TextAlign.Center,
                                 color = if (selectedTab == index) Color.White else Color.Black
                             )
@@ -160,6 +165,8 @@ fun ElectricityBillForm() {
                 accountNumber = it
             },
             placeholder = "Type here",
+            maxLength = 10,
+            inputType = KeyboardType.Number
         )
 
         Spacer(Modifier.height(12.dp))
@@ -168,7 +175,9 @@ fun ElectricityBillForm() {
             label = "K Number",
             value = "",
             onValueChange = {},
-            placeholder = "Type here"
+            placeholder = "Type here",
+            maxLength = 30,
+            inputType = KeyboardType.Number
         )
         Spacer(modifier = Modifier.height(10.dp))
 
@@ -194,7 +203,7 @@ fun ElectricityBillForm() {
             Icon(
                 painter = painterResource(Res.drawable.camera),
                 contentDescription = "Front Camera",
-                tint = Color.Black,
+                tint = blue,
                 modifier = Modifier.size(28.dp)
             )
             Spacer(modifier = Modifier.height(4.dp))
@@ -244,7 +253,7 @@ fun AadhaarCardForm() {
                 Icon(
                     painter = painterResource(Res.drawable.camera),
                     contentDescription = "Front Camera",
-                    tint = Color.Black,
+                    tint = blue,
                     modifier = Modifier.size(28.dp)
                 )
                 Spacer(modifier = Modifier.height(4.dp))
@@ -265,7 +274,7 @@ fun AadhaarCardForm() {
                 Icon(
                     painter = painterResource(Res.drawable.camera),
                     contentDescription = "Back Camera",
-                    tint = Color.Black,
+                    tint = blue,
                     modifier = Modifier.size(28.dp)
                 )
                 Spacer(modifier = Modifier.height(4.dp))
@@ -320,7 +329,7 @@ Column {
             Icon(
                 painter = painterResource(Res.drawable.camera),
                 contentDescription = "Front Camera",
-                tint = Color.Black,
+                tint = blue,
                 modifier = Modifier.size(28.dp)
             )
 
@@ -368,6 +377,7 @@ fun IdProofSection() {
                         fontSize = 12.sp,
                         maxLines = 1,
                         textAlign = TextAlign.Center,
+                        fontFamily = FontFamily(Font(Res.font.roboto_regular)),
                         color = if (selectedProof == index) Color.White else Color.Black
                     )
                 }
@@ -423,7 +433,7 @@ fun PanCardForm() {
             Icon(
                 painter = painterResource(Res.drawable.camera),
                 contentDescription = "PAN Camera",
-                tint = Color.Black,
+                tint = blue,
                 modifier = Modifier.size(28.dp)
             )
 
