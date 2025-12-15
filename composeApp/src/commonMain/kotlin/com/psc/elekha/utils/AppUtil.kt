@@ -31,6 +31,7 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.relocation.BringIntoViewRequester
+import androidx.compose.foundation.relocation.bringIntoViewRequester
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
@@ -71,6 +72,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -194,6 +196,7 @@ import e_lekha.composeapp.generated.resources.user_default
 import e_lekha.composeapp.generated.resources.username
 import e_lekha.composeapp.generated.resources.vehicle_no
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.Font
@@ -747,8 +750,12 @@ fun FormFieldCompact(
     disabledBackgroundColor: Color = formborder,
     maxLines: Int = 1,
     modifier: Modifier = Modifier,
-    placeholderTextSize: Int = 12
+    placeholderTextSize: Int = 12,
+    focusRequester: FocusRequester? = null,
+    bringIntoViewRequester: BringIntoViewRequester? = null
 ) {
+
+    val coroutineScope = rememberCoroutineScope()
 
     Column(modifier) {
 
@@ -771,7 +778,12 @@ fun FormFieldCompact(
                     shape = RoundedCornerShape(15.dp)
                 )
                 .border(1.dp, borderColor, RoundedCornerShape(15.dp))
-                .clickable(enabled = isEnable) { /* triggers keyboard focus */ },
+                .clickable(enabled = isEnable) {
+                    focusRequester?.requestFocus()
+                    coroutineScope.launch {
+                        bringIntoViewRequester?.bringIntoView()
+                    }
+                },
             contentAlignment = Alignment.CenterStart
         ) {
 
@@ -779,41 +791,37 @@ fun FormFieldCompact(
                 value = value,
                 enabled = isEnable,
                 readOnly = isReadable,
-                onValueChange = { newValue ->
-                    val filtered = when (inputType) {
-                        KeyboardType.Number, KeyboardType.Phone -> newValue.filter { it.isDigit() }
-                        else -> newValue
-                    }
-                    if (filtered.length <= maxLength) onValueChange(filtered)
+                onValueChange = {
+                    if (it.length <= maxLength) onValueChange(it)
                 },
-
                 textStyle = TextStyle(
                     fontSize = 16.sp,
-                    lineHeight = 14.sp,
                     color = Color.Black,
-                    fontFamily = FontFamily(Font(Res.font.roboto_medium)),
-                    textAlign = TextAlign.Start
+                    fontFamily = FontFamily(Font(Res.font.roboto_medium))
                 ),
-
-                maxLines = maxLines,
                 keyboardOptions = KeyboardOptions(keyboardType = inputType),
+                maxLines = maxLines,
 
                 modifier = Modifier
                     .matchParentSize()
-                    .padding(horizontal = 12.dp, vertical = 8.dp),
+                    .padding(horizontal = 12.dp, vertical = 8.dp)
+                    .then(
+                        if (focusRequester != null)
+                            Modifier.focusRequester(focusRequester)
+                        else Modifier
+                    )
+                    .then(
+                        if (bringIntoViewRequester != null)
+                            Modifier.bringIntoViewRequester(bringIntoViewRequester)
+                        else Modifier
+                    ),
 
                 decorationBox = { innerTextField ->
-
                     Row(
                         modifier = Modifier.fillMaxSize(),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-
-
-                        Box(
-                            modifier = Modifier.weight(1f),
-                            contentAlignment = Alignment.CenterStart
-                        ) {
+                        Box(Modifier.weight(1f)) {
                             if (value.isEmpty()) {
                                 ReusableTextView(
                                     text = placeholder,
@@ -823,10 +831,7 @@ fun FormFieldCompact(
                             }
                             innerTextField()
                         }
-
-                        if (trailingIcon != null) {
-                            trailingIcon()
-                        }
+                        trailingIcon?.invoke()
                     }
                 }
             )
@@ -1790,58 +1795,70 @@ fun FormSpinner(
     selectedOption: String,
     onOptionSelected: (String) -> Unit,
     modifier: Modifier = Modifier,
-    labelColor: Color = toolbar_color,
-    backgroundColor: Color = text_fiiled_color,
-    textColor: Color = Color.Black,
-    fontFamily: FontFamily = FontFamily(Font(Res.font.roboto_medium)),
-    borderColor: Color = boderColor
+    focusRequester: FocusRequester,
+    bringIntoViewRequester: BringIntoViewRequester
 ) {
     var expanded by remember { mutableStateOf(false) }
-    var spinnerWidth by remember { mutableStateOf(0.dp) }
+    var hasFocus by remember { mutableStateOf(false) }
+    var spinnerWidth by remember { mutableStateOf(0) }
 
-    // FIX: Get density only once in Composable scope
+    val placeholder = stringResource(Res.string.spinner_select)
     val density = LocalDensity.current
-    val select = stringResource(Res.string.spinner_select)
-    val optionsList = remember(options) {
-        val list = mutableListOf(select)
-        options?.forEach { list.add(it) }
-        list
+
+    // 🔥 Focus आते ही auto-open
+    LaunchedEffect(hasFocus) {
+        if (hasFocus) {
+            delay(150)
+            bringIntoViewRequester.bringIntoView()
+            expanded = true
+        }
     }
 
-    Column(modifier = modifier) {
+    Column(
+        modifier = modifier
+            .fillMaxWidth()
+            .bringIntoViewRequester(bringIntoViewRequester)
+    ) {
 
-        ReusableTextView(
-            text = label,
-            fontSize = 14,
-            textColor = labelColor,
-            fontFamily = fontFamily
-        )
+        ReusableTextView(text = label)
 
-        Spacer(modifier = Modifier.height(5.dp))
+        Spacer(modifier = Modifier.height(6.dp))
 
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(40.dp)
-                .border(1.dp, borderColor, RoundedCornerShape(15.dp))
-                .background(backgroundColor, RoundedCornerShape(15.dp))
-                .clickable { expanded = true }
-                .onGloballyPositioned { coords ->
-                    // SAFE: No composable call inside callback
-                    spinnerWidth = with(density) { coords.size.width.toDp() }
-                },
-            contentAlignment = Alignment.CenterStart
+                .height(42.dp)
+                .border(1.dp, boderColor, RoundedCornerShape(15.dp))
+                .background(text_fiiled_color, RoundedCornerShape(15.dp))
+                .onGloballyPositioned {
+                    spinnerWidth = it.size.width
+                }
         ) {
+
             Row(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(horizontal = 10.dp),
+                    .padding(horizontal = 12.dp)
+
+                    // ✅ FOCUS MUST COME FIRST
+                    .focusRequester(focusRequester)
+                    .focusable()
+
+                    // ✅ FOCUS LISTENER
+                    .onFocusChanged { state ->
+                        hasFocus = state.isFocused
+                    }
+
+                    // ✅ CLICK AFTER FOCUS
+                    .clickable {
+                        expanded = true
+                    },
+
                 verticalAlignment = Alignment.CenterVertically
             ) {
+
                 ReusableTextView(
-                    text = selectedOption.ifEmpty { stringResource(Res.string.spinner_select) },
-                    textColor = textColor,
-                    fontFamily = fontFamily
+                    text = selectedOption.ifEmpty { placeholder }
                 )
 
                 Spacer(modifier = Modifier.weight(1f))
@@ -1856,18 +1873,21 @@ fun FormSpinner(
                 expanded = expanded,
                 onDismissRequest = { expanded = false },
                 modifier = Modifier
-                    .width(spinnerWidth)        // FULL WIDTH MATCH
+                    .width(with(density) { spinnerWidth.toDp() })
                     .background(Color.White)
             ) {
-                optionsList.forEach { option ->
+
+                DropdownMenuItem(
+                    text = { Text(placeholder) },
+                    onClick = {
+                        onOptionSelected("")
+                        expanded = false
+                    }
+                )
+
+                options?.forEach { option ->
                     DropdownMenuItem(
-                        text = {
-                            ReusableTextView(
-                                text = option,
-                                textColor = Color.Black,
-                                modifier = Modifier.fillMaxWidth()
-                            )
-                        },
+                        text = { Text(option) },
                         onClick = {
                             onOptionSelected(option)
                             expanded = false
@@ -2687,12 +2707,12 @@ fun CustomerItemCard(
                 Box(
                     modifier = Modifier
                         .size(55.dp)
-                        .background(Color.Gray, RoundedCornerShape(6.dp))
+                        .background(Color(0xFFE8E8E8), RoundedCornerShape(6.dp))
                 )
                 Box(
                     modifier = Modifier
                         .size(55.dp)
-                        .background(Color.Gray, RoundedCornerShape(6.dp))
+                        .background(Color(0xFFE8E8E8), RoundedCornerShape(6.dp))
                 )
             }
         }
@@ -2723,7 +2743,6 @@ fun FormFieldCompacts(
 
     Column(modifier) {
 
-        Spacer(Modifier.height(5.dp))
 
         Box(
             modifier = Modifier
@@ -2913,40 +2932,26 @@ fun ReusableTextViewBlackCard(
 
 @Composable
 fun ReusableDynamicSpinner(
-    selectedValue: String?,
+    selectedValue: String,
     options: List<String>,
-    placeholder: String = stringResource(Res.string.spinner_select),
     onValueSelected: (String) -> Unit,
     modifier: Modifier = Modifier,
+    textColor: Color = Color.Black,
+    fontFamily: FontFamily = FontFamily(Font(Res.font.roboto_medium)),
     backgroundColor: Color = text_fiiled_color,
     borderColor: Color = boderColor,
 ) {
 
     var expanded by remember { mutableStateOf(false) }
     var spinnerWidth by remember { mutableStateOf(0) }
-
     val density = LocalDensity.current
-
-    val robotoMedium = FontFamily(Font(Res.font.roboto_medium))
-    val textColor = Color.Black
-
-    val displayText = selectedValue?.takeIf { it.isNotEmpty() } ?: placeholder
 
     Box(
         modifier = modifier
             .height(40.dp)
-            .onGloballyPositioned { coordinates ->
-                spinnerWidth = coordinates.size.width
-            }
-            .background(
-                color = backgroundColor,
-                shape = RoundedCornerShape(15.dp)
-            )
-            .border(
-                width = 1.dp,
-                color = borderColor,
-                shape = RoundedCornerShape(15.dp)
-            )
+            .onGloballyPositioned { spinnerWidth = it.size.width }
+            .background(backgroundColor, RoundedCornerShape(15.dp))
+            .border(1.dp, borderColor, RoundedCornerShape(15.dp))
             .clickable { expanded = true }
             .padding(horizontal = 12.dp),
         contentAlignment = Alignment.CenterStart
@@ -2954,21 +2959,21 @@ fun ReusableDynamicSpinner(
 
         Row(
             modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
         ) {
 
             Text(
-                text = displayText,
-                color = textColor,
+                text = selectedValue,          // 👈 Direct value
+                color = textColor,             // 👈 Black
                 fontSize = 12.sp,
-                fontFamily = robotoMedium
+                fontFamily = fontFamily        // 👈 SemiBold
             )
 
             Text(
                 text = "▼",
                 fontSize = 12.sp,
-                fontFamily = robotoMedium,
+                fontFamily = fontFamily,
                 color = textColor
             )
         }
@@ -2976,19 +2981,16 @@ fun ReusableDynamicSpinner(
         DropdownMenu(
             expanded = expanded,
             onDismissRequest = { expanded = false },
-            modifier = Modifier
-                .width(with(density) { spinnerWidth.toDp() })
+            modifier = Modifier.width(with(density) { spinnerWidth.toDp() })
         ) {
-
             options.forEach { item ->
-
                 DropdownMenuItem(
                     text = {
                         Text(
                             text = item,
                             fontSize = 12.sp,
-                            fontFamily = robotoMedium,
-                            color = textColor
+                            fontFamily = fontFamily,
+                            color = Color.Black
                         )
                     },
                     onClick = {
@@ -3396,13 +3398,13 @@ fun CustomAlertMovableAssets(
                     Spacer(Modifier.height(12.dp))
 
                     // Movable Assets Spinner
-                    FormSpinner(
+                   /* FormSpinner(
                         label = stringResource(Res.string.movable_assets),
                         options = listOf("Car", "Bike", "Truck"),
                         selectedOption = movableAssets,
                         onOptionSelected = {movableAssets = it},
                         modifier = Modifier.fillMaxWidth()
-                    )
+                    )*/
 
                     Spacer(Modifier.height(12.dp))
 
@@ -3560,7 +3562,7 @@ fun CustomAlertMonthlyIncome(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.spacedBy(10.dp)
                     ) {
-                        FormSpinner(
+                        /* FormSpinner(
                             label = stringResource(Res.string.name),
                             options = listOf("Test", "ABC", "XYZ"),
                             selectedOption = name,
@@ -3576,15 +3578,15 @@ fun CustomAlertMonthlyIncome(
                             modifier = Modifier.weight(1f)
                         )
                     }
+*/
+                        Spacer(Modifier.height(12.dp))
 
-                    Spacer(Modifier.height(12.dp))
-
-                    // ----------- OCCUPATION & INCOME SPINNERS -----------
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(10.dp)
-                    ) {
-                        FormSpinner(
+                        // ----------- OCCUPATION & INCOME SPINNERS -----------
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.spacedBy(10.dp)
+                        ) {
+                            /*  FormSpinner(
                             label = stringResource(Res.string.occupation),
                             options = listOf("Shop", "Farming", "Labour", "Other"),
                             selectedOption = occupation,
@@ -3599,61 +3601,63 @@ fun CustomAlertMonthlyIncome(
                             onOptionSelected = {income = it},
                             modifier = Modifier.weight(1f)
                         )
-                    }
+                    }*/
 
-                    Spacer(Modifier.height(12.dp))
+                            Spacer(Modifier.height(12.dp))
 
-                    // ----------- REMARKS FIELD -----------
-                    FormFieldCompact(
-                        label = stringResource(Res.string.remarks),
-                        value = remarks,
-                        onValueChange = { remarks =it },
-                        placeholder = stringResource(Res.string.type_here),
-                        maxLength = 30,
-                        modifier = Modifier.fillMaxWidth()
-                    )
+                            // ----------- REMARKS FIELD -----------
+                            FormFieldCompact(
+                                label = stringResource(Res.string.remarks),
+                                value = remarks,
+                                onValueChange = { remarks = it },
+                                placeholder = stringResource(Res.string.type_here),
+                                maxLength = 30,
+                                modifier = Modifier.fillMaxWidth()
+                            )
 
-                    Spacer(Modifier.height(24.dp))
+                            Spacer(Modifier.height(24.dp))
 
-                    // ----------------------- BUTTONS -----------------------
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(12.dp)
-                    ) {
-                        Button(
-                            onClick = onCancel,
-                            modifier = Modifier
-                                .weight(1f)
-                                .height(48.dp),
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = btn_color,
-                                contentColor = Color.Black
-                            ),
-                            shape = RoundedCornerShape(15.dp)
-                        ) {
-                            Text(cancelText)
+                            // ----------------------- BUTTONS -----------------------
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.spacedBy(12.dp)
+                            ) {
+                                Button(
+                                    onClick = onCancel,
+                                    modifier = Modifier
+                                        .weight(1f)
+                                        .height(48.dp),
+                                    colors = ButtonDefaults.buttonColors(
+                                        containerColor = btn_color,
+                                        contentColor = Color.Black
+                                    ),
+                                    shape = RoundedCornerShape(15.dp)
+                                ) {
+                                    Text(cancelText)
+                                }
+
+
+
+
+
+                                Button(
+                                    onClick = onSubmit,
+                                    modifier = Modifier
+                                        .weight(1f)
+                                        .height(48.dp),
+                                    colors = ButtonDefaults.buttonColors(
+                                        containerColor = btn_color,
+                                        contentColor = Color.Black
+                                    ),
+                                    shape = RoundedCornerShape(15.dp)
+                                ) {
+                                    Text(submitText)
+                                }
+                            }
+
+                            Spacer(Modifier.height(10.dp))
                         }
-
-
-
-
-
-                        Button(
-                            onClick = onSubmit,
-                            modifier = Modifier
-                                .weight(1f)
-                                .height(48.dp),
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = btn_color,
-                                contentColor = Color.Black
-                            ),
-                            shape = RoundedCornerShape(15.dp)
-                        ) {
-                            Text(submitText)
-                        }
                     }
-
-                    Spacer(Modifier.height(10.dp))
                 }
             }
         }

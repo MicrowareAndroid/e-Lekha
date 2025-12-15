@@ -6,8 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.psc.elekha.ui.screen.customer.CustomerDetailScreen
-import com.psc.elekha.ui.screen.familydetails.FamilyDetailFormScreen
-import com.psc.elekha.ui.screen.familydetails.FamilyDetailListScreen
+
 import com.psc.elekha.ui.screen.repayment.RepaymentList
 
 import com.psc.elekha.ui.screen.gtrlist.GtrListDataScreen
@@ -111,8 +110,8 @@ fun AppNavGraph(
             RepaymentList(navController)
         }
 
-        composable(RouteName.family_detail_form_screen) {
+        /*composable(RouteName.family_detail_form_screen) {
             FamilyDetailFormScreen(navController)
-        }
+        }*/
     }
 }

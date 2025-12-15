@@ -338,8 +338,8 @@ fun FilterLoanDetailsDialog(
                 verticalArrangement = Arrangement.spacedBy(20.dp)
             ) {
 
-                FormSpinner(
-                    label = "Village",
+             /*   FormSpinner(
+                   label = "Village",
                     options = villages,
                     selectedOption = selectedVillage,
                     onOptionSelected = { selectedVillage = it },
@@ -352,7 +352,7 @@ fun FilterLoanDetailsDialog(
                     options = centers,
                     selectedOption = selectedCenter,
                     onOptionSelected = { selectedCenter = it }
-                )
+                )*/
 
                 ReusableTextView(
                     text = "OR",

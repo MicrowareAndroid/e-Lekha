@@ -1,3 +1,4 @@
+/*
 package com.psc.elekha.ui.screen.bankdetails
 
 import androidx.compose.foundation.Image
@@ -239,4 +240,4 @@ fun BankDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = {}) 
         }
     }
 
-}
+}*/

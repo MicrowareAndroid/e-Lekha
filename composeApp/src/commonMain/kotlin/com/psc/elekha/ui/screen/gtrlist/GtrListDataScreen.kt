@@ -111,14 +111,16 @@ fun GtrListDataScreen(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(5.dp)
-                    ) {
+                    )
+                    {
 
                         // ---------- ROW 1 : USER NAME (LEFT FULL WIDTH) ----------
                         Row(
                             modifier = Modifier.fillMaxWidth(),
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.Start
-                        ) {
+                        )
+                        {
                             ReusableTextView(
                                 text = stringResource(Res.string.home_user),
                                 textColor = toolbar_color
@@ -222,7 +224,7 @@ fun GtrListDataScreen(
                         Box(
                             modifier = Modifier
                                 .size(100.dp)
-                                .background(Color.LightGray)
+                                .background(Color(0xFFE8E8E8))
                         ) {
                             capturedImage?.let { img ->
                                 Image(

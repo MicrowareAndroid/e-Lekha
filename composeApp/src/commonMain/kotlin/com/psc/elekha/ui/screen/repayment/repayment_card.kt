@@ -152,7 +152,7 @@ fun RepaymentItemCard(
                     Box(
                         modifier = Modifier
                             .size(43.dp)
-                            .background(Color.LightGray)
+                            .background(Color(0xFFE8E8E8))
                     )
 
                     IconButton(

@@ -1,3 +1,4 @@
+/*
 package com.psc.elekha.ui.screen.familydetails
 
 import androidx.compose.foundation.Image
@@ -415,3 +416,4 @@ fun CustomAlertFamilyDetails(
 
 
 
+*/

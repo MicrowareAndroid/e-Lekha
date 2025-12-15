@@ -1,3 +1,4 @@
+/*
 package com.psc.elekha.ui.screen.familydetails
 
 import androidx.compose.foundation.Image
@@ -58,7 +59,8 @@ fun FamilyDetailListScreen(
         )
     }
 
-    /*Box(
+    */
+/*Box(
         modifier = Modifier
             .fillMaxSize()
             .navigationBarsPadding()
@@ -72,7 +74,8 @@ fun FamilyDetailListScreen(
                 onNavigationClick = {
                     navController.popBackStack()
                 }
-            )*/
+            )*//*
+
 
             Box(
                 modifier = Modifier
@@ -80,28 +83,36 @@ fun FamilyDetailListScreen(
             )
             {
 
-                /*Image(
+                */
+/*Image(
                     painter = painterResource(Res.drawable.background),
                     contentDescription = null,
                     modifier = Modifier.fillMaxSize(),    // THIS is enough
                     contentScale = ContentScale.Crop
-                )*/
+                )*//*
+
 
                 Spacer(modifier = Modifier.height(10.dp))
 
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(/*horizontal = 16.dp, */vertical = 8.dp)
+                        .padding(*/
+/*horizontal = 16.dp, *//*
+vertical = 8.dp)
                 ) {
                     items(familyDetailModel) { item ->
                         FamilyDetailCard(
                             familyDetailModel = item,
                             onEdit = {
-                                /*edit click listener here*/
+                                */
+/*edit click listener here*//*
+
                             },
                             onDelete = {
-                                /*delete code goes here*/
+                                */
+/*delete code goes here*//*
+
                             }
                         )
                         Spacer(modifier = Modifier.height(12.dp))
@@ -143,6 +154,7 @@ fun FamilyDetailListScreen(
                 }
             }
         }
-    /*}
+    */
+/*}
 
 }*/
