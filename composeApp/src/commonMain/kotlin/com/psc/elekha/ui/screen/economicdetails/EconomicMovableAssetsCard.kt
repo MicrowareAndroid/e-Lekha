@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.psc.elekha.model.EconomicMovableAssetsModel
 import com.psc.elekha.ui.theme.editext_bg_color
+import com.psc.elekha.ui.theme.loginBg
 import com.psc.elekha.ui.theme.repaymentColor
 import com.psc.elekha.utils.ReusableTextViewBlackCard
 import com.psc.elekha.utils.ReusableTextViewGrayCard
@@ -32,49 +33,48 @@ fun EconomicMovableAssetsCard(
 
     Card(
         shape = RoundedCornerShape(12.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-        colors = CardDefaults.cardColors(containerColor = repaymentColor),
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+        colors = CardDefaults.cardColors(containerColor = loginBg),
         modifier = Modifier
             .fillMaxWidth()
-            .padding(4.dp)
+            .padding(horizontal = 6.dp, vertical = 2.dp)
     ) {
-        Row(
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(10.dp),
-            verticalAlignment = Alignment.Top
+                .padding(8.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            Column(
-                modifier = Modifier
-                    .weight(1f)
-            ) {
 
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Column(modifier = Modifier.weight(1f)) {
-                        ReusableTextViewGrayCard(
-                            stringResource(Res.string.movable_assets)
-                        )
-                        Spacer(Modifier.height(4.dp))
-                        ReusableTextViewBlackCard(economicMovableAssetsModel.type)
-                    }
+            DetailRow(
+                label = stringResource(Res.string.movable_assets),
+                value = economicMovableAssetsModel.type
+            )
 
-                    Spacer(modifier = Modifier.width(20.dp))
-
-                    Column(modifier = Modifier.weight(1f)) {
-                        ReusableTextViewGrayCard(
-                            stringResource(Res.string.vehicle_no)
-                        )
-                        Spacer(Modifier.height(4.dp))
-                        ReusableTextViewBlackCard(economicMovableAssetsModel.vehicle_no)
-                    }
-                }
-
-            }
+            DetailRow(
+                label = stringResource(Res.string.vehicle_no),
+                value = economicMovableAssetsModel.vehicle_no
+            )
         }
     }
+}
 
-
+@Composable
+private fun DetailRow(
+    label: String,
+    value: String
+) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        ReusableTextViewGrayCard(
+            label,
+            modifier = Modifier.width(100.dp)
+        )
+        ReusableTextViewBlackCard(
+            value,
+            modifier = Modifier.weight(1f)
+        )
+    }
 }

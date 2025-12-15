@@ -29,11 +29,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.psc.elekha.ui.theme.blue
 import com.psc.elekha.ui.theme.appleblue
 import com.psc.elekha.ui.theme.lightblues
 import com.psc.elekha.ui.theme.white
@@ -61,6 +63,8 @@ import e_lekha.composeapp.generated.resources.name_on_aadhar
 import e_lekha.composeapp.generated.resources.name_on_pan
 import e_lekha.composeapp.generated.resources.name_on_vid
 import e_lekha.composeapp.generated.resources.next
+import e_lekha.composeapp.generated.resources.roboto_regular
+import org.jetbrains.compose.resources.Font
 import e_lekha.composeapp.generated.resources.pan_camera
 import e_lekha.composeapp.generated.resources.pan_number
 import e_lekha.composeapp.generated.resources.select_id_proof
@@ -90,7 +94,7 @@ fun KycDetailsScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(white)
+
     ) {
         Column(modifier = Modifier.fillMaxSize()) {
             Spacer(modifier = Modifier.height(10.dp))
@@ -131,6 +135,7 @@ fun KycDetailsScreen(
                                 text = label,
                                 fontSize = 12.sp,
                                 maxLines = 1,
+                                fontFamily = FontFamily(Font(Res.font.roboto_regular)),
                                 textAlign = TextAlign.Center,
                                 color = if (selectedTab == index) Color.White else Color.Black
                             )
@@ -204,6 +209,8 @@ fun ElectricityBillForm(viewModel: KycDetailViewModel) {
             onValueChange = {
                 viewModel.accountNumber = it
             },
+
+            maxLength = 10,
             placeholder = stringResource(Res.string.type_here),
             inputType = KeyboardType.Number
         )
@@ -211,6 +218,8 @@ fun ElectricityBillForm(viewModel: KycDetailViewModel) {
         Spacer(Modifier.height(12.dp))
 
         FormFieldCompact(
+
+            maxLength = 30,
             label = stringResource(Res.string.k_number),
             value = viewModel.kNumber,
             onValueChange = {
@@ -244,6 +253,7 @@ fun ElectricityBillForm(viewModel: KycDetailViewModel) {
             Spacer(modifier = Modifier.height(6.dp))
             Icon(
                 painter = painterResource(Res.drawable.camera),
+                tint = blue,
                 contentDescription = stringResource(Res.string.front_image),
                 tint = Color.Black,
                 modifier = Modifier.size(28.dp)
@@ -299,8 +309,8 @@ fun AadhaarCardForm(viewModel: KycDetailViewModel) {
                 Spacer(modifier = Modifier.height(6.dp))
                 Icon(
                     painter = painterResource(Res.drawable.camera),
+                    tint = blue,
                     contentDescription = stringResource(Res.string.front_image),
-                    tint = Color.Black,
                     modifier = Modifier.size(28.dp)
                 )
                 Spacer(modifier = Modifier.height(4.dp))
@@ -320,8 +330,8 @@ fun AadhaarCardForm(viewModel: KycDetailViewModel) {
                 Spacer(modifier = Modifier.height(6.dp))
                 Icon(
                     painter = painterResource(Res.drawable.camera),
+                    tint = blue,
                     contentDescription = stringResource(Res.string.back_image),
-                    tint = Color.Black,
                     modifier = Modifier.size(28.dp)
                 )
                 Spacer(modifier = Modifier.height(4.dp))
@@ -374,12 +384,13 @@ fun VidForm(viewModel: KycDetailViewModel) {
 
                 Spacer(modifier = Modifier.height(6.dp))
 
-                Icon(
-                    painter = painterResource(Res.drawable.camera),
-                    contentDescription = stringResource(Res.string.front_image),
-                    tint = Color.Black,
-                    modifier = Modifier.size(28.dp)
-                )
+
+            Icon(
+                painter = painterResource(Res.drawable.camera),
+                tint = blue,
+                contentDescription = stringResource(Res.string.front_image),
+                modifier = Modifier.size(28.dp)
+            )
 
                 Spacer(modifier = Modifier.height(4.dp))
 
@@ -424,6 +435,7 @@ fun IdProofSection(viewModel: KycDetailViewModel) {
                         fontSize = 12.sp,
                         maxLines = 1,
                         textAlign = TextAlign.Center,
+                        fontFamily = FontFamily(Font(Res.font.roboto_regular)),
                         color = if (selectedProof == index) Color.White else Color.Black
                     )
                 }
@@ -483,8 +495,8 @@ fun PanCardForm(viewModel: KycDetailViewModel) {
 
             Icon(
                 painter = painterResource(Res.drawable.camera),
+                tint = blue,
                 contentDescription = stringResource(Res.string.pan_camera),
-                tint = Color.Black,
                 modifier = Modifier.size(28.dp)
             )
 

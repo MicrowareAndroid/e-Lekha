@@ -125,7 +125,7 @@ fun EconomicDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(white)
+
     )
     {
 
