@@ -3633,11 +3633,6 @@ fun CustomAlertMonthlyIncome(
                         ) {
                             Text(cancelText)
                         }
-
-
-
-
-
                         Button(
                             onClick = onSubmit,
                             modifier = Modifier
