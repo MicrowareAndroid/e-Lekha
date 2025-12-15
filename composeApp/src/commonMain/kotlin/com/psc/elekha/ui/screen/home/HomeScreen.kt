@@ -54,7 +54,10 @@ import e_lekha.composeapp.generated.resources.home_registration_detail
 import e_lekha.composeapp.generated.resources.home_repayment
 import e_lekha.composeapp.generated.resources.home_time
 import e_lekha.composeapp.generated.resources.home_user
+import e_lekha.composeapp.generated.resources.ic_loan
 import e_lekha.composeapp.generated.resources.ic_menu
+import e_lekha.composeapp.generated.resources.ic_repayment
+import e_lekha.composeapp.generated.resources.ic_savings
 import e_lekha.composeapp.generated.resources.ic_setting
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
