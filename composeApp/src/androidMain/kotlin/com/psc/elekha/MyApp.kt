@@ -6,6 +6,7 @@ import com.psc.elekha.database.appdatabase.AppDatabase
 import com.psc.elekha.utils.AppPreferences
 import com.psc.elekha.utils.VersionInfo
 import com.psc.elekha.di.initKoin
+import com.psc.elekha.expectfile.AndroidContextProvider
 
 
 import org.koin.android.ext.koin.androidContext
@@ -26,6 +27,8 @@ class MyApp : Application(), KoinComponent {
 
         VersionInfo.init(applicationContext)
         appPreferences = AppPreferences(this)
+
+        AndroidContextProvider.context = this
 
         initKoin {
             androidLogger()

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- cache files your app generates -->
+    <external-cache-path
+        name="shared_files"
+        path="." />
+
+    <!-- files stored in Android/data/<package>/files -->
+    <external-files-path
+        name="external_files"
+        path="." />
+
+    <!-- (Optional) internal app files -->
+    <files-path
+        name="internal_files"
+        path="." />
+</paths>
