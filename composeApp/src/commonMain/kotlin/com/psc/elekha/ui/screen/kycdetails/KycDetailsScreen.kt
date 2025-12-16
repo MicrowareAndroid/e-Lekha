@@ -255,7 +255,7 @@ fun ElectricityBillForm(viewModel: KycDetailViewModel) {
                 painter = painterResource(Res.drawable.camera),
                 tint = blue,
                 contentDescription = stringResource(Res.string.front_image),
-                tint = Color.Black,
+
                 modifier = Modifier.size(28.dp)
             )
             Spacer(modifier = Modifier.height(4.dp))
