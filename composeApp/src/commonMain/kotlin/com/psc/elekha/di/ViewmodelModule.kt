@@ -1,5 +1,6 @@
 package com.psc.elekha.di
 
+import FamilyMemberDetailViewModel
 import com.psc.elekha.database.viewmodel.CustomerDefaultViewModel
 import com.psc.elekha.database.viewmodel.CustomerExistingLoanDetailViewModel
 import com.psc.elekha.database.viewmodel.CustomerFamilyMemberDetailsViewModel
@@ -38,6 +39,7 @@ import com.psc.elekha.database.viewmodel.UserBranchViewModel
 import com.psc.elekha.database.viewmodel.UserResponseViewModel
 import com.psc.elekha.database.viewmodel.UsersViewModel
 import com.psc.elekha.ui.screen.kycdetails.KycDetailViewModel
+import com.psc.elekha.ui.screen.personaldetails.PersonalDetailViewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 
@@ -79,5 +81,7 @@ val viewmodelModule = module {
     viewModelOf(::UserBranchViewModel)
     viewModelOf(::UsersViewModel)
     viewModelOf(::UserResponseViewModel)
+    viewModelOf(::FamilyMemberDetailViewModel)
     viewModelOf(::KycDetailViewModel)
+    viewModelOf(::PersonalDetailViewModel)
 }
