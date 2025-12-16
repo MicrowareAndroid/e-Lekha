@@ -29,13 +29,20 @@ class KycDetailViewModel(
 ): BaseValidationViewModel()
 {
  var billName by   mutableStateOf("")
+ var billNameIdProof by   mutableStateOf("")
  var accountNumber by mutableStateOf("")
+ var accountNumberIdProof by mutableStateOf("")
  var kNumber by  mutableStateOf("")
+ var kNumberIdProof by  mutableStateOf("")
 
  var aadharno by  mutableStateOf("")
+ var aadharnoIdProof by  mutableStateOf("")
  var nameonadhar by  mutableStateOf("")
+ var nameonadharIdProof by  mutableStateOf("")
  var voterno by mutableStateOf("")
+ var voternoIdProof by mutableStateOf("")
  var nameonvid by mutableStateOf("")
+ var nameonvidIdProof by mutableStateOf("")
  var panNumber by mutableStateOf("")
  var nameOnPan by  mutableStateOf("")
 
@@ -88,11 +95,11 @@ class KycDetailViewModel(
  val focusRequesterElectricityAccountNo2 = FocusRequester()
  val focusRequesterElectricityRelation2 = FocusRequester()*/
 
- suspend fun SaveKyc()
+fun SaveKyc(onSuccess: () -> Unit)
  {
-  val guid=appPreferences.getString(AppSP.customerGuid)
-  if(returnStringValue(guid).isEmpty())
-  {
+//  val guid=appPreferences.getString(AppSP.customerGuid)
+ /* if(returnStringValue(guid).isEmpty())
+  {*/
    val newGuid= generateRandomId()
    val entity= CustomerDefaultEntity(
     newGuid,
@@ -193,13 +200,14 @@ class KycDetailViewModel(
    )
    println( "billName$billName")
    customerDefaultViewModel.insertCustomer(entity)
-   appPreferences.putString(AppSP.customerGuid,newGuid)
-   saveMessage= getString(Res.string.data_saved_successfully)
+//   appPreferences.putString(AppSP.customerGuid,newGuid)
+//   saveMessage= getString(Res.string.data_saved_successfully)
     showSaveAlert=true
+  onSuccess()
   }
  }
 
- fun loadSaveData(){
+/* fun loadSaveData(){
 
   viewModelScope.launch {
   val saveGuid=returnStringValue(appPreferences.getString(AppSP.customerGuid))
@@ -219,7 +227,7 @@ class KycDetailViewModel(
 
    }
  }
- }
+ }*/
 
  /*suspend fun checkValidation(): ValidationModelContorl{
    return when{
@@ -228,5 +236,3 @@ class KycDetailViewModel(
    }
  }*/
 
-
-}
