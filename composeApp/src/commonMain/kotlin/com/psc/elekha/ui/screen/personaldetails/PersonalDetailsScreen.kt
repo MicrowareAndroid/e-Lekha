@@ -272,6 +272,41 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
 
                 Spacer(modifier = Modifier.height(8.dp))
 
+               Row(
+                   modifier = Modifier.fillMaxWidth(),
+                   horizontalArrangement = Arrangement.spacedBy(10.dp)
+               ) {
+                   FormDatePickerCompact(
+                       label = stringResource(Res.string.date_of_birth),
+                       value = dob,
+                       onValueChange = {dob=it},
+                       onClick = {
+                           pickDate(context) { date ->
+                               dob = date
+                           }
+                       },
+                       trailingIcon = {
+                           Icon(
+                               painter = painterResource(Res.drawable.date),
+                               contentDescription = "Date Icon",
+                               tint = Color.Unspecified
+                           )
+                       },
+                       isEnable = true,
+                       modifier = Modifier.weight(1f)
+                   )
+
+                   FormSpinner(
+                       label = stringResource(Res.string.marital_status),
+                       options = listOf("Married", "Unmarried", "Single"),
+                       selectedOption = maritalStatus,
+                       onOptionSelected = {
+                               selected ->
+                           maritalStatus = selected
+                       },
+                       modifier = Modifier.weight(1f)
+                   )
+               }
 
                 Row(
                     modifier = Modifier.fillMaxWidth(),

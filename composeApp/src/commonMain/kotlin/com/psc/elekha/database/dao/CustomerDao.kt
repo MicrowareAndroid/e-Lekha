@@ -16,10 +16,10 @@ interface CustomerDao {
     suspend fun getAllCustomer(): List<CustomerEntity>
 
     @Query("Select Count(*) from Customer Where IsDeleted = 0 and IsUpload = 0 and CutomerStatusID = 1")
-    suspend fun getAllCountCustomer(): Int?
+    suspend fun getAllCountCustomer(): Int
 
     @Query("Select Count(*) from Customer where CutomerStatusID in(2,3) and IsDeleted = 0")
-    suspend fun getLoanAppliedIDCount(): Int?
+    suspend fun getLoanAppliedIDCount(): Int
 
     @Query("Select * from Customer where IsDeleted=0 and IsEdited=1")
     suspend fun getAllCustomerUpload(): List<CustomerEntity>
@@ -31,22 +31,22 @@ interface CustomerDao {
     suspend fun getCustomerByContactNumber(ContactNo: String, UserID: String): List<CustomerEntity>
 
     @Query("Select Count(*) from Customer where ContactNo=:ContactNo and CutomerStatusID=:CutomerStatusID")
-    suspend fun getCountByContactNumber(ContactNo: String, CutomerStatusID: Int): Int?
+    suspend fun getCountByContactNumber(ContactNo: String, CutomerStatusID: Int): Int
 
     @Query("Select Count(*) from Customer where ContactNo=:ContactNo")
-    suspend fun getCountByContactNumber(ContactNo: String): Int?
+    suspend fun getCountByContactNumber(ContactNo: String): Int
 
     @Query("Select * from Customer where GUID=:GUID")
     suspend fun getCustomerDetails(GUID: String): CustomerEntity
 
     @Query("Select CutomerStatusID from Customer where GUID=:GUID")
-    suspend fun getCustomerStatus(GUID: String): Int?
+    suspend fun getCustomerStatus(GUID: String): Int
 
     @Query("Select Count(*) from Customer where GUID=:GUID and length(FirstName) > 0")
-    suspend fun getMyProfileCount(GUID: String): Int?
+    suspend fun getMyProfileCount(GUID: String): Int
 
     @Query("Select Count(*) from Customer where GUID=:GUID and length(CKYC_UID) > 0")
-    suspend fun getMyKYCCount(GUID: String): Int?
+    suspend fun getMyKYCCount(GUID: String): Int
 
     @Query("Delete from Customer")
     suspend fun deleteAllCustomer()
@@ -146,13 +146,13 @@ interface CustomerDao {
     suspend fun getCustomerByLoanApplied(CutomerStatusID: List<Int>): List<CustomerEntity>
 
     @Query("Select CKYC_UID from Customer where GUID =:GUID")
-    suspend fun getCustomerAadhaar(GUID: String): String?
+    suspend fun getCustomerAadhaar(GUID: String): String
 
     @Query("Select LoanAppliedID from Customer where GUID =:GUID")
-    suspend fun getCustomerLoanAppliedID(GUID: String): Int?
+    suspend fun getCustomerLoanAppliedID(GUID: String): Int
 
     @Query("Select :ColumnName from Customer where GUID =:GUID and IsDeleted=0")
-    suspend fun getCustomerImageName(GUID: String, ColumnName: String): String?
+    suspend fun getCustomerImageName(GUID: String, ColumnName: String): String
 
     /*@Query("select GUID from Customer where IsDeleted=0 UNION ALL select GUID from CustomerDefault where IsDeleted=0")
     fun getAllGUID(): List<String>?*/
@@ -161,7 +161,7 @@ interface CustomerDao {
     suspend fun updateUploaded()
 
     @Query("Select IsUpload from Customer where GUID =:GUID")
-    suspend fun getIsUploaded(GUID: String): Int?
+    suspend fun getIsUploaded(GUID: String): Int
 
     @Query("Select Count(*) from Customer where IsDeleted = 0")
     suspend fun getCount(): Int
@@ -170,13 +170,13 @@ interface CustomerDao {
     suspend fun getCustomerByRegistrationStatusID(RegistrationStatusID: List<Int>): List<CustomerEntity>
 
     @Query("Select max(LoanDisbursedDate) from Customer where ContactNo=:ContactNo")
-    suspend fun getMaxLoan(ContactNo: String): String?
+    suspend fun getMaxLoan(ContactNo: String): String
 
     @Query("Select * from Customer where LoanDisbursedDate=:LoanDisbursedDate")
     suspend fun getCustomerDataBYLoanDate(LoanDisbursedDate: String): List<CustomerEntity>
 
     @Query("Select Count(*) from Customer where IsDeleted = 0 and CutomerStatusID in(:CutomerStatusID)")
-    suspend fun getCustomerByLoanAppliedCount(CutomerStatusID: List<Int>): Int?
+    suspend fun getCustomerByLoanAppliedCount(CutomerStatusID: List<Int>): Int
 
     @Query("Select Count(*) from Customer where IsDeleted=0 and IsEdited=1")
     suspend fun getAllCustomerUploadCount(): Int

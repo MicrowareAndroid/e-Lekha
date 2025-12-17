@@ -13,3 +13,9 @@ actual fun getDatabaseBuilder(): RoomDatabase.Builder<AppDatabase> {
         name = dbFilePath,
     )
 }
+
+actual class DatabaseExporter {
+    actual fun exportAndShare(dbBaseName: String) {
+        // For now, do nothing
+    }
+}
