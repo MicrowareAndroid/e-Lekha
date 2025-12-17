@@ -37,6 +37,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.psc.elekha.database.appdatabase.dbFileName
+import com.psc.elekha.expectfile.DatabaseExporter
 import com.psc.elekha.ui.theme.black
 import com.psc.elekha.ui.theme.blue
 import com.psc.elekha.ui.theme.btn_color
@@ -199,8 +201,15 @@ fun DrawerContent() {
                 Spacer(Modifier.height(5.dp))
 
                 Button(
-                    onClick = {},
+                    onClick = {
+                        val exporter = DatabaseExporter()
+                        exporter.exportAndShare(dbFileName)
+                    },
                     shape = RoundedCornerShape(8.dp),
+
+
+
+
                     modifier = Modifier
                         .width(130.dp),
                     colors = ButtonDefaults.buttonColors(
@@ -334,8 +343,6 @@ fun DrawerContent() {
 
 
             }
-
-
 
 
         }

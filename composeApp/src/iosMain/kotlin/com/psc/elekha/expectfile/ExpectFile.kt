@@ -16,6 +16,7 @@ actual fun getDatabaseBuilder(): RoomDatabase.Builder<AppDatabase> {
     )
 }
 
+<<<<<<< HEAD
 actual class PermissionManager {
 
     @Composable
@@ -31,3 +32,10 @@ actual class PermissionManager {
         onResult(true)
     }
 }
+=======
+actual class DatabaseExporter {
+    actual fun exportAndShare(dbBaseName: String) {
+        // For now, do nothing
+    }
+}
+>>>>>>> 600e007581c4eacc7ef0adb63cea590ee8001a8a

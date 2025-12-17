@@ -12,7 +12,10 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import java.io.ByteArrayOutputStream
+import java.io.File
+
 
 @Composable
 actual fun CameraPicker(
@@ -22,30 +25,30 @@ actual fun CameraPicker(
     val context = LocalContext.current
     var shouldLaunch by remember { mutableStateOf(openCamera) }
 
-    // Camera Result
-    val cameraLauncher = rememberLauncherForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
+    //  Camera launcher (declare first)
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartActivityForResult()
     ) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
-            val bmp = result.data?.extras?.get("data") as? Bitmap
-            bmp?.let {
+            val bitmap = result.data?.extras?.get("data") as? Bitmap
+            bitmap?.let {
                 val stream = ByteArrayOutputStream()
                 it.compress(Bitmap.CompressFormat.JPEG, 90, stream)
                 onImagePicked(stream.toByteArray())
-            } ?: onImagePicked(null)
+            }
         } else {
             onImagePicked(null)
         }
         shouldLaunch = false
     }
 
-    // Permission Launcher
+    //  Permission launcher (can now access launcher)
     val permissionLauncher = rememberLauncherForActivityResult(
-        ActivityResultContracts.RequestPermission()
-    ) { granted ->
-        if (granted) {
+        contract = ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+        if (isGranted) {
             val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            cameraLauncher.launch(intent)
+            launcher.launch(intent)
         } else {
             Toast.makeText(context, "Camera permission denied", Toast.LENGTH_SHORT).show()
             onImagePicked(null)
@@ -53,16 +56,15 @@ actual fun CameraPicker(
         }
     }
 
-    // Launch
+    //  Launch effect
     LaunchedEffect(shouldLaunch) {
         if (shouldLaunch) {
             val permission = Manifest.permission.CAMERA
-
             if (ContextCompat.checkSelfPermission(context, permission)
                 == PackageManager.PERMISSION_GRANTED
             ) {
                 val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                cameraLauncher.launch(intent)
+                launcher.launch(intent)
             } else {
                 permissionLauncher.launch(permission)
             }

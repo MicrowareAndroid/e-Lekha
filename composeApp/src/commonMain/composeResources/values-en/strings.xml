@@ -259,5 +259,9 @@
     <string name="aadhar">Aadhaar Card</string>
 
     <string name="voter">Voter ID</string>
+    <string name="personal_maternal_address">Please Enter Maternal Address</string>
+    <string name="personal_father">Please Enter Father Name</string>
+    <string name="personal_maternal_mobile">Please Enter Maternal Mobile Number</string>
+
 
 </resources>
