@@ -3,6 +3,7 @@ package com.psc.elekha.ui.screen.kycdetails
 import androidx.compose.foundation.relocation.BringIntoViewRequester
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.focus.FocusRequester
 import androidx.lifecycle.viewModelScope
@@ -27,33 +28,26 @@ class KycDetailViewModel(
     var customerDefaultViewModel: CustomerDefaultViewModel
 ): BaseValidationViewModel()
 {
+ var billName by   mutableStateOf("")
+ var billNameIdProof by   mutableStateOf("")
+ var accountNumber by mutableStateOf("")
+ var accountNumberIdProof by mutableStateOf("")
+ var kNumber by  mutableStateOf("")
+ var kNumberIdProof by  mutableStateOf("")
 
-    var customerName by mutableStateOf("")
-    var aadharCard by mutableStateOf("")
-   var aadhaarImage1 by mutableStateOf("")
-    var aadhaarImage2 by mutableStateOf("")
-    var voterCard by mutableStateOf("")
-    var voterIDCardImage1 by mutableStateOf("")
-    var voterIDCardImage2 by mutableStateOf("")
-    var rationCard by mutableStateOf("")
-    var rationCardIDImage1 by mutableStateOf("")
-    var rationCardIDImage2 by mutableStateOf("")
-    var gurantorName by mutableStateOf("")
-    var gurantorAadharCard by mutableStateOf("")
-    var guarantorAadhaarCardImage1 by mutableStateOf("")
-    var guarantorAadhaarCardImage2 by mutableStateOf("")
-    var electricityBIllsImage1 by mutableStateOf("")
-    var electricityBIllsImage2 by mutableStateOf("")
-    var electricityKNo1 by mutableStateOf("")
-    var electricityName1 by mutableStateOf("")
-    var electricityAccountNo1 by mutableStateOf("")
-    var electricityRelation1 by mutableStateOf("")
-    var electricityKNo2 by mutableStateOf("")
-    var electricityName2 by mutableStateOf("")
-    var electricityAccountNo2 by mutableStateOf("")
-    var electricityRelation2 by mutableStateOf("")
+ var aadharno by  mutableStateOf("")
+ var aadharnoIdProof by  mutableStateOf("")
+ var nameonadhar by  mutableStateOf("")
+ var nameonadharIdProof by  mutableStateOf("")
+ var voterno by mutableStateOf("")
+ var voternoIdProof by mutableStateOf("")
+ var nameonvid by mutableStateOf("")
+ var nameonvidIdProof by mutableStateOf("")
+ var panNumber by mutableStateOf("")
+ var nameOnPan by  mutableStateOf("")
 
-    val bringIntoViewRequesterCustomerName = BringIntoViewRequester()
+
+/*    val bringIntoViewRequesterCustomerName = BringIntoViewRequester()
     val bringIntoViewRequesterAadharCard = BringIntoViewRequester()
     val bringIntoViewRequesterAadhaarImage1 =BringIntoViewRequester()
     val bringIntoViewRequesterAadhaarImage2 =BringIntoViewRequester()
@@ -99,13 +93,13 @@ class KycDetailViewModel(
  val focusRequesterElectricityKNo2 = FocusRequester()
  val focusRequesterElectricityName2 = FocusRequester()
  val focusRequesterElectricityAccountNo2 = FocusRequester()
- val focusRequesterElectricityRelation2 = FocusRequester()
+ val focusRequesterElectricityRelation2 = FocusRequester()*/
 
- suspend fun SaveKyc()
+fun SaveKyc(onSuccess: () -> Unit)
  {
-  val guid=appPreferences.getString(AppSP.customerGuid)
-  if(returnStringValue(guid).isEmpty())
-  {
+//  val guid=appPreferences.getString(AppSP.customerGuid)
+ /* if(returnStringValue(guid).isEmpty())
+  {*/
    val newGuid= generateRandomId()
    val entity= CustomerDefaultEntity(
     newGuid,
@@ -114,31 +108,31 @@ class KycDetailViewModel(
     0,
     "",
     0,
-    customerName,
     "",
     "",
     "",
-    gurantorName,
     "",
     "",
-    guarantorAadhaarCardImage1,
+    "",
+    "",
+    "",
     "",
     0,
     0,
     "",
     0,
     "",
-    aadharCard,
-    aadhaarImage1,
-    aadhaarImage2,
-    voterCard,
-    voterIDCardImage1,
-    voterIDCardImage2,
-    electricityAccountNo1,
-    returnIntegerValue(electricityRelation1),
-    electricityBIllsImage1,
-    electricityName1,
     "",
+    "",
+    "",
+    voterno,
+    "",
+    "",
+    accountNumber,
+    returnIntegerValue(""),
+    "",
+    billName,
+    kNumber,
     "",
     0,
     "",
@@ -160,9 +154,9 @@ class KycDetailViewModel(
     "",
     "",
     "",
-    rationCard,
-    rationCardIDImage1,
-    rationCardIDImage2,
+    "",
+    "",
+    "",
     0,
     "",
     "",
@@ -173,6 +167,7 @@ class KycDetailViewModel(
     "",
     0,
     0,
+    panNumber,
     "",
     "",
     "",
@@ -181,6 +176,7 @@ class KycDetailViewModel(
     "",
     "",
     "",
+    nameonvid,
     "",
     "",
     "",
@@ -188,9 +184,7 @@ class KycDetailViewModel(
     "",
     "",
     "",
-    "",
-    "",
-    "",
+    nameOnPan,
     "",
     "",
     "",
@@ -204,14 +198,16 @@ class KycDetailViewModel(
     0,
     ""
    )
+   println( "billName$billName")
    customerDefaultViewModel.insertCustomer(entity)
-   appPreferences.putString(AppSP.customerGuid,newGuid)
-   saveMessage= getString(Res.string.data_saved_successfully)
+//   appPreferences.putString(AppSP.customerGuid,newGuid)
+//   saveMessage= getString(Res.string.data_saved_successfully)
     showSaveAlert=true
+  onSuccess()
   }
  }
 
- fun loadSaveData(){
+/* fun loadSaveData(){
 
   viewModelScope.launch {
   val saveGuid=returnStringValue(appPreferences.getString(AppSP.customerGuid))
@@ -220,11 +216,18 @@ class KycDetailViewModel(
    if(!listData.isNullOrEmpty())
    {
     var data=listData[0]
+    billName = returnStringValue(data.CKYC_ElectricityBill_Name)
+    kNumber = returnStringValue(data.KElectricNumber)
+    voterno = returnStringValue(data.CKYC_VoterCard)
+    accountNumber = returnStringValue(data.CKYC_ElectricityBill)
+    panNumber = returnStringValue(data.CKYC_PANCard)
+    nameonvid = returnStringValue(data.CKYC_VoterCard)
+    nameOnPan = returnStringValue(data.CKYC_PANCard)
 
 
    }
  }
- }
+ }*/
 
  /*suspend fun checkValidation(): ValidationModelContorl{
    return when{
@@ -233,5 +236,3 @@ class KycDetailViewModel(
    }
  }*/
 
-
-}

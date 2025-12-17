@@ -79,6 +79,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.focusTarget
 import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.painter.Painter
@@ -124,8 +125,11 @@ import com.psc.elekha.ui.theme.desire_orange
 import com.psc.elekha.ui.theme.editext_bg_color
 import com.psc.elekha.ui.theme.formborder
 import com.psc.elekha.ui.theme.hintColor
+import com.psc.elekha.ui.theme.homeTopIconsBg
+import com.psc.elekha.ui.theme.homedatareportsColor
 import com.psc.elekha.ui.theme.lightGrey
 import com.psc.elekha.ui.theme.lightgreens
+import com.psc.elekha.ui.theme.loginBg
 import com.psc.elekha.ui.theme.loginTitle
 import com.psc.elekha.ui.theme.repaymentColor
 import com.psc.elekha.ui.theme.teal700
@@ -577,7 +581,7 @@ fun CommonSaveButton(
                 containerColor = backgroundColor,
                 contentColor = contentColor
             ),
-            shape = RoundedCornerShape(15.dp)
+            shape = RoundedCornerShape(1.dp)
         ) {
             Text(saveText)
         }
@@ -630,7 +634,7 @@ fun CommonSingleButtonsBottomString(
                 containerColor = btn_color,
                 contentColor = Color.Black
             ),
-            shape = RoundedCornerShape(15.dp)
+            shape = RoundedCornerShape(1.dp)
         ) {
             Text(
                 text = text,
@@ -791,7 +795,7 @@ fun FormFieldCompact(
                     fontSize = 16.sp,
                     lineHeight = 14.sp,
                     color = Color.Black,
-                    fontFamily = FontFamily(Font(Res.font.roboto_medium)),
+                    fontFamily = FontFamily(Font(Res.font.roboto_regular)),
                     textAlign = TextAlign.Start
                 ),
 
@@ -1104,7 +1108,7 @@ fun FormDatePickerCompact(
                 textStyle = TextStyle(
                     fontSize = 16.sp,
                     color = Color.Black,
-                    fontFamily = FontFamily(Font(Res.font.roboto_medium))
+                    fontFamily = FontFamily(Font(Res.font.roboto_regular))
                 ),
                 decorationBox = { innerTextField ->
 
@@ -1114,7 +1118,7 @@ fun FormDatePickerCompact(
                             text = placeholder,
                             fontSize = 16.sp,
                             color = placeholderColor,
-                            fontFamily = FontFamily(Font(Res.font.roboto_medium)),
+                            fontFamily = FontFamily(Font(Res.font.roboto_regular)),
                         )
                     }
 
@@ -1793,7 +1797,7 @@ fun FormSpinner(
     labelColor: Color = toolbar_color,
     backgroundColor: Color = text_fiiled_color,
     textColor: Color = Color.Black,
-    fontFamily: FontFamily = FontFamily(Font(Res.font.roboto_medium)),
+    fontFamily: FontFamily = FontFamily(Font(Res.font.roboto_regular)),
     borderColor: Color = boderColor
 ) {
     var expanded by remember { mutableStateOf(false) }
@@ -2127,7 +2131,7 @@ fun SimpleOtp(
         focusRequesters[0].requestFocus()
     }
 
-    ReusableTextView(
+    Text(
         text = stringResource(Res.string.enter_otp),
         style = MaterialTheme.typography.headlineLarge.copy(
             fontWeight = FontWeight.Thin,
@@ -2216,7 +2220,7 @@ fun DashboardCardItem(
     label: String,
     icon: Painter,
     modifier: Modifier = Modifier,
-    backgroundColor: Color = Color(0xFFB8EEDC),
+    backgroundColor: Color = homeTopIconsBg,
     onClick: () -> Unit = {}
 ) {
 
@@ -2224,7 +2228,6 @@ fun DashboardCardItem(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // CARD + ICON Group
         Box(
             modifier = Modifier.size(75.dp),
             contentAlignment = Alignment.TopCenter
@@ -2234,7 +2237,7 @@ fun DashboardCardItem(
                 shape = RoundedCornerShape(16.dp),
                 modifier = Modifier
                     .fillMaxSize()
-                    .offset(y = 10.dp)        // Same offset
+                    .offset(y = 10.dp)
                     .clickable { onClick() },
                 colors = CardDefaults.cardColors(containerColor = backgroundColor),
                 elevation = CardDefaults.cardElevation(3.dp)
@@ -2246,25 +2249,24 @@ fun DashboardCardItem(
                     Text(
                         text = number,
                         fontSize = 20.sp,
-                        color = Color(0xFF0A6B78),
+                        color = white,
                         fontWeight = FontWeight.Bold
                     )
                 }
             }
 
-            // ICON on Top Left
             Box(
                 modifier = Modifier
                     .size(32.dp)
-                    .background(lightgreens.copy(alpha = 0.6f), CircleShape)
+                    .background(loginBg.copy(alpha = 0.6f), CircleShape)
                     .align(Alignment.TopStart)
-                    .border(1.dp, Color.White, CircleShape),
+                    .border(1.dp, homeTopIconsBg, CircleShape),
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
                     painter = icon,
                     contentDescription = null,
-                    tint = Color(0xFF0A6B78),
+                    tint = black,
                     modifier = Modifier.size(16.dp)
                 )
             }
@@ -2277,7 +2279,7 @@ fun DashboardCardItem(
             text = label,
             fontSize = 11.sp,
             fontWeight = FontWeight.Medium,
-            color = lightgreens,
+            color = black,
             textAlign = TextAlign.Center,
             maxLines = 1,
             modifier = Modifier.fillMaxWidth()
@@ -2336,7 +2338,16 @@ fun TripleIconSlider(
                 modifier = Modifier
                     .width(260.dp)
                     .height(160.dp)
-                    .background(bgColor, RoundedCornerShape(25.dp)),
+                    .background(
+                        brush = Brush.verticalGradient(
+                            colors = listOf(
+                                Color(0xFFFFE4E1),
+                                Color(0xFFEAF4FF),
+                                Color(0xFFD6E9F8)
+                            )
+                        ),
+                        shape = RoundedCornerShape(25.dp)
+                    ),
                 contentAlignment = Alignment.Center
             ) {
 
@@ -2443,7 +2454,7 @@ fun GroupCardUI(
     Card(
         shape = RoundedCornerShape(12.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-        colors = CardDefaults.cardColors(containerColor = repaymentColor),
+        colors = CardDefaults.cardColors(containerColor = loginBg),
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp)
@@ -2642,7 +2653,7 @@ fun CustomerItemCard(
                 onCardClick(customer)
 
             },
-        backgroundColor = repaymentColor,
+        backgroundColor = loginBg,
         cornerRadius = 12
     ) {
 
@@ -3338,129 +3349,6 @@ fun CustomAlertMovableAssets(
     }
 }*/
 
-@Composable
-fun CustomAlertMovableAssets(
-    title: String = stringResource(Res.string.app_name),
-    submitText: String = stringResource(Res.string.ok),
-    cancelText: String = stringResource(Res.string.cancel),
-    onSubmit: () -> Unit = {},
-    onCancel: () -> Unit = {}
-) {
-    var movableAssets by remember { mutableStateOf("") }
-    var vehicleNo by remember { mutableStateOf("") }
-
-    Dialog(onDismissRequest = {}) {
-
-        Box(
-            modifier = Modifier
-                .widthIn(min = 350.dp, max = 500.dp)
-                .background(lightGrey, RoundedCornerShape(16.dp))
-                .border(1.dp, lightGrey, RoundedCornerShape(16.dp))
-        ) {
-
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-
-                // --------------------- HEADER (NO MARGIN) ---------------------
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(
-                            toolbar_color,
-                            shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp)
-                        )
-                        .height(50.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    ReusableTextView(
-                        text = title,
-                        fontSize = 20,
-                        fontWeight = FontWeight.Bold,
-                        textColor = white,
-                        textAlignment = TextAlign.Center,
-                        modifier = Modifier.fillMaxWidth()   // Perfect center
-                    )
-                }
-
-                // ------------------- CONTENT AREA (WITH PADDING) -------------------
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),      // Only content has padding
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-
-                    Spacer(Modifier.height(12.dp))
-
-                    // Movable Assets Spinner
-                    FormSpinner(
-                        label = stringResource(Res.string.movable_assets),
-                        options = listOf("Car", "Bike", "Truck"),
-                        selectedOption = movableAssets,
-                        onOptionSelected = {movableAssets = it},
-                        modifier = Modifier.fillMaxWidth()
-                    )
-
-                    Spacer(Modifier.height(12.dp))
-
-                    // Vehicle Number Field
-                    FormFieldCompact(
-                        label = stringResource(Res.string.vehicle_no),
-                        value = vehicleNo,
-                        onValueChange = { vehicleNo = it },
-                        placeholder = stringResource(Res.string.type_here),
-                        maxLength = 10,
-                        modifier = Modifier.fillMaxWidth()
-                    )
-
-                    Spacer(Modifier.height(20.dp))
-
-                    // ------------------ BUTTON ROW -------------------
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(12.dp)
-                    ) {
-
-                        // Cancel Button
-                        Button(
-                            onClick = onCancel,
-                            modifier = Modifier
-                                .weight(1f)
-                                .height(48.dp),
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = btn_color,
-                                contentColor = Color.Black
-                            ),
-                            shape = RoundedCornerShape(15.dp)
-                        ) {
-                            Text(cancelText)
-                        }
-
-                        // Submit Button
-                        Button(
-                            onClick = onSubmit,
-                            modifier = Modifier
-                                .weight(1f)
-                                .height(48.dp),
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = btn_color,
-                                contentColor = Color.Black
-                            ),
-                            shape = RoundedCornerShape(15.dp)
-                        ) {
-                            Text(submitText)
-                        }
-                    }
-
-                    Spacer(Modifier.height(10.dp))
-                }
-            }
-        }
-    }
-}
 
 fun convertDateFormatYYYYMMDD(inputDate: String): String {
     var newDate = ""

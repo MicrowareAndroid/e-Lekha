@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import com.psc.elekha.model.EconomicMonthlyIncomeModel
 import com.psc.elekha.model.EconomicMovableAssetsModel
 import com.psc.elekha.ui.theme.editext_bg_color
+import com.psc.elekha.ui.theme.loginBg
 import com.psc.elekha.ui.theme.repaymentColor
 import com.psc.elekha.utils.ReusableTextViewBlackCard
 import com.psc.elekha.utils.ReusableTextViewGrayCard
@@ -37,72 +38,59 @@ fun EconomicMonthlyIncomeCard(
 
     Card(
         shape = RoundedCornerShape(12.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-        colors = CardDefaults.cardColors(containerColor = repaymentColor),
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+        colors = CardDefaults.cardColors(containerColor = loginBg),
         modifier = Modifier
             .fillMaxWidth()
-            .padding(4.dp)
+            .padding(horizontal = 6.dp, vertical = 2.dp)
     ) {
-        Row(
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(10.dp),
-            verticalAlignment = Alignment.Top
+                .padding(8.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            Column(
-                modifier = Modifier
-                    .weight(1f)
-            ) {
 
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Column(modifier = Modifier.weight(1f)) {
-                        ReusableTextViewGrayCard(
-                            stringResource(Res.string.name)
-                        )
-                        Spacer(Modifier.height(4.dp))
-                        ReusableTextViewBlackCard(economicMonthlyIncomeModel.name)
-                    }
+            DetailRow(
+                label = stringResource(Res.string.name),
+                value = economicMonthlyIncomeModel.name
+            )
 
-                    Spacer(modifier = Modifier.width(20.dp))
+            DetailRow(
+                label = stringResource(Res.string.relation),
+                value = economicMonthlyIncomeModel.relation
+            )
 
-                    Column(modifier = Modifier.weight(1f)) {
-                        ReusableTextViewGrayCard(
-                            stringResource(Res.string.relation)
-                        )
-                        Spacer(Modifier.height(4.dp))
-                        ReusableTextViewBlackCard(economicMonthlyIncomeModel.relation)
-                    }
-                }
+            DetailRow(
+                label = stringResource(Res.string.occupation),
+                value = economicMonthlyIncomeModel.occupation
+            )
 
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Column(modifier = Modifier.weight(1f)) {
-                        ReusableTextViewGrayCard(
-                            stringResource(Res.string.occupation)
-                        )
-                        Spacer(Modifier.height(4.dp))
-                        ReusableTextViewBlackCard(economicMonthlyIncomeModel.occupation)
-                    }
-
-                    Spacer(modifier = Modifier.width(20.dp))
-
-                    Column(modifier = Modifier.weight(1f)) {
-                        ReusableTextViewGrayCard(
-                            stringResource(Res.string.income)
-                        )
-                        Spacer(Modifier.height(4.dp))
-                        ReusableTextViewBlackCard(economicMonthlyIncomeModel.income)
-                    }
-                }
-
-            }
+            DetailRow(
+                label = stringResource(Res.string.income),
+                value = economicMonthlyIncomeModel.income
+            )
         }
     }
+}
 
+@Composable
+private fun DetailRow(
+    label: String,
+    value: String
+) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        ReusableTextViewGrayCard(
+            label,
+            modifier = Modifier.width(80.dp)
+        )
 
+        ReusableTextViewBlackCard(
+            value,
+            modifier = Modifier.weight(1f)
+        )
+    }
 }

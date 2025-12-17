@@ -10,4 +10,6 @@ object AppSP {
     var dateOfBirth = "dateOfBirth"
     var userId = "userId"
 
+    var familyGuid="familyGuid"
+
 }

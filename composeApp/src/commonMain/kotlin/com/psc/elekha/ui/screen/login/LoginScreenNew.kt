@@ -117,7 +117,7 @@ fun LoginScreenNew(navController: NavController) {
                         painter = painterResource(Res.drawable.logo),
                         contentDescription = "Logo",
                         modifier = Modifier
-                            .size(160.dp)
+                            .size(190.dp)
                     )
                 }
 

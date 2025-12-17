@@ -2,23 +2,52 @@ package com.psc.elekha.database.repository
 
 import com.psc.elekha.database.dao.CustomerFamilyMemberDetailsDao
 import com.psc.elekha.database.entity.CustomerFamilyMemberDetailsEntity
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 
-class CustomerFamilyMemberDetailsRepository (
+class CustomerFamilyMemberDetailsRepository(
     private val dao: CustomerFamilyMemberDetailsDao
-){
-     //Insert Single Family member
-     suspend fun insertCustomerFamilyMember(member: CustomerFamilyMemberDetailsEntity){
+) {
+
+    suspend fun insertCustomerFamilyMember(member: CustomerFamilyMemberDetailsEntity) {
         dao.insertCustomerFamilyMember(member)
     }
-    //Insert List of Family members
-    suspend fun insertAllCustomerFamilyMember(members:List<CustomerFamilyMemberDetailsEntity>){
+
+    suspend fun insertAllCustomerFamilyMember(members: List<CustomerFamilyMemberDetailsEntity>) {
         dao.insertAllCustomerFamilyMember(members)
     }
-    //Get All Family Members
-    suspend fun getAllCustomerFamilyMember():List<CustomerFamilyMemberDetailsEntity>{
+
+    suspend fun getAllCustomerFamilyMember(): List<CustomerFamilyMemberDetailsEntity> {
         return dao.getAllCustomerFamilyMember()
     }
-    suspend fun deleteAllCustomer(){
+
+    suspend fun deleteAllCustomer() {
         dao.deleteAllCustomerFamilyMember()
     }
+
+    //  UPDATE — repository only delegates
+    suspend fun updateCustomerFamilyMemberByGuid(
+        guid: String,
+        firstName: String,
+        middleName: String,
+        lastName: String,
+        relationId: Int,
+        age: Int,
+        gender: String,
+        educationId: Int,
+        occupationId: Int
+    ) {
+        dao.updateCustomerFamilyMemberByGuid(
+            guid,
+            firstName,
+            middleName,
+            lastName,
+            relationId,
+            age,
+            gender,
+            educationId,
+            occupationId
+        )
+    }
 }
+

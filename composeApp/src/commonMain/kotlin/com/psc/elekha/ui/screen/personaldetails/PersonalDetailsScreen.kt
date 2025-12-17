@@ -12,12 +12,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.relocation.bringIntoViewRequester
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -25,22 +27,30 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.Uri
 import coil3.compose.LocalPlatformContext
+import com.psc.elekha.ui.theme.blue
 import com.psc.elekha.ui.theme.white
 import com.psc.elekha.utils.CommonSaveButton
 import com.psc.elekha.utils.CommonSingleButtonsBottomString
+import com.psc.elekha.utils.CustomAlertDialog
 import com.psc.elekha.utils.DynamicCheckBox
 import com.psc.elekha.utils.FormDatePickerCompact
 import com.psc.elekha.utils.FormFieldCompact
 import com.psc.elekha.utils.FormSpinner
 import com.psc.elekha.utils.ReusableTextView
+import com.psc.elekha.utils.StaticComboBoxData
 import com.psc.elekha.utils.pickDate
+import com.psc.elekha.utils.toValueList
 import e_lekha.composeapp.generated.resources.Res
+import e_lekha.composeapp.generated.resources.background
+import e_lekha.composeapp.generated.resources.camera
 import e_lekha.composeapp.generated.resources.customer_id
 import e_lekha.composeapp.generated.resources.customer_image
 import e_lekha.composeapp.generated.resources.customer_name
@@ -76,6 +86,7 @@ import e_lekha.composeapp.generated.resources.your_full_address
 import e_lekha.composeapp.generated.resources.your_photo_with_guarantor
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.viewmodel.koinViewModel
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -95,46 +106,57 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
 //    var message = viewModel.saveMessage
     var customerImage by remember { mutableStateOf<Uri?>(null) }
     var guarantorImage by remember { mutableStateOf<Uri?>(null) }
-    var customename by remember{mutableStateOf("")}
+    var customename by remember { mutableStateOf("") }
     var dob by remember { mutableStateOf("") }
     var maritalStatus by remember { mutableStateOf("") }
     var education by remember { mutableStateOf("") }
-    var religion by remember{mutableStateOf("")}
-    var purpose by remember{mutableStateOf("")}
-    var mobile_number by remember{mutableStateOf("")}
+    var religion by remember { mutableStateOf("") }
+    var purpose by remember { mutableStateOf("") }
+    var mobile_number by remember { mutableStateOf("") }
     var enter_otp by remember { mutableStateOf("") }
-    var husband_name by remember{mutableStateOf("")}
-    var guarantor_name by remember{mutableStateOf("")}
+    var husband_name by remember { mutableStateOf("") }
+    var guarantor_name by remember { mutableStateOf("") }
     var guarantor_mobile_number by remember { mutableStateOf("") }
     var your_full_address by remember { mutableStateOf("") }
     var state by remember { mutableStateOf("") }
     var district by remember { mutableStateOf("") }
-    var village_name by remember {mutableStateOf("")}
+    var village_name by remember { mutableStateOf("") }
     var landmark by remember { mutableStateOf("") }
-    var tehsil by remember {mutableStateOf("")}
+    var tehsil by remember { mutableStateOf("") }
     var pin_code by remember { mutableStateOf("") }
     var maternal_address by remember { mutableStateOf("") }
     var maternal_mob_no by remember { mutableStateOf("") }
     var father_name by remember { mutableStateOf("") }
     var guarantordob by remember { mutableStateOf("") }
-    var gurantor_religion by remember{mutableStateOf("")}
+    var gurantor_religion by remember { mutableStateOf("") }
     var gurantor_enter_otp by remember { mutableStateOf("") }
-    var gurantor_village_name by remember {mutableStateOf("")}
+    var gurantor_village_name by remember { mutableStateOf("") }
     var isChecked by remember { mutableStateOf(false) }
 
-    /*val viewModel = koinViewModel<PersonalDetailViewModel>()*/
+    val viewModel = koinViewModel<PersonalDetailViewModel>()
     val coroutineScope = rememberCoroutineScope()
-  /*  LaunchedEffect(Unit) {
-viewModel.loadSavedData()
-    }*/
+    var maritalStatusValue by remember { mutableStateOf("") }
+    var educationValue by remember { mutableStateOf("") }
+    var religionValue by remember { mutableStateOf("") }
+    var purposeValue by remember { mutableStateOf("") }
+    var relationValue by remember { mutableStateOf("") }
+    var stateValue by remember { mutableStateOf("") }
+    var distictValue by remember { mutableStateOf("") }
+
+
+
+    LaunchedEffect(Unit) {
+        viewModel.loadSavedData()
+    }
 
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(white)
-    ) {
-        Column(modifier = Modifier.fillMaxSize()) {
+        //.background(white)
+    )
+    {
 
+        Column(modifier = Modifier.fillMaxSize()) {
 
 
             Spacer(modifier = Modifier.height(10.dp))
@@ -148,9 +170,6 @@ viewModel.loadSavedData()
 
             ) {
 
-//                ReusableTextView(
-//                    text = stringResource(Res.string.enter_your_personal_details)
-//                )
                 Spacer(modifier = Modifier.height(6.dp))
                 ReusableTextView(
                     text = stringResource(Res.string.customer_id)
@@ -182,6 +201,14 @@ viewModel.loadSavedData()
                                 .padding(4.dp),   // optional
                             contentScale = ContentScale.Crop
                         )
+                        Spacer(modifier = Modifier.height(6.dp))
+                        Icon(
+                            painter = painterResource(Res.drawable.camera),
+                            contentDescription = "Back Camera",
+                            tint = blue,
+                            modifier = Modifier.size(28.dp)
+                        )
+                        Spacer(modifier = Modifier.height(4.dp))
                         ReusableTextView(
                             text = stringResource(Res.string.customer_image)
                         )
@@ -199,7 +226,7 @@ viewModel.loadSavedData()
                             painter = painterResource(Res.drawable.ic_gurantor),
                             contentDescription = null,
                             modifier = Modifier
-                                .size(120.dp)
+                                .size(160.dp, 120.dp)
                                 .background(
                                     Color(0xFFE8E8E8),
                                     shape = RoundedCornerShape(8.dp)   // optional, looks better
@@ -207,6 +234,14 @@ viewModel.loadSavedData()
                                 .padding(4.dp),   // optional
                             contentScale = ContentScale.Crop
                         )
+                        Spacer(modifier = Modifier.height(6.dp))
+                        Icon(
+                            painter = painterResource(Res.drawable.camera),
+                            contentDescription = "Back Camera",
+                            tint = blue,
+                            modifier = Modifier.size(28.dp)
+                        )
+                        Spacer(modifier = Modifier.height(4.dp))
                         ReusableTextView(
                             text = stringResource(Res.string.your_photo_with_guarantor)
                         )
@@ -224,11 +259,13 @@ viewModel.loadSavedData()
                 {
                     FormFieldCompact(
                         label = stringResource(Res.string.customer_name),
-                        value = customename,
-                        onValueChange = { customename=it },
+                        value = viewModel.customerName,
+                        onValueChange = { viewModel.customerName = it },
                         placeholder = stringResource(Res.string.type_here),
-                        modifier = Modifier.weight(1f),
-                        maxLength = 30
+                        modifier = Modifier.weight(1f).focusRequester( viewModel.focusRequesterCustomerName)
+                            .bringIntoViewRequester(viewModel.bringIntoViewRequesterCustomerName),
+                        maxLength = 30,
+
                     )
 
                 }
@@ -270,44 +307,94 @@ viewModel.loadSavedData()
                        modifier = Modifier.weight(1f)
                    )
                }
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
+                    FormDatePickerCompact(
+                        label = stringResource(Res.string.date_of_birth),
+                        value = dob,
+                        onValueChange = { dob = it },
+                        onClick = {
+                            pickDate(context) { date ->
+                                dob = date
+                            }
+                        },
+                        trailingIcon = {
+                            Icon(
+                                painter = painterResource(Res.drawable.date),
+                                contentDescription = "Date Icon",
+                                tint = Color.Unspecified
+                            )
+                        },
+                        isEnable = true,
+                        modifier = Modifier.weight(1f)
+                    )
+
+                    FormSpinner(
+                        label = stringResource(Res.string.marital_status),
+                        options = StaticComboBoxData.maritalStatusList.toValueList(),
+                        selectedOption = maritalStatusValue,
+                        onOptionSelected = { selectedValue ->
+                            maritalStatusValue = selectedValue
+                            viewModel.maritalStatusId =
+                                StaticComboBoxData.maritalStatusList.firstOrNull { it.Value == selectedValue }?.ID
+                                    ?: 0
+                        },
+                        modifier = Modifier.weight(1f),
+                        /* focusRequester = viewModel.focusRequesterMaritalStatusId,
+                         bringIntoViewRequester = viewModel.bringIntoViewRequesterMaritalStatusId
+
+               */
+                    )
+                }
+
                 Spacer(modifier = Modifier.height(8.dp))
 
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(10.dp)
-                    ){
+                ) {
                     FormSpinner(
                         label = stringResource(Res.string.education),
-                        options = listOf("12th", "Graduation", "Post Graduation"),
-                        selectedOption = education,
-                        onOptionSelected = {
-                            educations->
-                            education = educations
+                        options = StaticComboBoxData.educationList.toValueList(),
+                        selectedOption = educationValue,
+                        onOptionSelected = { selectedValue ->
+                            educationValue = selectedValue
+                            viewModel.educationId =
+                                StaticComboBoxData.educationList.firstOrNull { it.Value == selectedValue }?.ID
+                                    ?: 0
                         },
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier.weight(1f),
                     )
                     FormSpinner(
                         label = stringResource(Res.string.religion),
-                        options = listOf("Hindu", "Muslim"),
-                        selectedOption = religion,
-                        onOptionSelected = {
-                            religions->
-                            religion=religions
+                        options = StaticComboBoxData.religionList.toValueList(),
+                        selectedOption = religionValue,
+                        onOptionSelected = { selectedValue ->
+                            religionValue = selectedValue
+                            viewModel.religionId =
+                                StaticComboBoxData.religionList.firstOrNull { it.Value == selectedValue }?.ID
+                                    ?: 0
                         },
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier.weight(1f),
                     )
                 }
                 Spacer(modifier = Modifier.height(8.dp))
                 FormSpinner(
                     label = stringResource(Res.string.purpose),
-                    options = listOf("Business", "Study Loan", "Home Loan"),
-                    selectedOption = purpose,
-                    onOptionSelected = {
-                        purposes->
-                        purpose=purposes
+                    options = StaticComboBoxData.purposeList.toValueList(),
+                    selectedOption = purposeValue,
+                    onOptionSelected = { selectedValue ->
+                        purposeValue = selectedValue
+                        viewModel.purposeId =
+                            StaticComboBoxData.purposeList.firstOrNull { it.Value == selectedValue }?.ID
+                                ?: 0
                     },
                     modifier = Modifier.fillMaxWidth()
                 )
+
                 Spacer(modifier = Modifier.height(8.dp))
 
                 Row(
@@ -317,22 +404,24 @@ viewModel.loadSavedData()
                 ) {
                     FormFieldCompact(
                         label = stringResource(Res.string.mobile_number),
-                        value = mobile_number,
-                        onValueChange = { mobilenumber->
-                            mobile_number=mobilenumber
+                        value = viewModel.mobileNumber,
+                        onValueChange = { mobilenumber ->
+                            viewModel.mobileNumber = mobilenumber
                         },
                         placeholder = stringResource(Res.string.type_here),
                         maxLength = 10,
-                        modifier = Modifier.weight(2f),
-                        inputType = KeyboardType.Number
+                        modifier = Modifier.weight(2f) .focusRequester( viewModel.focusRequesterMobileNumber)
+                            .bringIntoViewRequester(viewModel.bringIntoViewRequesterMobileNumber)
+                        ,
+                        inputType = KeyboardType.Number,
+
                     )
 
                     FormFieldCompact(
                         label = stringResource(Res.string.enter_otp),
                         value = enter_otp,
-                        onValueChange = {
-                            enterotp->
-                            enter_otp=enterotp
+                        onValueChange = { enterotp ->
+                            enter_otp = enterotp
                         },
                         placeholder = stringResource(Res.string.type_here),
                         modifier = Modifier.weight(1f),
@@ -345,7 +434,7 @@ viewModel.loadSavedData()
                         },
                         stringResource(Res.string.send_otp),
                         modifier = Modifier.weight(1f),
-                        textSize = 11
+                        textSize = 10
                     )
                 }
 
@@ -354,13 +443,15 @@ viewModel.loadSavedData()
                 // ---------------- Form Start ----------------
                 FormFieldCompact(
                     label = stringResource(Res.string.husband_name),
-                    value = husband_name,
+                    value = viewModel.husbandName,
                     placeholder = stringResource(Res.string.type_here),
-                    onValueChange = {
-                        husbandname->
-                        husband_name=husbandname
+                    onValueChange = { husbandname ->
+                        viewModel.husbandName = husbandname
                     },
-                    maxLength = 20
+                    maxLength = 20,
+                    modifier = Modifier.focusRequester( viewModel.focusRequesterHusbandName)
+                        .bringIntoViewRequester(viewModel.bringIntoViewRequesterHusbandName)
+
                 )
 
                 Spacer(modifier = Modifier.height(3.dp))
@@ -368,8 +459,7 @@ viewModel.loadSavedData()
                 DynamicCheckBox(
                     label = stringResource(Res.string.same_as_husband),
                     isChecked = isChecked,
-                    onCheckedChange = {
-                            checked ->
+                    onCheckedChange = { checked ->
                         isChecked = checked
 
                     }
@@ -380,12 +470,16 @@ viewModel.loadSavedData()
                 // ---------------- Form Start ----------------
                 FormFieldCompact(
                     label = stringResource(Res.string.guarantor_name),
-                    value =guarantor_name,
+                    value = viewModel.gurantorName,
                     placeholder = stringResource(Res.string.type_here),
-                    onValueChange = { gurantorname->
-                        guarantor_name=gurantorname
+                    onValueChange = { gurantorname ->
+                        viewModel.gurantorName = gurantorname
                     },
-                    maxLength = 20
+                    modifier = Modifier.focusRequester( viewModel.focusRequesterGurantorName)
+                        .bringIntoViewRequester(viewModel.bringIntoViewRequesterGurantorName),
+                    maxLength = 20,
+
+
                 )
                 Spacer(modifier = Modifier.height(8.dp))
 
@@ -395,11 +489,13 @@ viewModel.loadSavedData()
                 ) {
                     FormSpinner(
                         label = stringResource(Res.string.relation),
-                        options = listOf("Brother", "Husband"),
-                        selectedOption = gurantor_religion,
-                        onOptionSelected = {
-                            religionns->
-                            gurantor_religion=religionns
+                        options = StaticComboBoxData.relationList.toValueList(),
+                        selectedOption = relationValue,
+                        onOptionSelected = { selectedValue ->
+                            relationValue = selectedValue
+                            viewModel.relationId =
+                                StaticComboBoxData.relationList.firstOrNull { it.Value == selectedValue }?.ID
+                                    ?: 0
                         },
                         modifier = Modifier.weight(1f)
                     )
@@ -407,7 +503,7 @@ viewModel.loadSavedData()
                     FormDatePickerCompact(
                         label = stringResource(Res.string.date_of_birth),
                         value = guarantordob,
-                        onValueChange = {guarantordob=it},
+                        onValueChange = { guarantordob = it },
                         onClick = {
                             pickDate(context) { date ->
                                 guarantordob = date
@@ -431,14 +527,18 @@ viewModel.loadSavedData()
                 // ---------------- Form Start ----------------
                 FormFieldCompact(
                     label = stringResource(Res.string.guarantor_mobile_number),
-                    value = guarantor_mobile_number,
+                    value = viewModel.gurantormobileNumber,
                     placeholder = stringResource(Res.string.not_same_as_customer_mobile_number),
-                    onValueChange = {
-                        gurantormbno->
-                        guarantor_mobile_number=gurantormbno
+                    onValueChange = { gurantormbno ->
+                        viewModel.gurantormobileNumber = gurantormbno
                     },
+                    modifier = Modifier.focusRequester( viewModel.focusRequesterGurantormobileNumber)
+                        .bringIntoViewRequester(viewModel.bringIntoViewRequesterGurantormobileNumber),
                     maxLength = 10,
-                    inputType = KeyboardType.Number
+                    inputType = KeyboardType.Number,
+
+
+
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -451,8 +551,9 @@ viewModel.loadSavedData()
                     FormFieldCompact(
                         label = stringResource(Res.string.enter_otp),
                         value = gurantor_enter_otp,
-                        onValueChange = {  gurantorotp->
-                            gurantor_enter_otp =gurantorotp },
+                        onValueChange = { gurantorotp ->
+                            gurantor_enter_otp = gurantorotp
+                        },
                         placeholder = stringResource(Res.string.type_here),
                         modifier = Modifier.weight(2f),
                         inputType = KeyboardType.Number
@@ -473,13 +574,15 @@ viewModel.loadSavedData()
                 // ---------------- Form Start ----------------
                 FormFieldCompact(
                     label = stringResource(Res.string.your_full_address),
-                    value = your_full_address,
+                    value = viewModel.fulladdresss,
                     placeholder = stringResource(Res.string.type_here),
-                    onValueChange = {
-                        yourfulladdress->
-                        your_full_address=yourfulladdress
+                    onValueChange = { yourfulladdress ->
+                        viewModel.fulladdresss = yourfulladdress
                     },
-                    maxLength = 20
+                    maxLength = 20,
+                    modifier = Modifier.focusRequester( viewModel.focusRequesterFullAddress)
+                        .bringIntoViewRequester(viewModel.bringIntoViewRequesterFullAddress),
+
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -490,24 +593,28 @@ viewModel.loadSavedData()
                 ) {
                     FormSpinner(
                         label = stringResource(Res.string.state),
-                        options = listOf("Delhi", "Punjab"),
-                        selectedOption = state,
-                        onOptionSelected = {
-                            states->
-                            state=states
+                        options = StaticComboBoxData.stateList.toValueList(),
+                        selectedOption = stateValue,
+                        onOptionSelected = { selectedValue ->
+                            stateValue = selectedValue
+                            viewModel.stateId =
+                                StaticComboBoxData.stateList.firstOrNull { it.Value == selectedValue }?.ID
+                                    ?: 0
                         },
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier.weight(1f),
                     )
 
                     FormSpinner(
                         label = stringResource(Res.string.district),
-                        options = listOf("West", "South"),
-                        selectedOption = district,
-                        onOptionSelected = {
-                            districts->
-                            district=districts
+                        options = StaticComboBoxData.districtList.toValueList(),
+                        selectedOption = distictValue,
+                        onOptionSelected = { selectedValue ->
+                            distictValue = selectedValue
+                            viewModel.districtId =
+                                StaticComboBoxData.districtList.firstOrNull { it.Value == selectedValue }?.ID
+                                    ?: 0
                         },
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier.weight(1f),
                     )
                 }
 
@@ -519,24 +626,29 @@ viewModel.loadSavedData()
                 ) {
                     FormFieldCompact(
                         label = stringResource(Res.string.village_name),
-                        value = village_name,
-                        onValueChange = {
-                            villagename->
-                            village_name=villagename
+                        value = viewModel.villageName,
+                        onValueChange = { villagename ->
+                            viewModel.villageName = villagename
                         },
                         placeholder = stringResource(Res.string.type_here),
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier.weight(1f).focusRequester( viewModel.focusRequesterVillageName)
+                            .bringIntoViewRequester(viewModel.bringIntoViewRequesterVillageName),
+
+
+
                     )
 
                     FormFieldCompact(
                         label = stringResource(Res.string.tehsil),
-                        value = tehsil,
-                        onValueChange = {
-                            tehsill->
-                            tehsil=tehsill
+                        value = viewModel.tehsilName,
+                        onValueChange = { tehsill ->
+                            viewModel.tehsilName = tehsill
                         },
                         placeholder = stringResource(Res.string.type_here),
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier.weight(1f).focusRequester( viewModel.focusRequesterTehsilName)
+                            .bringIntoViewRequester(viewModel.bringIntoViewRequesterTehsilName),
+
+
                     )
                 }
 
@@ -548,38 +660,45 @@ viewModel.loadSavedData()
                 ) {
                     FormFieldCompact(
                         label = stringResource(Res.string.landmark),
-                        value = landmark,
-                        onValueChange = {
-                            landmarks->
-                            landmark=landmarks
+                        value = viewModel.landMark,
+                        onValueChange = { landmarks ->
+                            viewModel.landMark = landmarks
                         },
                         placeholder = stringResource(Res.string.type_here),
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier.weight(1f).focusRequester( viewModel.focusRequesterLandMark)
+                            .bringIntoViewRequester(viewModel.bringIntoViewRequesterLandMark),
+
+
                     )
 
                     FormFieldCompact(
                         label = stringResource(Res.string.pin_code),
-                        value = pin_code,
-                        onValueChange = {
-                            pincode->
-                            pin_code=pincode
+                        value = viewModel.pinCode,
+                        onValueChange = { pincode ->
+                            viewModel.pinCode = pincode
                         },
                         placeholder = stringResource(Res.string.type_here),
-                        modifier = Modifier.weight(1f),
-                        inputType = KeyboardType.Number
+                        modifier = Modifier.weight(1f).focusRequester( viewModel.focusRequesterPinCode)
+                            .bringIntoViewRequester(viewModel.bringIntoViewRequesterPinCode),
+                        inputType = KeyboardType.Number,
+                        maxLength = 6
+
                     )
                 }
                 Spacer(modifier = Modifier.height(8.dp))
                 FormFieldCompact(
                     label = stringResource(Res.string.maternal_address),
-                    value = maternal_address,
+                    value = viewModel.maternalAddress,
                     placeholder = stringResource(Res.string.type_here),
-                    onValueChange = {
-                        maternaladdress->
-                        maternal_address=maternaladdress
+                    onValueChange = { maternaladdress ->
+                        viewModel.maternalAddress = maternaladdress
                     },
                     maxLength = 20,
-                    isEnable = true
+                    isEnable = true,
+                    modifier=Modifier.focusRequester( viewModel.focusRequesterMaternalAddress)
+                        .bringIntoViewRequester(viewModel.bringIntoViewRequesterMaternalAddress)
+
+
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Row(
@@ -588,25 +707,31 @@ viewModel.loadSavedData()
                 ) {
                     FormFieldCompact(
                         label = stringResource(Res.string.village_name),
-                        value = gurantor_village_name,
-                        onValueChange = { gurantorvillagename->
-                            gurantor_village_name=gurantorvillagename
+                        value = viewModel.villageName,
+                        onValueChange = { gurantorvillagename ->
+                            viewModel.villageName = gurantorvillagename
                         },
                         placeholder = stringResource(Res.string.type_here),
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier.weight(1f).focusRequester( viewModel.focusRequesterVillageNames)
+                            .bringIntoViewRequester(viewModel.bringIntoViewRequesterVillageNames),
+
+
                     )
 
                     FormFieldCompact(
                         label = stringResource(Res.string.maternal_mob_no),
-                        value = maternal_mob_no,
-                        onValueChange = {
-                            maternalmbno->
-                            maternal_mob_no=maternalmbno
+                        value = viewModel.maternalMobileNo,
+                        onValueChange = { maternalmbno ->
+                            viewModel.maternalMobileNo = maternalmbno
                         },
                         placeholder = stringResource(Res.string.type_here),
-                        modifier = Modifier.weight(1f),
-                        inputType = KeyboardType.Number
-                    )
+                        modifier = Modifier.weight(1f)
+                            .focusRequester(viewModel.focusRequesterMaternalMobileNo)
+                            .bringIntoViewRequester(viewModel.bringIntoViewRequesterMaternalMobileNo),
+                        inputType = KeyboardType.Number,
+                        maxLength = 10
+
+                        )
                 }
                 Spacer(modifier = Modifier.height(8.dp))
                 Row(
@@ -615,37 +740,56 @@ viewModel.loadSavedData()
                 ) {
                     FormFieldCompact(
                         label = stringResource(Res.string.father_name),
-                        value = father_name,
-                        onValueChange = {
-                            fathername->
-                            father_name=fathername
+                        value = viewModel.fatherName,
+                        onValueChange = { fathername ->
+                            viewModel.fatherName = fathername
                         },
                         placeholder = stringResource(Res.string.type_here),
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier.weight(1f).focusRequester( viewModel.focusRequesterFatherName)
+                            .bringIntoViewRequester(viewModel.bringIntoViewRequesterFatherName),
+
+
                     )
                     FormSpinner(
                         label = stringResource(Res.string.state),
-                        options = listOf("Delhi", "Punjab"),
-                        selectedOption = state,
-                        onOptionSelected = {
-                            states->
-                            state=states
+                        options = StaticComboBoxData.stateList.toValueList(),
+                        selectedOption = stateValue,
+                        onOptionSelected = { selectedValue ->
+                            stateValue = selectedValue
+                            viewModel.stateId =
+                                StaticComboBoxData.stateList.firstOrNull { it.Value == selectedValue }?.ID
+                                    ?: 0
                         },
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier.weight(1f),
                     )
                 }
 
             } // END Scroll Column
 
             // Bottom Buttons (Not scrollable)
-            CommonSaveButton (
-                onSaveClick ={
-               //    viewModel.saveData()
+            CommonSaveButton(
+                onSaveClick = {
+                    viewModel.saveData()
                 },
                 saveText = stringResource(Res.string.next)
             )
+            if (viewModel.showSaveAlert) {
+                CustomAlertDialog(
+                    showDialog = viewModel.showSaveAlert,
+                    message = viewModel.saveMessage,
+                    onConfirm = {
+                        if (viewModel.saveFlag == 1) {
+                            viewModel.showSaveAlert = false
+                            onNextTab()
+                        } else {
+                            viewModel.requestFocus()
+                        }
+                    }
+                )
+            }
         }
     }
+
 
 }
 
