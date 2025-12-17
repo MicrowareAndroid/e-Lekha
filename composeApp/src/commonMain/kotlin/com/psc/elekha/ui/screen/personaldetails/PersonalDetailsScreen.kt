@@ -492,10 +492,10 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
                 // ---------------- Form Start ----------------
                 FormFieldCompact(
                     label = stringResource(Res.string.guarantor_mobile_number),
-                    value = viewModel.mobileNumber,
+                    value = viewModel.gurantormobileNumber,
                     placeholder = stringResource(Res.string.not_same_as_customer_mobile_number),
                     onValueChange = { gurantormbno ->
-                        viewModel.mobileNumber = gurantormbno
+                        viewModel.gurantormobileNumber = gurantormbno
                     },
                     modifier = Modifier.focusRequester( viewModel.focusRequesterGurantormobileNumber)
                         .bringIntoViewRequester(viewModel.bringIntoViewRequesterGurantormobileNumber),
@@ -559,10 +559,10 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
                     FormSpinner(
                         label = stringResource(Res.string.state),
                         options = StaticComboBoxData.stateList.toValueList(),
-                        selectedOption = educationValue,
+                        selectedOption = stateValue,
                         onOptionSelected = { selectedValue ->
-                            educationValue = selectedValue
-                            viewModel.educationId =
+                            stateValue = selectedValue
+                            viewModel.stateId =
                                 StaticComboBoxData.stateList.firstOrNull { it.Value == selectedValue }?.ID
                                     ?: 0
                         },
@@ -576,7 +576,7 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
                         onOptionSelected = { selectedValue ->
                             distictValue = selectedValue
                             viewModel.districtId =
-                                StaticComboBoxData.stateList.firstOrNull { it.Value == selectedValue }?.ID
+                                StaticComboBoxData.districtList.firstOrNull { it.Value == selectedValue }?.ID
                                     ?: 0
                         },
                         modifier = Modifier.weight(1f),
@@ -646,6 +646,7 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
                         modifier = Modifier.weight(1f).focusRequester( viewModel.focusRequesterPinCode)
                             .bringIntoViewRequester(viewModel.bringIntoViewRequesterPinCode),
                         inputType = KeyboardType.Number,
+                        maxLength = 6
 
                     )
                 }
@@ -693,6 +694,7 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
                             .focusRequester(viewModel.focusRequesterMaternalMobileNo)
                             .bringIntoViewRequester(viewModel.bringIntoViewRequesterMaternalMobileNo),
                         inputType = KeyboardType.Number,
+                        maxLength = 10
 
                         )
                 }
@@ -716,10 +718,10 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
                     FormSpinner(
                         label = stringResource(Res.string.state),
                         options = StaticComboBoxData.stateList.toValueList(),
-                        selectedOption = educationValue,
+                        selectedOption = stateValue,
                         onOptionSelected = { selectedValue ->
-                            educationValue = selectedValue
-                            viewModel.educationId =
+                            stateValue = selectedValue
+                            viewModel.stateId =
                                 StaticComboBoxData.stateList.firstOrNull { it.Value == selectedValue }?.ID
                                     ?: 0
                         },

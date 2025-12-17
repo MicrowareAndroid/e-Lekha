@@ -12,6 +12,10 @@ class CustomerViewModel(private val customerRepository: CustomerRepository) : Vi
 
     private val _customers = MutableStateFlow<List<CustomerEntity>>(emptyList())
     val customers: StateFlow<List<CustomerEntity>> = _customers
+    private val _searchResults = MutableStateFlow<List<CustomerEntity>>(emptyList())
+    val searchResults: StateFlow<List<CustomerEntity>> = _searchResults
+    private val _customerByGuid = MutableStateFlow<List<CustomerEntity>>(emptyList())
+    val customerByGuid: StateFlow<List<CustomerEntity>> = _customerByGuid
 
     // Load all customers
     fun loadCustomers() {
@@ -118,5 +122,17 @@ class CustomerViewModel(private val customerRepository: CustomerRepository) : Vi
             loadCustomers() // refresh
         }
     }
+    fun searchCustomerByName(search: String) {
+        viewModelScope.launch {
+            val result = customerRepository.searchCustomerByName(search)
+            _searchResults.value = result
+        }
+    }
 
-}
+    suspend fun getCustomerDetailGuid(guId: String): List<CustomerEntity> {
+        return customerRepository.getCustomerByGuid(guId)
+    }
+    }
+
+
+
