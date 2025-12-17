@@ -18,4 +18,31 @@ interface CustomerFamilyMemberDetailsDao {
     @Query("Delete from CustomerFamilyMemberDetails")
     suspend  fun deleteAllCustomerFamilyMember()
 
+    @Query("""
+        UPDATE CustomerFamilyMemberDetails 
+        SET 
+            MFirstName = :firstName,
+            MMiddleName = :middleName,
+            MLastName = :lastName,
+            RelationID = :relationId,
+            Age = :age,
+            Gender = :gender,
+            EducationID = :educationId,
+            OccupationID = :occupationId
+        WHERE GUID = :guid
+    """)
+    suspend fun updateCustomerFamilyMemberByGuid(
+        guid: String,
+        firstName: String,
+        middleName: String,
+        lastName: String,
+        relationId: Int,
+        age: Int,
+        gender: String,
+        educationId: Int,
+        occupationId: Int
+    )
+
+
+
 }

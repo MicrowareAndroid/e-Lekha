@@ -1,5 +1,6 @@
 package com.psc.elekha.ui.screen.economicdetails
 
+import CustomAlertMovableAssets
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -40,7 +41,6 @@ import com.psc.elekha.ui.theme.btn_color
 import com.psc.elekha.ui.theme.white
 import com.psc.elekha.utils.CommonSaveButton
 import com.psc.elekha.utils.CustomAlertMonthlyIncome
-import com.psc.elekha.utils.CustomAlertMovableAssets
 import com.psc.elekha.utils.FormField
 import com.psc.elekha.utils.FormFieldCompact
 import com.psc.elekha.utils.ReusableTextView

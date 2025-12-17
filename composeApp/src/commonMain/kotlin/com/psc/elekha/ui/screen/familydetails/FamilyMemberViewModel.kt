@@ -8,72 +8,63 @@ import com.psc.elekha.ui.screen.base.BaseValidationViewModel
 import com.psc.elekha.utils.AppPreferences
 import com.psc.elekha.utils.AppSP
 import com.psc.elekha.utils.generateRandomId
-import com.psc.elekha.utils.returnIntegerValue
 import com.psc.elekha.utils.returnStringValue
 import e_lekha.composeapp.generated.resources.Res
 import e_lekha.composeapp.generated.resources.data_saved_successfully
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.getString
 
 class FamilyMemberDetailViewModel(
-    var appPreferences: AppPreferences,
-    var familyMemberViewModel: CustomerFamilyMemberDetailsViewModel
+    private val appPreferences: AppPreferences,
+    private val familyMemberViewModel: CustomerFamilyMemberDetailsViewModel
 ) : BaseValidationViewModel() {
 
     var memberFirstName by mutableStateOf("")
     var memberMiddleName by mutableStateOf("")
     var memberLastName by mutableStateOf("")
-    var relationId by mutableStateOf(0)
-    var age by mutableStateOf(0)
-    var gender by mutableStateOf(0)
-    var isSchooling by mutableStateOf(0)
-    var educationId by mutableStateOf(0)
-    var isEarning by mutableStateOf(0)
-    var occupationId by mutableStateOf(0)
-    var monthlyIncomeId by mutableStateOf(0)
-    var monthlyIncome by mutableStateOf(0)
+    var relationId by mutableStateOf("")
+    var age by mutableStateOf("")
+    var gender by mutableStateOf("")
+    var educationId by mutableStateOf("")
+    var occupationId by mutableStateOf("")
+    var monthlyIncome by mutableStateOf("")
 
 
-    suspend fun saveFamilyMember() {
 
-        val familyID =
-            returnStringValue(appPreferences.getString(AppSP.familyGuid))
+    fun saveDataWithoutValidation(onSuccess: () -> Unit) {
+        viewModelScope.launch {
+            val memberGuid = generateRandomId()
 
-        if (returnStringValue(familyID).isEmpty()) {
-            val newguid = generateRandomId()
             val entity = CustomerFamilyMemberDetailsEntity(
-                GUID = newguid,
+                GUID = memberGuid,  // Each member gets unique GUID
                 MemberID = 0,
                 MFirstName = memberFirstName,
                 MMiddleName = memberMiddleName,
                 MLastName = memberLastName,
-                RelationID = relationId,
-                Age = age,
-                IsSchooling = isSchooling,
-                EducationID = educationId,
-                IsEarning = isEarning,
-                OccupationID = occupationId,
-                MonthlyIncomeID = monthlyIncomeId,
-                Gender = gender.toString(),
+                RelationID = relationId.toIntOrNull() ?: 0,
+                Age = age.toIntOrNull() ?: 0,
+                IsSchooling = 0,
+                EducationID = educationId.toIntOrNull() ?: 0,
+                IsEarning = 0,
+                OccupationID = occupationId.toIntOrNull() ?: 0,
+                MonthlyIncomeID = 0,
+                Gender = gender,
                 IsOld = 0,
-                MonthlyIncome = monthlyIncome,
+                MonthlyIncome = occupationId.toIntOrNull() ?: 0,
                 IsUpload = 0
             )
 
             familyMemberViewModel.insertCustomerFamilyMember(entity)
-            appPreferences.putString(AppSP.familyGuid,newguid)
             saveMessage = getString(Res.string.data_saved_successfully)
+
+            saveFlag = 1
             showSaveAlert = true
+
+            onSuccess()
         }
     }
-
-    fun loadFamilyMembers() {
-        viewModelScope.launch {
-            val familyID =
-                returnStringValue(appPreferences.getString(AppSP.familyGuid))
-
-
-
-        }
     }
-}
+
