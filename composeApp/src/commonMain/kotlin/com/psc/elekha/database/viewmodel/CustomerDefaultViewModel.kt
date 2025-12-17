@@ -266,6 +266,22 @@ class CustomerDefaultViewModel(
             _customerDefaultGUIDList.value = repository.getCustomerDefaultGUID(userId)
         }
     }
+
+    fun updateBankDetail(
+        customerGuid: String,
+        accountNo: String,
+        bankId: Int,
+        ifscCode: String,
+        UpdatedBy: Int?,
+        UpdatedOn: String?
+    ) {
+        viewModelScope.launch {
+            repository.updateBankDetail(
+                customerGuid,accountNo,bankId,ifscCode,UpdatedBy,UpdatedOn
+            )
+        }
+    }
+
 }
 
 

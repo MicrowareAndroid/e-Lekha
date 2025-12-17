@@ -312,7 +312,7 @@ fun DrawerContent() {
                 Spacer(Modifier.height(30.dp))
                 Button(
                     onClick = {},
-                    shape = RoundedCornerShape(8.dp),
+                    shape = RoundedCornerShape(1.dp),
                     modifier = Modifier.width(130.dp),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = btn_color
