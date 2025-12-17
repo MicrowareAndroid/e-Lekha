@@ -25,6 +25,7 @@ import e_lekha.composeapp.generated.resources.data_saved_successfully
 import e_lekha.composeapp.generated.resources.personal_customer_name
 import e_lekha.composeapp.generated.resources.personal_district
 import e_lekha.composeapp.generated.resources.personal_education
+import e_lekha.composeapp.generated.resources.personal_father
 import e_lekha.composeapp.generated.resources.personal_full_address
 import e_lekha.composeapp.generated.resources.personal_gurantor_mobile
 import e_lekha.composeapp.generated.resources.personal_gurantor_name
@@ -32,6 +33,8 @@ import e_lekha.composeapp.generated.resources.personal_husband_name
 import e_lekha.composeapp.generated.resources.personal_landmark
 
 import e_lekha.composeapp.generated.resources.personal_marital
+import e_lekha.composeapp.generated.resources.personal_maternal_address
+import e_lekha.composeapp.generated.resources.personal_maternal_mobile
 import e_lekha.composeapp.generated.resources.personal_mobile_number
 import e_lekha.composeapp.generated.resources.personal_pincode
 import e_lekha.composeapp.generated.resources.personal_purpose
@@ -52,7 +55,7 @@ import kotlin.compareTo
 
 class PersonalDetailViewModel(
     val appPreferences: AppPreferences,
-  val customerDefaultViewModel: CustomerDefaultViewModel):
+  val customerViewModel: CustomerViewModel):
     BaseValidationViewModel()
 {
     var customerName  by mutableStateOf("")
@@ -141,31 +144,98 @@ class PersonalDetailViewModel(
         val guid = appPreferences.getString(AppSP.customerGuid)
         if (returnStringValue(guid).isEmpty()) {
             val newguid = generateRandomId()
-            val entity = CustomerDefaultEntity(
+            val entity = CustomerEntity(
                 newguid,
                 "",
+                0,
                 "",
                 0,
-                mobileNumber,
                 maritalStatusId,
                 customerName,
                 "",
                 "",
                 "",
                 "",
+                husbandName,
+                "",
+                0,
                 gurantorName,
                 "",
                 "",
+                "",
                 convertDateFormatYYYYMMDD(returnStringValue(appPreferences.getString(AppSP.dateOfBirth))),
                 0,
+                0,
+                0,
+                mobileNumber,
+                gurantormobileNumber,
+                religionId,
+                0,
+                educationId,
+                0,
+                0,
+                0,
+                "",
+                "",
+                "",
+                "",
+                "",
                 returnIntegerValue(villageName),
+                "",
                 pinCode,
                 0,
-                convertDateFormatYYYYMMDD(returnStringValue(appPreferences.getString(AppSP.dateOfBirth))),
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                false,
+                0,
+                false,
+                0,
+                false,
+                0,
+                false,
+                0,
+                false,
+                0,
+                false,
+                false,
+                false,
+                false,
+                false,
+                0,
+                0,
+                0,
+                0,
                 "",
                 "",
                 "",
                 "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                0,
+                "",
+                "",
+                "",
+                0,
+                "",
+                "",
+                "",
+                0,
                 "",
                 "",
                 "",
@@ -181,64 +251,127 @@ class PersonalDetailViewModel(
                 "",
                 "",
                 "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                0,
+                "",
+                "",
+                "",
+                0,
+                "",
+                "",
+                "",
+                0,
+                "",
+                "",
+                "",
+                0,
+                "",
+                "",
+                "",
+                "",
+                0,
+                "",
+                "",
+                0,
+                0,
+                0,
+                0,
+                0,
+                "",
+                "",
+                "",
+                0,
+                "",
+                "",
+                0,
+                0,
+                "",
+                0,
+                0,
+                0,
+                "",
+                "",
+                "",
+                0,
+                "",
+                0,
+                "",
+                0,
+                0.0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                "",
+                false,
+                "",
+                0,
                 appPreferences.getString(AppSP.userId),
                 currentDatetime(),
                 "",
                 "",
+                false,
+                "",
+                "",
+                "",
+                "",
+                "",
+                0,
+                0,
+                0,
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                false,
+                "",
+                false,
+                0,
+                0,
+                "",
+                "",
+                "",
+                false,
+                0,
+                "",
+                "",
+                0,
+                "",
+                "",
+                0,
+                0,
+                "",
+                "",
+                "",
+                "",
+                "",
+                convertDateFormatYYYYMMDD(returnStringValue(appPreferences.getString(AppSP.dateOfBirth))),
+                "",
+                "",
                 1,
-                false,
-                0,
-                "",
-                husbandName,
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                0,
-                "",
-                "",
-                "",
-                "",
-                false,
-                0,
-                "",
-                educationId,
-                religionId,
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                0,
-                "",
-                "",
-                "",
-                "",
                 "",
                 0,
                 0,
-                ""
-            )
-            customerDefaultViewModel.insertCustomer(entity)
+                "",
+
+                )
+            customerViewModel.insertCustomer(entity)
             appPreferences.putString(AppSP.customerGuid, newguid)
             saveMessage = getString(Res.string.data_saved_successfully)
             showSaveAlert = true
@@ -249,36 +382,35 @@ class PersonalDetailViewModel(
         viewModelScope.launch {
 
             val savedGuid = returnStringValue(appPreferences.getString(AppSP.customerGuid))
+            if (savedGuid.isNotEmpty()) {
 
-            customerDefaultViewModel.loadCustomerDefaultGUID(savedGuid)
-            val listData = customerDefaultViewModel.customerDefaultGUIDList.value
-
-            if (!listData.isNullOrEmpty()) {
-
+                val listData = customerViewModel.getCustomerDetailGuid(savedGuid)
+                if (listData.isNotEmpty()) {
 
                     val data = listData[0]
 
                     customerName = returnStringValue(data.FirstName)
-                   maritalStatusId = returnIntegerValue(data.MaritalStatusID?.toString())
+                    maritalStatusId = returnIntegerValue(data.MaritalStatusID?.toString())
                     educationId = returnIntegerValue(data.EducationID?.toString())
 
                     religionId = returnIntegerValue(data.ReligionID?.toString())
-                mobileNumber=returnStringValue(listData[0].ContactNo)
-                husbandName=returnStringValue(listData[0].HusbandMName)
-                gurantorName=returnStringValue(listData[0].GurantorMName)
+                    mobileNumber = returnStringValue(listData[0].ContactNo)
+                    husbandName = returnStringValue(listData[0].HusbandMName)
+                    gurantorName = returnStringValue(listData[0].GurantorMName)
 
-                  //  relationId = returnIntegerValue(data.Re.toString())
+                    //  relationId = returnIntegerValue(data.Re.toString())
 
-                 //  gurantormobileNumber = returnIntegerValue(data..toString())
+                    //  gurantormobileNumber = returnIntegerValue(data..toString())
                     //districtId = returnIntegerValue(data.DistrictId.toString())
-                villageName = returnStringValue(data.VillageID?.toString())
+                    villageName = returnStringValue(data.VillageID?.toString())
 
 
-                   // tehsilName = returnStringValue(data.TehsilName)
-                   // landMark = returnStringValue(data.Landmark)
-                pinCode = returnStringValue(data.PinCode)
+                    // tehsilName = returnStringValue(data.TehsilName)
+                    // landMark = returnStringValue(data.Landmark)
+                    pinCode = returnStringValue(data.PinCode)
                 }
             }
+        }
 
     }
 
@@ -395,7 +527,7 @@ class PersonalDetailViewModel(
                 )
             }
 
-            returnStringValue(gurantormobileNumber).isBlank() -> {
+            returnStringValue(gurantormobileNumber).length < 10 -> {
                 val nameLabel = getString(Res.string.personal_gurantor_mobile)
                 ValidationModelContorl(
                     isValid = false,
@@ -459,7 +591,7 @@ class PersonalDetailViewModel(
                     bringIntoViewRequester = bringIntoViewRequesterLandMark
                 )
             }
-            returnStringValue(pinCode).isBlank() -> {
+            returnStringValue(pinCode).length < 6 -> {
                 val nameLabel = getString(Res.string.personal_pincode)
                 ValidationModelContorl(
                     isValid = false,
@@ -469,7 +601,7 @@ class PersonalDetailViewModel(
                 )
             }
             returnStringValue(maternalAddress).isBlank() -> {
-                val nameLabel = getString(Res.string.personal_pincode)
+                val nameLabel = getString(Res.string.personal_maternal_address)
                 ValidationModelContorl(
                     isValid = false,
                     errorMessage = nameLabel,
@@ -479,7 +611,7 @@ class PersonalDetailViewModel(
             }
 
             returnStringValue(maternalMobileNo).isBlank() -> {
-                val nameLabel = getString(Res.string.personal_pincode)
+                val nameLabel = getString(Res.string.personal_maternal_mobile)
                 ValidationModelContorl(
                     isValid = false,
                     errorMessage = nameLabel,
@@ -488,7 +620,7 @@ class PersonalDetailViewModel(
                 )
             }
             returnStringValue(fatherName).isBlank() -> {
-                val nameLabel = getString(Res.string.personal_pincode)
+                val nameLabel = getString(Res.string.personal_father)
                 ValidationModelContorl(
                     isValid = false,
                     errorMessage = nameLabel,

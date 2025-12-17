@@ -85,6 +85,11 @@ class CustomerRepository(private val customerDao: CustomerDao) {
             guid
         )
     }
+    suspend fun searchCustomerByName(search: String): List<CustomerEntity> {
+        return customerDao.searchCustomerByName(search)
+    }
 
-
+    suspend fun getCustomerByGuid(guId: String): List<CustomerEntity> {
+        return customerDao.getCustomerByGuid(guId)
+    }
 }

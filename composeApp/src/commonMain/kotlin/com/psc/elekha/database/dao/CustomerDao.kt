@@ -192,4 +192,19 @@ interface CustomerDao {
 
     @Query("Select CustomerID from Customer where GUID=:GUID")
     suspend fun getCustomerIDByGUID(GUID: String): String
+
+    @Query(
+        "SELECT * FROM Customer " +
+                "WHERE TRIM(" +
+                "COALESCE(FirstName, '') || ' ' || " +
+                "COALESCE(MiddleName, '') || ' ' || " +
+                "COALESCE(LastName, '')" +
+                ") LIKE '%' || :search || '%'"
+    )
+    fun searchCustomerByName(search: String): List<CustomerEntity>
+
+    @Query(" SELECT * FROM Customer WHERE GUID =:guId")
+    suspend fun getCustomerByGuid(guId: String): List<CustomerEntity>
+
+
 }
