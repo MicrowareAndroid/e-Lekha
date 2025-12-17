@@ -7,7 +7,7 @@ import com.psc.elekha.utils.AppPermission
 
 expect fun getDatabaseBuilder(): RoomDatabase.Builder<AppDatabase>
 
-<<<<<<< HEAD
+
 expect class PermissionManager {
 
     @Composable
@@ -18,8 +18,9 @@ expect class PermissionManager {
         permission: AppPermission,
         onResult: (Boolean) -> Unit
     )
-=======
+}
+
 expect class DatabaseExporter() {
     fun exportAndShare(dbBaseName: String)
->>>>>>> 600e007581c4eacc7ef0adb63cea590ee8001a8a
+
 }

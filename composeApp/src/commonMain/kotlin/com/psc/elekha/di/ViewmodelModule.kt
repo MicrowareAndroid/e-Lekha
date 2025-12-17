@@ -84,9 +84,9 @@ val viewmodelModule = module {
     viewModelOf(::UserResponseViewModel)
     viewModelOf(::FamilyMemberDetailViewModel)
     viewModelOf(::KycDetailViewModel)
-<<<<<<< HEAD
+
     viewModelOf(::BankDetailViewModel)
-=======
+
     viewModelOf(::PersonalDetailViewModel)
->>>>>>> 600e007581c4eacc7ef0adb63cea590ee8001a8a
+
 }
