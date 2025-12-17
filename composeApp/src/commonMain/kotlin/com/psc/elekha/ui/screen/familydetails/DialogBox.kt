@@ -256,7 +256,7 @@ fun CustomAlertFamilyDetails(
                                 containerColor = btn_color,
                                 contentColor = Color.Black
                             ),
-                            shape = RoundedCornerShape(15.dp)
+                            shape = RoundedCornerShape(1.dp)
                         ) {
                             Text(cancelText)
                         }
@@ -275,7 +275,7 @@ fun CustomAlertFamilyDetails(
                                 containerColor = btn_color,
                                 contentColor = Color.Black
                             ),
-                            shape = RoundedCornerShape(15.dp)
+                            shape = RoundedCornerShape(1.dp)
                         ) {
                             Text(submitText)
                         }

@@ -70,12 +70,11 @@ import e_lekha.composeapp.generated.resources.pan_number
 import e_lekha.composeapp.generated.resources.select_id_proof
 import e_lekha.composeapp.generated.resources.type_here
 import e_lekha.composeapp.generated.resources.voter_no
-import kotlinx.coroutines.coroutineScope
+
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
-import kotlin.coroutines.coroutineContext
 
 @Composable
 fun KycDetailsScreen(
@@ -255,7 +254,6 @@ fun ElectricityBillForm(viewModel: KycDetailViewModel) {
                 painter = painterResource(Res.drawable.camera),
                 tint = blue,
                 contentDescription = stringResource(Res.string.front_image),
-                tint = Color.Black,
                 modifier = Modifier.size(28.dp)
             )
             Spacer(modifier = Modifier.height(4.dp))

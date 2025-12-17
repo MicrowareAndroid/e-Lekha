@@ -46,6 +46,7 @@ import com.psc.elekha.utils.CameraPreviewField
 import com.psc.elekha.utils.CommonDivider
 import com.psc.elekha.utils.CommonSaveButton
 import com.psc.elekha.utils.CommonSingleButtonsBottomString
+import com.psc.elekha.utils.CustomAlertDialog
 import com.psc.elekha.utils.DynamicCheckBox
 import com.psc.elekha.utils.FormDatePicker
 import com.psc.elekha.utils.FormField
@@ -109,6 +110,7 @@ import e_lekha.composeapp.generated.resources.voter_id_card
 import e_lekha.composeapp.generated.resources.your_full_address
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.viewmodel.koinViewModel
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -120,6 +122,7 @@ fun BankDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = {}) 
     var bankName by remember { mutableStateOf("") }
     var branchName by remember { mutableStateOf("") }
     var ifscCode by remember { mutableStateOf("") }
+    val viewModel = koinViewModel<BankDetailViewModel>()
 
 
     LaunchedEffect(Unit) {
@@ -135,7 +138,6 @@ fun BankDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = {}) 
 
             Spacer(modifier = Modifier.height(10.dp))
 
-            // -------- ALL FORM CONTENT SHOULD BE INSIDE THIS SCROLL COLUMN ----------
             Column(
                 modifier = Modifier
                     .weight(1f)
@@ -230,12 +232,25 @@ fun BankDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = {}) 
                 }
 
 
-            } // END Scroll Column
+            }
 
-            // Bottom Buttons (Not scrollable)
             CommonSaveButton(
-                onSaveClick = {},
+                onSaveClick = { viewModel.saveData()},
                 saveText = stringResource(Res.string.next)
+            )
+        }
+        if (viewModel.showSaveAlert) {
+            CustomAlertDialog(
+                showDialog = viewModel.showSaveAlert,
+                message = viewModel.saveMessage,
+                onConfirm = {
+                    if (viewModel.saveFlag == 1) {
+                        viewModel.showSaveAlert = false
+                        onNextTab()
+                    } else {
+                        viewModel.requestFocus()
+                    }
+                }
             )
         }
     }
