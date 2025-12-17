@@ -2,7 +2,7 @@ package com.psc.elekha.expectfile
 
 import android.Manifest
 import android.app.Application
-<<<<<<< HEAD
+
 import android.content.pm.PackageManager
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -10,13 +10,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.ContextCompat
-=======
+
 import android.content.Context
 import android.content.Intent
 import android.database.sqlite.SQLiteDatabase
 import android.widget.Toast
 import androidx.core.content.FileProvider
->>>>>>> 600e007581c4eacc7ef0adb63cea590ee8001a8a
+
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.psc.elekha.database.appdatabase.AppDatabase
@@ -41,7 +41,7 @@ actual fun getDatabaseBuilder(): RoomDatabase.Builder<AppDatabase> {
     )
 }
 
-<<<<<<< HEAD
+
 actual class PermissionManager {
 
     @Composable
@@ -90,7 +90,7 @@ private fun AppPermission.toAndroidPermission(): String =
         AppPermission.LOCATION -> Manifest.permission.ACCESS_FINE_LOCATION
         AppPermission.MICROPHONE -> Manifest.permission.RECORD_AUDIO
     }
-=======
+
 
 actual class DatabaseExporter {
 
@@ -211,4 +211,3 @@ fun shareFile(
     }
 }
 
->>>>>>> 600e007581c4eacc7ef0adb63cea590ee8001a8a
