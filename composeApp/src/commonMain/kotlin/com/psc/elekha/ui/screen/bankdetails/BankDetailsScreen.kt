@@ -53,7 +53,9 @@ import com.psc.elekha.utils.FormFieldCompact
 import com.psc.elekha.utils.FormSpinner
 import com.psc.elekha.utils.ReusableImageView
 import com.psc.elekha.utils.ReusableTextView
+import com.psc.elekha.utils.StaticComboBoxData
 import com.psc.elekha.utils.pickDate
+import com.psc.elekha.utils.toValueList
 import e_lekha.composeapp.generated.resources.Res
 import e_lekha.composeapp.generated.resources.aadhaar_card
 import e_lekha.composeapp.generated.resources.back_image
@@ -172,7 +174,7 @@ fun BankDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = {}) 
 
                 FormSpinner(
                     label = stringResource(Res.string.bank_name),
-                    options = listOf("SBI", "HDFC", "AXIS"),
+                    options = StaticComboBoxData.bankname.toValueList(),
                     selectedOption = bankName,
                     onOptionSelected = { bankName = it}
                 )
@@ -181,7 +183,7 @@ fun BankDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = {}) 
 
                 FormSpinner(
                     label = stringResource(Res.string.branch_name),
-                    options = listOf("SBI Delhi","SBI Gurgaon", "HDFC Delhi","HDFC Gurgaon", "AXIS Delhi","AXIS Gurgaon"),
+                    options = StaticComboBoxData.branchname.toValueList(),
                     selectedOption = branchName,
                     onOptionSelected = {branchName = it }
                 )
