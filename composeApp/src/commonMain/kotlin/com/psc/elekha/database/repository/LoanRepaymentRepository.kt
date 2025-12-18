@@ -7,7 +7,7 @@ class LoanRepaymentRepository(
     private val dao: LoanRepaymentDao
 ) {
 
-    // Insert single loan repayment
+    // Insert single loan data_reports
     suspend fun insertLoanRepayment(loanRepayment: LoanRepaymentEntity) {
         dao.insertLoanRepayment(loanRepayment)
     }
@@ -22,7 +22,7 @@ class LoanRepaymentRepository(
         return dao.getAllLoanRepayment()
     }
 
-    // Get loan repayment by GUID
+    // Get loan data_reports by GUID
     suspend fun getLoanRepaymentByGUID(GUID: String): LoanRepaymentEntity {
         return dao.getLoanRepaymentByGUID(GUID)
     }
@@ -37,7 +37,7 @@ class LoanRepaymentRepository(
         return dao.getLoanRepaymentUploadDataCount()
     }
 
-    // Update loan repayment data
+    // Update loan data_reports data
     suspend fun updateLoanRepaymentData(
         Total: Double,
         PaidDate: String,

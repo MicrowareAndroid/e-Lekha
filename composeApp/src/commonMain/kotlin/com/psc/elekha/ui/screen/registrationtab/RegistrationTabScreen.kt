@@ -72,17 +72,12 @@ fun RegistartionTabScreen(navController: NavController, pref: AppPreferences) {
         modifier = Modifier.fillMaxSize()
     ) {
 
-        // ✅ BACKGROUND IMAGE (FULL SCREEN)
-        Image(
-            painter = painterResource(Res.drawable.background),
-            contentDescription = null,
-            modifier = Modifier.matchParentSize(),
-            contentScale = ContentScale.FillBounds
-        )
+
+
         Scaffold(
             modifier = Modifier
                 .fillMaxSize(),
-            containerColor = Color.Transparent,
+            containerColor = white,
             topBar = {
                 ReusableTopBar(
                     title = tabs[selectedTabIndex],

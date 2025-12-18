@@ -1,6 +1,7 @@
 package com.psc.elekha.expectfile
 
 import android.Manifest
+import android.app.Activity
 import android.app.Application
 
 import android.content.pm.PackageManager
@@ -12,9 +13,16 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.ContextCompat
 
 import android.content.Context
+import android.content.ContextWrapper
 import android.content.Intent
 import android.database.sqlite.SQLiteDatabase
+import android.net.Uri
+import android.os.Build
+import android.provider.Settings
 import android.widget.Toast
+import androidx.activity.ComponentActivity
+import androidx.activity.result.ActivityResultLauncher
+import androidx.core.app.ActivityCompat
 import androidx.core.content.FileProvider
 
 import androidx.room.Room
@@ -22,6 +30,7 @@ import androidx.room.RoomDatabase
 import com.psc.elekha.database.appdatabase.AppDatabase
 import com.psc.elekha.database.appdatabase.dbFileName
 import com.psc.elekha.utils.AppPermission
+import kotlinx.coroutines.suspendCancellableCoroutine
 import org.koin.mp.KoinPlatform
 import java.io.File
 import java.io.FileInputStream
@@ -31,6 +40,7 @@ import java.util.Date
 import java.util.Locale
 import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
+import kotlin.coroutines.resume
 
 actual fun getDatabaseBuilder(): RoomDatabase.Builder<AppDatabase> {
     val appContext = KoinPlatform.getKoin().get<Application>()
@@ -42,54 +52,102 @@ actual fun getDatabaseBuilder(): RoomDatabase.Builder<AppDatabase> {
 }
 
 
-actual class PermissionManager {
+actual class PermissionManager(
+    private val context: Context
+) {
+    actual suspend fun checkPermission(
+        permission: AppPermission
+    ): PermissionStatus {
 
-    @Composable
-    actual fun hasPermission(permission: AppPermission): Boolean {
-        val context = LocalContext.current
-        val androidPermission = permission.toAndroidPermission()
-        return ContextCompat.checkSelfPermission(
-            context,
-            androidPermission
-        ) == PackageManager.PERMISSION_GRANTED
-    }
+        val androidPermissions = permission.toAndroidPermissions()
 
-    @Composable
-    actual fun requestPermission(
-        permission: AppPermission,
-        onResult: (Boolean) -> Unit
-    ) {
-        val context = LocalContext.current
-        val androidPermission = permission.toAndroidPermission()
-
-        val launcher = rememberLauncherForActivityResult(
-            ActivityResultContracts.RequestPermission()
-        ) { granted ->
-            onResult(granted)
+        if (androidPermissions.isEmpty()) {
+            return PermissionStatus.GRANTED
         }
 
-        LaunchedEffect(Unit) {
-            if (
-                ContextCompat.checkSelfPermission(
-                    context,
-                    androidPermission
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                launcher.launch(androidPermission)
-            } else {
-                onResult(true)
-            }
+        val allGranted = androidPermissions.all {
+            ContextCompat.checkSelfPermission(
+                context,
+                it
+            ) == PackageManager.PERMISSION_GRANTED
+        }
+
+        if (allGranted) return PermissionStatus.GRANTED
+
+        val activity = context.findActivity() ?: return PermissionStatus.DENIED
+
+        val shouldShowRationale = androidPermissions.any {
+            ActivityCompat.shouldShowRequestPermissionRationale(activity, it)
+        }
+
+        val prefs = context.getSharedPreferences("permissions", Context.MODE_PRIVATE)
+        val wasRequested = prefs.getBoolean(permission.name, false)
+
+        return when {
+            shouldShowRationale -> PermissionStatus.DENIED
+            wasRequested -> PermissionStatus.DENIED_PERMANENTLY
+            else -> PermissionStatus.NOT_DETERMINED
         }
     }
+
+    actual suspend fun requestPermission(
+        permission: AppPermission
+    ): PermissionStatus {
+
+        return checkPermission(permission)
+    }
+
+    actual suspend fun requestMultiplePermissions(
+        permissions: List<AppPermission>
+    ): Map<AppPermission, PermissionStatus> {
+        return permissions.associateWith { checkPermission(it) }
+    }
+
+    actual fun openAppSettings() {
+        val intent = Intent(
+            Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+            Uri.fromParts("package", context.packageName, null)
+        ).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        }
+        context.startActivity(intent)
+    }
+
+    private fun AppPermission.toAndroidPermissions(): List<String> =
+        when (this) {
+            AppPermission.CAMERA -> listOf(Manifest.permission.CAMERA)
+
+            AppPermission.STORAGE ->
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    listOf(
+                        Manifest.permission.READ_MEDIA_IMAGES,
+                        Manifest.permission.READ_MEDIA_VIDEO,
+                        Manifest.permission.READ_MEDIA_AUDIO
+                    )
+                } else {
+                    listOf(
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    )
+                }
+
+            AppPermission.LOCATION -> listOf(
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            )
+
+            AppPermission.MICROPHONE ->
+                listOf(Manifest.permission.RECORD_AUDIO)
+        }
 }
 
-private fun AppPermission.toAndroidPermission(): String =
-    when (this) {
-        AppPermission.CAMERA -> Manifest.permission.CAMERA
-        AppPermission.STORAGE -> Manifest.permission.READ_EXTERNAL_STORAGE
-        AppPermission.LOCATION -> Manifest.permission.ACCESS_FINE_LOCATION
-        AppPermission.MICROPHONE -> Manifest.permission.RECORD_AUDIO
+fun Context.findActivity(): Activity? {
+    return when (this) {
+        is Activity -> this
+        is ContextWrapper -> baseContext.findActivity()
+        else -> null
     }
+}
 
 
 actual class DatabaseExporter {

@@ -79,12 +79,7 @@ fun RegistrationListScreen(navController: NavController) {
                     .fillMaxSize()
             ) {
 
-                Image(
-                    painter = painterResource(Res.drawable.background),
-                    contentDescription = null,
-                    modifier = Modifier.matchParentSize(),
-                    contentScale = ContentScale.FillBounds
-                )
+
 
                 Spacer(modifier = Modifier.height(10.dp))
 
