@@ -78,6 +78,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.focusTarget
 import androidx.compose.ui.focus.onFocusChanged
@@ -111,6 +112,7 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import coil3.Uri
 import coil3.compose.rememberAsyncImagePainter
+import com.psc.elekha.database.entity.MSTComboBox_NEntity
 import com.psc.elekha.model.SliderItem
 import com.psc.elekha.ui.screen.gtrlist.CustomerData
 import com.psc.elekha.ui.screen.gtrlist.GroupCardData
@@ -163,7 +165,9 @@ import e_lekha.composeapp.generated.resources.enter_otp
 import e_lekha.composeapp.generated.resources.existing_customer
 import e_lekha.composeapp.generated.resources.gender
 import e_lekha.composeapp.generated.resources.gtr_add
+import e_lekha.composeapp.generated.resources.gtr_cancel
 import e_lekha.composeapp.generated.resources.gtr_save
+import e_lekha.composeapp.generated.resources.gtr_saves
 import e_lekha.composeapp.generated.resources.hh_mm
 import e_lekha.composeapp.generated.resources.ic_arrow_drop_down
 import e_lekha.composeapp.generated.resources.ic_close
@@ -530,8 +534,8 @@ fun CommonActionButtons(
     onSaveClick: () -> Unit,
     onCloseClick: () -> Unit,
     accentColor: Color = btn_color,
-    saveText: String = stringResource(Res.string.gtr_save),
-    closeText: String = stringResource(Res.string.gtr_add),
+    saveText: String = stringResource(Res.string.gtr_saves),
+    closeText: String = stringResource(Res.string.gtr_cancel),
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -543,28 +547,28 @@ fun CommonActionButtons(
             onClick = onSaveClick,
             modifier = Modifier
                 .weight(1f)
-                .height(48.dp),
+                .height(40.dp),
             colors = ButtonDefaults.buttonColors(
                 containerColor = btn_color,
                 contentColor = Color.Black
             ),
-            shape = RoundedCornerShape(15.dp)
+            shape = RoundedCornerShape(1.dp)
         ) {
             Text(saveText)
         }
 
-
+Spacer(modifier = Modifier.width(5.dp))
 
         Button(
             onClick = onCloseClick,
             modifier = Modifier
                 .weight(1f)
-                .height(48.dp),
+                .height(40.dp),
             colors = ButtonDefaults.buttonColors(
                 containerColor = btn_color,
                 contentColor = Color.Black
             ),
-            shape = RoundedCornerShape(15.dp)
+            shape = RoundedCornerShape(1.dp)
         ) {
             Text(closeText)
         }
@@ -1892,6 +1896,120 @@ fun FormSpinner(
         }
     }
 }
+
+
+
+@Composable
+fun <T : Any> FillDynamicSpinner(
+    label: String,
+    options: List<T>?,
+    selectedOption: Int?,
+    onOptionSelected: (Int) -> Unit,
+    getOptionId: (T) -> Int,
+    getOptionLabel: (T) -> String,
+    modifier: Modifier = Modifier,
+    labelColor: Color = black,
+    backgroundColor: Color = text_fiiled_color,
+    textColor: Color = Color.Black,
+    fontFamily: FontFamily = FontFamily(Font(Res.font.roboto_regular)),
+    borderColor: Color = desire_orange,
+    focusRequester: FocusRequester? = null,
+    bringIntoViewRequester: BringIntoViewRequester? = null
+) {
+    var expanded by remember { mutableStateOf(false) }
+    var hasFocus by remember { mutableStateOf(false) }
+
+    LaunchedEffect(hasFocus) {
+        if (hasFocus) {
+            delay(120)
+            bringIntoViewRequester?.bringIntoView()
+            expanded = true
+        }
+    }
+
+    val optionList = remember(options) {
+        val list = mutableListOf<Pair<Int, String>>()
+        list.add(0 to "Select")
+        options?.forEach { list.add(getOptionId(it) to getOptionLabel(it)) }
+        list
+    }
+
+    val selectedText = optionList.find { it.first == selectedOption }?.second ?: "Select"
+
+    Column(modifier = modifier) {
+        ReusableTextView(
+            text = label,
+            fontSize = 14,
+            textColor = labelColor,
+            fontFamily = fontFamily
+        )
+        Spacer(modifier = Modifier.height(5.dp))
+
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .heightIn(min = 40.dp)
+                .border(1.dp, borderColor, RoundedCornerShape(15.dp))
+                .background(backgroundColor, RoundedCornerShape(15.dp))
+                .focusTarget()
+                .focusable()
+                .focusProperties { canFocus = true }
+                .then(
+                    if (focusRequester != null)
+                        Modifier.focusRequester(focusRequester)
+                    else Modifier
+                )
+                .onFocusChanged { state ->
+                    hasFocus = state.isFocused
+                }
+                .clickable { expanded = true },
+            contentAlignment = Alignment.CenterStart
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 10.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+               ReusableTextView(
+                    text = selectedText,
+                    textColor = textColor,
+                    fontFamily = fontFamily
+                )
+                Spacer(modifier = Modifier.weight(1f))
+                Icon(
+                    imageVector = vectorResource(Res.drawable.ic_arrow_drop_down),
+                    contentDescription = "Dropdown"
+                )
+            }
+
+            DropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { expanded = false },
+                modifier = Modifier
+                    .background(Color.White)
+                    .fillMaxWidth()
+            ) {
+                optionList.forEach { (id, name) ->
+                    DropdownMenuItem(
+                        text = {
+                            ReusableTextView(
+                                text = name,
+                                modifier = Modifier.fillMaxWidth()
+                            )
+                        },
+                        onClick = {
+                            onOptionSelected(id)
+                            expanded = false
+                        },
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
+            }
+        }
+    }
+}
+
 
 // Helper: px → dp
 @Composable
