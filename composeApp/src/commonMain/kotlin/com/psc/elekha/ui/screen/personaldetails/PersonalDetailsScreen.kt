@@ -61,7 +61,11 @@ import com.psc.elekha.utils.FormFieldCompact
 import com.psc.elekha.utils.FormSpinner
 import com.psc.elekha.utils.ReusableTextView
 import com.psc.elekha.utils.StaticComboBoxData
+import com.psc.elekha.utils.getMaxDateInstant
+import com.psc.elekha.utils.getMinDateInstant
+import com.psc.elekha.utils.isAge18Plus
 import com.psc.elekha.utils.pickDate
+import com.psc.elekha.utils.pickMinMaxDate
 import com.psc.elekha.utils.toValueList
 import e_lekha.composeapp.generated.resources.Res
 import e_lekha.composeapp.generated.resources.add
@@ -123,6 +127,7 @@ import e_lekha.composeapp.generated.resources.your_photo_with_guarantor
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
+
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -237,7 +242,6 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
     var stateValue by remember { mutableStateOf("") }
     var distictValue by remember { mutableStateOf("") }
     var showFamilyDialog by remember { mutableStateOf(false) }
-
 
     LaunchedEffect(Unit) {
         viewModel.loadSavedData()
@@ -364,9 +368,7 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
                         )
 
                 }
-
                 Spacer(modifier = Modifier.height(8.dp))
-
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(10.dp)
@@ -376,44 +378,19 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
                         value = dob,
                         onValueChange = { dob = it },
                         onClick = {
-                            pickDate(context) { date ->
-                                dob = date
-                            }
-                        },
-                        trailingIcon = {
-                            Icon(
-                                painter = painterResource(Res.drawable.date),
-                                contentDescription = "Date Icon",
-                                tint = Color.Unspecified
+                            pickMinMaxDate(
+                                context = context,
+                                onDatePicked = { date ->
+                                    // Optional validation: make sure user picked >=18 years
+                                    if (isAge18Plus(date)) {
+                                        dob = date
+                                    } else {
+
+                                    }
+                                },
+                                minDate = getMinDateInstant(),
+                                maxDate = getMaxDateInstant()
                             )
-                        },
-                        isEnable = true,
-                        modifier = Modifier.weight(1f)
-                    )
-
-                    FormSpinner(
-                        label = stringResource(Res.string.marital_status),
-                        options = listOf("Married", "Unmarried", "Single"),
-                        selectedOption = maritalStatus,
-                        onOptionSelected = { selected ->
-                            maritalStatus = selected
-                        },
-                        modifier = Modifier.weight(1f)
-                    )
-                }
-
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(10.dp)
-                ) {
-                    FormDatePickerCompact(
-                        label = stringResource(Res.string.date_of_birth),
-                        value = dob,
-                        onValueChange = { dob = it },
-                        onClick = {
-                            pickDate(context) { date ->
-                                dob = date
-                            }
                         },
                         trailingIcon = {
                             Icon(
@@ -517,6 +494,7 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
                         onValueChange = { enterotp ->
                             enter_otp = enterotp
                         },
+                        maxLength = 6,
                         placeholder = stringResource(Res.string.type_here),
                         modifier = Modifier.weight(1f),
                         inputType = KeyboardType.Number
@@ -599,9 +577,18 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
                         value = guarantordob,
                         onValueChange = { guarantordob = it },
                         onClick = {
-                            pickDate(context) { date ->
-                                guarantordob = date
-                            }
+                            pickMinMaxDate(
+                                context = context,
+                                onDatePicked = { date ->
+                                    if (isAge18Plus(date)) {
+                                        dob = date
+                                    } else {
+
+                                    }
+                                },
+                                minDate = getMinDateInstant(),
+                                maxDate = getMaxDateInstant()
+                            )
 
                         },
                         trailingIcon = {

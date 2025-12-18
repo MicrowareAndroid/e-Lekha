@@ -88,6 +88,7 @@ import androidx.compose.ui.graphics.RenderEffect
 import androidx.compose.ui.graphics.Shader
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.input.key.Key.Companion.Calendar
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
@@ -208,6 +209,12 @@ import e_lekha.composeapp.generated.resources.user_default
 import e_lekha.composeapp.generated.resources.username
 import e_lekha.composeapp.generated.resources.vehicle_no
 import kotlinx.coroutines.delay
+import kotlinx.datetime.Clock
+import kotlinx.datetime.DatePeriod
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.plus
+import kotlinx.datetime.todayIn
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.Font
@@ -1147,6 +1154,22 @@ fun FormDatePickerCompact(
             )
         }
     }
+}
+fun isAge18Plus(dob: String): Boolean {
+    // Expected format: dd-MM-yyyy or dd/MM/yyyy
+    val parts = dob.replace("/", "-").split("-")
+    if (parts.size != 3) return false
+
+    val day = parts[0].toIntOrNull() ?: return false
+    val month = parts[1].toIntOrNull() ?: return false
+    val year = parts[2].toIntOrNull() ?: return false
+
+    val dobDate = LocalDate(year, month, day)
+    val today = Clock.System.todayIn(TimeZone.currentSystemDefault())
+
+    val eighteenthBirthday = dobDate.plus(DatePeriod(years = 18))
+
+    return today >= eighteenthBirthday  // true if 18 or older
 }
 
 
