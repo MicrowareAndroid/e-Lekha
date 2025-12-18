@@ -7,5 +7,11 @@ data class RepaymentItem(
     val emiAmount: String,
     val totalDue: String,
     val weeksInArrear: String,
-    val hasQrScanner: Boolean = true
+    val hasQrScanner: Boolean = true,
+    val emiNumber: String,
+    val distributeDate:String,
+    val preClosureAmount:String,
+    val pastDue:String,
+    val currentDue:String,
+    val mobileNumber:String
 )

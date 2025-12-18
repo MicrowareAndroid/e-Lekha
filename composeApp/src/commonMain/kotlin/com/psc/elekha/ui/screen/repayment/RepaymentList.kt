@@ -38,6 +38,7 @@ import com.psc.elekha.ui.theme.toolbar_color
 import org.jetbrains.compose.resources.stringResource
 
 import androidx.compose.foundation.layout.BoxScope
+import androidx.compose.ui.window.Dialog
 import com.psc.elekha.ui.theme.homedatareportsColor
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -48,6 +49,8 @@ fun RepaymentList(
     var select by remember { mutableStateOf("Repayment List") }
     var selectedItems by remember { mutableStateOf(setOf<Int>()) }
     var showFilterDialog by remember { mutableStateOf(false) }
+    var selectedDialogItem by remember { mutableStateOf<RepaymentItem?>(null) }
+
     val sampleRepaymentList = listOf(
         RepaymentItem(
             "BHK03.123",
@@ -56,12 +59,74 @@ fun RepaymentList(
             "5300",
             "10,600",
             "4",
-            true
+            true,
+            "17",
+            "12/05/2020",
+            "6500",
+            "5500",
+            "4700",
+            "7834456567"
         ),
-        RepaymentItem("BHK03.234", "SUNITA W/O Mahesh", "75,000", "3200", "8,200", "3", true),
-        RepaymentItem("BHK03.345", "PRIYA D/O Suresh", "50,000", "2500", "5,000", "2", true),
-        RepaymentItem("BHK03.456", "REKHA W/O Ajay", "60,000", "2800", "4,000", "1", false),
-        RepaymentItem("BHK03.567", "KAVITA W/O waju", "90,000", "4100", "9,200", "5", false)
+        RepaymentItem(
+            "BHK03.234",
+            "SUNITA W/O Mahesh",
+            "75,000",
+            "3200",
+            "8,200",
+            "3",
+            true,
+            "15",
+            "14/05/2019",
+            "4000",
+            "4500",
+            "3500",
+            "9588543364"
+        ),
+        RepaymentItem(
+            "BHK03.345",
+            "PRIYA D/O Suresh",
+            "50,000",
+            "2500",
+            "5,000",
+            "2",
+            true,
+            "14",
+            "15/06/2020",
+            "5000",
+            "3000",
+            "2300",
+            "6733559874"
+        ),
+        RepaymentItem(
+            "BHK03.456",
+            "REKHA W/O Ajay",
+            "60,000",
+            "2800",
+            "4,000",
+            "1",
+            false,
+            "18",
+            "17/12/2020",
+            "6000",
+            "3400",
+            "2400",
+            "7465002358"
+        ),
+        RepaymentItem(
+            "BHK03.567",
+            "KAVITA W/O waju",
+            "90,000",
+            "4100",
+            "9,200",
+            "5",
+            false,
+            "20",
+            "20/12/2019",
+            "6000",
+            "3300",
+            "2400",
+            "7958443364"
+        )
     )
 
 
@@ -197,12 +262,14 @@ fun RepaymentList(
                             } else {
                                 selectedItems + index
                             }
+
+
+                            selectedDialogItem = sampleRepaymentList[index]
                         },
                         onFilterClick = { showFilterDialog = true },
                         modifier = Modifier
                             .weight(1f)
                             .padding(bottom = 45.dp)
-
                     )
                 }
                 Box(
@@ -236,13 +303,28 @@ fun RepaymentList(
         }
 
 
-
+    }
+    selectedDialogItem?.let { item ->
+        Dialog(
+            onDismissRequest = { selectedDialogItem = null }
+        ) {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                RepaymentDialog(
+                    item = item,
+                    isSelected = true,
+                    onSelected = {
+                        selectedDialogItem = null
+                    }
+                )
+            }
+        }
     }
 
 
-
 }
-
 
 
 @Composable
@@ -311,7 +393,7 @@ fun FilterLoanDetailsDialog(
     // Sample data - replace with actual data
     val villages = listOf("Village 1", "Village 2", "Village 3", "Village 4")
     val centers = listOf("Center A", "Center B", "Center C", "Center D")
-    var customerIds  by remember { mutableStateOf("") }
+    var customerIds by remember { mutableStateOf("") }
     val select = stringResource(Res.string.spinner_select)
 
     AlertDialog(
@@ -389,7 +471,8 @@ fun FilterLoanDetailsDialog(
                                 selectedVillage.takeIf { it.isNotEmpty() && it != select },
                                 selectedCenter.takeIf { it.isNotEmpty() && it != select },
                                 customerId.ifEmpty { null }
-                            ) },
+                            )
+                        },
                         modifier = Modifier.weight(1f).height(48.dp),
                         colors = ButtonDefaults.buttonColors(containerColor = btn_color)
                     ) { Text("Filter") }

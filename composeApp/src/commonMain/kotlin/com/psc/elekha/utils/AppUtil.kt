@@ -2734,7 +2734,7 @@ fun FormFieldCompacts(
 
     Column(modifier) {
 
-        Spacer(Modifier.height(5.dp))
+
 
         Box(
             modifier = Modifier

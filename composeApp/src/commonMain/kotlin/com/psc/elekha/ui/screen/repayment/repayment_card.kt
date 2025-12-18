@@ -22,6 +22,13 @@ import com.psc.elekha.utils.ReusableDynamicSpinner
 import com.psc.elekha.utils.ReusableTextViewBlackCard
 import com.psc.elekha.utils.ReusableTextViewGrayCard
 import e_lekha.composeapp.generated.resources.Res
+import e_lekha.composeapp.generated.resources.gtr_save
+import e_lekha.composeapp.generated.resources.personal_customer
+import e_lekha.composeapp.generated.resources.personal_emi
+import e_lekha.composeapp.generated.resources.personal_loan
+import e_lekha.composeapp.generated.resources.personal_payment_mode
+import e_lekha.composeapp.generated.resources.personal_total_due
+import e_lekha.composeapp.generated.resources.personal_weeks_arrear
 import e_lekha.composeapp.generated.resources.type_here
 import org.jetbrains.compose.resources.stringResource
 
@@ -66,7 +73,7 @@ fun RepaymentItemCard(
                 ) {
                     // CUSTOMER ROW
                     Row(verticalAlignment = Alignment.Top) {
-                        ReusableTextViewGrayCard("Customer", fontSize = 13)
+                        ReusableTextViewGrayCard(stringResource(Res.string.personal_customer), fontSize = 13)
                         Spacer(modifier = Modifier.width(4.dp))
                         ReusableTextViewBlackCard(
                             "${item.customerId}  ${item.customerName}",
@@ -84,7 +91,7 @@ fun RepaymentItemCard(
 
                         // Loan Amount Label
                         ReusableTextViewGrayCard(
-                            "Loan Amount",
+                            stringResource(Res.string.personal_loan),
                             fontSize = 13,
                             modifier = Modifier.weight(1.5f)
                         )
@@ -98,7 +105,7 @@ fun RepaymentItemCard(
 
                         // EMI Label
                         ReusableTextViewGrayCard(
-                            "EMI",
+                            stringResource(Res.string.personal_emi),
                             fontSize = 13,
                             modifier = Modifier.weight(0.6f)
                         )
@@ -124,7 +131,7 @@ fun RepaymentItemCard(
                             modifier = Modifier.weight(1f),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            ReusableTextViewGrayCard("Total Due", fontSize = 13)
+                            ReusableTextViewGrayCard(stringResource(Res.string.personal_total_due), fontSize = 13)
                             Spacer(modifier = Modifier.width(6.dp))
                             ReusableTextViewBlackCard(item.totalDue, fontSize = 13)
                         }
@@ -133,7 +140,7 @@ fun RepaymentItemCard(
                             modifier = Modifier.weight(1f),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            ReusableTextViewGrayCard("Weeks in Arrear", fontSize = 13)
+                            ReusableTextViewGrayCard(stringResource(Res.string.personal_weeks_arrear), fontSize = 13)
                             Spacer(modifier = Modifier.width(6.dp))
                             ReusableTextViewBlackCard(item.weeksInArrear, fontSize = 13)
                         }
@@ -153,21 +160,11 @@ fun RepaymentItemCard(
                 ) {
                     Box(
                         modifier = Modifier
-                            .size(43.dp)
+                            .size(55.dp)
                             .background(Color.LightGray)
                     )
 
-                    IconButton(
-                        onClick = onCameraClick,
-                        modifier = Modifier.size(40.dp)
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.CameraAlt,
-                            contentDescription = "Camera",
-                            tint = blue,
-                            modifier = Modifier.size(28.dp)
-                        )
-                    }
+
                 }
 
                 Spacer(modifier = Modifier.width(10.dp))
@@ -189,25 +186,16 @@ fun RepaymentItemCard(
                 verticalAlignment = Alignment.CenterVertically
             ) {
 
-                ReusableTextViewGrayCard("Payment Mode", fontSize = 13)
+                ReusableTextViewGrayCard(stringResource(Res.string.personal_payment_mode), fontSize = 13)
                 Spacer(modifier = Modifier.width(6.dp))
 
-                ReusableDynamicSpinner(
-                    selectedValue = selectedPaymentMode,
-                    options = paymentOptions,
-                    onValueSelected = { selectedPaymentMode = it },
-                    modifier = Modifier.weight(1f)
-                )
+                ReusableTextViewGrayCard(stringResource(Res.string.personal_payment_mode), fontSize = 13)
+
 
                 Spacer(modifier = Modifier.width(10.dp))
 
-                FormFieldCompacts(
-                    value = repaymentAmounts,
-                    onValueChange = { repaymentAmounts = it },
-                    placeholder = stringResource(Res.string.type_here),
-                    maxLength = 10,
-                    modifier = Modifier.weight(1f)
-                )
+                ReusableTextViewGrayCard(stringResource(Res.string.personal_payment_mode), fontSize = 13)
+
             }
         }
     }
