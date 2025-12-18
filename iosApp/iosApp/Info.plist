@@ -1,34 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-<dict>
-// add line camera
-<key>NSCameraUsageDescription</key>
-    <string>We need camera access to capture photos.</string>
+    <dict>
+        <!-- Camera Permission -->
+        <key>NSCameraUsageDescription</key>
+        <string>We need camera access to capture photos.</string>
 
-	<key>CADisableMinimumFrameDurationOnPhone</key>
-	<true/>
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSAllowsArbitraryLoads</key>
-		<true/>
-		<key>NSExceptionDomains</key>
-		<dict>
-			<key>New Exception Domain</key>
-			<dict>
-				<key>NSExceptionAllowsInsecureHTTPLoads</key>
-				<true/>
-				<key>NSIncludesSubdomains</key>
-				<true/>
-			</dict>
-			<key>New Exception Domain 1</key>
-			<dict>
-				<key>NSExceptionAllowsInsecureHTTPLoads</key>
-				<true/>
-				<key>NSIncludesSubdomains</key>
-				<true/>
-			</dict>
-		</dict>
-	</dict>
-</dict>
+        <!-- Photo Library/Gallery Permission -->
+        <key>NSPhotoLibraryUsageDescription</key>
+        <string>We need access to your photo library to select and save images.</string>
+
+        <key>NSPhotoLibraryAddUsageDescription</key>
+        <string>We need permission to save photos to your photo library.</string>
+
+        <!-- Location Permission -->
+        <key>NSLocationWhenInUseUsageDescription</key>
+        <string>We need your location to provide location-based services.</string>
+
+        <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+        <string>We need your location to provide location-based services even when the app is in background.</string>
+
+        <key>NSLocationAlwaysUsageDescription</key>
+        <string>We need your location to provide location-based services.</string>
+
+        <!-- Microphone Permission -->
+        <key>NSMicrophoneUsageDescription</key>
+        <string>We need microphone access to record audio.</string>
+
+        <key>CADisableMinimumFrameDurationOnPhone</key>
+        <true/>
+
+        <key>NSAppTransportSecurity</key>
+        <dict>
+            <key>NSAllowsArbitraryLoads</key>
+            <true/>
+            <key>NSExceptionDomains</key>
+            <dict>
+                <key>New Exception Domain</key>
+                <dict>
+                    <key>NSExceptionAllowsInsecureHTTPLoads</key>
+                    <true/>
+                    <key>NSIncludesSubdomains</key>
+                    <true/>
+                </dict>
+                <key>New Exception Domain 1</key>
+                <dict>
+                    <key>NSExceptionAllowsInsecureHTTPLoads</key>
+                    <true/>
+                    <key>NSIncludesSubdomains</key>
+                    <true/>
+                </dict>
+            </dict>
+        </dict>
+    </dict>
 </plist>

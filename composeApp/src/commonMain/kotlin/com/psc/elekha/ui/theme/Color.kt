@@ -55,7 +55,7 @@ val editext_bg_color = Color(0xFFC4E2EA)
 val btn_color = Color(0xFFFCC739)
 
 val text_fiiled_color= Color(0xFFE8F2FF)
-val toolbar_color = Color(0xFF1B6874)
+val toolbar_color = Color(0xFF106594)
 
 
 
@@ -85,6 +85,19 @@ val homegtrColor =Color(0xFF95E2FE)
 val homerepaymentColor =Color(0xFFCBFFC8)
 val homedatareportsColor =Color(0xFFF0D480)
 val homemenuGreyColor =Color(0xFFBABBBC)
+val loginbgGradientTop =Color(0xFFDAF0FE)
+
+
+val loginbgGradientBottom =Color(0xFF106594)
+
+val loginSmallGradientTop =Color(0xFFACCBDD)
+
+val loginSmallGradientBottom =Color(0xFF5C94B5)
+
+
+
+
+
 
 
 
