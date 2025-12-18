@@ -1,24 +1,22 @@
-package com.psc.elekha.ui.screen.familydetails
+package com.psc.elekha.ui.screen.personaldetails
 
 import FamilyMemberDetailViewModel
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import com.psc.elekha.ui.theme.btn_color
 import com.psc.elekha.ui.theme.lightGrey
 import com.psc.elekha.ui.theme.toolbar_color
 import com.psc.elekha.ui.theme.white
+import com.psc.elekha.utils.CommonSingleButtonsBottomString
 import com.psc.elekha.utils.FormFieldCompact
 import com.psc.elekha.utils.FormSpinner
 import com.psc.elekha.utils.ReusableTextView
@@ -33,6 +31,7 @@ fun CustomAlertFamilyDetails(
     title: String = stringResource(Res.string.app_name),
     submitText: String = stringResource(Res.string.ok),
     cancelText: String = stringResource(Res.string.cancel),
+
     onSubmit: () -> Unit = {},
     onCancel: () -> Unit = {},
 ) {
@@ -154,50 +153,46 @@ fun CustomAlertFamilyDetails(
                             onOptionSelected = { viewModel.occupationId = it },
                             modifier = Modifier.weight(1f)
                         )
+                        Spacer(Modifier.height(24.dp))
+
+
                     }
 
+                    Spacer(Modifier.height(10.dp))
+                    FormFieldCompact(
+                        label = stringResource(Res.string.monthly_income),
+                        value ="",
+                        placeholder = stringResource(Res.string.type_here),
+                        onValueChange = { viewModel.memberFirstName = it }
+                    )
                     Spacer(Modifier.height(24.dp))
-
                     // BUTTONS
                     Row(
                         modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(12.dp)
+                        horizontalArrangement = Arrangement.spacedBy(10.dp)
                     ) {
-                        Button(
-                            onClick = {
-                                resetForm()
-                                onCancel()
+                        CommonSingleButtonsBottomString(
+                            onOkClick = {
+                                onSubmit()
                             },
-                            modifier = Modifier.weight(1f).height(48.dp),
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = btn_color,
-                                contentColor = Color.Black
-                            ),
-                            shape = RoundedCornerShape(15.dp)
-                        ) {
-                            Text(cancelText)
-                        }
+                            stringResource(Res.string.cancel),
+                            modifier = Modifier.weight(1f),
+                            textSize = 12
+                        )
+                        CommonSingleButtonsBottomString(
+                            onOkClick = {
+                                onSubmit()
+                            },
+                            stringResource(Res.string.ok),
+                            modifier = Modifier.weight(1f),
+                            textSize = 12
+                        )
+                    }
 
-                        Button(
-                            onClick = {
-                                viewModel.saveDataWithoutValidation {
-                                    resetForm() // Reset form after successful save
-                                    onSubmit() // Close dialog
-                                }
-                            },
-                            modifier = Modifier.weight(1f).height(48.dp),
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = btn_color,
-                                contentColor = Color.Black
-                            ),
-                            shape = RoundedCornerShape(15.dp)
-                        ) {
-                            Text(submitText)
-                        }
+                    }
                     }
                     Spacer(Modifier.height(10.dp))
                 }
             }
         }
-    }
-}
+

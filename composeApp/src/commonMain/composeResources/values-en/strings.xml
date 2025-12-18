@@ -170,6 +170,7 @@
     <string name="total_monthly_expenditure">Total monthly expenditure</string>
     <string name="annual">Annual</string>
     <string name="movable_assets">Movable assets</string>
+    <string name="no_vehicle">No. of vehicle</string>
     <string name="vehicle_no">Vehicle no.</string>
     <string name="data_saved_successfully">Data Saved SuccessFully</string>
     <string name="personal_customer_name">Please Enter Customer Name</string>
@@ -193,9 +194,9 @@
     <string name="customer_photo">Customer Photo</string>
     <string name="your_photo_with_guarantor">Photo With Guarantor</string>
     <string name="customer_id">Customer ID BHK.12.123</string>
-    <string name="chose_document_type">Chosse Document Type</string>
+    <string name="customer_kyc">Customer Kyc</string>
     <string name="id_proof">ID Proof</string>
-    <string name="select_id_proof">Select Id Proof</string>
+
 
     <string name="select_information">INFORMATION</string>
     <string name="select_group">Group Name :</string>
@@ -262,6 +263,20 @@
     <string name="personal_maternal_address">Please Enter Maternal Address</string>
     <string name="personal_father">Please Enter Father Name</string>
     <string name="personal_maternal_mobile">Please Enter Maternal Mobile Number</string>
+    <string name="upi_idd">psc.augp@aubank</string>
+    <string name="add_more_family_member">Add more Family Member</string>
+    <string name="family_econonic">Family Economic</string>
+    <string name="add_more_family">+</string>
+    <string name="gurantor_kyc">Guarantor Kyc</string>
+    <string name="your_monthly_expenditure">Your Monthly Expenditure</string>
+    <string name="medical">Medical</string>
+    <string name="others">Others</string>
+    <string name="mfi_bank_name">MFI/Bank Name</string>
+    <string name="outstanding">Outstanding</string>
+    <string name="emi">Emi</string>
+    <string name="full_name_of_applicant">Full Name Of Applicant</string>
+    <string name="family_econonic_profile">Family Economic Profile</string>
+
 
 
 </resources>

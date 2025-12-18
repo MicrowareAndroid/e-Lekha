@@ -71,6 +71,7 @@ import e_lekha.composeapp.generated.resources.profile_picture
 import e_lekha.composeapp.generated.resources.ro_address
 import e_lekha.composeapp.generated.resources.scanner
 import e_lekha.composeapp.generated.resources.type_here
+import e_lekha.composeapp.generated.resources.upi_idd
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
@@ -195,7 +196,7 @@ fun DrawerContent() {
                 FormFieldCompact(
                     value = "",
                     onValueChange = { "" },
-                    placeholder = stringResource(Res.string.type_here),
+                    placeholder = stringResource(Res.string.upi_idd),
                     modifier = Modifier.width(150.dp),
                     maxLength = 30
                 )

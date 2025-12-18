@@ -8,7 +8,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.focus.FocusRequester
 import androidx.lifecycle.viewModelScope
 import com.psc.elekha.database.entity.CustomerDefaultEntity
+import com.psc.elekha.database.entity.CustomerEntity
 import com.psc.elekha.database.viewmodel.CustomerDefaultViewModel
+import com.psc.elekha.database.viewmodel.CustomerViewModel
 import com.psc.elekha.model.ValidationModelContorl
 import com.psc.elekha.ui.screen.base.BaseValidationViewModel
 import com.psc.elekha.utils.AppPreferences
@@ -25,7 +27,7 @@ import org.jetbrains.compose.resources.getString
 
 class KycDetailViewModel(
     var appPreferences: AppPreferences,
-    var customerDefaultViewModel: CustomerDefaultViewModel
+    var customerViewModel: CustomerViewModel
 ): BaseValidationViewModel()
 {
  var billName by   mutableStateOf("")
@@ -95,115 +97,62 @@ class KycDetailViewModel(
  val focusRequesterElectricityAccountNo2 = FocusRequester()
  val focusRequesterElectricityRelation2 = FocusRequester()*/
 
-fun SaveKyc(onSuccess: () -> Unit)
+fun updateKyc(onSuccess: () -> Unit) {
+ viewModelScope.launch {
+  updateKycUpdate()
+  showSaveAlert = true
+  onSuccess()
+ }
+}
+private suspend  fun updateKycUpdate()
  {
 //  val guid=appPreferences.getString(AppSP.customerGuid)
  /* if(returnStringValue(guid).isEmpty())
   {*/
    val newGuid= generateRandomId()
-   val entity= CustomerDefaultEntity(
-    newGuid,
-    "",
-    "",
-    0,
-    "",
-    0,
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    0,
-    0,
-    "",
-    0,
-    "",
-    "",
-    "",
-    "",
-    voterno,
-    "",
-    "",
-    accountNumber,
-    returnIntegerValue(""),
-    "",
-    billName,
-    kNumber,
-    "",
-    0,
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    appPreferences.getString(AppSP.userId),
-    currentDatetime(),
-    "",
-    "",
-    1,
-    false,
-    0,
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    0,
-    "",
-    "",
-    "",
-    "",
-    false,
-    0,
-    "",
-    0,
-    0,
-    panNumber,
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    nameonvid,
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    nameOnPan,
-    "",
-    "",
-    "",
-    0,
-    "",
-    "",
-    "",
-    "",
-    "",
-    0,
-    0,
-    ""
-   )
-   println( "billName$billName")
-   customerDefaultViewModel.insertCustomer(entity)
+  val guid = returnStringValue(appPreferences.getString(AppSP.customerGuid))
+  if (guid.isEmpty()) return
+customerViewModel.updateKyc(
+ CKYC_UID = aadharno,
+ CKYC_UID_Image = aadharnoIdProof,
+ CKYC_UID_Image2 = "",
+ CKYC_VoterCard = voterno,
+ CKYC_VoterCardImage = voternoIdProof,
+ CKYC_VoterCardImage2 = "",
+ CKYC_ElectricityBill = accountNumber,
+ CKYC_ElectricityBill_Image = billNameIdProof,
+ CKYC_ElectricityBillRelationID = 0,
+ CKYC_ElectricityBill_Name = billName,
+ KElectricNumber = kNumber,
+ CKYC_JobCard = "",
+ CKYC_JobCard_Image = "",
+ CKYC_JobCardRelationID = 0,
+ CKYC_JobCard_Name = "",
+ CKYC_JobCard_Image2 = "",
+ GKYC_UID = "",
+ GKYC_UID_Image = "",
+ GKYC_UID_Image2 = "",
+ IsEdited = 1,
+ UpdatedBy = returnStringValue(appPreferences.getString(AppSP.userId)),
+ UpdatedOn = currentDatetime(),
+ CKYC_Bank = 0,
+ CKYC_BankAccountNumber = accountNumber,
+ CKYC_Bank_Image = "",
+ CustomerBankIFSCCode = "",
+ CustomerBankNameEditable = "",
+ CKYC_RationCard = "",
+ CKYC_RationCard_Image = "",
+ CKYC_RationCard_Image2 = "",
+ RegPlace = "",
+ RegLat = "",
+ RegLong = "",
+ GUID = guid
+)
+
+
 //   appPreferences.putString(AppSP.customerGuid,newGuid)
 //   saveMessage= getString(Res.string.data_saved_successfully)
-    showSaveAlert=true
-  onSuccess()
+  saveMessage = getString(Res.string.data_saved_successfully)
   }
  }
 

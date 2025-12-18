@@ -28,6 +28,7 @@ import com.psc.elekha.ui.theme.LightTeal
 import com.psc.elekha.ui.theme.PrimaryDark
 import com.psc.elekha.ui.theme.black
 import com.psc.elekha.ui.theme.editext_bg_color
+import com.psc.elekha.ui.theme.homedatareportsColor
 import com.psc.elekha.ui.theme.toolbar_color
 import com.psc.elekha.ui.theme.white
 import com.psc.elekha.utils.CameraPicker
@@ -129,7 +130,7 @@ fun CustomerDetailScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(5.dp),
-                    backgroundColor = LightTeal,
+                    backgroundColor = homedatareportsColor,
                     cornerRadius = 12
                 )
                 {
