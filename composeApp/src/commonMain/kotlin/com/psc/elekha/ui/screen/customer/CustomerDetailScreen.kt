@@ -44,7 +44,7 @@ import com.psc.elekha.utils.ReusableTextView
 import com.psc.elekha.utils.ReusableTextViewBlackCard
 import com.psc.elekha.utils.ReusableTextViews
 import com.psc.elekha.utils.ReusableTopBar
-import com.psc.elekha.utils.toPlatformImageBitmap
+
 import e_lekha.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.painterResource

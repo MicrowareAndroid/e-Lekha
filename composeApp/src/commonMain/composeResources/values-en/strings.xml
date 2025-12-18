@@ -262,6 +262,18 @@
     <string name="personal_maternal_address">Please Enter Maternal Address</string>
     <string name="personal_father">Please Enter Father Name</string>
     <string name="personal_maternal_mobile">Please Enter Maternal Mobile Number</string>
+    <string name="personal_payment_mode">Payment Mode</string>
+    <string name="personal_customer">Customer</string>
+    <string name="personal_loan">Loan Amount</string>
+    <string name="personal_emi">EMI</string>
+    <string name="personal_total_due">Total Due</string>
+    <string name="personal_weeks_arrear">Weeks in Arrear</string>
+    <string name="personal_emi_number">Emi Numbers</string>
+    <string name="personal_distribute_date">Distribute Date</string>
+    <string name="personal_pre_closure">Pre Closure Date</string>
+    <string name="personal_past">Past Due</string>
+    <string name="personal_current">Current Due</string>
+
 
 
 </resources>

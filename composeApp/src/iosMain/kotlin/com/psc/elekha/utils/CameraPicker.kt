@@ -8,21 +8,52 @@ import kotlinx.cinterop.*
 import kotlinx.coroutines.launch
 import platform.Foundation.NSData
 import platform.UIKit.*
+import platform.Foundation.*
 import platform.darwin.NSObject
-import platform.posix.memcpy
+
+
 
 @Composable
 actual fun CameraPicker(
-    onImagePicked: (ByteArray?) -> Unit,
-    openCamera: Boolean
+    openCamera: Boolean,
+    onImagePicked: (String?) -> Unit
 ) {
     if (!openCamera) return
 
+    val controller = LocalUIViewController.current
     val viewController = LocalUIViewController.current
     val coroutineScope = rememberCoroutineScope()
     var launched by remember { mutableStateOf(false) }
     var permissionChecked by remember { mutableStateOf(false) }
 
+    if (launched) return
+    launched = true
+
+    val picker = UIImagePickerController().apply {
+        sourceType = UIImagePickerControllerSourceType.UIImagePickerControllerSourceTypeCamera
+        allowsEditing = false
+        delegate = object : NSObject(),
+            UIImagePickerControllerDelegateProtocol,
+            UINavigationControllerDelegateProtocol {
+
+            override fun imagePickerController(
+                picker: UIImagePickerController,
+                didFinishPickingMediaWithInfo: Map<Any?, *>
+            ) {
+                val image =
+                    didFinishPickingMediaWithInfo[UIImagePickerControllerOriginalImage] as? UIImage
+
+                if (image != null) {
+                    val data: NSData? = UIImageJPEGRepresentation(image, 0.9)
+                    val path = saveImageToDocuments(data)
+                    onImagePicked(path)
+                } else {
+                    onImagePicked(null)
+                }
+            }
+                    
+                    
+                    
     val permissionManager = remember { PermissionManager() }
 
     LaunchedEffect(openCamera) {
@@ -54,11 +85,19 @@ actual fun CameraPicker(
                         onImagePicked(null)
                     }
                 }
+
+                picker.dismissViewControllerAnimated(true, null)
+            }
+
+            override fun imagePickerControllerDidCancel(picker: UIImagePickerController) {
+                picker.dismissViewControllerAnimated(true, null)
+                onImagePicked(null)
             }
         }
     }
-}
 
+    controller.presentViewController(picker, true, null)
+    
 private fun launchCamera(
     viewController: UIViewController,
     onImagePicked: (ByteArray?) -> Unit
@@ -125,6 +164,20 @@ private fun showSettingsAlert(
 @OptIn(ExperimentalForeignApi::class)
 fun NSData.toByteArray(): ByteArray = ByteArray(length.toInt()).apply {
     usePinned { memcpy(it.addressOf(0), bytes, length) }
+}
+fun saveImageToDocuments(data: NSData?): String? {
+    if (data == null) return null
+
+    val paths = NSSearchPathForDirectoriesInDomains(
+        NSDocumentDirectory,
+        NSUserDomainMask,
+        true
+    )
+
+    val documentsDir = paths.firstOrNull() as? String ?: return null
+    val filePath = "$documentsDir/IMG_${NSDate().timeIntervalSince1970}.jpg"
+
+    return if (data.writeToFile(filePath, true)) filePath else null
 }
 
 // Helper: convert UIImage to JPEG NSData
