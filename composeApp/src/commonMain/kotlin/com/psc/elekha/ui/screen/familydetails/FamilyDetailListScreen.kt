@@ -1,6 +1,5 @@
 package com.psc.elekha.ui.screen.familydetails
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -11,21 +10,17 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.psc.elekha.model.FamilyDetailModel
+import com.psc.elekha.ui.screen.personaldetails.CustomAlertFamilyDetails
 import com.psc.elekha.ui.theme.black
 import com.psc.elekha.ui.theme.btn_color
-
 import com.psc.elekha.utils.ReusableTopBar
 import com.psc.elekha.utils.RouteName
 import e_lekha.composeapp.generated.resources.Res
 import e_lekha.composeapp.generated.resources.add
-import e_lekha.composeapp.generated.resources.background
 import e_lekha.composeapp.generated.resources.ic_add
-import e_lekha.composeapp.generated.resources.ic_back
-import e_lekha.composeapp.generated.resources.list
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 

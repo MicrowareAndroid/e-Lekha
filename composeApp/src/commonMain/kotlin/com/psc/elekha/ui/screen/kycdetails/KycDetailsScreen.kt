@@ -1,6 +1,7 @@
 // Updated KycDetailsScreen.kt
 package com.psc.elekha.ui.screen.kycdetails
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
@@ -29,6 +30,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
@@ -50,13 +52,17 @@ import e_lekha.composeapp.generated.resources.aadhar_no
 import e_lekha.composeapp.generated.resources.account_no
 import e_lekha.composeapp.generated.resources.back_image
 import e_lekha.composeapp.generated.resources.camera
-import e_lekha.composeapp.generated.resources.chose_document_type
+import e_lekha.composeapp.generated.resources.customer_image
+import e_lekha.composeapp.generated.resources.customer_kyc
 import e_lekha.composeapp.generated.resources.electricity_bill
 import e_lekha.composeapp.generated.resources.enter_aadhar
 import e_lekha.composeapp.generated.resources.enter_pan
 import e_lekha.composeapp.generated.resources.enter_voter_id
 import e_lekha.composeapp.generated.resources.enter_your_kyc_details
 import e_lekha.composeapp.generated.resources.front_image
+import e_lekha.composeapp.generated.resources.gurantor_kyc
+import e_lekha.composeapp.generated.resources.ic_customer
+import e_lekha.composeapp.generated.resources.ic_gurantor
 import e_lekha.composeapp.generated.resources.k_number
 import e_lekha.composeapp.generated.resources.name_electricity
 import e_lekha.composeapp.generated.resources.name_on_aadhar
@@ -67,9 +73,9 @@ import e_lekha.composeapp.generated.resources.roboto_regular
 import org.jetbrains.compose.resources.Font
 import e_lekha.composeapp.generated.resources.pan_camera
 import e_lekha.composeapp.generated.resources.pan_number
-import e_lekha.composeapp.generated.resources.select_id_proof
 import e_lekha.composeapp.generated.resources.type_here
 import e_lekha.composeapp.generated.resources.voter_no
+import e_lekha.composeapp.generated.resources.your_photo_with_guarantor
 
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
@@ -98,18 +104,94 @@ fun KycDetailsScreen(
         Column(modifier = Modifier.fillMaxSize()) {
             Spacer(modifier = Modifier.height(10.dp))
 
+            Spacer(modifier = Modifier.height(18.dp))
             Column(
                 modifier = Modifier
                     .weight(1f)
                     .verticalScroll(rememberScrollState())
                     .padding(bottom = 15.dp)
             ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 10.dp),
+                    horizontalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+
+
+                    Column(
+                        modifier = Modifier.weight(1f),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+
+                        Spacer(modifier = Modifier.height(6.dp))
+
+                        Image(
+                            painter = painterResource(Res.drawable.ic_customer),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .size(120.dp)
+                                .background(
+                                    Color(0xFFE8E8E8),
+                                    shape = RoundedCornerShape(8.dp)   // optional, looks better
+                                )
+                                .padding(4.dp),   // optional
+                            contentScale = ContentScale.Crop
+                        )
+                        Spacer(modifier = Modifier.height(6.dp))
+                        Icon(
+                            painter = painterResource(Res.drawable.camera),
+                            contentDescription = "Back Camera",
+                            tint = blue,
+                            modifier = Modifier.size(28.dp)
+                        )
+                        Spacer(modifier = Modifier.height(4.dp))
+                        ReusableTextView(
+                            text = stringResource(Res.string.customer_image)
+                        )
+
+                    }
+
+                    Column(
+                        modifier = Modifier.weight(1f),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+
+                        Spacer(modifier = Modifier.height(6.dp))
+
+                        Image(
+                            painter = painterResource(Res.drawable.ic_gurantor),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .size(160.dp, 120.dp)
+                                .background(
+                                    Color(0xFFE8E8E8),
+                                    shape = RoundedCornerShape(8.dp)   // optional, looks better
+                                )
+                                .padding(4.dp),   // optional
+                            contentScale = ContentScale.Crop
+                        )
+                        Spacer(modifier = Modifier.height(6.dp))
+                        Icon(
+                            painter = painterResource(Res.drawable.camera),
+                            contentDescription = "Back Camera",
+                            tint = blue,
+                            modifier = Modifier.size(28.dp)
+                        )
+                        Spacer(modifier = Modifier.height(4.dp))
+                        ReusableTextView(
+                            text = stringResource(Res.string.your_photo_with_guarantor)
+                        )
+
+                    }
+                }
+                Spacer(modifier = Modifier.height(20.dp))
                 ReusableTextView(
                     text = stringResource(Res.string.enter_your_kyc_details)
                 )
                 Spacer(Modifier.height(12.dp))
                 ReusableTextView(
-                    text = stringResource(Res.string.chose_document_type)
+                    text = stringResource(Res.string.customer_kyc)
                 )
 
                 Spacer(Modifier.height(12.dp))
@@ -164,17 +246,19 @@ fun KycDetailsScreen(
                             // Handle error: e.g., set showSaveAlert=true with error message
                         }
                     }*/
-                    viewModel.SaveKyc {
-                        viewModel.billName
-                        viewModel.accountNumber
-                        viewModel.kNumber
-                        viewModel.aadharno
-                        viewModel.nameonadhar
-                        viewModel.voterno
-                        viewModel.nameonvid
-                        viewModel.panNumber
-                        viewModel.nameOnPan
-                    }
+                   viewModel.updateKyc {
+                       viewModel.kNumber
+                       viewModel.kNumberIdProof
+                       viewModel.accountNumber
+                       viewModel.nameonadhar
+                       viewModel.accountNumberIdProof
+                       viewModel.voterno
+                       viewModel.nameonvid
+                       viewModel.voternoIdProof
+                       viewModel.panNumber
+                       viewModel.nameOnPan
+
+                   }
                     onNextTab
                 },
                 saveText = stringResource(Res.string.next)
@@ -419,7 +503,7 @@ fun IdProofSection(viewModel: KycDetailViewModel) {
     Column(
         modifier = Modifier.fillMaxWidth(),
     ) {
-        ReusableTextView(text = stringResource(Res.string.select_id_proof))
+        ReusableTextView(text = stringResource(Res.string.gurantor_kyc))
         Spacer(Modifier.height(10.dp))
 
         Row(

@@ -1,3 +1,5 @@
+package com.psc.elekha.ui.screen.economicdetails
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -33,28 +35,31 @@ import com.psc.elekha.utils.CommonSingleButtonsBottomString
 import com.psc.elekha.utils.FormFieldCompact
 import com.psc.elekha.utils.FormSpinner
 import com.psc.elekha.utils.ReusableTextView
-import com.psc.elekha.utils.StaticComboBoxData
-import com.psc.elekha.utils.toValueList
 import e_lekha.composeapp.generated.resources.Res
 import e_lekha.composeapp.generated.resources.app_name
 import e_lekha.composeapp.generated.resources.cancel
-import e_lekha.composeapp.generated.resources.movable_assets
-import e_lekha.composeapp.generated.resources.no_vehicle
+import e_lekha.composeapp.generated.resources.income
+import e_lekha.composeapp.generated.resources.name
+import e_lekha.composeapp.generated.resources.occupation
 import e_lekha.composeapp.generated.resources.ok
+import e_lekha.composeapp.generated.resources.relation
+import e_lekha.composeapp.generated.resources.remarks
 import e_lekha.composeapp.generated.resources.type_here
-import e_lekha.composeapp.generated.resources.vehicle_no
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-fun CustomAlertMovableAssets(
+fun CustomAlertMonthlyIncome(
     title: String = stringResource(Res.string.app_name),
     submitText: String = stringResource(Res.string.ok),
     cancelText: String = stringResource(Res.string.cancel),
     onSubmit: () -> Unit = {},
     onCancel: () -> Unit = {}
 ) {
-    var movableAssets by remember { mutableStateOf("") }
-    var vehicleNo by remember { mutableStateOf("") }
+    var name by remember { mutableStateOf("") }
+    var relation by remember { mutableStateOf("") }
+    var occupation by remember { mutableStateOf("") }
+    var income by remember { mutableStateOf("") }
+    var remarks by remember { mutableStateOf("") }
 
     Dialog(onDismissRequest = {}) {
 
@@ -70,7 +75,7 @@ fun CustomAlertMovableAssets(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
 
-                // --------------------- HEADER (NO MARGIN) ---------------------
+                // ----------------------- HEADER (NO MARGIN) -----------------------
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -88,60 +93,88 @@ fun CustomAlertMovableAssets(
                         fontWeight = FontWeight.Bold,
                         textColor = white,
                         textAlignment = TextAlign.Center,
-                        modifier = Modifier.fillMaxWidth()   // Perfect center
+                        modifier = Modifier.fillMaxWidth()  // Perfect centering
                     )
                 }
 
-                // ------------------- CONTENT AREA (WITH PADDING) -------------------
+                // ----------------------- CONTENT AREA -----------------------
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(16.dp),      // Only content has padding
+                        .padding(16.dp),             // Padding ONLY inside content area
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
 
+                    Spacer(Modifier.height(8.dp))
+
+                    // ----------- NAME & RELATION SPINNERS -----------
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(10.dp)
+                    ) {
+                        FormSpinner(
+                            label = stringResource(Res.string.name),
+                            options = listOf("Test", "ABC", "XYZ"),
+                            selectedOption = name,
+                            onOptionSelected = {name = it},
+                            modifier = Modifier.weight(1f)
+                        )
+
+                        FormSpinner(
+                            label = stringResource(Res.string.relation),
+                            options = listOf("Brother", "Self", "Sister"),
+                            selectedOption = relation,
+                            onOptionSelected = {relation = it},
+                            modifier = Modifier.weight(1f)
+                        )
+                    }
+
                     Spacer(Modifier.height(12.dp))
 
-                    // Movable Assets Spinner
-                    FormSpinner(
-                        label = stringResource(Res.string.movable_assets),
-                        options = StaticComboBoxData.vehicleasset.toValueList(),
-                        selectedOption = movableAssets,
-                        onOptionSelected = {movableAssets = it},
-                        modifier = Modifier.fillMaxWidth()
-                    )
+                    // ----------- OCCUPATION & INCOME SPINNERS -----------
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(10.dp)
+                    ) {
+                        FormSpinner(
+                            label = stringResource(Res.string.occupation),
+                            options = listOf("Shop", "Farming", "Labour", "Other"),
+                            selectedOption = occupation,
+                            onOptionSelected = {occupation =it},
+                            modifier = Modifier.weight(1f)
+                        )
+
+                        FormSpinner(
+                            label = stringResource(Res.string.income),
+                            options = listOf("<5000", "5000-10000", "10000-20000", ">20000"),
+                            selectedOption = income,
+                            onOptionSelected = {income = it},
+                            modifier = Modifier.weight(1f)
+                        )
+                    }
 
                     Spacer(Modifier.height(12.dp))
+
+                    // ----------- REMARKS FIELD -----------
                     FormFieldCompact(
-                        label = stringResource(Res.string.no_vehicle),
-                        value = "",
-                        onValueChange = { "" },
+                        label = stringResource(Res.string.remarks),
+                        value = remarks,
+                        onValueChange = { remarks =it },
                         placeholder = stringResource(Res.string.type_here),
-                        maxLength = 10,
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                    Spacer(Modifier.height(12.dp))
-                    // Vehicle Number Field
-                    FormFieldCompact(
-                        label = stringResource(Res.string.vehicle_no),
-                        value = vehicleNo,
-                        onValueChange = { vehicleNo = it },
-                        placeholder = stringResource(Res.string.type_here),
-                        maxLength = 10,
+                        maxLength = 30,
                         modifier = Modifier.fillMaxWidth()
                     )
 
-                    Spacer(Modifier.height(20.dp))
+                    Spacer(Modifier.height(24.dp))
 
-                    // ------------------ BUTTON ROW -------------------
+                    // ----------------------- BUTTONS -----------------------
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.spacedBy(12.dp)
                     ) {
-
                         CommonSingleButtonsBottomString(
                             onOkClick = {
-                              onCancel()
+                                onSubmit()
                             },
                             stringResource(Res.string.cancel),
                             modifier = Modifier.weight(1f),
@@ -156,7 +189,9 @@ fun CustomAlertMovableAssets(
                             textSize = 12
                         )
                     }
+
                     }
+
                     Spacer(Modifier.height(10.dp))
                 }
             }
