@@ -7,6 +7,7 @@ import androidx.room.RoomDatabase
 import com.psc.elekha.database.appdatabase.AppDatabase
 import com.psc.elekha.database.appdatabase.dbFileName
 import com.psc.elekha.utils.AppPermission
+import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.coroutines.suspendCancellableCoroutine
 import platform.AVFoundation.AVAuthorizationStatusAuthorized
 import platform.AVFoundation.AVAuthorizationStatusDenied
@@ -21,15 +22,23 @@ import platform.CoreLocation.kCLAuthorizationStatusAuthorizedAlways
 import platform.CoreLocation.kCLAuthorizationStatusAuthorizedWhenInUse
 import platform.CoreLocation.kCLAuthorizationStatusDenied
 import platform.CoreLocation.kCLAuthorizationStatusRestricted
+import platform.Foundation.NSApplicationSupportDirectory
+import platform.Foundation.NSCachesDirectory
+import platform.Foundation.NSDate
+import platform.Foundation.NSDateFormatter
+import platform.Foundation.NSFileManager
 import platform.Foundation.NSHomeDirectory
 import platform.Foundation.NSURL
+import platform.Foundation.NSUserDomainMask
 import platform.Photos.PHAuthorizationStatusAuthorized
 import platform.Photos.PHAuthorizationStatusDenied
 import platform.Photos.PHAuthorizationStatusLimited
 import platform.Photos.PHAuthorizationStatusRestricted
 import platform.Photos.PHPhotoLibrary
+import platform.UIKit.UIActivityViewController
 import platform.UIKit.UIApplication
 import platform.UIKit.UIApplicationOpenSettingsURLString
+import platform.UIKit.popoverPresentationController
 import kotlin.coroutines.resume
 
 actual fun getDatabaseBuilder(): RoomDatabase.Builder<AppDatabase> {
@@ -153,8 +162,81 @@ actual class PermissionManager {
 
 
 actual class DatabaseExporter {
+
     actual fun exportAndShare(dbBaseName: String) {
-        // For now, do nothing
+        val files = prepareDatabaseFiles(dbBaseName)
+        if (files.isNotEmpty()) {
+            shareFiles(files)
+        }
     }
 }
 
+@OptIn(ExperimentalForeignApi::class)
+private fun prepareDatabaseFiles(dbBaseName: String): List<NSURL> {
+    val fm = NSFileManager.defaultManager
+    val result = mutableListOf<NSURL>()
+
+    val timestamp = NSDateFormatter().apply {
+        dateFormat = "yyyyMMdd_HHmmss"
+    }.stringFromDate(NSDate())
+
+    val exportBase = "Elekha_$timestamp"
+
+    val cacheDir = fm.URLForDirectory(
+        directory = NSCachesDirectory,
+        inDomain = NSUserDomainMask,
+        appropriateForURL = null,
+        create = true,
+        error = null
+    ) ?: return emptyList()
+
+    val dbUrl = getDatabaseUrl(dbBaseName) ?: return emptyList()
+
+    fun copyIfExists(src: NSURL, name: String) {
+        if (!fm.fileExistsAtPath(src.path!!)) return
+
+        val dst = cacheDir.URLByAppendingPathComponent(name) ?: return
+        fm.removeItemAtURL(dst, null)
+        fm.copyItemAtURL(src, dst, null)
+        result.add(dst)
+    }
+
+    copyIfExists(dbUrl, "$exportBase.db")
+    copyIfExists(dbUrl.URLByAppendingPathExtension("-wal") ?: return emptyList(), "$exportBase.db-wal")
+    copyIfExists(dbUrl.URLByAppendingPathExtension("-shm") ?: return emptyList(), "$exportBase.db-shm")
+
+    return result
+}
+
+
+
+@OptIn(ExperimentalForeignApi::class)
+private fun getDatabaseUrl(dbBaseName: String): NSURL? {
+    val fileManager = NSFileManager.defaultManager
+
+    val appSupportDir = fileManager.URLForDirectory(
+        directory = NSApplicationSupportDirectory,
+        inDomain = NSUserDomainMask,
+        appropriateForURL = null,
+        create = true,
+        error = null
+    ) ?: return null
+
+    return appSupportDir.URLByAppendingPathComponent("$dbBaseName.db")
+}
+
+private fun shareFiles(files: List<NSURL>) {
+    val controller = UIActivityViewController(
+        activityItems = files,
+        applicationActivities = null
+    )
+
+    val rootVC = UIApplication.sharedApplication
+        .keyWindow
+        ?.rootViewController ?: return
+
+    controller.popoverPresentationController?.sourceView =
+        rootVC.view
+
+    rootVC.presentViewController(controller, true, null)
+}

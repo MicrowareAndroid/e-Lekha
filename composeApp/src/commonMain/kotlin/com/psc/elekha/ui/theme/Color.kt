@@ -94,6 +94,7 @@ val loginbgGradientBottom =Color(0xFF106594)
 val loginSmallGradientTop =Color(0xFFACCBDD)
 
 val loginSmallGradientBottom =Color(0xFF5C94B5)
+val viewmorebgColor =Color(0xFFE5E5E5)
 
 
 

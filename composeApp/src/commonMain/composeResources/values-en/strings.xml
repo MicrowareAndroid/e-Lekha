@@ -268,5 +268,6 @@
     <string name="personal_pre_closure">Pre Closure Date</string>
     <string name="personal_past">Past Due</string>
     <string name="personal_current">Current Due</string>
+    <string name="view_more">View more</string>
 
 </resources>

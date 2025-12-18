@@ -38,6 +38,7 @@ import com.psc.elekha.ui.theme.toolbar_color
 import org.jetbrains.compose.resources.stringResource
 
 import androidx.compose.foundation.layout.BoxScope
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.window.Dialog
 import com.psc.elekha.ui.theme.homedatareportsColor
 
@@ -161,12 +162,7 @@ fun RepaymentList(
                 .padding(innerPadding)
         ) {
 
-            Image(
-                painter = painterResource(Res.drawable.background),
-                contentDescription = null,
-                modifier = Modifier.matchParentSize(),
-                contentScale = ContentScale.FillBounds
-            )
+
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -461,8 +457,14 @@ fun FilterLoanDetailsDialog(
                 ) {
                     Button(
                         onClick = onDismiss,
-                        modifier = Modifier.weight(1f).height(48.dp),
-                        colors = ButtonDefaults.buttonColors(containerColor = Color.LightGray)
+                        shape=RoundedCornerShape(0.dp),
+                        modifier = Modifier.weight(1f).height(45.dp),
+                        colors = ButtonDefaults.buttonColors(containerColor = Color.LightGray),
+                        elevation = ButtonDefaults.buttonElevation(
+                            defaultElevation = 4.dp,
+                            pressedElevation = 6.dp,
+                            focusedElevation = 4.dp
+                        )
                     ) { Text("Cancel") }
 
                     Button(
@@ -473,8 +475,14 @@ fun FilterLoanDetailsDialog(
                                 customerId.ifEmpty { null }
                             )
                         },
-                        modifier = Modifier.weight(1f).height(48.dp),
-                        colors = ButtonDefaults.buttonColors(containerColor = btn_color)
+                        modifier = Modifier.weight(1f).height(45.dp),
+                        shape=RoundedCornerShape(0.dp),
+                        colors = ButtonDefaults.buttonColors(containerColor = btn_color),
+                        elevation = ButtonDefaults.buttonElevation(
+                            defaultElevation = 4.dp,
+                            pressedElevation = 6.dp,
+                            focusedElevation = 4.dp
+                        )
                     ) { Text("Filter") }
                 }
             }
