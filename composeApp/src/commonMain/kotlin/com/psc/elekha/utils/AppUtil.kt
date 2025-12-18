@@ -68,6 +68,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -75,6 +76,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.focusTarget
@@ -82,6 +84,9 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.RenderEffect
+import androidx.compose.ui.graphics.Shader
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onGloballyPositioned
@@ -103,6 +108,7 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import coil3.Uri
 import coil3.compose.rememberAsyncImagePainter
 import com.psc.elekha.model.SliderItem
@@ -131,6 +137,7 @@ import com.psc.elekha.ui.theme.lightGrey
 import com.psc.elekha.ui.theme.lightgreens
 import com.psc.elekha.ui.theme.loginBg
 import com.psc.elekha.ui.theme.loginTitle
+import com.psc.elekha.ui.theme.loginbgGradientBottom
 import com.psc.elekha.ui.theme.repaymentColor
 import com.psc.elekha.ui.theme.teal700
 import com.psc.elekha.ui.theme.text_fiiled_color
@@ -746,7 +753,7 @@ fun FormFieldCompact(
     placeholder: String = stringResource(Res.string.type_here),
     isEnable: Boolean = true,
     isReadable: Boolean = false,
-    labelColor: Color = toolbar_color,
+    labelColor: Color = black,
     placeholderColor: Color = Color.Black,
     backgroundColor: Color = text_fiiled_color,
     borderColor: Color = boderColor,
@@ -1071,7 +1078,7 @@ fun FormDatePickerCompact(
     trailingIcon: @Composable (() -> Unit)? = null,
     placeholder: String = stringResource(Res.string.dd_mm_yy),
     isEnable: Boolean = true,
-    labelColor: Color = toolbar_color,
+    labelColor: Color = black,
     placeholderColor: Color = Color.Black,
     backgroundColor: Color = text_fiiled_color,
     borderColor: Color = boderColor,
@@ -1796,7 +1803,7 @@ fun FormSpinner(
     selectedOption: String,
     onOptionSelected: (String) -> Unit,
     modifier: Modifier = Modifier,
-    labelColor: Color = toolbar_color,
+    labelColor: Color = black,
     backgroundColor: Color = text_fiiled_color,
     textColor: Color = Color.Black,
     fontFamily: FontFamily = FontFamily(Font(Res.font.roboto_regular)),
@@ -2231,7 +2238,7 @@ fun DashboardCardItem(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Box(
-            modifier = Modifier.size(75.dp),
+            modifier = Modifier.size(70.dp),
             contentAlignment = Alignment.TopCenter
         ) {
 
@@ -2240,17 +2247,24 @@ fun DashboardCardItem(
                 modifier = Modifier
                     .fillMaxSize()
                     .offset(y = 10.dp)
-                    .clickable { onClick() },
+                    .clickable { onClick() }
+                    .border(
+                    width = 1.dp,
+            color = Color.White,
+            shape = RoundedCornerShape(20.dp)
+            ),
                 colors = CardDefaults.cardColors(containerColor = backgroundColor),
                 elevation = CardDefaults.cardElevation(3.dp)
             ) {
                 Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(end = 10.dp, bottom = 8.dp),
+                    contentAlignment = Alignment.BottomEnd
                 ) {
                     Text(
                         text = number,
-                        fontSize = 20.sp,
+                        fontSize = 22.sp,
                         color = white,
                         fontWeight = FontWeight.Bold
                     )
@@ -2259,17 +2273,17 @@ fun DashboardCardItem(
 
             Box(
                 modifier = Modifier
-                    .size(32.dp)
-                    .background(loginBg.copy(alpha = 0.6f), CircleShape)
+                    .size(45.dp)
+                    .background(white.copy(alpha = 0.6f), CircleShape)
                     .align(Alignment.TopStart)
                     .border(1.dp, homeTopIconsBg, CircleShape),
                 contentAlignment = Alignment.Center
             ) {
-                Icon(
+                Image(
                     painter = icon,
                     contentDescription = null,
-                    tint = black,
-                    modifier = Modifier.size(16.dp)
+                    modifier = Modifier.fillMaxSize(),
+
                 )
             }
         }
@@ -2295,31 +2309,64 @@ fun CommonSingleButtons(
     onOkClick: () -> Unit,
     backgroundColor: Color,
     text: String = "",
-    textColor: Color
+    textColor: Color,
+    bgImage: Painter? = null
 ) {
-    Row(
-        modifier = Modifier.fillMaxWidth().padding(end = 25.dp, start = 20.dp),
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(start = 20.dp, end = 25.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Button(
-            onClick = onOkClick,
+
+        Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(55.dp),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = backgroundColor,
-                contentColor = lightgreens
-            ),
-            shape = RoundedCornerShape(18.dp)
+                .height(120.dp)
+                .clickable { onOkClick() },
+            shape = RoundedCornerShape(14.dp),
+            elevation = CardDefaults.cardElevation(defaultElevation = 7.dp),
+            border = BorderStroke(1.dp, loginbgGradientBottom)
         ) {
-            ReusableTextView(
-                text = text,
-                textColor = textColor,
-                fontWeight = FontWeight.Bold
-            )
+
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(
+                        brush = Brush.verticalGradient(
+                            colors = listOf(
+                                backgroundColor.copy(alpha = 0.9f),
+                                backgroundColor.copy(alpha = 0.4f)
+                            )
+                        )
+                    )
+            ) {
+
+                if (bgImage != null) {
+                    Image(
+                        painter = bgImage,
+                        contentDescription = null,
+                        contentScale = ContentScale.Crop,
+                        alignment = Alignment.Center,
+                        modifier = Modifier.fillMaxSize()
+                    )
+                }
+            }
         }
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        ReusableTextView(
+            text = text,
+            textColor = textColor,
+            textAlignment = TextAlign.Center,
+            fontSize = 18,
+            fontFamily = FontFamily(Font(Res.font.roboto_medium)),
+        )
     }
 }
+
+
 
 @Composable
 fun TripleIconSlider(
@@ -2736,7 +2783,7 @@ fun FormFieldCompacts(
 
     Column(modifier) {
 
-        Spacer(Modifier.height(5.dp))
+
 
         Box(
             modifier = Modifier
@@ -3150,6 +3197,12 @@ fun CustomAlertDialogRegistrationExisting(
         }
     }
 }
+
+
+
+
+
+
 
 @Composable
 fun SelectableChip(

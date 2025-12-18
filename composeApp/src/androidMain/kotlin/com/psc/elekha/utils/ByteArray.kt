@@ -4,6 +4,6 @@ import android.graphics.BitmapFactory
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 
-actual fun ByteArray.toPlatformImageBitmap(): ImageBitmap {
-    return BitmapFactory.decodeByteArray(this, 0, size).asImageBitmap()
+actual fun loadImageFromPath(path: String): ImageBitmap? {
+    return BitmapFactory.decodeFile(path)?.asImageBitmap()
 }

@@ -5,8 +5,12 @@ import androidx.compose.runtime.Composable
 
 
 // Common expect function
+// Common expect function
+// commonMain
 @Composable
 expect fun CameraPicker(
-    onImagePicked: (ByteArray?) -> Unit,
-    openCamera: Boolean
+    openCamera: Boolean,
+    onImagePicked: (String?) -> Unit
 )
+
+

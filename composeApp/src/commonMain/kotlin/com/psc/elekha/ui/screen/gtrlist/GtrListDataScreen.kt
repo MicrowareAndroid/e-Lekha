@@ -39,10 +39,10 @@ fun GtrListDataScreen(
 
     var selectedScreen by remember { mutableStateOf("GTR List Data") }
     val checkedMap = remember { mutableStateMapOf<CustomerData, Boolean>() }
-
-
+    var imagePath by remember { mutableStateOf<String?>(null) }
     var openCamera by remember { mutableStateOf(false) }
     var capturedImage by remember { mutableStateOf<ImageBitmap?>(null) }
+
     val customerList = listOf(
         CustomerData(101,"Shanti Devi w/o Manohar Singh", "987654321", "50,000"),
         CustomerData(112,"Rina Kumari w/o Gopal Sharma", "9988776655", "75,000"),
@@ -294,13 +294,16 @@ fun GtrListDataScreen(
 
     }
 
-       if (openCamera) {
+    if (openCamera) {
         CameraPicker(
             openCamera = openCamera,
-            onImagePicked = { bytes ->
-                capturedImage = bytes?.toPlatformImageBitmap()
+            onImagePicked = { path ->
+                imagePath = path
+                capturedImage = path?.let { loadImageFromPath(it) }
                 openCamera = false
             }
         )
     }
+
+
 }
