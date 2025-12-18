@@ -121,6 +121,7 @@ import com.psc.elekha.ui.theme.LightSkyBlue
 import com.psc.elekha.ui.theme.LightTeal
 import com.psc.elekha.ui.theme.LoginTextBox
 import com.psc.elekha.ui.theme.PrimaryDark
+import com.psc.elekha.ui.theme.appleblue
 import com.psc.elekha.ui.theme.assureOrange
 import com.psc.elekha.ui.theme.bgColor
 import com.psc.elekha.ui.theme.black
@@ -399,7 +400,7 @@ fun ReusableOutlinedTextField(
 @Composable
 fun ReusableTopBar(
     title: String,
-    backgroundColor: Color = toolbar_color,
+    backgroundColor: Color = appleblue,
     titleColor: Color = Color.White,
     navigationIcon: Painter? = null,
     onNavigationClick: (() -> Unit)? = null,

@@ -55,7 +55,8 @@ val editext_bg_color = Color(0xFFC4E2EA)
 val btn_color = Color(0xFFFCC739)
 
 val text_fiiled_color= Color(0xFFE8F2FF)
-val toolbar_color = Color(0xFF106594)
+val toolbar_color = Color(0xFF527BC0)
+//val toolbar_color = Color(0xFF106594)
 
 
 
