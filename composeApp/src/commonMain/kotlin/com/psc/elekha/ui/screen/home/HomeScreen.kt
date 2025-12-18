@@ -1,6 +1,7 @@
 package com.psc.elekha.ui.screen.home
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -8,16 +9,20 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.psc.elekha.model.DashboardItem
 import com.psc.elekha.model.SliderItem
+import com.psc.elekha.ui.screen.login.LoginScreenNew
 import com.psc.elekha.ui.theme.LightMint
 import com.psc.elekha.ui.theme.LightTeal
 import com.psc.elekha.ui.theme.LightYellow
@@ -32,6 +37,8 @@ import com.psc.elekha.ui.theme.homerepaymentColor
 import com.psc.elekha.ui.theme.lightGrey
 import com.psc.elekha.ui.theme.lightgreens
 import com.psc.elekha.ui.theme.loginBg
+import com.psc.elekha.ui.theme.loginbgGradientBottom
+import com.psc.elekha.ui.theme.loginbgGradientTop
 import com.psc.elekha.ui.theme.repaymentColor
 import com.psc.elekha.utils.CommonSingleButtons
 import com.psc.elekha.utils.DashboardCardItem
@@ -39,7 +46,15 @@ import com.psc.elekha.utils.ReusableTextView
 import com.psc.elekha.utils.RouteName
 import com.psc.elekha.utils.TripleIconSlider
 import e_lekha.composeapp.generated.resources.Res
+import e_lekha.composeapp.generated.resources.activecustomer
+import e_lekha.composeapp.generated.resources.arrear
+import e_lekha.composeapp.generated.resources.case_load
+import e_lekha.composeapp.generated.resources.credit_enquiry
+import e_lekha.composeapp.generated.resources.data_reports
+import e_lekha.composeapp.generated.resources.default
 import e_lekha.composeapp.generated.resources.group
+import e_lekha.composeapp.generated.resources.gtr
+import e_lekha.composeapp.generated.resources.gtr_done
 import e_lekha.composeapp.generated.resources.home_active_customer
 import e_lekha.composeapp.generated.resources.home_arrear
 import e_lekha.composeapp.generated.resources.home_case
@@ -59,8 +74,14 @@ import e_lekha.composeapp.generated.resources.ic_menu
 import e_lekha.composeapp.generated.resources.ic_repayment
 import e_lekha.composeapp.generated.resources.ic_savings
 import e_lekha.composeapp.generated.resources.ic_setting
+import e_lekha.composeapp.generated.resources.loan_closed
+import e_lekha.composeapp.generated.resources.logo
+import e_lekha.composeapp.generated.resources.registration
+import e_lekha.composeapp.generated.resources.registration_top
+import e_lekha.composeapp.generated.resources.repayment
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun HomeScreen(
@@ -91,36 +112,52 @@ fun HomeScreen(
 
 
     val dashboardItems = listOf(
-        DashboardItem("837", stringResource(Res.string.home_active_customer), painterResource(Res.drawable.ic_setting)),
-        DashboardItem("80", stringResource(Res.string.home_default), painterResource(Res.drawable.ic_setting)),
-        DashboardItem("50", stringResource(Res.string.home_registration), painterResource(Res.drawable.ic_setting)),
-        DashboardItem("27", stringResource(Res.string.home_active_customer), painterResource(Res.drawable.ic_setting)),
-        DashboardItem("837", stringResource(Res.string.home_arrear), painterResource(Res.drawable.ic_setting)),
-        DashboardItem("80", stringResource(Res.string.home_closed), painterResource(Res.drawable.ic_setting)),
-        DashboardItem("50", stringResource(Res.string.home_gtr), painterResource(Res.drawable.ic_setting)),
-        DashboardItem("27", stringResource(Res.string.home_case), painterResource(Res.drawable.ic_setting))
+        DashboardItem("837", stringResource(Res.string.home_active_customer), painterResource(Res.drawable.activecustomer)),
+        DashboardItem("80", stringResource(Res.string.home_default), painterResource(Res.drawable.default)),
+        DashboardItem("50", stringResource(Res.string.home_registration), painterResource(Res.drawable.registration_top)),
+        DashboardItem("27", stringResource(Res.string.home_active_customer), painterResource(Res.drawable.credit_enquiry
+        )),
+        DashboardItem("837", stringResource(Res.string.home_arrear), painterResource(Res.drawable.arrear)),
+        DashboardItem("80", stringResource(Res.string.home_closed), painterResource(Res.drawable.loan_closed)),
+        DashboardItem("50", stringResource(Res.string.home_gtr), painterResource(Res.drawable.gtr_done)),
+        DashboardItem("27", stringResource(Res.string.home_case), painterResource(Res.drawable.case_load))
     )
 
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(
+        modifier = Modifier.fillMaxSize()
+            ) {
 
-        Image(
+       /* Image(
             painter = painterResource(Res.drawable.group),
             contentDescription = null,
             contentScale = ContentScale.FillBounds,
             modifier = Modifier.matchParentSize()
-        )
+        )*/
 
         Scaffold(
-            modifier = Modifier.fillMaxSize(),
-            containerColor = loginBg
+            modifier = Modifier
+                .fillMaxSize()
+
+
+            ,
+
+            //containerColor = loginBg
         ) { innerPadding ->
 
             Column(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(innerPadding)
-                    .padding(horizontal = 15.dp)
+
                     .statusBarsPadding()
+                    .background(
+                        brush = Brush.verticalGradient(
+                            colors = listOf(
+                                loginbgGradientTop,
+                                loginbgGradientBottom
+                            )
+                        )
+                    )
             ) {
 
                 Row(
@@ -177,8 +214,9 @@ fun HomeScreen(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(horizontal = 25.dp)
-                                .height(220.dp),
-                            horizontalArrangement = Arrangement.spacedBy(12.dp),
+                            .height(220.dp),
+
+                        horizontalArrangement = Arrangement.spacedBy(12.dp),
                             verticalArrangement = Arrangement.spacedBy(12.dp),
                             userScrollEnabled = false
                         ) {
@@ -189,49 +227,64 @@ fun HomeScreen(
                         }
                     }
 
-                    item {
-                        Divider(
-                            color = homeViewLineColor,
-                            thickness = 1.dp,
-                            modifier = Modifier.padding(horizontal = 8.dp)
-                        )
-                    }
+
 
                     item {
-                        CommonSingleButtons(
-                            onOkClick = { navController.navigate(RouteName.registration_list) },
-                            backgroundColor = homeRegistrationColor,
-                            text = stringResource(Res.string.home_registration_detail),
-                            textColor = black
-                        )
+                        LazyVerticalGrid(
+                            columns = GridCells.Fixed(2),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp)
+                                .height(330.dp),
+                            horizontalArrangement = Arrangement.spacedBy(12.dp),
+                            verticalArrangement = Arrangement.spacedBy(12.dp),
+                            userScrollEnabled = false
+                        ) {
+
+                            item {
+                                CommonSingleButtons(
+                                    onOkClick = { navController.navigate(RouteName.registration_list) },
+                                    backgroundColor = homeRegistrationColor,
+                                    text = stringResource(Res.string.home_registration_detail),
+                                    textColor = black,
+                                    bgImage = painterResource(Res.drawable.registration)
+                                )
+                            }
+
+                            item {
+                                CommonSingleButtons(
+                                    onOkClick = { navController.navigate(RouteName.replayment_list) },
+                                    backgroundColor = homerepaymentColor,
+                                    text = stringResource(Res.string.home_repayment),
+                                    textColor = black,
+                                    bgImage = painterResource(Res.drawable.repayment)
+                                )
+                            }
+
+
+                            item {
+                                CommonSingleButtons(
+                                    onOkClick = { navController.navigate(RouteName.gtr_list_screen) },
+                                    backgroundColor = homegtrColor,
+                                    text = stringResource(Res.string.home_gtr_home),
+                                    textColor = black,
+                                    bgImage = painterResource(Res.drawable.gtr)
+                                )
+                            }
+
+
+                            item {
+                                CommonSingleButtons(
+                                    onOkClick = {},
+                                    backgroundColor = homedatareportsColor,
+                                    text = stringResource(Res.string.home_data),
+                                    textColor = black,
+                                    bgImage = painterResource(Res.drawable.data_reports)
+                                )
+                            }
+                        }
                     }
 
-                    item {
-                        CommonSingleButtons(
-                            onOkClick = { navController.navigate(RouteName.gtr_list_screen) },
-                            backgroundColor = homegtrColor,
-                            text = stringResource(Res.string.home_gtr_home),
-                            textColor = black
-                        )
-                    }
-
-                    item {
-                        CommonSingleButtons(
-                            onOkClick = { navController.navigate(RouteName.replayment_list) },
-                            backgroundColor = homerepaymentColor,
-                            text = stringResource(Res.string.home_repayment),
-                            textColor = black
-                        )
-                    }
-
-                    item {
-                        CommonSingleButtons(
-                            onOkClick = {},
-                            backgroundColor = homedatareportsColor,
-                            text = stringResource(Res.string.home_data),
-                            textColor = black
-                        )
-                    }
                     item {
                         TripleIconSlider(
                             items = sliderItems,
@@ -246,3 +299,15 @@ fun HomeScreen(
         }
     }
 }
+
+@Preview
+@Composable
+fun HomeScreenPreview() {
+    MaterialTheme {
+        HomeScreen(
+            navController = rememberNavController(),
+            onMenuClick = {}
+        )
+    }
+}
+

@@ -9,16 +9,19 @@ expect fun getDatabaseBuilder(): RoomDatabase.Builder<AppDatabase>
 
 
 expect class PermissionManager {
-
-    @Composable
-    fun hasPermission(permission: AppPermission): Boolean
-
-    @Composable
-    fun requestPermission(
-        permission: AppPermission,
-        onResult: (Boolean) -> Unit
-    )
+    suspend fun checkPermission(permission: AppPermission): PermissionStatus
+    suspend fun requestPermission(permission: AppPermission): PermissionStatus
+    suspend fun requestMultiplePermissions(permissions: List<AppPermission>): Map<AppPermission, PermissionStatus>
+    fun openAppSettings()
 }
+
+enum class PermissionStatus {
+    GRANTED,
+    DENIED,
+    DENIED_PERMANENTLY,
+    NOT_DETERMINED
+}
+
 
 expect class DatabaseExporter() {
     fun exportAndShare(dbBaseName: String)
