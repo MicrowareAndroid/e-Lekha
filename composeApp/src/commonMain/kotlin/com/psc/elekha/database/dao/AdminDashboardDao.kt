@@ -5,8 +5,9 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.psc.elekha.database.entity.AdminDashbordEntity
+
 @Dao
-interface AdminDashbordDao {
+interface AdminDashboardDao {
     // Insert single record
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(adminDashbord: AdminDashbordEntity)
@@ -16,10 +17,10 @@ interface AdminDashbordDao {
     suspend fun insertAll(list: List<AdminDashbordEntity>)
 
     // Get dashboard data
-    @Query("SELECT * FROM AdminDashbord")
+    @Query("SELECT * FROM AdminDashboard")
     suspend fun getAll(): List<AdminDashbordEntity>
 
     // Delete all (logout / resync)
-    @Query("DELETE FROM AdminDashbord")
+    @Query("DELETE FROM AdminDashboard")
     suspend fun deleteAll()
 }
