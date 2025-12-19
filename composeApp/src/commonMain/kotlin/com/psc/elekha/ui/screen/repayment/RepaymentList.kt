@@ -39,7 +39,10 @@ import org.jetbrains.compose.resources.stringResource
 
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.ui.window.Dialog
+import androidx.navigation.compose.rememberNavController
+import com.psc.elekha.ui.screen.home.HomeScreen
 import com.psc.elekha.ui.theme.homedatareportsColor
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -317,8 +320,15 @@ fun RepaymentList(
                     isSelected = true,
                     onSelected = {
                         selectedDialogItem = null
+                    },
+                    onCameraClick = {
+                        // camera logic yahan
+                    },
+                    onBack = {
+                        selectedDialogItem = null
                     }
                 )
+
             }
         }
     }
@@ -484,4 +494,14 @@ fun FilterLoanDetailsDialog(
         dismissButton = {}
     )
 
+}
+@Preview
+@Composable
+fun RepaymentList() {
+    MaterialTheme {
+        HomeScreen(
+            navController = rememberNavController(),
+            onMenuClick = {}
+        )
+    }
 }

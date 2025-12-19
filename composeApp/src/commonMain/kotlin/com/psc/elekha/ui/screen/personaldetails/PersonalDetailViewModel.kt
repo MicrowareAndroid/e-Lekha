@@ -15,6 +15,7 @@ import com.psc.elekha.ui.screen.base.BaseValidationViewModel
 import com.psc.elekha.utils.AppPreferences
 import com.psc.elekha.utils.AppSP
 import com.psc.elekha.utils.Validator.checkValidation
+import com.psc.elekha.utils.convertDateFormatDDMMYYYY
 import com.psc.elekha.utils.convertDateFormatYYYYMMDD
 import com.psc.elekha.utils.currentDatetime
 import com.psc.elekha.utils.generateRandomId
@@ -163,7 +164,7 @@ class PersonalDetailViewModel(
                 "",
                 "",
                 "",
-                convertDateFormatYYYYMMDD(returnStringValue(appPreferences.getString(AppSP.dateOfBirth))),
+                convertDateFormatYYYYMMDD(returnStringValue(dateOfBirth)),
                 0,
                 0,
                 0,
@@ -397,7 +398,7 @@ class PersonalDetailViewModel(
                     mobileNumber = returnStringValue(listData[0].ContactNo)
                     husbandName = returnStringValue(listData[0].HusbandMName)
                     gurantorName = returnStringValue(listData[0].GurantorMName)
-
+                   // dateOfBirth= convertDateFormatDDMMYYYY(returnStringValue(listData[0].DOB))
                     //  relationId = returnIntegerValue(data.Re.toString())
 
                     //  gurantormobileNumber = returnIntegerValue(data..toString())

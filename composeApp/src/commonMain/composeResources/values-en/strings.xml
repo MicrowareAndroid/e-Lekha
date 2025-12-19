@@ -33,7 +33,9 @@
     <string name="home_drawer_logout">LOG OUT</string>
     <string name="gtr_group">Groups for GTR</string>
     <string name="gtr_save">Save and Upload</string>
+    <string name="gtr_saves">Save </string>
     <string name="gtr_add">Add</string>
+    <string name="gtr_cancel">Cancel</string>
     <string name="gtr_select">Select Branch</string>
     <string name="gtr_customer">No of Customers : 7</string>
     <string name="gtr_center">Center : 11(17)</string>
@@ -257,16 +259,21 @@
     <string name="emi">Emi</string>
     <string name="full_name_of_applicant">Full Name Of Applicant</string>
     <string name="family_econonic_profile">Family Economic Profile</string>
-    <string name="personal_payment_mode">Payment Mode</string>
-    <string name="personal_customer">Customer</string>
-    <string name="personal_loan">Loan Amount</string>
-    <string name="personal_emi">EMI</string>
-    <string name="personal_total_due">Total Due</string>
-    <string name="personal_weeks_arrear">Weeks in Arrear</string>
-    <string name="personal_emi_number">Emi Numbers</string>
-    <string name="personal_distribute_date">Distribute Date</string>
-    <string name="personal_pre_closure">Pre Closure Date</string>
-    <string name="personal_past">Past Due</string>
-    <string name="personal_current">Current Due</string>
+    <string name="personal_payment_mode">Payment Mode :</string>
+    <string name="personal_customer">Customer :</string>
+    <string name="personal_loan">Loan Amount :</string>
+    <string name="personal_emi">EMI :</string>
+    <string name="personal_total_due">Total Due :</string>
+    <string name="personal_weeks_arrear">Weeks in Arrear :</string>
+    <string name="personal_emi_number">Emi Numbers :</string>
+    <string name="personal_distribute_date">Distribute Date :</string>
+    <string name="personal_pre_closure">Pre Closure Date :</string>
+    <string name="personal_past">Past Due :</string>
+    <string name="personal_current">Current Due :</string>
+    <string name="personal_current_mobile">Mobile Number :</string>
+    <string name="personal_current_payment">Total Payment </string>
+    <string name="personal_payment_image">Payment Image</string>
+    <string name="personal_payment_utr">UTR Number</string>
+    <string name="personal_payment_detail">Repayment Detail</string>
 
 </resources>
