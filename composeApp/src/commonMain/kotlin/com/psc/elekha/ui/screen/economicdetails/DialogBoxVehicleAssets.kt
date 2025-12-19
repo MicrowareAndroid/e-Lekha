@@ -8,10 +8,12 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -25,6 +27,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import com.psc.elekha.ui.theme.blue
 import com.psc.elekha.ui.theme.btn_color
 import com.psc.elekha.ui.theme.lightGrey
 import com.psc.elekha.ui.theme.toolbar_color
@@ -37,17 +40,20 @@ import com.psc.elekha.utils.StaticComboBoxData
 import com.psc.elekha.utils.toValueList
 import e_lekha.composeapp.generated.resources.Res
 import e_lekha.composeapp.generated.resources.app_name
+import e_lekha.composeapp.generated.resources.camera
 import e_lekha.composeapp.generated.resources.cancel
+import e_lekha.composeapp.generated.resources.front_image
 import e_lekha.composeapp.generated.resources.movable_assets
 import e_lekha.composeapp.generated.resources.no_vehicle
 import e_lekha.composeapp.generated.resources.ok
 import e_lekha.composeapp.generated.resources.type_here
 import e_lekha.composeapp.generated.resources.vehicle_no
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun CustomAlertMovableAssets(
-    title: String = stringResource(Res.string.app_name),
+    title: String = stringResource(Res.string.movable_assets),
     submitText: String = stringResource(Res.string.ok),
     cancelText: String = stringResource(Res.string.cancel),
     onSubmit: () -> Unit = {},
@@ -102,22 +108,43 @@ fun CustomAlertMovableAssets(
 
                     Spacer(Modifier.height(12.dp))
 
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        // Front Image Box
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 20.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Box(
+                                modifier = Modifier
+                                    .size(120.dp)
+                                    .background(Color(0xFFE8E8E8)), // Light Grey Box
+                                contentAlignment = Alignment.Center
+                            ) {
+                                // Preview can go here
+                            }
+                            Spacer(modifier = Modifier.height(6.dp))
+                            Icon(
+                                painter = painterResource(Res.drawable.camera),
+                                tint = blue,
+                                contentDescription = stringResource(Res.string.front_image),
+                                modifier = Modifier.size(28.dp)
+                            )
+                            Spacer(modifier = Modifier.height(4.dp))
+                            ReusableTextView(text = stringResource(Res.string.front_image))
+                        }
+                    }
                     // Movable Assets Spinner
                     FormSpinner(
                         label = stringResource(Res.string.movable_assets),
                         options = StaticComboBoxData.vehicleasset.toValueList(),
                         selectedOption = movableAssets,
                         onOptionSelected = {movableAssets = it},
-                        modifier = Modifier.fillMaxWidth()
-                    )
-
-                    Spacer(Modifier.height(12.dp))
-                    FormFieldCompact(
-                        label = stringResource(Res.string.no_vehicle),
-                        value = "",
-                        onValueChange = { "" },
-                        placeholder = stringResource(Res.string.type_here),
-                        maxLength = 10,
                         modifier = Modifier.fillMaxWidth()
                     )
                     Spacer(Modifier.height(12.dp))

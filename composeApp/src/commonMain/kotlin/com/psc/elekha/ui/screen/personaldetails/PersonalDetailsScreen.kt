@@ -28,6 +28,7 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -43,6 +44,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import coil3.Uri
 import coil3.compose.LocalPlatformContext
+import com.psc.elekha.database.viewmodel.MSTComboBox_NViewModel
 import com.psc.elekha.model.EconomicMonthlyIncomeModel
 import com.psc.elekha.model.EconomicMovableAssetsModel
 import com.psc.elekha.model.FamilyDetailModel
@@ -56,12 +58,17 @@ import com.psc.elekha.utils.CommonSaveButton
 import com.psc.elekha.utils.CommonSingleButtonsBottomString
 import com.psc.elekha.utils.CustomAlertDialog
 import com.psc.elekha.utils.DynamicCheckBox
+import com.psc.elekha.utils.FillDynamicSpinner
 import com.psc.elekha.utils.FormDatePickerCompact
 import com.psc.elekha.utils.FormFieldCompact
 import com.psc.elekha.utils.FormSpinner
 import com.psc.elekha.utils.ReusableTextView
 import com.psc.elekha.utils.StaticComboBoxData
+import com.psc.elekha.utils.getMaxDateInstant
+import com.psc.elekha.utils.getMinDateInstant
+import com.psc.elekha.utils.isAge18Plus
 import com.psc.elekha.utils.pickDate
+import com.psc.elekha.utils.pickMinMaxDate
 import com.psc.elekha.utils.toValueList
 import e_lekha.composeapp.generated.resources.Res
 import e_lekha.composeapp.generated.resources.add
@@ -123,6 +130,7 @@ import e_lekha.composeapp.generated.resources.your_photo_with_guarantor
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
+
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -198,48 +206,39 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
             )
         )
     }
-    var customerImage by remember { mutableStateOf<Uri?>(null) }
-    var guarantorImage by remember { mutableStateOf<Uri?>(null) }
-    var customename by remember { mutableStateOf("") }
+   var mstComboViewModel=koinViewModel<MSTComboBox_NViewModel>()
+    val maritalList by mstComboViewModel.maritalStatus.collectAsState()
+    val qualificationList by mstComboViewModel.mstQualificationValue.collectAsState()
+    val religionList by mstComboViewModel.religionValue.collectAsState()
+    val relationList by mstComboViewModel.relationValue.collectAsState()
+    val locationList by mstComboViewModel.locationValue.collectAsState()
+    val genderList by mstComboViewModel.genderValue.collectAsState()
+
     var dob by remember { mutableStateOf("") }
     var maritalStatus by remember { mutableStateOf("") }
-    var education by remember { mutableStateOf("") }
-    var religion by remember { mutableStateOf("") }
-    var purpose by remember { mutableStateOf("") }
-    var mobile_number by remember { mutableStateOf("") }
+
     var enter_otp by remember { mutableStateOf("") }
-    var husband_name by remember { mutableStateOf("") }
-    var guarantor_name by remember { mutableStateOf("") }
-    var guarantor_mobile_number by remember { mutableStateOf("") }
-    var your_full_address by remember { mutableStateOf("") }
-    var state by remember { mutableStateOf("") }
-    var district by remember { mutableStateOf("") }
-    var village_name by remember { mutableStateOf("") }
-    var landmark by remember { mutableStateOf("") }
-    var tehsil by remember { mutableStateOf("") }
-    var pin_code by remember { mutableStateOf("") }
-    var maternal_address by remember { mutableStateOf("") }
-    var maternal_mob_no by remember { mutableStateOf("") }
-    var father_name by remember { mutableStateOf("") }
+
     var guarantordob by remember { mutableStateOf("") }
-    var gurantor_religion by remember { mutableStateOf("") }
+
     var gurantor_enter_otp by remember { mutableStateOf("") }
-    var gurantor_village_name by remember { mutableStateOf("") }
+
     var isChecked by remember { mutableStateOf(false) }
-    var showFamilyPopup by remember { mutableStateOf(false) }
+
     val viewModel = koinViewModel<PersonalDetailViewModel>()
     val coroutineScope = rememberCoroutineScope()
-    var maritalStatusValue by remember { mutableStateOf("") }
-    var educationValue by remember { mutableStateOf("") }
-    var religionValue by remember { mutableStateOf("") }
-    var purposeValue by remember { mutableStateOf("") }
-    var relationValue by remember { mutableStateOf("") }
-    var stateValue by remember { mutableStateOf("") }
-    var distictValue by remember { mutableStateOf("") }
+
     var showFamilyDialog by remember { mutableStateOf(false) }
 
-
     LaunchedEffect(Unit) {
+        mstComboViewModel.loadLookUpValues(lookupTypeFk = 1)
+        mstComboViewModel.loadLookUpValues(lookupTypeFk = 2)
+        mstComboViewModel.loadLookUpValues(lookupTypeFk = 3)
+        mstComboViewModel.loadLookUpValues(lookupTypeFk = 4)
+        mstComboViewModel.loadLookUpValues(lookupTypeFk = 5)
+        mstComboViewModel.loadLookUpValues(lookupTypeFk = 6)
+
+
         viewModel.loadSavedData()
     }
 
@@ -364,9 +363,7 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
                         )
 
                 }
-
                 Spacer(modifier = Modifier.height(8.dp))
-
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(10.dp)
@@ -376,9 +373,19 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
                         value = dob,
                         onValueChange = { dob = it },
                         onClick = {
-                            pickDate(context) { date ->
-                                dob = date
-                            }
+                            pickMinMaxDate(
+                                context = context,
+                                onDatePicked = { date ->
+                                    // Optional validation: make sure user picked >=18 years
+                                    if (isAge18Plus(date)) {
+                                        dob = date
+                                    } else {
+
+                                    }
+                                },
+                                minDate = getMinDateInstant(),
+                                maxDate = getMaxDateInstant()
+                            )
                         },
                         trailingIcon = {
                             Icon(
@@ -391,57 +398,21 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
                         modifier = Modifier.weight(1f)
                     )
 
-                    FormSpinner(
+                    FillDynamicSpinner(
                         label = stringResource(Res.string.marital_status),
-                        options = listOf("Married", "Unmarried", "Single"),
-                        selectedOption = maritalStatus,
+                        options = maritalList,
+                        selectedOption = viewModel.maritalStatusId,
                         onOptionSelected = { selected ->
-                            maritalStatus = selected
-                        },
-                        modifier = Modifier.weight(1f)
-                    )
-                }
+                            viewModel.maritalStatusId = selected
 
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(10.dp)
-                ) {
-                    FormDatePickerCompact(
-                        label = stringResource(Res.string.date_of_birth),
-                        value = dob,
-                        onValueChange = { dob = it },
-                        onClick = {
-                            pickDate(context) { date ->
-                                dob = date
-                            }
                         },
-                        trailingIcon = {
-                            Icon(
-                                painter = painterResource(Res.drawable.date),
-                                contentDescription = "Date Icon",
-                                tint = Color.Unspecified
-                            )
-                        },
-                        isEnable = true,
-                        modifier = Modifier.weight(1f)
+                        focusRequester = viewModel.focusRequesterMaritalStatusId,
+                        bringIntoViewRequester = viewModel.bringIntoViewRequesterMaritalStatusId,
+                        getOptionId = { it.ID },
+                        getOptionLabel = { it.Value.toString() }
                     )
 
-                    FormSpinner(
-                        label = stringResource(Res.string.marital_status),
-                        options = StaticComboBoxData.maritalStatusList.toValueList(),
-                        selectedOption = maritalStatusValue,
-                        onOptionSelected = { selectedValue ->
-                            maritalStatusValue = selectedValue
-                            viewModel.maritalStatusId =
-                                StaticComboBoxData.maritalStatusList.firstOrNull { it.Value == selectedValue }?.ID
-                                    ?: 0
-                        },
-                        modifier = Modifier.weight(1f),
-                        /* focusRequester = viewModel.focusRequesterMaritalStatusId,
-                         bringIntoViewRequester = viewModel.bringIntoViewRequesterMaritalStatusId
 
-               */
-                    )
                 }
 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -450,44 +421,52 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(10.dp)
                 ) {
-                    FormSpinner(
+                    FillDynamicSpinner(
                         label = stringResource(Res.string.education),
-                        options = StaticComboBoxData.educationList.toValueList(),
-                        selectedOption = educationValue,
-                        onOptionSelected = { selectedValue ->
-                            educationValue = selectedValue
-                            viewModel.educationId =
-                                StaticComboBoxData.educationList.firstOrNull { it.Value == selectedValue }?.ID
-                                    ?: 0
+                        options = qualificationList,
+                        selectedOption = viewModel.educationId,
+                        onOptionSelected = { selected ->
+                            viewModel.educationId = selected
+
                         },
-                        modifier = Modifier.weight(1f),
+                        focusRequester = viewModel.focusRequesterEducationId,
+                        bringIntoViewRequester = viewModel.bringIntoViewRequesterEducationId,
+                        getOptionId = { it.ID },
+                        getOptionLabel = { it.Value.toString() }
                     )
-                    FormSpinner(
+                    FillDynamicSpinner(
                         label = stringResource(Res.string.religion),
-                        options = StaticComboBoxData.religionList.toValueList(),
-                        selectedOption = religionValue,
-                        onOptionSelected = { selectedValue ->
-                            religionValue = selectedValue
-                            viewModel.religionId =
-                                StaticComboBoxData.religionList.firstOrNull { it.Value == selectedValue }?.ID
-                                    ?: 0
+                        options = religionList,
+                        selectedOption = viewModel.religionId,
+                        onOptionSelected = { selected ->
+                            viewModel.religionId = selected
+
                         },
-                        modifier = Modifier.weight(1f),
+                        focusRequester = viewModel.focusRequesterReligionId,
+                        bringIntoViewRequester = viewModel.bringIntoViewRequesterReligionId,
+                        getOptionId = { it.ID },
+                        getOptionLabel = { it.Value.toString() }
                     )
+
+
                 }
                 Spacer(modifier = Modifier.height(8.dp))
-                FormSpinner(
+
+                FillDynamicSpinner(
                     label = stringResource(Res.string.purpose),
-                    options = StaticComboBoxData.purposeList.toValueList(),
-                    selectedOption = purposeValue,
-                    onOptionSelected = { selectedValue ->
-                        purposeValue = selectedValue
-                        viewModel.purposeId =
-                            StaticComboBoxData.purposeList.firstOrNull { it.Value == selectedValue }?.ID
-                                ?: 0
+                    options = relationList,
+                    selectedOption = viewModel.purposeId,
+                    onOptionSelected = { selected ->
+                        viewModel.purposeId = selected
+
                     },
-                    modifier = Modifier.fillMaxWidth()
+                    focusRequester = viewModel.focusRequesterPurposeId,
+                    bringIntoViewRequester = viewModel.bringIntoViewRequesterPurposeId,
+                    getOptionId = { it.ID },
+                    getOptionLabel = { it.Value.toString() }
                 )
+
+
 
                 Spacer(modifier = Modifier.height(8.dp))
 
@@ -517,6 +496,7 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
                         onValueChange = { enterotp ->
                             enter_otp = enterotp
                         },
+                        maxLength = 6,
                         placeholder = stringResource(Res.string.type_here),
                         modifier = Modifier.weight(1f),
                         inputType = KeyboardType.Number
@@ -581,10 +561,10 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(10.dp)
                 ) {
-                    FormSpinner(
+                    /*FormSpinner(
                         label = stringResource(Res.string.relation),
                         options = StaticComboBoxData.relationList.toValueList(),
-                        selectedOption = relationValue,
+                        selectedOption = viewModel.relationId,
                         onOptionSelected = { selectedValue ->
                             relationValue = selectedValue
                             viewModel.relationId =
@@ -593,15 +573,24 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
                         },
                         modifier = Modifier.weight(1f)
                     )
-
+*/
                     FormDatePickerCompact(
                         label = stringResource(Res.string.date_of_birth),
                         value = guarantordob,
                         onValueChange = { guarantordob = it },
                         onClick = {
-                            pickDate(context) { date ->
-                                guarantordob = date
-                            }
+                            pickMinMaxDate(
+                                context = context,
+                                onDatePicked = { date ->
+                                    if (isAge18Plus(date)) {
+                                        dob = date
+                                    } else {
+
+                                    }
+                                },
+                                minDate = getMinDateInstant(),
+                                maxDate = getMaxDateInstant()
+                            )
 
                         },
                         trailingIcon = {
@@ -684,7 +673,7 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(10.dp)
                 ) {
-                    FormSpinner(
+                    /*FormSpinner(
                         label = stringResource(Res.string.state),
                         options = StaticComboBoxData.stateList.toValueList(),
                         selectedOption = stateValue,
@@ -695,9 +684,9 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
                                     ?: 0
                         },
                         modifier = Modifier.weight(1f),
-                    )
+                    )*/
 
-                    FormSpinner(
+                    /*FormSpinner(
                         label = stringResource(Res.string.district),
                         options = StaticComboBoxData.districtList.toValueList(),
                         selectedOption = distictValue,
@@ -708,7 +697,7 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
                                     ?: 0
                         },
                         modifier = Modifier.weight(1f),
-                    )
+                    )*/
                 }
 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -848,7 +837,7 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
 
 
                         )
-                    FormSpinner(
+                   /* FormSpinner(
                         label = stringResource(Res.string.state),
                         options = StaticComboBoxData.stateList.toValueList(),
                         selectedOption = stateValue,
@@ -859,7 +848,7 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
                                     ?: 0
                         },
                         modifier = Modifier.weight(1f),
-                    )
+                    )*/
 
                 }
                 Spacer(modifier = Modifier.height(8.dp))

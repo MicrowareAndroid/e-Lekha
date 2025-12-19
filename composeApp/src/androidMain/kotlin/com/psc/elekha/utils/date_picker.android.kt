@@ -91,5 +91,19 @@ actual fun pickMinMaxDate(
     datePickerDialog.show()
 }
 
-actual fun getMinDateInstant(): Instant = Clock.System.now() // today
-actual fun getMaxDateInstant(): Instant = Clock.System.now() // example: today
+
+// example: today
+actual fun getMinDateInstant(): Instant {
+    val cal = Calendar.getInstance()
+    cal.set(1900, Calendar.JANUARY, 1)
+    cal.set(Calendar.HOUR_OF_DAY, 0)
+    cal.set(Calendar.MINUTE, 0)
+    cal.set(Calendar.SECOND, 0)
+    cal.set(Calendar.MILLISECOND, 0)
+    return Instant.fromEpochMilliseconds(cal.timeInMillis)
+}
+
+
+actual fun getMaxDateInstant(): Instant {
+    return Instant.fromEpochMilliseconds(System.currentTimeMillis())
+}

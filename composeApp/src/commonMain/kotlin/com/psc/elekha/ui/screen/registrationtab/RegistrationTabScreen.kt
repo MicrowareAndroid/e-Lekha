@@ -57,8 +57,6 @@ fun RegistartionTabScreen(navController: NavController, pref: AppPreferences) {
         stringResource(Res.string.personal_details),
         stringResource(Res.string.kyc),
         stringResource(Res.string.bank_details),
-        stringResource(Res.string.family_details),
-        stringResource(Res.string.economic_details)
     )
 
 
@@ -189,17 +187,17 @@ fun RegistartionTabScreen(navController: NavController, pref: AppPreferences) {
                         2 -> BankDetailsScreen(
                             onNextTab = { selectedTabIndex++ },
                             onCancelTab = { selectedTabIndex-- })
-
-                        3 -> FamilyDetailListScreen(
-                            onNextTab = { selectedTabIndex++ },
-                            onCancelTab = { selectedTabIndex-- },
-                            navController = navController
-                        )
-
-                        4 -> EconomicDetailsScreen(
-                            onNextTab = { selectedTabIndex++ },
-                            onCancelTab = { selectedTabIndex-- }
-                        )
+//
+//                        3 -> FamilyDetailListScreen(
+//                            onNextTab = { selectedTabIndex++ },
+//                            onCancelTab = { selectedTabIndex-- },
+//                            navController = navController
+//                        )
+//
+//                        4 -> EconomicDetailsScreen(
+//                            onNextTab = { selectedTabIndex++ },
+//                            onCancelTab = { selectedTabIndex-- }
+//                        )
 
                         /*3 -> CustomAlertDialog(
                         true,

@@ -23,6 +23,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.psc.elekha.database.entity.MSTComboBox_NEntity
 import com.psc.elekha.database.viewmodel.MSTComboBox_NViewModel
+import com.psc.elekha.database.viewmodel.UsersViewModel
 import com.psc.elekha.getAppVersion
 
 import com.psc.elekha.ui.theme.*
@@ -42,7 +43,7 @@ import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun LoginScreenNew(navController: NavController) {
-
+    val viewModel = koinViewModel<LoginViewModel>()
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var otp by remember { mutableStateOf("") }
@@ -154,7 +155,9 @@ fun LoginScreenNew(navController: NavController) {
                         .padding(horizontal = 5.dp)
                         .verticalScroll(rememberScrollState())
                         .padding(bottom = 20.dp)
-                ) {
+                )
+                {
+
 
                     Card(
                         modifier = Modifier
@@ -225,8 +228,11 @@ fun LoginScreenNew(navController: NavController) {
                                         if (!showOtpField) {
                                             showOtpField = true
                                         } else {
+                                            viewModel.updateData()
                                             navController.navigate(RouteName.home)
+
                                         }
+
                                     },
                                     modifier = Modifier
                                         .width(200.dp)
