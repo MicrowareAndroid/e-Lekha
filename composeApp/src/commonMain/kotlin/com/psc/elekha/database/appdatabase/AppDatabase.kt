@@ -85,9 +85,9 @@ import com.psc.elekha.database.entity.TabletMenuRoleEntity
 import com.psc.elekha.database.entity.UserBranchEntity
 import com.psc.elekha.database.entity.UserResponseEntity
 import com.psc.elekha.database.entity.UsersEntity
+import com.psc.elekha.database.entity.TrainingGroupStatusEntity
 import com.psc.elekha.database.entity.AdminDashbordEntity
 import com.psc.elekha.database.entity.BranchManagerDashbordEntity
-import com.psc.elekha.database.entity.TrainingGroupStatusEntity
 @Database(entities = [
     CustomerStatusEntity::class, MSTAssetsValuationEntity::class, MSTBankBranchEntity::class, MSTBankEntity::class,
     MSTBranchEntity::class, MSTCenterEntity::class, MSTComboBox_NEntity::class, MSTDistrictEntity::class,
