@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Environment
 import android.provider.MediaStore
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -110,7 +111,8 @@ private fun launchCamera(
     context: Context,
     onReady: (File, Uri) -> Unit
 ) {
-    val dir = File(context.filesDir, "camera")
+    val dir = File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        , "camera")
     if (!dir.exists()) dir.mkdirs()
 
     val file = File(dir, "IMG_${System.currentTimeMillis()}.jpg")

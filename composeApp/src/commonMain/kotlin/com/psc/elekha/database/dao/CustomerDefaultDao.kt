@@ -131,12 +131,5 @@ interface CustomerDefaultDao {
     @Query("Update CustomerDefault set IsEdited=0, IsUpload=1 where IsEdited=1 and IsDeleted=0 and CustomerBankIFSCCode is not null")
     suspend fun updateUploadedNew()
 
-    @Query("UPDATE CustomerDefault set CKYC_BankAccountNumber=:accountNo,CKYC_Bank=:bankId,CustomerBankIFSCCode=:ifscCode,UpdatedBy=:UpdatedBy,UpdatedOn=:UpdatedOn,isEdited = 1 WHERE GUID = :customerGuid")
-    suspend fun updateBankDetail(
-        customerGuid: String,
-        accountNo: String,
-        bankId: Int,
-        ifscCode: String,
-        UpdatedBy: Int?,
-        UpdatedOn: String?)
+
 }

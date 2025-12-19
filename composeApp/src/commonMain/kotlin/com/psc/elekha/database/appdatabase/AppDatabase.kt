@@ -42,7 +42,9 @@ import com.psc.elekha.database.dao.RegistrationStatusDao
 import com.psc.elekha.database.dao.TabletMenuDao
 import com.psc.elekha.database.dao.TabletMenuRoleDao
 import com.psc.elekha.database.dao.TrainingGroupStatusDao
+import com.psc.elekha.database.dao.TrainingGroupDao
 import com.psc.elekha.database.dao.UserBranchDao
+import com.psc.elekha.database.dao.UserContactDetailDao
 import com.psc.elekha.database.dao.UserResponseDao
 import com.psc.elekha.database.dao.UsersDao
 import com.psc.elekha.database.entity.CustomerDefaultEntity
@@ -82,7 +84,9 @@ import com.psc.elekha.database.entity.MstLoanDetailsEntity
 import com.psc.elekha.database.entity.RegistrationStatusEntity
 import com.psc.elekha.database.entity.TabletMenuEntity
 import com.psc.elekha.database.entity.TabletMenuRoleEntity
+import com.psc.elekha.database.entity.TrainingGroupEntity
 import com.psc.elekha.database.entity.UserBranchEntity
+import com.psc.elekha.database.entity.UserContactDetailEntity
 import com.psc.elekha.database.entity.UserResponseEntity
 import com.psc.elekha.database.entity.UsersEntity
 import com.psc.elekha.database.entity.AdminDashbordEntity
@@ -99,7 +103,8 @@ import com.psc.elekha.database.entity.TrainingGroupStatusEntity
     CustomerFamilyMemberDetailsEntity::class, LoanClosureEntity::class, LoanRepaymentEntity::class, LoanScheduleEntity::class,
     CustomerLoanDisbursementEntity::class, ImageTrackingRecordEntity::class, ImageDetailEntity::class, UserResponseEntity::class,
     CustomerDefaultEntity::class, MstLoanDetailsEntity::class, RegistrationStatusEntity::class, CustomerTransactionDataEntity::class,
-    CustomerTransactionsDetailsEntity::class,AdminDashbordEntity::class,BranchManagerDashbordEntity::class, TrainingGroupStatusEntity::class ],
+    CustomerTransactionsDetailsEntity::class,AdminDashbordEntity::class,BranchManagerDashbordEntity::class,
+    TrainingGroupStatusEntity::class, TrainingGroupEntity::class, UserContactDetailEntity::class],
     version = 1, exportSchema = true)
 @ConstructedBy(AppDatabaseConstructor::class)
 abstract class AppDatabase : RoomDatabase() {
@@ -143,6 +148,8 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun registrationStatusDao(): RegistrationStatusDao
     abstract fun customerTransactionDataDao(): CustomerTransactionDataDao
     abstract fun customerTransactionsDetailsDao(): CustomerTransactionsDetailsDao
+    abstract fun trainingGroupDao(): TrainingGroupDao
+    abstract fun userContactDetailDao(): UserContactDetailDao
 
     abstract fun admissionDashboardDao(): AdminDashbordDao
 

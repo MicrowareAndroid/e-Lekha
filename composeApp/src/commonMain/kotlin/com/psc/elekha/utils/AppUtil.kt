@@ -174,6 +174,7 @@ import e_lekha.composeapp.generated.resources.ic_close
 import e_lekha.composeapp.generated.resources.income
 import e_lekha.composeapp.generated.resources.inter_medium
 import e_lekha.composeapp.generated.resources.inter_regular
+import e_lekha.composeapp.generated.resources.inter_semibold
 import e_lekha.composeapp.generated.resources.login_subtitle
 import e_lekha.composeapp.generated.resources.mobile_number
 import e_lekha.composeapp.generated.resources.movable_assets
@@ -236,7 +237,7 @@ fun ReusableTextView(
     textColor: Color = Color.Black,
     fontSize: Int = 14,
     fontWeight: FontWeight = FontWeight.Normal,
-    fontFamily: FontFamily = FontFamily(Font(Res.font.roboto_regular)),
+    fontFamily: FontFamily = FontFamily(Font(Res.font.inter_regular)),
     backgroundColor: Color = Color.Transparent,
     cornerRadius: Dp = 0.dp,
     padding: Dp = 0.dp,
@@ -277,8 +278,8 @@ fun ReusableTextViews(
     modifier: Modifier = Modifier,
     textColor: Color = Color.Black,
     fontSize: Int = 16,
-    fontWeight: FontWeight = FontWeight.Normal,
-    fontFamily: FontFamily = FontFamily(Font(Res.font.roboto_medium)),
+    fontWeight: FontWeight = FontWeight.Medium,
+    fontFamily: FontFamily = FontFamily(Font(Res.font.inter_medium)),
     backgroundColor: Color = Color.Transparent,
     cornerRadius: Dp = 0.dp,
     padding: Dp = 0.dp,
@@ -345,67 +346,6 @@ fun ReusableImageView(
     )
 }
 
-/*edittext*/
-@Composable
-fun ReusableOutlinedTextField(
-    value: String,
-    onValueChange: (String) -> Unit,
-    modifier: Modifier = Modifier,
-    hint: String = "psc.augp@aubank",
-    textColor: Color = Color.Black,
-    hintColor: Color = Color.Gray,
-    fontSize: TextUnit = 10.sp,
-    fontFamily: FontFamily = FontFamily.Default,
-    backgroundColor: Color = Color.White,
-    focusedBorderColor: Color = lightgreens,
-    unfocusedBorderColor: Color = lightgreens,
-
-    singleLine: Boolean = true,
-    maxLines: Int = 1,
-    leadingIcon: @Composable (() -> Unit)? = null,
-    trailingIcon: @Composable (() -> Unit)? = null,
-    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
-    keyboardActions: KeyboardActions = KeyboardActions.Default
-) {
-    OutlinedTextField(
-        value = value,
-        onValueChange = onValueChange,
-        modifier = modifier
-            .fillMaxWidth()
-            .background(backgroundColor),
-        placeholder = {
-            Text(
-                text = hint,
-                color = hintColor,
-                fontSize = fontSize,
-                fontFamily = fontFamily
-            )
-        },
-        textStyle = TextStyle(
-            color = textColor,
-            fontSize = fontSize,
-            fontFamily = fontFamily
-        ),
-        singleLine = singleLine,
-        maxLines = maxLines,
-        leadingIcon = leadingIcon,
-        trailingIcon = trailingIcon,
-        keyboardOptions = keyboardOptions,
-        keyboardActions = keyboardActions,
-
-        colors = OutlinedTextFieldDefaults.colors(
-            focusedBorderColor = focusedBorderColor,
-            unfocusedBorderColor = unfocusedBorderColor,
-            cursorColor = focusedBorderColor,
-            focusedTextColor = textColor,
-            unfocusedTextColor = textColor,
-            focusedPlaceholderColor = hintColor,
-            unfocusedPlaceholderColor = hintColor,
-            focusedContainerColor = backgroundColor,
-            unfocusedContainerColor = backgroundColor
-        )
-    )
-}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -418,7 +358,7 @@ fun ReusableTopBar(
     actionIcon: Painter? = null,
     onActionClick: (() -> Unit)? = null,
     modifier: Modifier = Modifier,
-    fontFamily: FontFamily = FontFamily.Default
+    fontFamily: FontFamily = FontFamily(Font(Res.font.inter_medium)),
 ) {
     CenterAlignedTopAppBar(
         title = {
@@ -482,7 +422,7 @@ fun HomeScreenCardItem(
     titleColor: Color = Color.Black,
     buttonColor: Color = Color(0xFFFFE0B2),
     arrowColor: Color = desire_orange,
-    fontFamily: FontFamily = FontFamily.Default
+    fontFamily: FontFamily = FontFamily(Font(Res.font.inter_regular)),
 ) {
     Card(
         shape = RoundedCornerShape(12.dp),
@@ -513,7 +453,6 @@ fun HomeScreenCardItem(
                 Text(
                     text = title,
                     fontSize = 16.sp,
-                    fontWeight = FontWeight.SemiBold,
                     fontFamily = fontFamily,
                     color = titleColor
                 )
@@ -548,20 +487,19 @@ fun CommonActionButtons(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-
-
         Button(
             onClick = onSaveClick,
             modifier = Modifier
                 .weight(1f)
                 .height(40.dp),
+
             colors = ButtonDefaults.buttonColors(
                 containerColor = btn_color,
                 contentColor = Color.Black
             ),
             shape = RoundedCornerShape(1.dp)
         ) {
-            Text(saveText)
+            Text(saveText, fontFamily = FontFamily(Font(Res.font.inter_medium)),)
         }
 
 Spacer(modifier = Modifier.width(5.dp))
@@ -577,7 +515,7 @@ Spacer(modifier = Modifier.width(5.dp))
             ),
             shape = RoundedCornerShape(1.dp)
         ) {
-            Text(closeText)
+            Text(closeText,fontFamily = FontFamily(Font(Res.font.inter_medium)))
         }
     }
 }
@@ -609,7 +547,7 @@ fun CommonSaveButton(
             ),
             shape = RoundedCornerShape(1.dp)
         ) {
-            Text(saveText)
+            Text(saveText,fontFamily = FontFamily(Font(Res.font.inter_medium)))
         }
     }
 }
@@ -634,7 +572,7 @@ fun CommonSingleButtons(
             ),
             shape = RoundedCornerShape(8.dp)
         ) {
-            Text(stringResource(Res.string.save))
+            Text(stringResource(Res.string.save),fontFamily = FontFamily(Font(Res.font.inter_medium)))
         }
 
     }
@@ -670,7 +608,7 @@ fun CommonSingleButtonsBottomString(
             Text(
                 text = text,
                 fontSize = textSize.sp,
-                fontFamily = FontFamily(Font(Res.font.roboto_medium))
+                fontFamily = FontFamily(Font(Res.font.inter_medium))
             )
         }
     }
@@ -678,91 +616,6 @@ fun CommonSingleButtonsBottomString(
 
 
 fun Modifier.withBottomBarPadding(extra: Int = 80) = this.padding(bottom = extra.dp)
-
-
-@Composable
-fun FormField(
-    label: String,
-    value: String,
-    onValueChange: (String) -> Unit,
-    maxLength: Int = Int.MAX_VALUE,
-    trailingIcon: @Composable (() -> Unit)? = null,
-    inputType: KeyboardType = KeyboardType.Text,
-    placeholder: String = stringResource(Res.string.type_here),
-    isEnable: Boolean = true,
-    isReadable: Boolean = false,
-    labelColor: Color = toolbar_color,
-    placeholderColor: Color = Color(0xFF212121),
-    backgroundColor: Color = text_fiiled_color,
-    borderColor: Color = boderColor,
-    maxLines: Int = 1,
-//    disabledBackgroundColor: Color = Color(0xFFE0E0E0),
-    disabledBackgroundColor: Color = formborder,
-    modifier: Modifier = Modifier,
-    placeholderTextSize: Int = 13
-) {
-
-    Column(modifier = modifier) {
-
-        ReusableTextView(
-            text = label,
-            fontSize = 14,
-            textColor = labelColor
-        )
-
-        Spacer(modifier = Modifier.height(5.dp))
-
-        OutlinedTextField(
-            enabled = isEnable,
-            readOnly = isReadable,
-            value = value,
-            onValueChange = { newValue ->
-                val filteredValue = when (inputType) {
-                    KeyboardType.Number, KeyboardType.Phone -> newValue.filter { it.isDigit() }
-                    else -> newValue
-                }
-                if (filteredValue.length <= maxLength) {
-                    onValueChange(filteredValue)
-                }
-            },
-            trailingIcon = trailingIcon,
-            placeholder = {
-                ReusableTextView(
-                    text = placeholder,
-                    fontSize = placeholderTextSize,
-                    textColor = placeholderColor,
-                    textAlignment = TextAlign.Start
-                )
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(40.dp),
-            shape = RoundedCornerShape(15.dp),
-            textStyle = TextStyle(
-                fontSize = 12.sp,
-                lineHeight = 14.sp,
-                fontFamily = FontFamily(Font(Res.font.roboto_medium)),
-                textAlign = TextAlign.Start
-            ),
-
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedContainerColor = if (isEnable) backgroundColor else disabledBackgroundColor,
-                unfocusedContainerColor = if (isEnable) backgroundColor else disabledBackgroundColor,
-                disabledContainerColor = disabledBackgroundColor,
-                focusedBorderColor = borderColor,
-                unfocusedBorderColor = borderColor,
-                cursorColor = Color.Black
-            ),
-            maxLines = maxLines,
-
-            keyboardOptions = KeyboardOptions(
-                keyboardType = inputType
-
-            )
-
-        )
-    }
-}
 
 @Composable
 fun FormFieldCompact(
@@ -791,7 +644,9 @@ fun FormFieldCompact(
             ReusableTextView(
                 text = label,
                 fontSize = 14,
-                textColor = labelColor
+                textColor = labelColor,
+                fontFamily = FontFamily(Font(Res.font.inter_regular))
+
             )
         }
 
@@ -826,7 +681,7 @@ fun FormFieldCompact(
                     fontSize = 16.sp,
                     lineHeight = 14.sp,
                     color = Color.Black,
-                    fontFamily = FontFamily(Font(Res.font.roboto_regular)),
+                    fontFamily = FontFamily(Font(Res.font.inter_regular)),
                     textAlign = TextAlign.Start
                 ),
 
@@ -869,87 +724,13 @@ fun FormFieldCompact(
     }
 }
 
-@Composable
-fun FormFields(
-
-    value: String,
-    onValueChange: (String) -> Unit,
-    maxLength: Int = Int.MAX_VALUE,
-    trailingIcon: @Composable (() -> Unit)? = null,
-    inputType: KeyboardType = KeyboardType.Text,
-    placeholder: String = stringResource(Res.string.type_here),
-    isEnable: Boolean = true,
-    isReadable: Boolean = false,
-    labelColor: Color = textview_color,
-    placeholderColor: Color = Color(0xFF212121),
-    backgroundColor: Color = text_fiiled_color,
-    borderColor: Color = boderColor,
-    maxLines: Int = 1,
-//    disabledBackgroundColor: Color = Color(0xFFE0E0E0),
-    disabledBackgroundColor: Color = formborder,
-    modifier: Modifier = Modifier,
-    placeholderTextSize: Int = 12
-) {
-
-
-    OutlinedTextField(
-        enabled = isEnable,
-        readOnly = isReadable,
-        value = value,
-        onValueChange = { newValue ->
-            val filteredValue = when (inputType) {
-                KeyboardType.Number, KeyboardType.Phone -> newValue.filter { it.isDigit() }
-                else -> newValue
-            }
-            if (filteredValue.length <= maxLength) {
-                onValueChange(filteredValue)
-            }
-        },
-        trailingIcon = trailingIcon,
-        placeholder = {
-            Text(
-                text = placeholder,
-                fontSize = placeholderTextSize.sp,
-                color = placeholderColor,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                style = TextStyle(
-                    lineHeight = 10.sp  // ✅ Line height कम करें
-                )
-            )
-        },
-        modifier = Modifier
-            .fillMaxWidth()
-            .wrapContentHeight()
-            .height(42.dp),
-        shape = RoundedCornerShape(15.dp),
-        textStyle = TextStyle(
-            fontSize = 15.sp,
-            fontFamily = FontFamily(Font(Res.font.roboto_medium)),
-            textAlign = TextAlign.Start
-        ),
-        colors = OutlinedTextFieldDefaults.colors(
-            focusedContainerColor = if (isEnable) backgroundColor else disabledBackgroundColor,
-            unfocusedContainerColor = if (isEnable) backgroundColor else disabledBackgroundColor,
-            disabledContainerColor = disabledBackgroundColor,
-            focusedBorderColor = borderColor,
-            unfocusedBorderColor = borderColor,
-            cursorColor = Color.Black
-        ),
-        maxLines = maxLines,
-        keyboardOptions = KeyboardOptions(
-            keyboardType = inputType
-        )
-    )
-
-}
 
 
 @Composable
 fun DynamicCheckBox(
     label: String,
     isChecked: Boolean,
-    fontFamily: FontFamily = FontFamily(Font(Res.font.roboto_medium)),
+    fontFamily: FontFamily = FontFamily(Font(Res.font.inter_medium)),
     onCheckedChange: (Boolean) -> Unit
 ) {
     Row(
@@ -972,124 +753,7 @@ fun DynamicCheckBox(
 }
 
 
-@OptIn(ExperimentalLayoutApi::class, ExperimentalResourceApi::class)
-@Composable
-fun MultiSelectDropdownWithChips(
-    label: String,
-    options: List<String>,
-    selectedOptions: List<String>,
-    fontFamily: FontFamily = FontFamily(Font(Res.font.roboto_medium)),
-    onSelectionChange: (List<String>) -> Unit
-) {
-    var expanded by remember { mutableStateOf(false) }
 
-    Column(modifier = Modifier.fillMaxWidth()) {
-        ReusableTextView(
-            text = label,
-            fontFamily = fontFamily,
-            fontSize = 14,
-            textColor = desire_orange
-        )
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight()
-                .heightIn(min = 52.dp)
-                .border(1.dp, Color.Gray, RoundedCornerShape(8.dp))
-                .clickable { expanded = true }
-                .background(Color.White)
-        ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight()
-                    .heightIn(50.dp)
-                    .background(bgColor, RoundedCornerShape(4.dp))
-                    .padding(horizontal = 8.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                if (selectedOptions.isEmpty()) {
-                    ReusableTextView(
-                        text = stringResource(Res.string.spinner_select),
-                        textColor = Color.Gray,
-                        fontFamily = fontFamily,
-                        fontSize = 14
-                    )
-                } else {
-                    FlowRow(
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        verticalArrangement = Arrangement.spacedBy(8.dp),
-                        modifier = Modifier.weight(1f)
-                    ) {
-                        selectedOptions.forEach { option ->
-                            Surface(
-                                shape = RoundedCornerShape(4.dp),
-                                color = Color(0xFFEDEDED),
-                                shadowElevation = 1.dp
-                            ) {
-                                Row(
-                                    verticalAlignment = Alignment.CenterVertically,
-                                    modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp)
-                                ) {
-                                    Text(text = option, color = Color(0xFF323232), fontSize = 12.sp)
-                                    Spacer(modifier = Modifier.width(6.dp))
-                                    Icon(
-                                        painter = painterResource(Res.drawable.ic_close),
-                                        contentDescription = "Remove",
-                                        modifier = Modifier
-                                            .size(20.dp)
-                                            .clickable {
-                                                onSelectionChange(selectedOptions - option)
-                                            }
-                                    )
-                                }
-                            }
-                        }
-                    }
-                }
-
-                Icon(
-                    painter = painterResource(Res.drawable.ic_arrow_drop_down),
-                    contentDescription = "Dropdown",
-                    tint = Color.Black
-                )
-            }
-        }
-
-        DropdownMenu(
-            expanded = expanded,
-            onDismissRequest = { expanded = false },
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            options.forEach { option ->
-                DropdownMenuItem(
-                    text = {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            Checkbox(
-                                checked = selectedOptions.contains(option),
-                                onCheckedChange = null
-                            )
-                            Spacer(modifier = Modifier.width(8.dp))
-                            Text(option)
-                        }
-                    },
-                    onClick = {
-                        val newList = if (selectedOptions.contains(option)) {
-                            selectedOptions - option
-                        } else {
-                            selectedOptions + option
-                        }
-                        onSelectionChange(newList)
-                    }
-                )
-            }
-        }
-    }
-}
 
 @Composable
 fun FormDatePickerCompact(
@@ -1113,7 +777,8 @@ fun FormDatePickerCompact(
         ReusableTextView(
             text = label,
             fontSize = 14,
-            textColor = labelColor
+            textColor = labelColor,
+            fontFamily = FontFamily(Font(Res.font.inter_regular))
         )
 
         Spacer(Modifier.height(5.dp))
@@ -1139,7 +804,7 @@ fun FormDatePickerCompact(
                 textStyle = TextStyle(
                     fontSize = 16.sp,
                     color = Color.Black,
-                    fontFamily = FontFamily(Font(Res.font.roboto_regular))
+                    fontFamily = FontFamily(Font(Res.font.inter_regular))
                 ),
                 decorationBox = { innerTextField ->
 
@@ -1149,7 +814,7 @@ fun FormDatePickerCompact(
                             text = placeholder,
                             fontSize = 16.sp,
                             color = placeholderColor,
-                            fontFamily = FontFamily(Font(Res.font.roboto_regular)),
+                            fontFamily = FontFamily(Font(Res.font.inter_regular)),
                         )
                     }
 
@@ -1187,66 +852,7 @@ fun isAge18Plus(dob: String): Boolean {
 }
 
 
-@Composable
-fun FormDatePicker(
-    label: String,
-    value: String,
-    onValueChange: (String) -> Unit,
-    onClick: () -> Unit,
-    trailingIcon: @Composable (() -> Unit)? = null,
-    inputType: KeyboardType = KeyboardType.Text,
-    placeholder: String = stringResource(Res.string.dd_mm_yy),
-    isEnable: Boolean = true,
-    isReadable: Boolean = false,
-    labelColor: Color = textview_color,
-    placeholderColor: Color = Color(0xFF212121),
-    backgroundColor: Color = text_fiiled_color,
-    borderColor: Color = boderColor,
-    modifier: Modifier = Modifier
-) {
 
-    Column(modifier = modifier) {
-        ReusableTextView(
-            text = label,
-            fontSize = 14,
-            textColor = labelColor
-        )
-        Spacer(modifier = Modifier.height(5.dp))
-
-        OutlinedTextField(
-            enabled = isEnable,
-            readOnly = true,
-            value = value,
-            onValueChange = onValueChange,
-            trailingIcon = trailingIcon,
-            placeholder = {
-                ReusableTextView(
-                    text = placeholder,
-                    fontSize = 15,
-                    textColor = placeholderColor
-                )
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(40.dp)
-                .clickable { onClick() },
-            shape = RoundedCornerShape(15.dp),
-            textStyle = TextStyle(
-                fontSize = 15.sp,
-                fontFamily = FontFamily(Font(Res.font.roboto_medium)),
-                color = Color.Black
-            ),
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedContainerColor = backgroundColor,
-                unfocusedContainerColor = backgroundColor,
-                disabledContainerColor = backgroundColor,
-                focusedBorderColor = borderColor,
-                unfocusedBorderColor = borderColor,
-                cursorColor = Color.Black
-            )
-        )
-    }
-}
 
 
 @Composable
@@ -1286,7 +892,7 @@ fun timePicker(
         shape = RoundedCornerShape(8.dp),
         textStyle = TextStyle(
             fontSize = 15.sp,
-            fontFamily = FontFamily(Font(Res.font.roboto_medium)),
+            fontFamily = FontFamily(Font(Res.font.inter_medium)),
             textAlign = TextAlign.Start,
             color = Color.Black
         ),
@@ -1304,38 +910,6 @@ fun timePicker(
     )
 }
 
-/*
-@Composable
-fun DynamicAlertDialog(
-    showDialog: Boolean,
-    title: String = stringResource(Res.string.app_name),
-    message: String = "",
-    confirmText: String = stringResource(Res.string.select_customer_ok),
-    dismissText: String? = null,
-    onConfirm: () -> Unit = {},
-    onDismiss: (() -> Unit)? = null
-) {
-    if (showDialog) {
-        AlertDialog(
-            onDismissRequest = { onDismiss?.invoke() ?: onConfirm() },
-            title = { ReusableTextView(title) },
-            text = { ReusableTextView(message) },
-            confirmButton = {
-                TextButton(onClick = onConfirm) {
-                    ReusableTextView(confirmText, textColor = black,)
-                }
-            },
-            dismissButton = dismissText?.let {
-                {
-                    TextButton(onClick = { onDismiss?.invoke() }) {
-                        ReusableTextView(dismissText)
-                    }
-                }
-            }
-        )
-    }
-}
-*/
 
 @Composable
 fun CustomAlertDialog(
@@ -1378,10 +952,10 @@ fun CustomAlertDialog(
                         ReusableTextView(
                             text = title,
                             fontSize = 20,
-                            fontWeight = FontWeight.Bold,
                             textColor = white,
                             textAlignment = TextAlign.Center,
-                            modifier = Modifier.padding(start = 10.dp)
+                            modifier = Modifier.padding(start = 10.dp),
+                             fontFamily =FontFamily(Font(Res.font.inter_medium)),
                         )
                     }
 
@@ -1392,7 +966,7 @@ fun CustomAlertDialog(
                         fontSize = 18,
                         textColor = black,
                         textAlignment = TextAlign.Center,
-                        fontFamily = FontFamily(Font(Res.font.roboto_medium)),
+                        fontFamily = FontFamily(Font(Res.font.inter_medium)),
                         modifier = Modifier.padding(bottom = 10.dp)
                     )
 
@@ -1450,389 +1024,16 @@ fun ProgressDialog(
                     text = message,
                     textColor = Color.Black,
                     fontSize = 16,
-                    textAlignment = TextAlign.Center
+                    textAlignment = TextAlign.Center,
+                    fontFamily = FontFamily(Font(Res.font.inter_regular)),
                 )
             }
         }
     }
 }
 
-@OptIn(ExperimentalResourceApi::class)
-@Composable
-fun DynamicRadioButton(
-    options: List<String>,
-    label: String,
-    initialSelection: Int? = null,
-    orientation: Orientation = Orientation.Horizontal,
-    onOptionSelected: (Int) -> Unit,
-    fontFamily: FontFamily = FontFamily(Font(Res.font.roboto_medium)),
-) {
-
-    var selectedOptionIndex by remember {
-        mutableStateOf(initialSelection ?: 0)
-    }
-
-    Column(modifier = Modifier.fillMaxWidth()) {
-        ReusableTextView(
-            text = label,
-            fontSize = 14,
-            fontFamily = fontFamily,
-            textColor = desire_orange,
-            isMandatory = 1
-        )
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        val layoutModifier = Modifier.fillMaxWidth()
-        val radioLayout: @Composable () -> Unit = {
-            options.forEachIndexed { index, option ->
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier
-                        .weight(1f)
-                        .clickable {
-                            selectedOptionIndex = index
-                            onOptionSelected(index)
-                        }
-                        .padding(4.dp)
-                ) {
-                    RadioButton(
-                        selected = (selectedOptionIndex == index),
-                        onClick = {
-                            selectedOptionIndex = index
-                            onOptionSelected(index)
-                        },
-                        colors = RadioButtonDefaults.colors(
-                            selectedColor = Color.Black,
-                            unselectedColor = Color.Gray
-                        )
-                    )
-                    ReusableTextView(
-                        text = option,
-                        fontSize = 14,
-                        textColor = black,
-                        modifier = Modifier.padding(start = 4.dp)
-                    )
-                }
-            }
-        }
-
-        if (orientation == Orientation.Horizontal) {
-            Row(modifier = layoutModifier) { radioLayout() }
-        } else {
-            Column(modifier = layoutModifier) { radioLayout() }
-        }
-    }
-}
-
-enum class Orientation {
-    Horizontal, Vertical
-}
-
-@Composable
-fun FormSpinner1(
-    label: String,
-    options: List<String>?,
-    selectedOption: Int?,
-    onOptionSelected: (Int) -> Unit,
-    modifier: Modifier = Modifier,
-    labelColor: Color = desire_orange,
-    backgroundColor: Color = bgColor,
-    textColor: Color = Color.Black,
-    fontFamily: FontFamily = FontFamily(Font(Res.font.roboto_medium)),
-    borderColor: Color = boderColor
-) {
-    var expanded by remember { mutableStateOf(false) }
-    val select = stringResource(Res.string.spinner_select)
-    val finalOptions = remember(options) {
-        val list = mutableListOf(select)
-        options?.let { list.addAll(it) }
-        list
-    }
 
 
-    val selectedText = if (selectedOption in finalOptions.indices)
-        finalOptions[selectedOption!!]
-    else
-        select
-
-    Column(modifier = modifier) {
-        ReusableTextView(
-            text = label,
-            fontSize = 14,
-            textColor = labelColor,
-            fontFamily = fontFamily
-        )
-        Spacer(modifier = Modifier.height(5.dp))
-
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .heightIn(min = 52.dp)
-                .border(1.dp, borderColor, RoundedCornerShape(8.dp))
-                .clickable { expanded = true }
-                .background(backgroundColor, RoundedCornerShape(8.dp)),
-            contentAlignment = Alignment.CenterStart
-        ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(horizontal = 10.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                ReusableTextView(
-                    text = selectedText,
-                    textColor = textColor,
-                    fontFamily = fontFamily
-                )
-                Spacer(modifier = Modifier.weight(1f))
-                Icon(
-                    vectorResource(Res.drawable.ic_arrow_drop_down),
-                    contentDescription = "Dropdown"
-                )
-            }
-
-            DropdownMenu(
-                expanded = expanded,
-                onDismissRequest = { expanded = false },
-                modifier = Modifier
-                    .background(Color.White)
-                    .fillMaxWidth()
-            ) {
-                finalOptions.forEachIndexed { index, option ->
-                    DropdownMenuItem(
-                        text = {
-                            ReusableTextView(
-                                text = option,
-                                textColor = black,
-                                modifier = Modifier.fillMaxWidth()
-                            )
-                        },
-                        onClick = {
-                            onOptionSelected(index)
-                            expanded = false
-                        },
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                }
-            }
-        }
-    }
-}
-
-/*@Composable
-fun FillStateSpinner(
-    label: String,
-    options: List<StateEntity>?,
-    selectedOption: Int,
-    onOptionSelected: (Int) -> Unit,
-    modifier: Modifier = Modifier,
-    labelColor: Color = desire_orange,
-    backgroundColor: Color = bgColor,
-    textColor: Color = Color.Black,
-    fontFamily: FontFamily = FontFamily(Font(Res.font.roboto_medium)),
-    borderColor: Color = boderColor
-) {
-    var expanded by remember { mutableStateOf(false) }
-var select=stringResource(Res.string.spinner_select)
-    val optionList = remember(options) {
-        val list = mutableListOf<Pair<Int, String>>()
-        list.add(0 to select)
-        options?.forEach { list.add((it.stateId to it.stateName.toString()) as Pair<Int, String>) }
-        list
-    }
-
-    val selectedText = optionList.find { it.first == selectedOption }?.second ?: select
-
-    Column(modifier = modifier) {
-        ReusableTextView(
-            text = label,
-            fontSize = 14,
-            textColor = labelColor,
-            fontFamily = fontFamily
-        )
-        Spacer(modifier = Modifier.height(5.dp))
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight()
-                .heightIn(min = 52.dp)
-                .border(1.dp, borderColor, RoundedCornerShape(8.dp))
-                .clickable { expanded = true }
-                .background(backgroundColor, RoundedCornerShape(8.dp)),
-            contentAlignment = Alignment.CenterStart
-        ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(horizontal = 10.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                ReusableTextView(
-                    text = selectedText,
-                    textColor = textColor,
-                    fontFamily = fontFamily
-                )
-                Spacer(modifier = Modifier.weight(1f))
-                Icon(
-                    vectorResource(Res.drawable.ic_arrow_drop_down),
-                    contentDescription = "Dropdown"
-                )
-            }
-
-            DropdownMenu(
-                expanded = expanded,
-                onDismissRequest = { expanded = false },
-                modifier = Modifier.background(Color.White).fillMaxWidth()
-            ) {
-                optionList.forEach { (id,option) ->
-                    DropdownMenuItem(
-                        text = {
-                            ReusableTextView(
-                                text = option,
-                                modifier = Modifier.fillMaxWidth()
-                            )
-                        },
-                        onClick = {
-                            onOptionSelected(id)
-                            expanded = false
-                        },
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                }
-            }
-        }
-    }
-}*/
-
-@Composable
-fun DrawerItem(
-    label: String,
-    selected: Boolean,
-    onClick: () -> Unit,
-    icon: Painter
-) {
-    val background =
-        if (selected) desire_orange.copy(alpha = 0.1f)
-        else MaterialTheme.colorScheme.surface
-
-    val textColor =
-        if (selected) black
-        else MaterialTheme.colorScheme.onSurface
-
-    val iconTint: Color =
-        if (selected) desire_orange
-        else Color.Black
-
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(background)
-            .clickable(onClick = onClick)
-            .padding(vertical = 12.dp, horizontal = 16.dp)
-    ) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Image(
-                painter = icon,
-                contentDescription = label,
-                modifier = Modifier
-                    .size(32.dp)
-                    .padding(end = 12.dp),
-                colorFilter = ColorFilter.tint(iconTint)
-            )
-            ReusableTextView(label, textColor = textColor)
-        }
-    }
-}
-
-
-/*@Composable
-fun FillLookUpSpinner(
-    label: String,
-    options: List<LookUpValueEntity>?,
-    selectedOption: Int?,
-    onOptionSelected: (Int) -> Unit,
-    modifier: Modifier = Modifier,
-    labelColor: Color = desire_orange,
-    backgroundColor: Color = bgColor,
-    textColor: Color = Color.Black,
-    fontFamily: FontFamily = FontFamily(Font(Res.font.roboto_medium)),
-    borderColor: Color = boderColor
-) {
-    var expanded by remember { mutableStateOf(false) }
-var select=stringResource(Res.string.spinner_select)
-    val optionList = remember(options) {
-        val list = mutableListOf<Pair<Int, String>>() // Pair<id, name>
-        list.add(0 to select)
-        options?.forEach { list.add((it.lookup_PK to it.lookName.toString()) as Pair<Int, String>) }
-        list
-    }
-
-
-    val selectedText = optionList.find { it.first == selectedOption }?.second ?:select
-
-    Column(modifier = modifier) {
-        ReusableTextView(
-            text = label,
-            fontSize = 14,
-            textColor = labelColor,
-            fontFamily = fontFamily
-        )
-        Spacer(modifier = Modifier.height(5.dp))
-
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .heightIn(min = 52.dp)
-                .border(1.dp, borderColor, RoundedCornerShape(8.dp))
-                .clickable { expanded = true }
-                .background(backgroundColor, RoundedCornerShape(8.dp)),
-            contentAlignment = Alignment.CenterStart
-        ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(horizontal = 10.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                ReusableTextView(
-                    text = selectedText,
-                    textColor = textColor,
-                    fontFamily = fontFamily
-                )
-                Spacer(modifier = Modifier.weight(1f))
-                Icon(
-                    vectorResource(Res.drawable.ic_arrow_drop_down),
-                    contentDescription = "Dropdown"
-                )
-            }
-
-            DropdownMenu(
-                expanded = expanded,
-                onDismissRequest = { expanded = false },
-                modifier = Modifier
-                    .background(Color.White)
-                    .fillMaxWidth()
-            ) {
-                optionList.forEach { (id, name) ->
-                    DropdownMenuItem(
-                        text = {
-                            ReusableTextView(
-                                text = name,
-                                modifier = Modifier.fillMaxWidth()
-                            )
-                        },
-                        onClick = {
-                            onOptionSelected(id)
-                            expanded = false
-                        },
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                }
-            }
-        }
-    }
-}*/
 
 @Composable
 fun FormSpinner(
@@ -1844,7 +1045,7 @@ fun FormSpinner(
     labelColor: Color = black,
     backgroundColor: Color = text_fiiled_color,
     textColor: Color = Color.Black,
-    fontFamily: FontFamily = FontFamily(Font(Res.font.roboto_regular)),
+    fontFamily: FontFamily = FontFamily(Font(Res.font.inter_regular)),
     borderColor: Color = boderColor
 ) {
     var expanded by remember { mutableStateOf(false) }
@@ -1916,7 +1117,8 @@ fun FormSpinner(
                             ReusableTextView(
                                 text = option,
                                 textColor = Color.Black,
-                                modifier = Modifier.fillMaxWidth()
+                                modifier = Modifier.fillMaxWidth(),
+                                fontFamily = FontFamily(Font(Res.font.inter_regular)),
                             )
                         },
                         onClick = {
@@ -1944,7 +1146,7 @@ fun <T : Any> FillDynamicSpinner(
     labelColor: Color = black,
     backgroundColor: Color = text_fiiled_color,
     textColor: Color = Color.Black,
-    fontFamily: FontFamily = FontFamily(Font(Res.font.roboto_regular)),
+    fontFamily: FontFamily = FontFamily(Font(Res.font.inter_regular)),
     borderColor: Color = desire_orange,
     focusRequester: FocusRequester? = null,
     bringIntoViewRequester: BringIntoViewRequester? = null
@@ -2028,7 +1230,8 @@ fun <T : Any> FillDynamicSpinner(
                         text = {
                             ReusableTextView(
                                 text = name,
-                                modifier = Modifier.fillMaxWidth()
+                                modifier = Modifier.fillMaxWidth(),
+                                fontFamily=fontFamily
                             )
                         },
                         onClick = {
@@ -2043,136 +1246,6 @@ fun <T : Any> FillDynamicSpinner(
     }
 }
 
-
-// Helper: px → dp
-@Composable
-fun Int.toDp() = (this / LocalDensity.current.density).dp
-
-
-/*@OptIn(ExperimentalLayoutApi::class, ExperimentalResourceApi::class)
-@Composable
-fun MultiSelectDropdownWithChips1(
-    label: String,
-    options: List<LookUpValueEntity>,
-    selectedOptions: List<LookUpValueEntity>,
-    onSelectionChange: (List<LookUpValueEntity>) -> Unit,
-    fontFamily: FontFamily = FontFamily(Font(Res.font.roboto_medium)),
-) {
-    var expanded by remember { mutableStateOf(false) }
-
-    Column(modifier = Modifier.fillMaxWidth()) {
-        ReusableTextView(
-            text = label,
-            fontFamily = fontFamily,
-            fontSize = 14,
-            textColor = desire_orange
-        )
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight()
-                .heightIn(min = 52.dp)
-                .border(1.dp, Color.Gray, RoundedCornerShape(8.dp))
-                .clickable { expanded = true }
-                .background(Color.White))
-        {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight()
-                    .heightIn(50.dp)
-                    .background(bgColor, RoundedCornerShape(4.dp))
-                    .padding(horizontal = 8.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-
-            ) {
-                if (selectedOptions.isEmpty()) {
-                    Box(
-                        modifier = Modifier
-                            .weight(1f)
-                            .fillMaxHeight(),
-                        contentAlignment = Alignment.CenterStart
-                    ) {
-                        ReusableTextView(
-                            text =stringResource(Res.string.spinner_select),
-                            textColor = Color.Gray,
-                            fontFamily = fontFamily,
-                            fontSize = 14
-                        )
-                    }
-                } else {
-                    FlowRow(
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        verticalArrangement = Arrangement.spacedBy(8.dp),
-                        modifier = Modifier.weight(1f)
-                    ) {
-                        selectedOptions.forEach { option ->
-                            Surface(
-                                shape = RoundedCornerShape(4.dp),
-                                color = Color(0xFFEDEDED),
-                                shadowElevation = 1.dp
-                            ) {
-                                Row(
-                                    verticalAlignment = Alignment.CenterVertically,
-                                    modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp)
-                                ) {
-                                    Text(text = option.lookName.toString(), color = Color(0xFF323232), fontSize = 12.sp)
-                                    Spacer(modifier = Modifier.width(6.dp))
-                                    Icon(
-                                        painter = painterResource(Res.drawable.ic_close),
-                                        contentDescription = "Remove",
-                                        modifier = Modifier.size(20.dp).clickable {
-                                            onSelectionChange(selectedOptions - option)
-                                        }
-                                    )
-                                }
-                            }
-                        }
-                    }
-                }
-
-                Icon(
-                    painter = painterResource(Res.drawable.ic_arrow_drop_down),
-                    contentDescription = "Dropdown",
-                    tint = Color.Black
-                )
-            }
-        }
-
-        DropdownMenu(
-            expanded = expanded,
-            onDismissRequest = { expanded = false },
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            options.forEach { option ->
-                DropdownMenuItem(
-                    text = {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            Checkbox(
-                                checked = selectedOptions.contains(option),
-                                onCheckedChange = null
-                            )
-                            Spacer(modifier = Modifier.width(8.dp))
-                            Text(option.lookName.toString())
-                        }
-                    },
-                    onClick = {
-                        val newList = if (selectedOptions.contains(option)) {
-                            selectedOptions - option
-                        } else {
-                            selectedOptions + option
-                        }
-                        onSelectionChange(newList)
-                    }
-                )
-            }
-        }
-    }
-}*/
 
 
 val ALLOWED_USERNAME_CHARS: Set<Char> =
@@ -2198,7 +1271,11 @@ fun UsernameField(
     maxLength: Int = 50
 ) {
     Column(modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp)) {
-        Text(text = label, fontSize = 16.sp, fontWeight = FontWeight.Thin, color = Color.White)
+        ReusableTextViews(text = label, fontSize = 16,
+            fontWeight = FontWeight.Thin,
+            textColor = Color.White,
+            fontFamily = FontFamily(Font(Res.font.inter_regular)),
+            )
         Spacer(modifier = Modifier.height(8.dp))
         OutlinedTextField(
             value = value,
@@ -2238,7 +1315,8 @@ fun PasswordField(
 ) {
     var passwordVisible by remember { mutableStateOf(false) }
     Column(modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp)) {
-        Text(text = label, fontSize = 16.sp, fontWeight = FontWeight.Thin, color = Color.White)
+        ReusableTextViews(text = label, fontSize = 16, fontWeight = FontWeight.Thin, textColor = Color.White,
+            fontFamily = FontFamily(Font(Res.font.inter_regular)),)
         Spacer(modifier = Modifier.height(8.dp))
         OutlinedTextField(
             value = password,
@@ -2294,6 +1372,7 @@ fun SimpleOtp(
 
     Text(
         text = stringResource(Res.string.enter_otp),
+        fontFamily = FontFamily(Font(Res.font.inter_regular)),
         style = MaterialTheme.typography.headlineLarge.copy(
             fontWeight = FontWeight.Thin,
             color = Color.White,
@@ -2584,7 +1663,7 @@ fun TripleIconSlider(
                 Text(
                     text = item.title,
                     color = Color.White,
-                    fontWeight = FontWeight.Bold,
+                    fontFamily = FontFamily(Font(Res.font.inter_medium)),
                     modifier = Modifier
                         .align(Alignment.BottomCenter)
                         .padding(bottom = 8.dp)
@@ -2774,7 +1853,8 @@ fun <T : Any> FillDynamicSpinner(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
 
-                ReusableTextView(text = displayText, textColor = textColor)
+                ReusableTextView(text = displayText, textColor = textColor,
+                    fontFamily = FontFamily(Font(Res.font.inter_regular)),)
 
                 Icon(
                     painter = painterResource(Res.drawable.ic_arrow_drop_down),
@@ -2793,7 +1873,8 @@ fun <T : Any> FillDynamicSpinner(
             ) {
 
                 DropdownMenuItem(
-                    text = { Text(placeholder) },
+                    text = { Text(placeholder,fontFamily = FontFamily(Font(Res.font.inter_regular)),) },
+
                     onClick = {
                         onOptionSelected(0)
                         expanded = false
@@ -2802,7 +1883,7 @@ fun <T : Any> FillDynamicSpinner(
 
                 options?.forEach { item ->
                     DropdownMenuItem(
-                        text = { Text(getOptionLabel(item)) },
+                        text = { Text(getOptionLabel(item),fontFamily = FontFamily(Font(Res.font.inter_regular)),) },
                         onClick = {
                             onOptionSelected(getOptionId(item))
                             expanded = false
@@ -2824,12 +1905,13 @@ fun LabelValueText(label: String, value: String,) {
     ) {
         ReusableTextViewGrayCard(
             text = label,
-            fontSize = 13
+            fontSize = 13,
+
       )
         Spacer(modifier = Modifier.width(4.dp))
         ReusableTextViewBlackCard(
             text = value,
-            fontSize = 12
+            fontSize = 12,
             )
     }
 }
@@ -2958,7 +2040,7 @@ fun FormFieldCompacts(
                     fontSize = 12.sp,
                     lineHeight = 14.sp,
                     color = Color.Black,
-                    fontFamily = FontFamily(Font(Res.font.roboto_medium)),
+                    fontFamily = FontFamily(Font(Res.font.inter_medium)),
                     textAlign = TextAlign.Start
                 ),
                 maxLines = maxLines,
@@ -2993,43 +2075,7 @@ fun FormFieldCompacts(
     }
 }
 
-@Composable
-fun CameraPreviewField(
-    image: Uri?,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier,
-    placeholderRes: DrawableResource = Res.drawable.document_icon
-) {
-    Row(
-        modifier = modifier,
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(10.dp)
-    ) {
 
-        // Pure Image Button with NO rounded background
-        Icon(
-            painter = painterResource(Res.drawable.camera),
-            contentDescription = "Camera Button",
-            modifier = Modifier
-                .size(25.dp)
-                .clickable { onClick() },
-            tint = Color.Unspecified   // remove tint if needed
-        )
-
-        // Preview Image
-        ReusableImageView(
-            painter = if (image != null)
-                rememberAsyncImagePainter(model = image)
-            else
-                painterResource(placeholderRes),
-            contentDescription = "Image Preview",
-            modifier = Modifier
-                .size(100.dp)
-                .border(2.dp, Color.White),
-            contentScale = ContentScale.Fit
-        )
-    }
-}
 
 @Composable
 fun ReusableTextViewGrayCard(
@@ -3038,7 +2084,7 @@ fun ReusableTextViewGrayCard(
     textColor: Color = toolbar_color,
     fontSize: Int = 15,
     fontWeight: FontWeight = FontWeight.W500,
-    fontFamily: FontFamily = FontFamily(Font(Res.font.roboto_medium)),
+    fontFamily: FontFamily = FontFamily(Font(Res.font.inter_medium)),
     backgroundColor: Color = Color.Transparent,
     cornerRadius: Dp = 0.dp,
     padding: Dp = 0.dp,
@@ -3080,7 +2126,7 @@ fun ReusableTextViewBlackCard(
     textColor: Color = Color.Black,
     fontSize: Int = 14,
     fontWeight: FontWeight = FontWeight.SemiBold,
-    fontFamily: FontFamily = FontFamily(Font(Res.font.roboto_medium)),
+    fontFamily: FontFamily = FontFamily(Font(Res.font.inter_medium)),
     backgroundColor: Color = Color.Transparent,
     cornerRadius: Dp = 0.dp,
     padding: Dp = 0.dp,
@@ -3134,7 +2180,7 @@ fun ReusableDynamicSpinner(
 
     val density = LocalDensity.current
 
-    val robotoMedium = FontFamily(Font(Res.font.roboto_medium))
+    val robotoMedium = FontFamily(Font(Res.font.inter_medium))
     val textColor = Color.Black
 
     val displayText = selectedValue?.takeIf { it.isNotEmpty() } ?: placeholder
@@ -3269,7 +2315,8 @@ fun CustomAlertDialogRegistrationExisting(
                         fontWeight = FontWeight.Bold,
                         textColor = white,
                         textAlignment = TextAlign.Center,
-                        modifier = Modifier.padding(start = 10.dp)
+                        modifier = Modifier.padding(start = 10.dp),
+
                     )
                 }
 
@@ -3345,213 +2392,6 @@ fun CustomAlertDialogRegistrationExisting(
     }
 }
 
-
-
-
-
-
-
-@Composable
-fun SelectableChip(
-    text: String,
-    isSelected: Boolean,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    val selectedBackground: Color = toolbar_color
-    val unSelectedBackground: Color = formborder
-    Box(
-        contentAlignment = Alignment.Center,
-        modifier = modifier
-            .clip(RoundedCornerShape(15.dp))
-            .background(
-                if (isSelected)
-                    selectedBackground
-                else
-                    unSelectedBackground
-            )
-            .clickable { onClick() }
-            .padding(horizontal = 8.dp, vertical = 10.dp)
-    ) {
-        Text(
-            text = text,
-            fontSize = 12.sp,
-            color = if (isSelected) Color.White else Color.Black,
-            fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal // <-- bold
-        )
-    }
-}
-
-/*@Composable
-fun CustomAlertMovableAssets(
-    title: String = stringResource(Res.string.app_name),
-    submitText: String = stringResource(Res.string.ok),
-    cancelText: String = stringResource(Res.string.cancel),
-    onSubmit: () -> Unit = {},
-    onCancel: () -> Unit = {}
-)
-{
-    Dialog(
-        onDismissRequest = { },
-    )
-    {
-        Box(
-            modifier = Modifier
-                .wrapContentHeight()
-                .wrapContentWidth()
-                .widthIn(min = 400.dp, max = 500.dp)
-                .heightIn(max = 500.dp)
-                .background(lightGrey, RoundedCornerShape(16.dp))
-                .border(1.dp, lightGrey, RoundedCornerShape(16.dp))
-        ) {
-            Column(
-                modifier = Modifier
-                    .wrapContentWidth()
-                    .widthIn(400.dp)
-                    .background(lightGrey, shape = RoundedCornerShape(16.dp))
-                    .border(1.dp, Color.LightGray, shape = RoundedCornerShape(16.dp)),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center,
-                    modifier = Modifier.fillMaxWidth().background(
-                        toolbar_color,
-                        shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp)
-                    )
-                        .heightIn(50.dp)
-                ) {
-                    ReusableTextView(
-                        text = title,
-                        fontSize = 20,
-                        fontWeight = FontWeight.Bold,
-                        textColor = white,
-                        textAlignment = TextAlign.Center,
-                        modifier = Modifier.padding(start = 10.dp)
-                    )
-                }
-
-                Spacer(Modifier.height(5.dp))
-
-                *//*Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center,
-                    modifier = Modifier.fillMaxWidth()
-                )
-                {
-                    Spacer(Modifier.weight(0.2f))
-
-                    Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.Center) {
-                        FormSpinner(
-                            label = stringResource(Res.string.movable_assets),
-                            options = listOf("Car", "Bike", "Truck"),
-                            selectedOption = "",
-                            onOptionSelected = { }
-                        )
-                    }
-
-                    Spacer(Modifier.weight(0.2f))
-                }*//*
-
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(10.dp)
-                ) {
-                    FormSpinner(
-                        label = stringResource(Res.string.movable_assets),
-                        options = listOf("Car", "Bike", "Truck"),
-                        selectedOption = "",
-                        onOptionSelected = { },
-                        modifier = Modifier.weight(1f)
-                    )
-                }
-
-                Spacer(Modifier.height(5.dp))
-
-                *//*Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center,
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-
-                    Spacer(Modifier.weight(0.2f))
-
-                    Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.Center) {
-                        FormFieldCompact(
-                            label = stringResource(Res.string.vehicle_no),
-                            value = "",
-                            onValueChange = { "" },
-                            placeholder = stringResource(Res.string.type_here),
-                            maxLength = 10
-                        )
-                    }
-
-                    Spacer(Modifier.weight(0.2f))
-                }*//*
-
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(10.dp)
-                ) {
-                    FormFieldCompact(
-                        label = stringResource(Res.string.vehicle_no),
-                        value = "",
-                        onValueChange = { "" },
-                        placeholder = stringResource(Res.string.type_here),
-                        maxLength = 10,
-                        modifier = Modifier.weight(1f)
-                    )
-                }
-
-                Spacer(Modifier.height(5.dp))
-
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center,
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Spacer(Modifier.weight(0.2f))
-
-                    Button(
-                        onClick = onCancel,
-                        modifier = Modifier
-                            .weight(1f)
-                            .height(48.dp),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = btn_color,
-                            contentColor = Color.Black
-                        ),
-                        shape = RoundedCornerShape(15.dp)
-                    ) {
-                        Text(cancelText)
-                    }
-
-                    Spacer(Modifier.weight(0.2f))
-
-                    Button(
-                        onClick = onSubmit,
-                        modifier = Modifier
-                            .weight(1f)
-                            .height(48.dp),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = btn_color,
-                            contentColor = Color.Black
-                        ),
-                        shape = RoundedCornerShape(15.dp)
-                    ) {
-                        Text(submitText)
-                    }
-
-                    Spacer(Modifier.weight(0.2f))
-                }
-
-                Spacer(Modifier.height(10.dp))
-            }
-        }
-    }
-}*/
-
-
 fun convertDateFormatYYYYMMDD(inputDate: String): String {
     var newDate = ""
     try {
@@ -3607,5 +2447,7 @@ fun AddCircleButton(
         )
     }
 }
+
+
 
 

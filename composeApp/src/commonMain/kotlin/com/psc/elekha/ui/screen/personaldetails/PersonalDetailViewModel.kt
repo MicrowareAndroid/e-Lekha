@@ -141,6 +141,8 @@ class PersonalDetailViewModel(
 
     val focusRequesterHusbandName = FocusRequester()
     val focusRequesterRelationId = FocusRequester()
+
+
     suspend fun savePersonalDetail() {
         val guid = appPreferences.getString(AppSP.customerGuid)
         if (returnStringValue(guid).isEmpty()) {
@@ -417,14 +419,15 @@ class PersonalDetailViewModel(
 
     fun saveData() {
         viewModelScope.launch {
-            val validation = checkValidation()
+            savePersonalDetail()
+            /*val validation = checkValidation()
             if (validation.isValid) {
                 savePersonalDetail()
                 showSaveAlert = true
                 saveFlag = 1
             } else {
                 showValidationError(validation)
-            }
+            }*/
         }
     }
 
@@ -463,7 +466,6 @@ class PersonalDetailViewModel(
             }
 
             returnIntegerValue(educationId.toString()) == 0 -> {
-
                 ValidationModelContorl(
                     isValid = false,
                     errorMessage = pleaseEducation,
@@ -473,7 +475,6 @@ class PersonalDetailViewModel(
             }
 
             returnIntegerValue(religionId.toString()) == 0 -> {
-
                 ValidationModelContorl(
                     isValid = false,
                     errorMessage = pleaseReligion,
@@ -482,7 +483,6 @@ class PersonalDetailViewModel(
                 )
             }
             returnIntegerValue(purposeId.toString()) == 0 -> {
-
                 ValidationModelContorl(
                     isValid = false,
                     errorMessage = pleasePurpose,
@@ -519,7 +519,6 @@ class PersonalDetailViewModel(
                 )
             }
             returnIntegerValue(relationId.toString()) == 0 -> {
-
                 ValidationModelContorl(
                     isValid = false,
                     errorMessage = pleaseRelation,
@@ -548,7 +547,6 @@ class PersonalDetailViewModel(
                 )
             }
             returnIntegerValue(stateId.toString()) == 0 -> {
-
                 ValidationModelContorl(
                     isValid = false,
                     errorMessage = pleaseState,
@@ -557,7 +555,6 @@ class PersonalDetailViewModel(
                 )
             }
             returnIntegerValue(districtId.toString()) == 0 -> {
-
                 ValidationModelContorl(
                     isValid = false,
                     errorMessage = pleaseDistrict,

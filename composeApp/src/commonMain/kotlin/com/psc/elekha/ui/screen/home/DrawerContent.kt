@@ -47,7 +47,7 @@ import com.psc.elekha.ui.theme.btn_color
 import com.psc.elekha.ui.theme.lightgreens
 import com.psc.elekha.ui.theme.white
 import com.psc.elekha.utils.FormFieldCompact
-import com.psc.elekha.utils.ReusableOutlinedTextField
+
 import com.psc.elekha.utils.ReusableTextView
 import e_lekha.composeapp.generated.resources.Res
 import e_lekha.composeapp.generated.resources.background

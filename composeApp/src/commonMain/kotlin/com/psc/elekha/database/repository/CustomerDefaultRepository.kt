@@ -204,16 +204,5 @@ class CustomerDefaultRepository(private val customerDefaultDao: CustomerDefaultD
         return customerDefaultDao.getAllCustomerUploadNew()
     }
 
-    suspend fun updateBankDetail(
-        customerGuid: String,
-        accountNo: String,
-        bankId: Int,
-        ifscCode: String,
-        UpdatedBy: Int?,
-        UpdatedOn: String?
-    ) {
-        customerDefaultDao.updateBankDetail(
-            customerGuid,accountNo,bankId,ifscCode,UpdatedBy,UpdatedOn
-        )
-    }
+
 }

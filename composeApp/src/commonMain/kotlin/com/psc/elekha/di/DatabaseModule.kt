@@ -49,6 +49,9 @@ val databaseModule = module {
     single { get<AppDatabase>().userBranchDao() }
     single { get<AppDatabase>().userResponseDao() }
     single { get<AppDatabase>().usersDao() }
+    single { get<AppDatabase>().trainingGroupDao() }
+    single { get<AppDatabase>().userContactDetailDao() }
+
 //    single { get<AppDatabase>().lookUpDao() }
 //    single { get<AppDatabase>().lookUpvalueDao() }
 //    single { get<AppDatabase>().caseCategoryQuestionDao() }

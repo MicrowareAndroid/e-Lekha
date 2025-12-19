@@ -206,5 +206,15 @@ interface CustomerDao {
     @Query(" SELECT * FROM Customer WHERE GUID =:guId")
     suspend fun getCustomerByGuid(guId: String): List<CustomerEntity>
 
+    @Query("UPDATE Customer set CKYC_BankAccountNumber=:accountNo,CKYC_Bank=:bankId,CustomerBankIFSCCode=:ifscCode,UpdatedBy=:UpdatedBy,UpdatedOn=:UpdatedOn,isEdited = 1 WHERE GUID = :customerGuid")
+    suspend fun updateBankDetail(
+        customerGuid: String,
+        accountNo: String,
+        bankId: Int,
+        ifscCode: String,
+        UpdatedBy: Int?,
+        UpdatedOn: String?)
+
+
 
 }

@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "44545f192fe3fb4ab5bef8dc7c5bd43d",
+    "identityHash": "b25e30ceb4f80bfff998afac935eda7d",
     "entities": [
       {
         "tableName": "CustomerStatus",
@@ -3905,11 +3905,162 @@
             "order_id"
           ]
         }
+      },
+      {
+        "tableName": "TrainingGroup",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`UID` INTEGER NOT NULL, `CGT_GroupImage2` TEXT, `GRT_GroupImage` TEXT, `CGT_GroupImage` TEXT, `longitudeDay2` INTEGER, `longitudeDay1` INTEGER, `latitudeDay2` INTEGER, `latitudeDay1` INTEGER, `IsDeleted` INTEGER, `TGroupID` INTEGER, `TGroupName` TEXT, `Day1_Date` TEXT, `Day1_Place` TEXT, `Day2_Date` TEXT, `Day2_Place` TEXT, `VillageID` INTEGER, `CurrentStatus` INTEGER, `UserID` TEXT, `CreatedBy` TEXT, `CreatedDate` TEXT, `CenterID` INTEGER, PRIMARY KEY(`UID`))",
+        "fields": [
+          {
+            "fieldPath": "UID",
+            "columnName": "UID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "CGT_GroupImage2",
+            "columnName": "CGT_GroupImage2",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GRT_GroupImage",
+            "columnName": "GRT_GroupImage",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CGT_GroupImage",
+            "columnName": "CGT_GroupImage",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "longitudeDay2",
+            "columnName": "longitudeDay2",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "longitudeDay1",
+            "columnName": "longitudeDay1",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "latitudeDay2",
+            "columnName": "latitudeDay2",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "latitudeDay1",
+            "columnName": "latitudeDay1",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "IsDeleted",
+            "columnName": "IsDeleted",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "TGroupID",
+            "columnName": "TGroupID",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "TGroupName",
+            "columnName": "TGroupName",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "Day1_Date",
+            "columnName": "Day1_Date",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "Day1_Place",
+            "columnName": "Day1_Place",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "Day2_Date",
+            "columnName": "Day2_Date",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "Day2_Place",
+            "columnName": "Day2_Place",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "VillageID",
+            "columnName": "VillageID",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "CurrentStatus",
+            "columnName": "CurrentStatus",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "UserID",
+            "columnName": "UserID",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CreatedBy",
+            "columnName": "CreatedBy",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CreatedDate",
+            "columnName": "CreatedDate",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CenterID",
+            "columnName": "CenterID",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "UID"
+          ]
+        }
+      },
+      {
+        "tableName": "UserContactDetails",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`UserId` TEXT NOT NULL, `Username` TEXT, `Contact` TEXT, `RoleId` TEXT, PRIMARY KEY(`UserId`))",
+        "fields": [
+          {
+            "fieldPath": "UserId",
+            "columnName": "UserId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "Username",
+            "columnName": "Username",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "Contact",
+            "columnName": "Contact",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "RoleId",
+            "columnName": "RoleId",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "UserId"
+          ]
+        }
       }
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '44545f192fe3fb4ab5bef8dc7c5bd43d')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b25e30ceb4f80bfff998afac935eda7d')"
     ]
   }
 }

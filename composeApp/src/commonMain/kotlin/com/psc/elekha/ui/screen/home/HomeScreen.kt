@@ -79,6 +79,8 @@ import e_lekha.composeapp.generated.resources.logo
 import e_lekha.composeapp.generated.resources.registration
 import e_lekha.composeapp.generated.resources.registration_top
 import e_lekha.composeapp.generated.resources.repayment
+import e_lekha.composeapp.generated.resources.right_arrow
+import e_lekha.composeapp.generated.resources.view_more
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -226,8 +228,6 @@ fun HomeScreen(
                             }
                         }
                     }
-
-
 
                     item {
                         LazyVerticalGrid(
