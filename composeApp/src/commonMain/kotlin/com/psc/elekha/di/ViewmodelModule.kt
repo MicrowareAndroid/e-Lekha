@@ -35,7 +35,9 @@ import com.psc.elekha.database.viewmodel.MSTVillageViewModel
 import com.psc.elekha.database.viewmodel.RegistrationStatusViewModel
 import com.psc.elekha.database.viewmodel.TabletMenuRoleViewModel
 import com.psc.elekha.database.viewmodel.TabletMenuViewModel
+import com.psc.elekha.database.viewmodel.TrainingGroupViewModel
 import com.psc.elekha.database.viewmodel.UserBranchViewModel
+import com.psc.elekha.database.viewmodel.UserContactDetailViewModel
 import com.psc.elekha.database.viewmodel.UserResponseViewModel
 import com.psc.elekha.database.viewmodel.UsersViewModel
 import com.psc.elekha.ui.screen.bankdetails.BankDetailViewModel
@@ -88,5 +90,7 @@ val viewmodelModule = module {
     viewModelOf(::BankDetailViewModel)
     viewModelOf(::PersonalDetailViewModel)
     viewModelOf(::LoginViewModel)
+    viewModelOf(::TrainingGroupViewModel)
+    viewModelOf(::UserContactDetailViewModel)
 
 }

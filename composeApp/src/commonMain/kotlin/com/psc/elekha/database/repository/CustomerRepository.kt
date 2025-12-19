@@ -167,4 +167,20 @@ class CustomerRepository(private val customerDao: CustomerDao) {
     suspend fun getCustomerByGuid(guId: String): List<CustomerEntity> {
         return customerDao.getCustomerByGuid(guId)
     }
+
+    suspend fun updateBankDetail(
+        customerGuid: String,
+        accountNo: String,
+        bankId: Int,
+        ifscCode: String,
+        UpdatedBy: Int?,
+        UpdatedOn: String?
+    ) {
+        customerDao.updateBankDetail(
+            customerGuid,accountNo,bankId,ifscCode,UpdatedBy,UpdatedOn
+        )
+    }
+
+
+
 }

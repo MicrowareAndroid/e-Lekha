@@ -275,5 +275,6 @@
     <string name="personal_payment_image">Payment Image</string>
     <string name="personal_payment_utr">UTR Number</string>
     <string name="personal_payment_detail">Repayment Detail</string>
+    <string name="view_more">View more</string>
 
 </resources>
