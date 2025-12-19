@@ -27,6 +27,7 @@ import com.psc.elekha.ui.theme.LightSkyBlue
 import com.psc.elekha.ui.theme.LightTeal
 import com.psc.elekha.ui.theme.PrimaryDark
 import com.psc.elekha.ui.theme.black
+import com.psc.elekha.ui.theme.blue
 import com.psc.elekha.ui.theme.editext_bg_color
 import com.psc.elekha.ui.theme.homedatareportsColor
 import com.psc.elekha.ui.theme.toolbar_color
@@ -107,21 +108,16 @@ fun CustomerDetailScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
+
+
         ) {
-
-
-            Image(
-                painter = painterResource(Res.drawable.background),
-                contentDescription = null,
-                modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.FillBounds
-            )
-
 
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(horizontal = 15.dp, vertical = 5.dp)
+                    .padding(horizontal = 15.dp, vertical = 5.dp),
+
+
             )
             {
 
@@ -449,6 +445,7 @@ fun CustomerDetailScreen(
                                 Icon(
                                     painter = painterResource(Res.drawable.camera),
                                     contentDescription = null,
+                                    tint = blue,
                                     modifier = Modifier
                                         .size(45.dp).padding(end = 15.dp)
                                         .clickable { openCamera = true }
@@ -510,6 +507,7 @@ fun CustomerDetailScreen(
                                 Icon(
                                     painter = painterResource(Res.drawable.camera),
                                     contentDescription = null,
+                                    tint = blue,
                                     modifier = Modifier
                                         .size(45.dp).padding(end = 15.dp)
                                         .clickable { openCamera = true }

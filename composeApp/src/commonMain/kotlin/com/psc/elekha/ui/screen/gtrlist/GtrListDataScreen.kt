@@ -87,12 +87,7 @@ fun GtrListDataScreen(
                 .padding(innerPadding)
         ) {
 
-            Image(
-                painter = painterResource(Res.drawable.background),
-                contentDescription = null,
-                modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.FillBounds
-            )
+
 
             Column(
                 modifier = Modifier

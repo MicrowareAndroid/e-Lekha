@@ -173,6 +173,8 @@ import e_lekha.composeapp.generated.resources.hh_mm
 import e_lekha.composeapp.generated.resources.ic_arrow_drop_down
 import e_lekha.composeapp.generated.resources.ic_close
 import e_lekha.composeapp.generated.resources.income
+import e_lekha.composeapp.generated.resources.inter_medium
+import e_lekha.composeapp.generated.resources.inter_regular
 import e_lekha.composeapp.generated.resources.login_subtitle
 import e_lekha.composeapp.generated.resources.mobile_number
 import e_lekha.composeapp.generated.resources.movable_assets
@@ -598,6 +600,11 @@ fun CommonSaveButton(
             modifier = Modifier
                 .weight(1f)
                 .height(48.dp),
+            elevation = ButtonDefaults.buttonElevation(
+                defaultElevation = 4.dp,
+                pressedElevation = 6.dp,
+                focusedElevation = 4.dp
+            ),
             colors = ButtonDefaults.buttonColors(
                 containerColor = backgroundColor,
                 contentColor = contentColor
@@ -654,6 +661,11 @@ fun CommonSingleButtonsBottomString(
             colors = ButtonDefaults.buttonColors(
                 containerColor = btn_color,
                 contentColor = Color.Black
+            ),
+            elevation = ButtonDefaults.buttonElevation(
+                defaultElevation = 4.dp,
+                pressedElevation = 6.dp,
+                focusedElevation = 4.dp
             ),
             shape = RoundedCornerShape(1.dp)
         ) {
@@ -2391,10 +2403,10 @@ fun DashboardCardItem(
                     .offset(y = 10.dp)
                     .clickable { onClick() }
                     .border(
-                    width = 1.dp,
-            color = Color.White,
-            shape = RoundedCornerShape(20.dp)
-            ),
+                        width = 1.dp,
+                        color = Color.White,
+                        shape = RoundedCornerShape(20.dp)
+                    ),
                 colors = CardDefaults.cardColors(containerColor = backgroundColor),
                 elevation = CardDefaults.cardElevation(3.dp)
             ) {
@@ -2408,7 +2420,7 @@ fun DashboardCardItem(
                         text = number,
                         fontSize = 22.sp,
                         color = white,
-                        fontWeight = FontWeight.Bold
+                        fontFamily = FontFamily(Font(Res.font.inter_medium)),
                     )
                 }
             }
@@ -2426,7 +2438,7 @@ fun DashboardCardItem(
                     contentDescription = null,
                     modifier = Modifier.fillMaxSize(),
 
-                )
+                    )
             }
         }
 
@@ -2436,7 +2448,7 @@ fun DashboardCardItem(
         Text(
             text = label,
             fontSize = 11.sp,
-            fontWeight = FontWeight.Medium,
+            fontFamily = FontFamily(Font(Res.font.inter_regular)),
             color = black,
             textAlign = TextAlign.Center,
             maxLines = 1,
@@ -2455,20 +2467,17 @@ fun CommonSingleButtons(
     bgImage: Painter? = null
 ) {
     Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(start = 20.dp, end = 25.dp),
+        modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
         Card(
             modifier = Modifier
-                .fillMaxWidth()
-                .height(120.dp)
+                .size(115.dp)
                 .clickable { onOkClick() },
             shape = RoundedCornerShape(14.dp),
             elevation = CardDefaults.cardElevation(defaultElevation = 7.dp),
-            border = BorderStroke(1.dp, loginbgGradientBottom)
+            border = BorderStroke(1.dp, homeTopIconsBg)
         ) {
 
             Box(
@@ -2477,19 +2486,18 @@ fun CommonSingleButtons(
                     .background(
                         brush = Brush.verticalGradient(
                             colors = listOf(
-                                backgroundColor.copy(alpha = 0.9f),
-                                backgroundColor.copy(alpha = 0.4f)
+                                backgroundColor.copy(alpha = 0.7f),
+                                backgroundColor.copy(alpha = 0.0f)
+
                             )
                         )
                     )
             ) {
-
-                if (bgImage != null) {
+                bgImage?.let {
                     Image(
-                        painter = bgImage,
+                        painter = it,
                         contentDescription = null,
                         contentScale = ContentScale.Crop,
-                        alignment = Alignment.Center,
                         modifier = Modifier.fillMaxSize()
                     )
                 }
@@ -2503,11 +2511,10 @@ fun CommonSingleButtons(
             textColor = textColor,
             textAlignment = TextAlign.Center,
             fontSize = 18,
-            fontFamily = FontFamily(Font(Res.font.roboto_medium)),
+            fontFamily = FontFamily(Font(Res.font.inter_medium))
         )
     }
 }
-
 
 
 @Composable
@@ -3253,7 +3260,7 @@ fun CustomAlertDialogRegistrationExisting(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center,
                     modifier = Modifier.fillMaxWidth().background(
-                        toolbar_color,
+                        appleblue,
                         shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp)
                     )
                         .heightIn(50.dp)

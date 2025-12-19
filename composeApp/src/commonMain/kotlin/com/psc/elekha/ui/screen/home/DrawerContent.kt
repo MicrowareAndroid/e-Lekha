@@ -317,6 +317,11 @@ fun DrawerContent() {
                     onClick = {},
                     shape = RoundedCornerShape(1.dp),
                     modifier = Modifier.width(130.dp),
+                    elevation = ButtonDefaults.buttonElevation(
+                        defaultElevation = 4.dp,
+                        pressedElevation = 6.dp,
+                        focusedElevation = 4.dp
+                    ),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = btn_color
                     )
