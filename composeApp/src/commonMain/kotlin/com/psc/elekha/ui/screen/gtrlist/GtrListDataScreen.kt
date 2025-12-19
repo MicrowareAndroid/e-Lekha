@@ -140,7 +140,7 @@ fun GtrListDataScreen(
                             )
                             {
                                 ReusableTextView(
-                                    text = stringResource(Res.string.home_time),
+                                    text = stringResource(Res.string.home_time).plus(":"),
                                     textColor = toolbar_color
                                 )
                                 Spacer(Modifier.width(6.dp))
@@ -152,7 +152,7 @@ fun GtrListDataScreen(
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
                                 ReusableTextView(
-                                    text = stringResource(Res.string.home_date),
+                                    text = stringResource(Res.string.home_date).plus(":"),
                                     textColor = toolbar_color
                                 )
                                 Spacer(Modifier.width(6.dp))
@@ -175,28 +175,28 @@ fun GtrListDataScreen(
                     Column(modifier = Modifier.weight(1f) .padding(start = 5.dp)) {
 
                         ReusableTextView(
-                            text = stringResource(Res.string.gtr_customer),
+                            text = stringResource(Res.string.gtr_customer).plus(" :"),
                             fontSize = 14,
                             textColor = black
                         )
                         Spacer(Modifier.height(6.dp))
 
                         ReusableTextView(
-                            text = stringResource(Res.string.gtr_center),
+                            text = stringResource(Res.string.gtr_center).plus(" :"),
                             fontSize = 12,
                             textColor = black
                         )
                         Spacer(Modifier.height(6.dp))
 
                         ReusableTextView(
-                            text = stringResource(Res.string.gtr_meeting),
+                            text = stringResource(Res.string.gtr_meeting).plus(" :"),
                             fontSize = 12,
                             textColor = black
                         )
                         Spacer(Modifier.height(6.dp))
 
                         ReusableTextView(
-                            text = stringResource(Res.string.gtr_next_meeting),
+                            text = stringResource(Res.string.gtr_next_meeting).plus(" :"),
                             fontSize = 12,
                             textColor = black
                         )

@@ -4,6 +4,8 @@ import androidx.room.ConstructedBy
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.microlekha.psc.dao.MSTMonthlyIncomeMarksDao
+import com.psc.elekha.database.dao.AdminDashbordDao
+import com.psc.elekha.database.dao.BranchManagerDashbordDao
 import com.psc.elekha.database.dao.CustomerDao
 import com.psc.elekha.database.dao.CustomerDefaultDao
 import com.psc.elekha.database.dao.CustomerExistingLoanDetailDao
@@ -39,6 +41,7 @@ import com.psc.elekha.database.dao.MSTVillageDao
 import com.psc.elekha.database.dao.RegistrationStatusDao
 import com.psc.elekha.database.dao.TabletMenuDao
 import com.psc.elekha.database.dao.TabletMenuRoleDao
+import com.psc.elekha.database.dao.TrainingGroupStatusDao
 import com.psc.elekha.database.dao.TrainingGroupDao
 import com.psc.elekha.database.dao.UserBranchDao
 import com.psc.elekha.database.dao.UserContactDetailDao
@@ -86,7 +89,9 @@ import com.psc.elekha.database.entity.UserBranchEntity
 import com.psc.elekha.database.entity.UserContactDetailEntity
 import com.psc.elekha.database.entity.UserResponseEntity
 import com.psc.elekha.database.entity.UsersEntity
-
+import com.psc.elekha.database.entity.AdminDashbordEntity
+import com.psc.elekha.database.entity.BranchManagerDashbordEntity
+import com.psc.elekha.database.entity.TrainingGroupStatusEntity
 @Database(entities = [
     CustomerStatusEntity::class, MSTAssetsValuationEntity::class, MSTBankBranchEntity::class, MSTBankEntity::class,
     MSTBranchEntity::class, MSTCenterEntity::class, MSTComboBox_NEntity::class, MSTDistrictEntity::class,
@@ -98,7 +103,8 @@ import com.psc.elekha.database.entity.UsersEntity
     CustomerFamilyMemberDetailsEntity::class, LoanClosureEntity::class, LoanRepaymentEntity::class, LoanScheduleEntity::class,
     CustomerLoanDisbursementEntity::class, ImageTrackingRecordEntity::class, ImageDetailEntity::class, UserResponseEntity::class,
     CustomerDefaultEntity::class, MstLoanDetailsEntity::class, RegistrationStatusEntity::class, CustomerTransactionDataEntity::class,
-    CustomerTransactionsDetailsEntity::class, TrainingGroupEntity::class, UserContactDetailEntity::class],
+    CustomerTransactionsDetailsEntity::class,AdminDashbordEntity::class,BranchManagerDashbordEntity::class,
+    TrainingGroupStatusEntity::class, TrainingGroupEntity::class, UserContactDetailEntity::class],
     version = 1, exportSchema = true)
 @ConstructedBy(AppDatabaseConstructor::class)
 abstract class AppDatabase : RoomDatabase() {
@@ -144,6 +150,15 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun customerTransactionsDetailsDao(): CustomerTransactionsDetailsDao
     abstract fun trainingGroupDao(): TrainingGroupDao
     abstract fun userContactDetailDao(): UserContactDetailDao
+
+    abstract fun admissionDashboardDao(): AdminDashbordDao
+
+    abstract fun branchManagerDashboardDao(): BranchManagerDashbordDao
+
+    abstract fun trainingGroupStatusDao(): TrainingGroupStatusDao
+
+
+
 
 
 }
