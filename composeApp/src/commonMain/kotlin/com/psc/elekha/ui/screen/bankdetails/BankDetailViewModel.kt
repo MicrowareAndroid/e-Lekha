@@ -40,12 +40,12 @@ class BankDetailViewModel(
 
  fun saveData() {
   viewModelScope.launch {
-   saveBankDetail()
+   //saveBankDetail()
 
   }
  }
 
- private suspend fun saveBankDetail() {
+ /*private suspend fun saveBankDetail() {
   val guid = appPreferences.getString(AppSP.customerGuid)
   customerDefaultViewModel.updateBankDetail(
    returnStringValue(guid),
@@ -58,7 +58,7 @@ class BankDetailViewModel(
   )
   saveMessage = getString(Res.string.data_saved_successfully)
 
- }
+ }*/
 
  fun loadSaveData(){
   viewModelScope.launch {

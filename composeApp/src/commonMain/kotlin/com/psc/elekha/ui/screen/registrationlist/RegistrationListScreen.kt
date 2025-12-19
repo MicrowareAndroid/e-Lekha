@@ -15,9 +15,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.psc.elekha.database.viewmodel.CustomerViewModel
+import com.psc.elekha.database.viewmodel.MSTComboBox_NViewModel
 import com.psc.elekha.model.RegistrationModel
 import com.psc.elekha.ui.theme.black
 import com.psc.elekha.ui.theme.btn_color
+import com.psc.elekha.utils.AppPreferences
+import com.psc.elekha.utils.AppSP
 import com.psc.elekha.utils.CustomAlertDialogRegistrationExisting
 import com.psc.elekha.utils.ReusableTopBar
 import com.psc.elekha.utils.RouteName
@@ -29,34 +33,22 @@ import e_lekha.composeapp.generated.resources.ic_back
 import e_lekha.composeapp.generated.resources.list
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.koinInject
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun RegistrationListScreen(navController: NavController) {
+
+    val viewModel = koinViewModel<CustomerViewModel>()
+    var mstComboViewModel=koinViewModel<MSTComboBox_NViewModel>()
     var showDialog by remember { mutableStateOf(false) }
+    val customerList by viewModel.customers.collectAsState()
+    val appPreferences: AppPreferences = koinInject()
 
-    var registrationModel by rememberSaveable {
-        mutableStateOf(
-            listOf(
-                RegistrationModel(
-                    "Test",
-                    "9999999911",
-                    "Married"
-                ),
-                RegistrationModel(
-                    "XYZ",
-                    "8899889988",
-                    "Single"
-                ),
-                RegistrationModel("ABC", "7711778866", "Divorced")
-            )
-        )
+    LaunchedEffect(Unit) {
+        viewModel.loadCustomers()
+
     }
-
-    /*Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .navigationBarsPadding().background(white)
-    ) {*/
 
     Box(
         modifier = Modifier
@@ -78,9 +70,6 @@ fun RegistrationListScreen(navController: NavController) {
                 modifier = Modifier
                     .fillMaxSize()
             ) {
-
-
-
                 Spacer(modifier = Modifier.height(10.dp))
 
                 LazyColumn(
@@ -88,52 +77,21 @@ fun RegistrationListScreen(navController: NavController) {
                         .fillMaxSize()
                         .padding(horizontal = 16.dp, vertical = 8.dp)
                 ) {
-                    items(registrationModel) { item ->
+                    items(customerList) { item ->
                         RegistrationCard(
-                            registrationModel = item,
+                            customer = item,
                             onEdit = {
-                                /*edit click listener here*/
+                                appPreferences.putString(AppSP.customerGuid, item.GUID)
+                                navController.navigate(RouteName.registration_tabs)
                             },
                             onDelete = {
-                                /*delete code goes here*/
+
                             }
                         )
                         Spacer(modifier = Modifier.height(12.dp))
                     }
                 }
 
-                //icon with text
-                /*ExtendedFloatingActionButton(
-                    onClick = {
-                        navController.navigate(RouteName.registration_tabs)
-                    },
-                    containerColor = btn_color,
-                    shape = CircleShape,
-                    modifier = Modifier
-                        .align(Alignment.BottomEnd)
-                        .padding(18.dp)
-                        .border(
-                            width = 1.dp,
-                            color = btn_color,
-                            shape = CircleShape
-                        ),
-                    icon = {
-                        Icon(
-                            painter = painterResource(Res.drawable.addicon),
-                            contentDescription = stringResource(Res.string.add),
-                            tint = black
-                        )
-                    },
-                    text = {
-                        ReusableTextView(
-                            text = stringResource(Res.string.add),
-                            textColor = black,
-                            fontWeight = FontWeight.W500
-                        )
-                    }
-                )*/
-
-                //just icon
                 FloatingActionButton(
                     onClick = {
                         showDialog = true
@@ -159,6 +117,7 @@ fun RegistrationListScreen(navController: NavController) {
             if (showDialog) {
                 CustomAlertDialogRegistrationExisting(
                     onRegistration = {
+                        appPreferences.putString(AppSP.customerGuid, "")
                         navController.navigate(RouteName.registration_tabs)
                         showDialog = false
                     },
