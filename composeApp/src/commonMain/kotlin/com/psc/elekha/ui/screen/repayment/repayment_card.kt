@@ -73,7 +73,7 @@ fun RepaymentItemCard(
                 ) {
                     // CUSTOMER ROW
                     Row(verticalAlignment = Alignment.Top) {
-                        ReusableTextViewGrayCard(stringResource(Res.string.personal_customer), fontSize = 13)
+                        ReusableTextViewGrayCard(stringResource(Res.string.personal_customer).plus(":"), fontSize = 13)
                         Spacer(modifier = Modifier.width(4.dp))
                         ReusableTextViewBlackCard(
                             "${item.customerId}  ${item.customerName}",
@@ -91,7 +91,7 @@ fun RepaymentItemCard(
 
                         // Loan Amount Label
                         ReusableTextViewGrayCard(
-                            stringResource(Res.string.personal_loan),
+                            stringResource(Res.string.personal_loan).plus(":"),
                             fontSize = 13,
                             modifier = Modifier.weight(1.5f)
                         )
@@ -105,7 +105,7 @@ fun RepaymentItemCard(
 
                         // EMI Label
                         ReusableTextViewGrayCard(
-                            stringResource(Res.string.personal_emi),
+                            stringResource(Res.string.personal_emi).plus(":"),
                             fontSize = 13,
                             modifier = Modifier.weight(0.6f)
                         )
@@ -131,7 +131,7 @@ fun RepaymentItemCard(
                             modifier = Modifier.weight(1f),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            ReusableTextViewGrayCard(stringResource(Res.string.personal_total_due), fontSize = 13)
+                            ReusableTextViewGrayCard(stringResource(Res.string.personal_total_due).plus(":"), fontSize = 13)
                             Spacer(modifier = Modifier.width(6.dp))
                             ReusableTextViewBlackCard(item.totalDue, fontSize = 13)
                         }
@@ -140,7 +140,7 @@ fun RepaymentItemCard(
                             modifier = Modifier.weight(1f),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            ReusableTextViewGrayCard(stringResource(Res.string.personal_weeks_arrear), fontSize = 13)
+                            ReusableTextViewGrayCard(stringResource(Res.string.personal_weeks_arrear).plus(":"), fontSize = 13)
                             Spacer(modifier = Modifier.width(6.dp))
                             ReusableTextViewBlackCard(item.weeksInArrear, fontSize = 13)
                         }
@@ -186,7 +186,7 @@ fun RepaymentItemCard(
                 verticalAlignment = Alignment.CenterVertically
             ) {
 
-                ReusableTextViewGrayCard(stringResource(Res.string.personal_payment_mode), fontSize = 13)
+                ReusableTextViewGrayCard(stringResource(Res.string.personal_payment_mode).plus(":"), fontSize = 13)
                 Spacer(modifier = Modifier.width(6.dp))
 
                 ReusableTextViewGrayCard(stringResource(Res.string.personal_payment_mode), fontSize = 13)

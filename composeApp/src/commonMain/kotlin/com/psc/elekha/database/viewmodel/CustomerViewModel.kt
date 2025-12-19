@@ -195,8 +195,6 @@ class CustomerViewModel(private val customerRepository: CustomerRepository) : Vi
                 RegLong,
                 GUID
             )
-
-            // Optional: refresh list if UI depends on it
             loadCustomers()
         }
     }

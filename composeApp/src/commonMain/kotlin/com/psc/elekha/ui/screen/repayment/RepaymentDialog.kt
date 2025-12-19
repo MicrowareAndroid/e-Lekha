@@ -42,7 +42,6 @@ import e_lekha.composeapp.generated.resources.front_image
 import e_lekha.composeapp.generated.resources.gtr_save
 import e_lekha.composeapp.generated.resources.mobile_number
 import e_lekha.composeapp.generated.resources.personal_current
-import e_lekha.composeapp.generated.resources.personal_current_mobile
 import e_lekha.composeapp.generated.resources.personal_current_payment
 import e_lekha.composeapp.generated.resources.personal_customer
 import e_lekha.composeapp.generated.resources.personal_distribute_date
@@ -52,6 +51,7 @@ import e_lekha.composeapp.generated.resources.personal_loan
 import e_lekha.composeapp.generated.resources.personal_past
 import e_lekha.composeapp.generated.resources.personal_payment_detail
 import e_lekha.composeapp.generated.resources.personal_payment_image
+import e_lekha.composeapp.generated.resources.personal_payment_mode
 import e_lekha.composeapp.generated.resources.personal_payment_utr
 import e_lekha.composeapp.generated.resources.personal_pre_closure
 import e_lekha.composeapp.generated.resources.personal_total_due
@@ -254,7 +254,7 @@ fun RepaymentDialog(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         ReusableTextViewGrayCard(
-                            stringResource(Res.string.personal_current),
+                            stringResource(Res.string.personal_current).plus(":"),
                             fontSize = 13
                         )
                         Spacer(modifier = Modifier.height(6.dp))
@@ -280,7 +280,7 @@ fun RepaymentDialog(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         ReusableTextViewGrayCard(
-                            stringResource(Res.string.personal_emi_number),
+                            stringResource(Res.string.personal_emi_number).plus(":"),
                             fontSize = 13
                         )
                         Spacer(modifier = Modifier.width(6.dp))
@@ -297,7 +297,7 @@ fun RepaymentDialog(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         ReusableTextViewGrayCard(
-                            stringResource(Res.string.personal_distribute_date),
+                            stringResource(Res.string.personal_distribute_date).plus(":"),
                             fontSize = 13
                         )
                         Spacer(modifier = Modifier.width(6.dp))
@@ -319,7 +319,7 @@ fun RepaymentDialog(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         ReusableTextViewGrayCard(
-                            stringResource(Res.string.personal_pre_closure),
+                            stringResource(Res.string.personal_pre_closure).plus(":"),
                             fontSize = 13
                         )
                         Spacer(modifier = Modifier.width(6.dp))
@@ -336,7 +336,7 @@ fun RepaymentDialog(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         ReusableTextViewGrayCard(
-                            stringResource(Res.string.personal_past),
+                            stringResource(Res.string.personal_past).plus(":"),
                             fontSize = 13
                         )
                         Spacer(modifier = Modifier.height(6.dp))
@@ -354,7 +354,7 @@ fun RepaymentDialog(
                 )
                 {
                     ReusableTextViewGrayCard(
-                        "Payment Mode",
+                        stringResource(Res.string.personal_payment_mode),
                         fontSize = 13
                     )
 

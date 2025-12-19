@@ -166,9 +166,8 @@ import e_lekha.composeapp.generated.resources.enter_otp
 import e_lekha.composeapp.generated.resources.existing_customer
 import e_lekha.composeapp.generated.resources.gender
 import e_lekha.composeapp.generated.resources.gtr_add
-import e_lekha.composeapp.generated.resources.gtr_cancel
+import e_lekha.composeapp.generated.resources.gtr_next_meeting
 import e_lekha.composeapp.generated.resources.gtr_save
-import e_lekha.composeapp.generated.resources.gtr_saves
 import e_lekha.composeapp.generated.resources.hh_mm
 import e_lekha.composeapp.generated.resources.ic_arrow_drop_down
 import e_lekha.composeapp.generated.resources.ic_close
@@ -206,7 +205,6 @@ import e_lekha.composeapp.generated.resources.select_information
 import e_lekha.composeapp.generated.resources.select_loan
 import e_lekha.composeapp.generated.resources.select_meeting
 import e_lekha.composeapp.generated.resources.select_new_customer
-import e_lekha.composeapp.generated.resources.select_next
 import e_lekha.composeapp.generated.resources.select_village
 import e_lekha.composeapp.generated.resources.spinner_select
 import e_lekha.composeapp.generated.resources.total_monthly_expenditure
@@ -543,8 +541,8 @@ fun CommonActionButtons(
     onSaveClick: () -> Unit,
     onCloseClick: () -> Unit,
     accentColor: Color = btn_color,
-    saveText: String = stringResource(Res.string.gtr_saves),
-    closeText: String = stringResource(Res.string.gtr_cancel),
+    saveText: String = stringResource(Res.string.save),
+    closeText: String = stringResource(Res.string.cancel),
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -2671,23 +2669,23 @@ fun GroupCardUI(
             Column(modifier = Modifier.weight(1f)) {
 
                 LabelValueText(
-                    label = stringResource(Res.string.select_group),
+                    label = stringResource(Res.string.select_group).plus(":"),
                     value = item.groupName
                 )
                 LabelValueText(
-                    label = stringResource(Res.string.select_customer),
+                    label = stringResource(Res.string.select_customer).plus(":"),
                     value = item.customers.toString()
                 )
                 LabelValueText(
-                    label = stringResource(Res.string.select_village),
+                    label = stringResource(Res.string.select_village).plus(":"),
                     value = item.village
                 )
                 LabelValueText(
-                    label = stringResource(Res.string.select_loan),
+                    label = stringResource(Res.string.select_loan).plus(":"),
                     value = item.officer
                 )
                 LabelValueText(
-                    label = stringResource(Res.string.select_formation),
+                    label = stringResource(Res.string.select_formation).plus(":"),
                     value = item.formation
                 )
             }
@@ -2696,19 +2694,19 @@ fun GroupCardUI(
             Column(modifier = Modifier.weight(1f)) {
 
                 LabelValueText(
-                    label = stringResource(Res.string.select_disbursement),
+                    label = stringResource(Res.string.select_disbursement).plus(":"),
                     value = item.disbursement
                 )
                 LabelValueText(
-                    label = stringResource(Res.string.select_center),
+                    label = stringResource(Res.string.select_center).plus(":"),
                     value = item.center
                 )
                 LabelValueText(
-                    label = stringResource(Res.string.select_meeting),
+                    label = stringResource(Res.string.select_meeting).plus(":"),
                     value = item.meetingDay
                 )
                 LabelValueText(
-                    label = stringResource(Res.string.select_next),
+                    label = stringResource(Res.string.gtr_next_meeting).plus(":"),
                     value = item.nextMeeting
                 )
             }
@@ -2878,13 +2876,13 @@ fun CustomerItemCard(
                 modifier = Modifier.weight(1f)
             ) {
                 LabelValueText(
-                    stringResource(Res.string.select_customer_id),
+                    stringResource(Res.string.select_customer_id).plus(":"),
                     customer.id.toString()
                 )
-                LabelValueText(stringResource(Res.string.select_customer_name), customer.name)
-                LabelValueText(stringResource(Res.string.select_customer_mobile), customer.mobile)
+                LabelValueText(stringResource(Res.string.select_customer_name).plus(":"), customer.name)
+                LabelValueText(stringResource(Res.string.select_customer_mobile).plus(":"), customer.mobile)
                 LabelValueText(
-                    stringResource(Res.string.select_customer_loan),
+                    stringResource(Res.string.select_customer_loan).plus(":"),
                     "Rs ${customer.amount}"
                 )
             }

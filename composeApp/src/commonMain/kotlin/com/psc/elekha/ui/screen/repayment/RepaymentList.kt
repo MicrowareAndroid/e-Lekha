@@ -199,7 +199,7 @@ fun RepaymentList(
                             {
                                 Row(verticalAlignment = Alignment.CenterVertically) {
                                     ReusableTextView(
-                                        text = stringResource(Res.string.select_customer_center),
+                                        text = stringResource(Res.string.select_customer_center).plus(":"),
                                         textColor = toolbar_color
                                     )
                                     Spacer(Modifier.width(6.dp))
@@ -207,7 +207,7 @@ fun RepaymentList(
                                 }
                                 Row(verticalAlignment = Alignment.CenterVertically) {
                                     ReusableTextView(
-                                        text = stringResource(Res.string.select_customer_next),
+                                        text = stringResource(Res.string.select_customer_next).plus(":"),
                                         textColor = toolbar_color
                                     )
                                     Spacer(Modifier.width(6.dp))
@@ -232,7 +232,7 @@ fun RepaymentList(
 
                                 Row(verticalAlignment = Alignment.CenterVertically) {
                                     ReusableTextView(
-                                        text = stringResource(Res.string.home_time),
+                                        text = stringResource(Res.string.home_time).plus(":"),
                                         textColor = toolbar_color
                                     )
                                     Spacer(Modifier.width(6.dp))
@@ -241,7 +241,7 @@ fun RepaymentList(
 
                                 Row(verticalAlignment = Alignment.CenterVertically) {
                                     ReusableTextView(
-                                        text = stringResource(Res.string.home_date),
+                                        text = stringResource(Res.string.home_date).plus(":"),
                                         textColor = toolbar_color
                                     )
                                     Spacer(Modifier.width(6.dp))
@@ -349,7 +349,7 @@ fun CollectionDetailsCard(
             verticalAlignment = Alignment.CenterVertically
         ) {
             ReusableTextView(
-                text = stringResource(Res.string.select_customer_collection),
+                text = stringResource(Res.string.select_customer_collection).plus(":"),
                 fontSize = 18,
                 fontWeight = FontWeight.SemiBold,
                 textColor = Color.Black,
@@ -359,7 +359,7 @@ fun CollectionDetailsCard(
             IconButton(onClick = onFilterClick) {
                 Icon(
                     imageVector = Icons.Default.FilterList,
-                    contentDescription = "Filter",
+                    contentDescription = "",
                     tint = Color.Black
                 )
             }
@@ -409,7 +409,7 @@ fun FilterLoanDetailsDialog(
         title = {
             Column {
                 ReusableTextView(
-                    text = stringResource(Res.string.select_customer_filter_details),
+                    text = stringResource(Res.string.select_customer_filter_details).plus(":"),
                     fontWeight = FontWeight.Bold,
                     fontSize = 20,
                     textColor = Color.Black
@@ -428,7 +428,7 @@ fun FilterLoanDetailsDialog(
             ) {
 
                 FormSpinner(
-                    label = "Village",
+                    label = stringResource(Res.string.village),
                     options = villages,
                     selectedOption = selectedVillage,
                     onOptionSelected = { selectedVillage = it },
@@ -437,14 +437,14 @@ fun FilterLoanDetailsDialog(
                 CommonDivider(color = Color(0xFFE0E0E0), thickness = 1.dp)
 
                 FormSpinner(
-                    label = "Center",
+                    label = stringResource(Res.string.select_center),
                     options = centers,
                     selectedOption = selectedCenter,
                     onOptionSelected = { selectedCenter = it }
                 )
 
                 ReusableTextView(
-                    text = "OR",
+                    text = stringResource(Res.string.select_customer_center_or),
                     fontSize = 16,
                     fontWeight = FontWeight.Bold,
                     textColor = Color.Black,
@@ -453,10 +453,10 @@ fun FilterLoanDetailsDialog(
                 )
 
                 FormFieldCompact(
-                    label = "Customer ID",
+                    label = stringResource(Res.string.select_customer_id),
                     value = customerIds,
                     onValueChange = { customerIds = it },
-                    placeholder = "Type here"
+                    placeholder = stringResource(Res.string.type_here)
                 )
 
                 Spacer(Modifier.height(8.dp))
@@ -475,7 +475,7 @@ fun FilterLoanDetailsDialog(
                             pressedElevation = 6.dp,
                             focusedElevation = 4.dp
                         )
-                    ) { Text("Cancel") }
+                    ) { Text(stringResource(Res.string.cancel)) }
 
                     Button(
                         onClick = {
@@ -493,7 +493,7 @@ fun FilterLoanDetailsDialog(
                             pressedElevation = 6.dp,
                             focusedElevation = 4.dp
                         )
-                    ) { Text("Filter") }
+                    ) { Text(stringResource(Res.string.select_customer_filter)) }
                 }
             }
         },

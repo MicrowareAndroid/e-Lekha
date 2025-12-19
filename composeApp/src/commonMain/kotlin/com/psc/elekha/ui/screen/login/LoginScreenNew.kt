@@ -86,7 +86,7 @@ fun LoginScreenNew(navController: NavController) {
 
                         ) {
                         Text(
-                            text = stringResource(Res.string.registered_office_address),
+                            text = stringResource(Res.string.registered_office_address).plus(":"),
                             style = MaterialTheme.typography.bodyMedium.copy(
                                 fontWeight = FontWeight.Bold,
                                 color = white
