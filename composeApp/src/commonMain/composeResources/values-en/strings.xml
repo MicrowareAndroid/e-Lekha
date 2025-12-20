@@ -62,7 +62,6 @@
     <string name="name">Name</string>
     <string name="edit_profile">Edit Profile</string>
     <string name="download">Download</string>
-    <string name="view_more">View more</string>
     <string name="upload">Upload</string>
     <string name="master_download">Master Data Download</string>
     <string name="are_you_sure_logout">Are you sure you want to logout?</string>
