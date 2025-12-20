@@ -92,8 +92,10 @@ fun GtrListDataScreen(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
+                    .verticalScroll(rememberScrollState())
                     .padding(horizontal = 15.dp, vertical = 5.dp)
-            ) {
+            )
+            {
 
                 ReusableCard(
                     modifier = Modifier
@@ -251,8 +253,6 @@ fun GtrListDataScreen(
 
                 Column(
                     modifier = Modifier
-                        .weight(1f)
-                        .verticalScroll(rememberScrollState())
                         .padding(bottom = 45.dp)
                 ) {
                     customerList.forEach { customer ->

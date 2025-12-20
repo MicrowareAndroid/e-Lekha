@@ -2,9 +2,11 @@ package com.psc.elekha.database.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.PrimaryKey
 
-@Entity(tableName = "BranchManagerDashbord")
+@Entity(tableName = "BranchManagerDashboard")
 data class BranchManagerDashbordEntity(
+    @PrimaryKey @ColumnInfo(name = "GUID") val GUID: String,
     @ColumnInfo(name = "Customers") val Customers: Int?,
     @ColumnInfo(name = "CustomersCollected") val CustomersCollected: Int?,
     @ColumnInfo(name = "Meetings") val Meetings: Int?,

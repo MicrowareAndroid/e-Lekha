@@ -115,13 +115,12 @@ fun CustomerDetailScreen(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
+                    .verticalScroll(rememberScrollState())
                     .padding(horizontal = 15.dp, vertical = 5.dp),
 
 
             )
             {
-
-
                 ReusableCard(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -241,8 +240,6 @@ fun CustomerDetailScreen(
                 Spacer(modifier = Modifier.height(15.dp))
                 Column(
                     modifier = Modifier
-
-                        .verticalScroll(rememberScrollState())
                         .padding(bottom = 20.dp)
                 )
                 {

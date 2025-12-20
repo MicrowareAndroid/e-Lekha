@@ -16,14 +16,14 @@ interface BranchManagerDashbordDao {
     suspend fun insertAll(list: List<BranchManagerDashbordEntity>)
 
     // Get all records
-    @Query("SELECT * FROM BranchManagerDashbord")
+    @Query("SELECT * FROM BranchManagerDashboard")
     suspend fun getAll(): List<BranchManagerDashbordEntity>
 
     // Get single dashboard (if you expect only one row)
-    @Query("SELECT * FROM BranchManagerDashbord LIMIT 1")
+    @Query("SELECT * FROM BranchManagerDashboard LIMIT 1")
     suspend fun getDashboard(): BranchManagerDashbordEntity?
 
     // Delete all (logout / resync)
-    @Query("DELETE FROM BranchManagerDashbord")
+    @Query("DELETE FROM BranchManagerDashboard")
     suspend fun deleteAll()
 }
