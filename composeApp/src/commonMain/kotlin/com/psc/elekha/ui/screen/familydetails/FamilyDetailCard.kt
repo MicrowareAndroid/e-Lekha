@@ -55,12 +55,13 @@ fun FamilyDetailCard(
         colors = CardDefaults.cardColors(containerColor = loginBg),
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 6.dp, vertical = 2.dp)
+
+            .padding(bottom = 8.dp)
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(8.dp),
+                .padding(12.dp),
             verticalAlignment = Alignment.Top
         ) {
 
@@ -70,22 +71,22 @@ fun FamilyDetailCard(
             ) {
 
                 DetailRow(
-                    label = stringResource(Res.string.name),
+                    label = stringResource(Res.string.name).plus(":"),
                     value = familyDetailModel.name
                 )
 
                 DetailRow(
-                    label = stringResource(Res.string.relation),
+                    label = stringResource(Res.string.relation).plus(":"),
                     value = familyDetailModel.relation
                 )
 
                 DetailRow(
-                    label = stringResource(Res.string.education),
+                    label = stringResource(Res.string.education).plus(":"),
                     value = familyDetailModel.education
                 )
 
                 DetailRow(
-                    label = stringResource(Res.string.occupation),
+                    label = stringResource(Res.string.occupation).plus(":"),
                     value = familyDetailModel.occupation
                 )
             }

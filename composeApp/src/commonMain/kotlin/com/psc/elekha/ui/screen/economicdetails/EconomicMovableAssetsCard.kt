@@ -37,22 +37,22 @@ fun EconomicMovableAssetsCard(
         colors = CardDefaults.cardColors(containerColor = loginBg),
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 6.dp, vertical = 2.dp)
+            .padding(bottom = 8.dp)
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(8.dp),
+                .padding(12.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
 
             DetailRow(
-                label = stringResource(Res.string.movable_assets),
+                label = stringResource(Res.string.movable_assets).plus(":"),
                 value = economicMovableAssetsModel.type
             )
 
             DetailRow(
-                label = stringResource(Res.string.vehicle_no),
+                label = stringResource(Res.string.vehicle_no).plus(":"),
                 value = economicMovableAssetsModel.vehicle_no
             )
         }

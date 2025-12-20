@@ -43,6 +43,7 @@ import e_lekha.composeapp.generated.resources.app_name
 import e_lekha.composeapp.generated.resources.camera
 import e_lekha.composeapp.generated.resources.cancel
 import e_lekha.composeapp.generated.resources.front_image
+import e_lekha.composeapp.generated.resources.gtr_saves
 import e_lekha.composeapp.generated.resources.movable_assets
 import e_lekha.composeapp.generated.resources.no_vehicle
 import e_lekha.composeapp.generated.resources.ok
@@ -54,7 +55,7 @@ import org.jetbrains.compose.resources.stringResource
 @Composable
 fun CustomAlertMovableAssets(
     title: String = stringResource(Res.string.movable_assets),
-    submitText: String = stringResource(Res.string.ok),
+    submitText: String = stringResource(Res.string.gtr_saves),
     cancelText: String = stringResource(Res.string.cancel),
     onSubmit: () -> Unit = {},
     onCancel: () -> Unit = {}
@@ -178,7 +179,7 @@ fun CustomAlertMovableAssets(
                             onOkClick = {
                                 onSubmit()
                             },
-                            stringResource(Res.string.ok),
+                            stringResource(Res.string.gtr_saves),
                             modifier = Modifier.weight(1f),
                             textSize = 12
                         )
