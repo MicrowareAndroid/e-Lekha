@@ -15,6 +15,7 @@ import androidx.compose.ui.draw.dropShadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -29,12 +30,14 @@ import com.psc.elekha.getAppVersion
 import com.psc.elekha.ui.theme.*
 import com.psc.elekha.utils.PasswordField
 import com.psc.elekha.utils.ReusableTextView
+import com.psc.elekha.utils.ReusableTextViews
 import com.psc.elekha.utils.RouteName
 import com.psc.elekha.utils.SimpleOtp
 import com.psc.elekha.utils.UsernameField
 
 import e_lekha.composeapp.generated.resources.Res
 import e_lekha.composeapp.generated.resources.*
+import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -86,7 +89,7 @@ fun LoginScreenNew(navController: NavController) {
 
                         ) {
                         Text(
-                            text = stringResource(Res.string.registered_office_address),
+                            text = stringResource(Res.string.registered_office_address).plus(":"),
                             style = MaterialTheme.typography.bodyMedium.copy(
                                 fontWeight = FontWeight.Bold,
                                 color = white
@@ -141,11 +144,11 @@ fun LoginScreenNew(navController: NavController) {
                         .fillMaxWidth(),
                     contentAlignment = Alignment.Center
                 ) {
-                    ReusableTextView(
+                    ReusableTextViews(
                         text = stringResource(Res.string.planned_social_concern),
                         textColor = loginTitle,
                         fontSize = 36,
-                        textAlignment = TextAlign.Center
+                        textAlignment = TextAlign.Center,
                     )
                 }
                 Spacer(modifier = Modifier.height(7.dp))
@@ -197,7 +200,7 @@ fun LoginScreenNew(navController: NavController) {
                                 horizontalAlignment = Alignment.CenterHorizontally
                             ) {
 
-                                ReusableTextView(
+                                ReusableTextViews(
                                     text = stringResource(Res.string.log_in),
                                     textColor = white,
                                     fontSize = 30

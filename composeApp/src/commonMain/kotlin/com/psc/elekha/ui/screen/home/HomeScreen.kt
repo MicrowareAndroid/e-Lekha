@@ -41,7 +41,6 @@ import com.psc.elekha.ui.theme.loginBg
 import com.psc.elekha.ui.theme.loginbgGradientBottom
 import com.psc.elekha.ui.theme.loginbgGradientTop
 import com.psc.elekha.ui.theme.repaymentColor
-import com.psc.elekha.ui.theme.viewmorebgColor
 import com.psc.elekha.utils.CommonSingleButtons
 import com.psc.elekha.utils.DashboardCardItem
 import com.psc.elekha.utils.ReusableTextView
@@ -67,7 +66,6 @@ import e_lekha.composeapp.generated.resources.home_default
 import e_lekha.composeapp.generated.resources.home_gtr
 import e_lekha.composeapp.generated.resources.home_gtr_home
 import e_lekha.composeapp.generated.resources.home_registration
-import e_lekha.composeapp.generated.resources.home_registration_detail
 import e_lekha.composeapp.generated.resources.home_repayment
 import e_lekha.composeapp.generated.resources.home_time
 import e_lekha.composeapp.generated.resources.home_user
@@ -130,17 +128,31 @@ fun HomeScreen(
 
     Box(
         modifier = Modifier.fillMaxSize()
-    ) {
+            ) {
 
+       /* Image(
+            painter = painterResource(Res.drawable.group),
+            contentDescription = null,
+            contentScale = ContentScale.FillBounds,
+            modifier = Modifier.matchParentSize()
+        )*/
 
         Scaffold(
-            modifier = Modifier.fillMaxSize(),
-            containerColor = Color.Transparent
+            modifier = Modifier
+                .fillMaxSize()
+
+
+            ,
+
+            //containerColor = loginBg
         ) { innerPadding ->
 
             Column(
                 modifier = Modifier
                     .fillMaxSize()
+                    .padding(innerPadding)
+
+                    .statusBarsPadding()
                     .background(
                         brush = Brush.verticalGradient(
                             colors = listOf(
@@ -149,8 +161,6 @@ fun HomeScreen(
                             )
                         )
                     )
-                    .statusBarsPadding()
-                    .padding(innerPadding)
             ) {
 
                 Row(
@@ -181,13 +191,13 @@ fun HomeScreen(
                         }
 
                         Row(verticalAlignment = Alignment.CenterVertically) {
-                            ReusableTextView(text = stringResource(Res.string.home_time), textColor = PrimaryDark)
+                            ReusableTextView(text = stringResource(Res.string.home_time).plus(":"), textColor = PrimaryDark)
                             Spacer(Modifier.width(6.dp))
                             ReusableTextView(text = "10:45 AM", textColor = Color.Black)
                         }
 
                         Row(verticalAlignment = Alignment.CenterVertically) {
-                            ReusableTextView(text = stringResource(Res.string.home_date), textColor = PrimaryDark)
+                            ReusableTextView(text = stringResource(Res.string.home_date).plus(":"), textColor = PrimaryDark)
                             Spacer(Modifier.width(6.dp))
                             ReusableTextView(text = "04/12/2025", textColor = Color.Black)
                         }
@@ -207,9 +217,9 @@ fun HomeScreen(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(horizontal = 25.dp)
-                                .height(220.dp),
+                            .height(220.dp),
 
-                            horizontalArrangement = Arrangement.spacedBy(12.dp),
+                        horizontalArrangement = Arrangement.spacedBy(12.dp),
                             verticalArrangement = Arrangement.spacedBy(12.dp),
                             userScrollEnabled = false
                         ) {
@@ -218,103 +228,60 @@ fun HomeScreen(
                                 DashboardCardItem(item.count, item.title, item.icon, Modifier)
                             }
                         }
-
-
-
                     }
+
                     item {
-                        Box(
+                        LazyVerticalGrid(
+                            columns = GridCells.Fixed(2),
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(horizontal = 14.dp),
-                            contentAlignment = Alignment.CenterEnd
+                                .padding(horizontal = 16.dp)
+                                .height(330.dp),
+                            horizontalArrangement = Arrangement.spacedBy(12.dp),
+                            verticalArrangement = Arrangement.spacedBy(12.dp),
+                            userScrollEnabled = false
                         ) {
-                            Row(
-                                modifier = Modifier
-                                    .background(
-                                        color = viewmorebgColor,
-                                        shape = RoundedCornerShape(14.dp)
-                                    )
-                                    .clickable {
-                                    }
-                                    .padding(horizontal = 8.dp, vertical = 4.dp),
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                ReusableTextView(
-                                    text = stringResource(Res.string.view_more),
-                                    textColor = Color.Black,
-                                    fontSize = 8
-                                )
-                                Spacer(Modifier.width(2.dp))
-                                Icon(
-                                    painter = painterResource(Res.drawable.right_arrow), // or any arrow
-                                    contentDescription = null,
-                                    tint = black,
-                                    modifier = Modifier.size(10.dp)
+
+                            item {
+                                CommonSingleButtons(
+                                    onOkClick = { navController.navigate(RouteName.registration_list) },
+                                    backgroundColor = homeRegistrationColor,
+                                    text = stringResource(Res.string.home_registration).uppercase(),
+                                    textColor = black,
+                                    bgImage = painterResource(Res.drawable.registration)
                                 )
                             }
-                        }
-                    }
+
+                            item {
+                                CommonSingleButtons(
+                                    onOkClick = { navController.navigate(RouteName.replayment_list) },
+                                    backgroundColor = homerepaymentColor,
+                                    text = stringResource(Res.string.home_repayment),
+                                    textColor = black,
+                                    bgImage = painterResource(Res.drawable.repayment)
+                                )
+                            }
 
 
-
-                    item {
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 32.dp)
-                        ) {
-                            LazyVerticalGrid(
-                                columns = GridCells.Fixed(2),
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .height(330.dp),
-                                horizontalArrangement = Arrangement.spacedBy(20.dp),
-                                verticalArrangement = Arrangement.spacedBy(20.dp),
-                                userScrollEnabled = false
-                            ) {
-
-                                item {
-                                    CommonSingleButtons(
-                                        onOkClick = { navController.navigate(RouteName.registration_list) },
-                                        backgroundColor = homeRegistrationColor,
-                                        text = stringResource(Res.string.home_registration_detail),
-                                        textColor = black,
-                                        bgImage = painterResource(Res.drawable.registration)
-                                    )
-                                }
-
-                                item {
-                                    CommonSingleButtons(
-                                        onOkClick = { navController.navigate(RouteName.replayment_list) },
-                                        backgroundColor = homerepaymentColor,
-                                        text = stringResource(Res.string.home_repayment),
-                                        textColor = black,
-                                        bgImage = painterResource(Res.drawable.repayment)
-                                    )
-                                }
+                            item {
+                                CommonSingleButtons(
+                                    onOkClick = { navController.navigate(RouteName.gtr_list_screen) },
+                                    backgroundColor = homegtrColor,
+                                    text = stringResource(Res.string.home_gtr_home),
+                                    textColor = black,
+                                    bgImage = painterResource(Res.drawable.gtr)
+                                )
+                            }
 
 
-                                item {
-                                    CommonSingleButtons(
-                                        onOkClick = { navController.navigate(RouteName.gtr_list_screen) },
-                                        backgroundColor = homegtrColor,
-                                        text = stringResource(Res.string.home_gtr_home),
-                                        textColor = black,
-                                        bgImage = painterResource(Res.drawable.gtr)
-                                    )
-                                }
-
-
-                                item {
-                                    CommonSingleButtons(
-                                        onOkClick = {},
-                                        backgroundColor = homedatareportsColor,
-                                        text = stringResource(Res.string.home_data),
-                                        textColor = black,
-                                        bgImage = painterResource(Res.drawable.data_reports)
-                                    )
-                                }
+                            item {
+                                CommonSingleButtons(
+                                    onOkClick = {},
+                                    backgroundColor = homedatareportsColor,
+                                    text = stringResource(Res.string.home_data),
+                                    textColor = black,
+                                    bgImage = painterResource(Res.drawable.data_reports)
+                                )
                             }
                         }
                     }

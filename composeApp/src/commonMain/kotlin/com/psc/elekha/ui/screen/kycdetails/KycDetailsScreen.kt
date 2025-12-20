@@ -1,6 +1,5 @@
 // Updated KycDetailsScreen.kt
 package com.psc.elekha.ui.screen.kycdetails
-
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -21,7 +20,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -36,25 +34,22 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.psc.elekha.ui.theme.blue
 import com.psc.elekha.ui.theme.appleblue
 import com.psc.elekha.ui.theme.lightblues
 import com.psc.elekha.ui.theme.white
 import com.psc.elekha.utils.CommonSaveButton
 import com.psc.elekha.utils.CustomAlertDialog
-import com.psc.elekha.utils.FormField
+
 import com.psc.elekha.utils.FormFieldCompact
 import com.psc.elekha.utils.ReusableTextView
 import e_lekha.composeapp.generated.resources.Res
-import e_lekha.composeapp.generated.resources.aadhaar_card
 import e_lekha.composeapp.generated.resources.aadhar_no
 import e_lekha.composeapp.generated.resources.account_no
 import e_lekha.composeapp.generated.resources.back_image
 import e_lekha.composeapp.generated.resources.camera
 import e_lekha.composeapp.generated.resources.customer_image
 import e_lekha.composeapp.generated.resources.customer_kyc
-import e_lekha.composeapp.generated.resources.electricity_bill
 import e_lekha.composeapp.generated.resources.enter_aadhar
 import e_lekha.composeapp.generated.resources.enter_pan
 import e_lekha.composeapp.generated.resources.enter_voter_id
@@ -76,8 +71,6 @@ import e_lekha.composeapp.generated.resources.pan_number
 import e_lekha.composeapp.generated.resources.type_here
 import e_lekha.composeapp.generated.resources.voter_no
 import e_lekha.composeapp.generated.resources.your_photo_with_guarantor
-
-import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
@@ -257,7 +250,6 @@ fun KycDetailsScreen(
                        viewModel.voternoIdProof
                        viewModel.panNumber
                        viewModel.nameOnPan
-
                    }
                     onNextTab
                 },
@@ -293,7 +285,9 @@ fun ElectricityBillForm(viewModel: KycDetailViewModel) {
             onValueChange = {
                 viewModel.billName = it
             },
+            maxLength = 30,
             placeholder = stringResource(Res.string.type_here)
+
         )
 
         Spacer(Modifier.height(12.dp))
@@ -305,7 +299,7 @@ fun ElectricityBillForm(viewModel: KycDetailViewModel) {
                 viewModel.accountNumber = it
             },
 
-            maxLength = 10,
+            maxLength = 20,
             placeholder = stringResource(Res.string.type_here),
             inputType = KeyboardType.Number
         )
@@ -378,6 +372,7 @@ fun AadhaarCardForm(viewModel: KycDetailViewModel) {
             onValueChange = {
                 viewModel.nameonadhar = it
             },
+            maxLength = 20,
             placeholder = stringResource(Res.string.type_here)
         )
         Spacer(Modifier.height(20.dp))
@@ -457,7 +452,7 @@ fun VidForm(viewModel: KycDetailViewModel) {
                 viewModel.nameonvid = it  // Fixed: was voterno
             },
             placeholder = stringResource(Res.string.type_here),
-            maxLength = 16,
+            maxLength = 30,
         )
         Spacer(modifier = Modifier.height(20.dp))
 
@@ -644,6 +639,7 @@ fun IdProofAadhaarCardForm(viewModel: KycDetailViewModel) {
             onValueChange = {
                 viewModel.nameonadharIdProof = it
             },
+            maxLength = 30,
             placeholder = stringResource(Res.string.type_here)
         )
         Spacer(Modifier.height(20.dp))
@@ -723,7 +719,7 @@ fun IdProofVidForm(viewModel: KycDetailViewModel) {
                 viewModel.nameonvidIdProof = it  // Fixed: was voterno
             },
             placeholder = stringResource(Res.string.type_here),
-            maxLength = 16,
+            maxLength = 20,
         )
         Spacer(modifier = Modifier.height(20.dp))
 
@@ -771,6 +767,7 @@ fun PanCardForm(viewModel: KycDetailViewModel) {
             onValueChange = {
                 viewModel.panNumber = it
             },
+            maxLength = 10,
             placeholder = stringResource(Res.string.enter_pan),
             inputType = KeyboardType.Number
         )
@@ -783,6 +780,7 @@ fun PanCardForm(viewModel: KycDetailViewModel) {
             onValueChange = {
                 viewModel.nameOnPan = it
             },
+            maxLength = 30,
             placeholder = stringResource(Res.string.type_here)
         )
 

@@ -195,8 +195,6 @@ class CustomerViewModel(private val customerRepository: CustomerRepository) : Vi
                 RegLong,
                 GUID
             )
-
-            // Optional: refresh list if UI depends on it
             loadCustomers()
         }
     }
@@ -209,6 +207,22 @@ class CustomerViewModel(private val customerRepository: CustomerRepository) : Vi
 
     suspend fun getCustomerDetailGuid(guId: String): List<CustomerEntity> {
         return customerRepository.getCustomerByGuid(guId)
+    }
+
+
+    fun updateBankDetail(
+        customerGuid: String,
+        accountNo: String,
+        bankId: Int,
+        ifscCode: String,
+        UpdatedBy: Int?,
+        UpdatedOn: String?
+    ) {
+        viewModelScope.launch {
+            customerRepository.updateBankDetail(
+                customerGuid,accountNo,bankId,ifscCode,UpdatedBy,UpdatedOn
+            )
+        }
     }
     }
 

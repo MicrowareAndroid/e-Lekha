@@ -36,7 +36,9 @@ import com.psc.elekha.database.repository.MSTVillageRepository
 import com.psc.elekha.database.repository.RegistrationStatusRepository
 import com.psc.elekha.database.repository.TabletMenuRepository
 import com.psc.elekha.database.repository.TabletMenuRoleRepository
+import com.psc.elekha.database.repository.TrainingGroupRepository
 import com.psc.elekha.database.repository.UserBranchRepository
+import com.psc.elekha.database.repository.UserContactDetailRepository
 import com.psc.elekha.database.repository.UserResponseRepository
 import com.psc.elekha.database.repository.UsersRepository
 import org.koin.dsl.module
@@ -81,6 +83,8 @@ val repositoryModule = module {
     single { UserBranchRepository(get()) }
     single { UserResponseRepository(get()) }
     single { UsersRepository(get()) }
+    single { TrainingGroupRepository(get()) }
+    single { UserContactDetailRepository(get()) }
 
 
 

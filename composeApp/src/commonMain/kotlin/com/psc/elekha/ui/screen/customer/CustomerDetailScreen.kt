@@ -36,9 +36,9 @@ import com.psc.elekha.utils.CameraPicker
 import com.psc.elekha.utils.CommonDivider
 import com.psc.elekha.utils.CommonSingleButtonsBottomString
 import com.psc.elekha.utils.FillDynamicSpinner
-import com.psc.elekha.utils.FormField
+
 import com.psc.elekha.utils.FormFieldCompact
-import com.psc.elekha.utils.FormFields
+
 import com.psc.elekha.utils.FormSpinner
 import com.psc.elekha.utils.ReusableCard
 import com.psc.elekha.utils.ReusableDynamicSpinner
@@ -115,13 +115,12 @@ fun CustomerDetailScreen(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
+                    .verticalScroll(rememberScrollState())
                     .padding(horizontal = 15.dp, vertical = 5.dp),
 
 
             )
             {
-
-
                 ReusableCard(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -144,7 +143,7 @@ fun CustomerDetailScreen(
                             horizontalArrangement = Arrangement.Start
                         ) {
                             ReusableTextView(
-                                text = stringResource(Res.string.home_user),
+                                text = stringResource(Res.string.home_user).plus(":"),
                                 textColor = toolbar_color
                             )
                             Spacer(Modifier.width(6.dp))
@@ -167,7 +166,7 @@ fun CustomerDetailScreen(
                             )
                             {
                                 ReusableTextView(
-                                    text = stringResource(Res.string.home_time),
+                                    text = stringResource(Res.string.home_time).plus(":"),
                                     textColor = toolbar_color
                                 )
                                 Spacer(Modifier.width(6.dp))
@@ -179,7 +178,7 @@ fun CustomerDetailScreen(
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
                                 ReusableTextView(
-                                    text = stringResource(Res.string.home_date),
+                                    text = stringResource(Res.string.home_date).plus(":"),
                                     textColor = toolbar_color
                                 )
                                 Spacer(Modifier.width(6.dp))
@@ -241,8 +240,6 @@ fun CustomerDetailScreen(
                 Spacer(modifier = Modifier.height(15.dp))
                 Column(
                     modifier = Modifier
-
-                        .verticalScroll(rememberScrollState())
                         .padding(bottom = 20.dp)
                 )
                 {
@@ -257,7 +254,7 @@ fun CustomerDetailScreen(
 
                         // Fixed width text (avoid Row squeezing)
                         ReusableTextViewBlackCard(
-                            text = stringResource(Res.string.user_last_loan),
+                            text = stringResource(Res.string.user_last_loan).plus(":"),
                             modifier = Modifier.width(120.dp) // <--- IMPORTANT
                         )
 
@@ -283,7 +280,7 @@ fun CustomerDetailScreen(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         ReusableTextViewBlackCard(
-                            text = stringResource(Res.string.user_psc),
+                            text = stringResource(Res.string.user_psc).plus(":"),
                             modifier = Modifier.width(120.dp),
                         )
                         Spacer(modifier = Modifier.width(8.dp))
@@ -305,7 +302,7 @@ fun CustomerDetailScreen(
                     ) {
                         ReusableTextViewBlackCard(
 
-                            text = stringResource(Res.string.user_total),
+                            text = stringResource(Res.string.user_total).plus(":"),
                             modifier = Modifier.width(120.dp),
                         )
                         Spacer(modifier = Modifier.width(7.dp))
@@ -327,7 +324,7 @@ fun CustomerDetailScreen(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         ReusableTextViewBlackCard(
-                            text = stringResource(Res.string.user_loan),
+                            text = stringResource(Res.string.user_loan).plus(":"),
                             modifier = Modifier.width(120.dp),
                         )
                         Spacer(modifier = Modifier.width(7.dp))
@@ -352,7 +349,7 @@ fun CustomerDetailScreen(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         ReusableTextViewBlackCard(
-                            text = stringResource(Res.string.user_existing),
+                            text = stringResource(Res.string.user_existing).plus(":"),
                             modifier = Modifier.width(120.dp),
 
                             )
@@ -375,7 +372,7 @@ fun CustomerDetailScreen(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         ReusableTextViewBlackCard(
-                            text = stringResource(Res.string.user_ebill),
+                            text = stringResource(Res.string.user_ebill).plus(":"),
                             modifier = Modifier.width(120.dp),
 
                             )
@@ -435,7 +432,7 @@ fun CustomerDetailScreen(
                             )
                             {
                                 Text(
-                                    text = stringResource(Res.string.user_electricity), // left side text
+                                    text = stringResource(Res.string.user_electricity).plus(":"), // left side text
                                     fontSize = 14.sp,
                                     color = Color.Black,
                                     fontFamily = FontFamily(Font(Res.font.roboto_medium)),
@@ -496,7 +493,7 @@ fun CustomerDetailScreen(
                             )
                             {
                                 Text(
-                                    text = stringResource(Res.string.user_house), // left side text
+                                    text = stringResource(Res.string.user_house).plus(":"), // left side text
                                     fontSize = 14.sp,
                                     color = Color.Black,
                                     fontFamily = FontFamily(Font(Res.font.roboto_medium)),
@@ -525,7 +522,7 @@ fun CustomerDetailScreen(
                     )
                     {
                         ReusableTextViewBlackCard(
-                            text = stringResource(Res.string.user_loan_any),
+                            text = stringResource(Res.string.user_loan_any).plus(":"),
                             modifier = Modifier.width(120.dp),
 
                             )
@@ -559,7 +556,7 @@ fun CustomerDetailScreen(
                     ) {
 
                         ReusableTextViews(
-                            text = stringResource(Res.string.user_note),
+                            text = stringResource(Res.string.user_note).plus(":"),
                             fontSize = 15,
                             textColor = Color.Gray,
                             isMandatory = 1

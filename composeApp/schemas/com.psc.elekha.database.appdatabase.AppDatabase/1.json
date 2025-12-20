@@ -3909,6 +3909,7 @@
       {
         "tableName": "TrainingGroup",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`UID` INTEGER NOT NULL, `CGT_GroupImage2` TEXT, `GRT_GroupImage` TEXT, `CGT_GroupImage` TEXT, `longitudeDay2` REAL, `longitudeDay1` REAL, `latitudeDay2` REAL, `latitudeDay1` REAL, `IsDeleted` INTEGER, `TGroupID` INTEGER, `TGroupName` TEXT, `Day1_Date` TEXT, `Day1_Place` TEXT, `Day2_Date` TEXT, `Day2_Place` TEXT, `VillageID` INTEGER, `CurrentStatus` TEXT, `UserID` TEXT, `CreatedBy` TEXT, `CreatedDate` TEXT, `CenterID` TEXT, PRIMARY KEY(`UID`))",
+
         "fields": [
           {
             "fieldPath": "UID",
@@ -4031,8 +4032,7 @@
           {
             "fieldPath": "LoanofficerID",
             "columnName": "LoanofficerID",
-            "affinity": "TEXT",
-            "notNull": true
+            "affinity": "INTEGER"
           },
           {
             "fieldPath": "Disbursed_ThisMonth",
@@ -4149,18 +4149,53 @@
             "columnName": "Customer",
             "affinity": "INTEGER"
           }
-        ],
+            ],
         "primaryKey": {
           "autoGenerate": false,
           "columnNames": [
             "LoanofficerID"
+            "UserId"
+          ]
+        }
+      },
+      {
+        "tableName": "UserContactDetails",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`UserId` TEXT NOT NULL, `Username` TEXT, `Contact` TEXT, `RoleId` TEXT, PRIMARY KEY(`UserId`))",
+        "fields": [
+          {
+            "fieldPath": "UserId",
+            "columnName": "UserId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          { 
+            "fieldPath": "Username",
+            "columnName": "Username",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "Contact",
+            "columnName": "Contact",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "RoleId",
+            "columnName": "RoleId",
+            "affinity": "TEXT"
+          }
+       ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "UserId"
           ]
         }
       }
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '775a5f111f0361d8a81989f09a6055bb')"
+
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b25e30ceb4f80bfff998afac935eda7d')"
     ]
   }
 }

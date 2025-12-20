@@ -173,7 +173,7 @@ fun GtrListScreen(
                                 )
                                 {
                                     ReusableTextView(
-                                        text = stringResource(Res.string.home_time),
+                                        text = stringResource(Res.string.home_time).plus(":"),
                                         textColor = toolbar_color
                                     )
                                     Spacer(Modifier.width(6.dp))
@@ -185,7 +185,7 @@ fun GtrListScreen(
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
                                     ReusableTextView(
-                                        text = stringResource(Res.string.home_date),
+                                        text = stringResource(Res.string.home_date).plus(":"),
                                         textColor = toolbar_color
                                     )
                                     Spacer(Modifier.width(6.dp))
