@@ -62,6 +62,7 @@
     <string name="name">Name</string>
     <string name="edit_profile">Edit Profile</string>
     <string name="download">Download</string>
+    <string name="view_more">View more</string>
     <string name="upload">Upload</string>
     <string name="master_download">Master Data Download</string>
     <string name="are_you_sure_logout">Are you sure you want to logout?</string>
@@ -267,6 +268,18 @@
     <string name="personal_payment_image">Payment Image</string>
     <string name="personal_payment_utr">UTR Number</string>
     <string name="personal_payment_detail">Repayment Detail</string>
+    <string name="personal_payment_daily">Please Enter Daily Expenses</string>
+    <string name="personal_education_selection">Please Enter Education</string>
+    <string name="personal_medical">Please Enter Medical</string>
+    <string name="personal_others">Please Enter Others</string>
+    <string name="personal_total_monthly">Please Enter Total Monthly Expenditure</string>
+    <string name="personal_annual">Please Enter Annual</string>
+    <string name="personal_mfi">Please Enter MFI/Bank Name</string>
+    <string name="personal_loan_enter">Please Enter Loan Amount</string>
+    <string name="personal_outstanding">Please Enter Outstanding</string>
+    <string name="personal_emi_enter">Please Enter Emi</string>
+    <string name="personal_full_name">Please Enter Full Name Applicant</string>
+    <string name="personal_remarks">Please Enter Remarks</string>
     <string name="view_more">View more</string>
 
 </resources>

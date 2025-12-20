@@ -834,6 +834,89 @@ fun FormDatePickerCompact(
         }
     }
 }
+
+
+
+@Composable
+fun FormDatePickerCompacts(
+    label: String,
+    value: String,
+    onValueChange: (String) -> Unit,
+    onClick: () -> Unit,
+    trailingIcon: @Composable (() -> Unit)? = null,
+    placeholder: String = stringResource(Res.string.dd_mm_yy),
+    isEnable: Boolean = true,
+    labelColor: Color = textview_color,
+    placeholderColor: Color = Color(0xFF212121),
+    backgroundColor: Color = text_fiiled_color,
+    borderColor: Color = boderColor,
+    modifier: Modifier = Modifier
+) {
+
+    Column(modifier = modifier) {
+
+        // Label (same as FormDatePicker)
+        ReusableTextView(
+            text = label,
+            fontSize = 14,
+            textColor = labelColor
+        )
+
+        Spacer(modifier = Modifier.height(5.dp))
+
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(40.dp)
+                .background(backgroundColor, RoundedCornerShape(15.dp))
+                .border(1.dp, borderColor, RoundedCornerShape(15.dp))
+                .clickable(enabled = isEnable) { onClick() }
+                .padding(horizontal = 12.dp),
+            contentAlignment = Alignment.CenterStart
+        ) {
+
+            BasicTextField(
+                value = value,
+                onValueChange = onValueChange,
+                enabled = false,
+                readOnly = true,
+                singleLine = true,
+                textStyle = TextStyle(
+                    fontSize = 15.sp, // SAME as FormDatePicker
+                    color = Color.Black,
+                    fontFamily = FontFamily(Font(Res.font.roboto_medium))
+                ),
+                decorationBox = { innerTextField ->
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+
+                        Box(modifier = Modifier.weight(1f)) {
+
+                            if (value.isEmpty()) {
+                                ReusableTextView(
+                                    text = placeholder,
+                                    fontSize = 15,
+                                    textColor = placeholderColor
+                                )
+                            }
+
+                            innerTextField()
+                        }
+
+                        if (trailingIcon != null) {
+                            trailingIcon()
+                        }
+                    }
+                }
+            )
+        }
+    }
+}
+
+
 fun isAge18Plus(dob: String): Boolean {
     // Expected format: dd-MM-yyyy or dd/MM/yyyy
     val parts = dob.replace("/", "-").split("-")
@@ -1132,7 +1215,132 @@ fun FormSpinner(
     }
 }
 
+@Composable
+fun <T : Any> FillDynamicSpinners(
+    label: String,
+    options: List<T>?,
+    selectedOption: Int?,
+    onOptionSelected: (Int) -> Unit,
+    getOptionId: (T) -> Int,
+    getOptionLabel: (T) -> String,
+    modifier: Modifier = Modifier,
+    labelColor: Color = black,
+    backgroundColor: Color = text_fiiled_color,
+    textColor: Color = Color.Black,
+    fontFamily: FontFamily = FontFamily(Font(Res.font.roboto_regular)),
+    borderColor: Color = boderColor,
+    focusRequester: FocusRequester? = null,
+    bringIntoViewRequester: BringIntoViewRequester? = null
+) {
 
+    var expanded by remember { mutableStateOf(false) }
+    var hasFocus by remember { mutableStateOf(false) }
+    var spinnerWidth by remember { mutableStateOf(0.dp) }
+
+    val density = LocalDensity.current
+    val selectText = "Select"
+
+    // ID + Label list
+    val optionList = remember(options) {
+        buildList {
+            add(0 to selectText)
+            options?.forEach {
+                add(getOptionId(it) to getOptionLabel(it))
+            }
+        }
+    }
+
+    val selectedText =
+        optionList.firstOrNull { it.first == selectedOption }?.second ?: selectText
+
+    //  Same behavior as old FillDynamicSpinner
+    LaunchedEffect(hasFocus) {
+        if (hasFocus) {
+            delay(120)
+            bringIntoViewRequester?.bringIntoView()
+            expanded = true
+        }
+    }
+
+    Column(modifier = modifier) {
+
+        ReusableTextView(
+            text = label,
+            fontSize = 14,
+            textColor = labelColor,
+            fontFamily = fontFamily
+        )
+
+        Spacer(modifier = Modifier.height(5.dp))
+
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(40.dp) // FormSpinner height
+                .border(1.dp, borderColor, RoundedCornerShape(15.dp))
+                .background(backgroundColor, RoundedCornerShape(15.dp))
+                .focusTarget()
+                .focusable()
+                .then(
+                    if (focusRequester != null)
+                        Modifier.focusRequester(focusRequester)
+                    else Modifier
+                )
+                .onFocusChanged { hasFocus = it.isFocused }
+                .clickable { expanded = true }
+                .onGloballyPositioned {
+                    spinnerWidth = with(density) { it.size.width.toDp() }
+                },
+            contentAlignment = Alignment.CenterStart
+        ) {
+
+            Row(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 10.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+
+                ReusableTextView(
+                    text = selectedText,
+                    textColor = textColor,
+                    fontFamily = fontFamily
+                )
+
+                Spacer(modifier = Modifier.weight(1f))
+
+                Icon(
+                    imageVector = vectorResource(Res.drawable.ic_arrow_drop_down),
+                    contentDescription = null
+                )
+            }
+
+            DropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { expanded = false },
+                modifier = Modifier
+                    .width(spinnerWidth)
+                    .background(Color.White)
+            ) {
+                optionList.forEach { (id, name) ->
+                    DropdownMenuItem(
+                        text = {
+                            ReusableTextView(
+                                text = name,
+                                modifier = Modifier.fillMaxWidth(),
+                                textColor = Color.Black
+                            )
+                        },
+                        onClick = {
+                            onOptionSelected(id)
+                            expanded = false
+                        }
+                    )
+                }
+            }
+        }
+    }
+}
 
 @Composable
 fun <T : Any> FillDynamicSpinner(

@@ -26,6 +26,7 @@ import e_lekha.composeapp.generated.resources.data_saved_successfully
 import e_lekha.composeapp.generated.resources.personal_customer_name
 import e_lekha.composeapp.generated.resources.personal_district
 import e_lekha.composeapp.generated.resources.personal_education
+import e_lekha.composeapp.generated.resources.personal_education_selection
 import e_lekha.composeapp.generated.resources.personal_father
 import e_lekha.composeapp.generated.resources.personal_full_address
 import e_lekha.composeapp.generated.resources.personal_gurantor_mobile
@@ -36,7 +37,9 @@ import e_lekha.composeapp.generated.resources.personal_landmark
 import e_lekha.composeapp.generated.resources.personal_marital
 import e_lekha.composeapp.generated.resources.personal_maternal_address
 import e_lekha.composeapp.generated.resources.personal_maternal_mobile
+import e_lekha.composeapp.generated.resources.personal_medical
 import e_lekha.composeapp.generated.resources.personal_mobile_number
+import e_lekha.composeapp.generated.resources.personal_payment_daily
 import e_lekha.composeapp.generated.resources.personal_pincode
 import e_lekha.composeapp.generated.resources.personal_purpose
 import e_lekha.composeapp.generated.resources.personal_relation
@@ -61,8 +64,6 @@ class PersonalDetailViewModel(
 {
     var customerName  by mutableStateOf("")
     var dateOfBirth by mutableStateOf("")
-    var maritalStatusId by mutableStateOf(0)
-    var educationId by mutableStateOf(0)
     var religionId by mutableStateOf(0)
     var purposeId by mutableStateOf(0)
     var mobileNumber by mutableStateOf("")
@@ -87,6 +88,23 @@ class PersonalDetailViewModel(
     var villageNames by mutableStateOf("")
     var statesId by mutableStateOf("")
     var maternalAddress by mutableStateOf("")
+    var maritalStatusId by mutableStateOf(0)
+
+    var educationId by mutableStateOf(0)
+    var dailyExpense by mutableStateOf("")
+    var educationExpense by mutableStateOf("")
+    var medicalExpense by mutableStateOf("")
+    var othersExpense by mutableStateOf("")
+    var totalMonthlyExpense by mutableStateOf("")
+    var annualExpense by mutableStateOf("")
+    var mfiBankExpense by mutableStateOf("")
+    var loanAmountExpense by mutableStateOf("")
+    var outStandingExpense by mutableStateOf("")
+    var emiExpense by mutableStateOf("")
+    var fullNameExpense by mutableStateOf("")
+    var remarksExpense by mutableStateOf("")
+
+
 
 
 
@@ -114,6 +132,19 @@ class PersonalDetailViewModel(
     val bringIntoViewRequesterFatherName = BringIntoViewRequester()
     val bringIntoViewRequesterVillageNames = BringIntoViewRequester()
     val bringIntoViewRequesterStatesId = BringIntoViewRequester()
+    val bringIntoViewRequesterDailyExpense = BringIntoViewRequester()
+    val bringIntoViewRequesterEducationExpense = BringIntoViewRequester()
+    val bringIntoViewRequesterMedicalExpense = BringIntoViewRequester()
+    val bringIntoViewRequesterOthersExpense = BringIntoViewRequester()
+    val bringIntoViewRequesterTotalMonthlyExpense = BringIntoViewRequester()
+    val bringIntoViewRequesterAnnualExpense = BringIntoViewRequester()
+    val bringIntoViewRequesterMfiBankExpense = BringIntoViewRequester()
+    val bringIntoViewRequesterLoanAmountExpense = BringIntoViewRequester()
+    val bringIntoViewRequesterOutStandingExpense = BringIntoViewRequester()
+    val bringIntoViewRequesterFullNameExpense = BringIntoViewRequester()
+    val bringIntoViewRequesterRemarksExpense = BringIntoViewRequester()
+    val bringIntoViewRequesterEmiExpense = BringIntoViewRequester()
+
     val bringIntoViewRequesterMaternalAddress = BringIntoViewRequester()
 
     val focusRequesterCustomerName = FocusRequester()
@@ -138,10 +169,20 @@ class PersonalDetailViewModel(
     val focusRequesterLandMark = FocusRequester()
     val focusRequesterPinCode = FocusRequester()
     val focusRequesterFullAddress = FocusRequester()
-
     val focusRequesterHusbandName = FocusRequester()
     val focusRequesterRelationId = FocusRequester()
-
+    val focusRequesterDailyExpense = FocusRequester()
+    val focusRequesterEducationExpense = FocusRequester()
+    val focusRequesterMedicalExpense = FocusRequester()
+    val focusRequesterOthersExpense = FocusRequester()
+    val focusRequesterTotalMonthlyExpense = FocusRequester()
+    val focusRequesterAnnualExpense = FocusRequester()
+    val focusRequesterMfiBankExpense = FocusRequester()
+    val focusRequesterLoanAmountExpense = FocusRequester()
+    val focusRequesterOutStandingExpense = FocusRequester()
+    val focusRequesterFullNameExpense = FocusRequester()
+    val focusRequesterRemarksExpense = FocusRequester()
+    val focusRequesterEmiExpense = FocusRequester()
 
     suspend fun savePersonalDetail() {
         val guid = appPreferences.getString(AppSP.customerGuid)
@@ -400,7 +441,7 @@ class PersonalDetailViewModel(
                     mobileNumber = returnStringValue(listData[0].ContactNo)
                     husbandName = returnStringValue(listData[0].HusbandMName)
                     gurantorName = returnStringValue(listData[0].GurantorMName)
-                   // dateOfBirth= convertDateFormatDDMMYYYY(returnStringValue(listData[0].DOB))
+                    dateOfBirth= convertDateFormatDDMMYYYY(returnStringValue(listData[0].DOB))
                     //  relationId = returnIntegerValue(data.Re.toString())
 
                     //  gurantormobileNumber = returnIntegerValue(data..toString())
@@ -624,6 +665,51 @@ class PersonalDetailViewModel(
                     errorMessage = nameLabel,
                     focusRequester = focusRequesterFatherName,
                     bringIntoViewRequester = bringIntoViewRequesterFatherName
+                )
+            }
+            returnStringValue(husbandName).isBlank() -> {
+                val nameLabel = getString(Res.string.personal_husband_name)
+                ValidationModelContorl(
+                    isValid = false,
+                    errorMessage = nameLabel,
+                    focusRequester = focusRequesterHusbandName,
+                    bringIntoViewRequester = bringIntoViewRequesterHusbandName
+                )
+            }
+            returnStringValue(dailyExpense).isBlank() -> {
+                val nameLabel = getString(Res.string.personal_payment_daily)
+                ValidationModelContorl(
+                    isValid = false,
+                    errorMessage = nameLabel,
+                    focusRequester = focusRequesterDailyExpense,
+                    bringIntoViewRequester = bringIntoViewRequesterDailyExpense
+                )
+            }
+            returnStringValue(educationExpense).isBlank() -> {
+                val nameLabel = getString(Res.string.personal_education_selection)
+                ValidationModelContorl(
+                    isValid = false,
+                    errorMessage = nameLabel,
+                    focusRequester = focusRequesterHusbandName,
+                    bringIntoViewRequester = bringIntoViewRequesterHusbandName
+                )
+            }
+            returnStringValue(medicalExpense).isBlank() -> {
+                val nameLabel = getString(Res.string.personal_medical)
+                ValidationModelContorl(
+                    isValid = false,
+                    errorMessage = nameLabel,
+                    focusRequester = focusRequesterHusbandName,
+                    bringIntoViewRequester = bringIntoViewRequesterHusbandName
+                )
+            }
+            returnStringValue(husbandName).isBlank() -> {
+                val nameLabel = getString(Res.string.personal_husband_name)
+                ValidationModelContorl(
+                    isValid = false,
+                    errorMessage = nameLabel,
+                    focusRequester = focusRequesterHusbandName,
+                    bringIntoViewRequester = bringIntoViewRequesterHusbandName
                 )
             }
 

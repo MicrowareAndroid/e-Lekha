@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "b25e30ceb4f80bfff998afac935eda7d",
+    "identityHash": "775a5f111f0361d8a81989f09a6055bb",
     "entities": [
       {
         "tableName": "CustomerStatus",
@@ -3908,7 +3908,8 @@
       },
       {
         "tableName": "TrainingGroup",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`UID` INTEGER NOT NULL, `CGT_GroupImage2` TEXT, `GRT_GroupImage` TEXT, `CGT_GroupImage` TEXT, `longitudeDay2` INTEGER, `longitudeDay1` INTEGER, `latitudeDay2` INTEGER, `latitudeDay1` INTEGER, `IsDeleted` INTEGER, `TGroupID` INTEGER, `TGroupName` TEXT, `Day1_Date` TEXT, `Day1_Place` TEXT, `Day2_Date` TEXT, `Day2_Place` TEXT, `VillageID` INTEGER, `CurrentStatus` INTEGER, `UserID` TEXT, `CreatedBy` TEXT, `CreatedDate` TEXT, `CenterID` INTEGER, PRIMARY KEY(`UID`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`UID` INTEGER NOT NULL, `CGT_GroupImage2` TEXT, `GRT_GroupImage` TEXT, `CGT_GroupImage` TEXT, `longitudeDay2` REAL, `longitudeDay1` REAL, `latitudeDay2` REAL, `latitudeDay1` REAL, `IsDeleted` INTEGER, `TGroupID` INTEGER, `TGroupName` TEXT, `Day1_Date` TEXT, `Day1_Place` TEXT, `Day2_Date` TEXT, `Day2_Place` TEXT, `VillageID` INTEGER, `CurrentStatus` TEXT, `UserID` TEXT, `CreatedBy` TEXT, `CreatedDate` TEXT, `CenterID` TEXT, PRIMARY KEY(`UID`))",
+
         "fields": [
           {
             "fieldPath": "UID",
@@ -3934,22 +3935,22 @@
           {
             "fieldPath": "longitudeDay2",
             "columnName": "longitudeDay2",
-            "affinity": "INTEGER"
+            "affinity": "REAL"
           },
           {
             "fieldPath": "longitudeDay1",
             "columnName": "longitudeDay1",
-            "affinity": "INTEGER"
+            "affinity": "REAL"
           },
           {
             "fieldPath": "latitudeDay2",
             "columnName": "latitudeDay2",
-            "affinity": "INTEGER"
+            "affinity": "REAL"
           },
           {
             "fieldPath": "latitudeDay1",
             "columnName": "latitudeDay1",
-            "affinity": "INTEGER"
+            "affinity": "REAL"
           },
           {
             "fieldPath": "IsDeleted",
@@ -3994,7 +3995,7 @@
           {
             "fieldPath": "CurrentStatus",
             "columnName": "CurrentStatus",
-            "affinity": "INTEGER"
+            "affinity": "TEXT"
           },
           {
             "fieldPath": "UserID",
@@ -4014,13 +4015,146 @@
           {
             "fieldPath": "CenterID",
             "columnName": "CenterID",
-            "affinity": "INTEGER"
+            "affinity": "TEXT"
           }
         ],
         "primaryKey": {
           "autoGenerate": false,
           "columnNames": [
             "UID"
+          ]
+        }
+      },
+      {
+        "tableName": "LoanofficerDashBoardData",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`LoanofficerID` TEXT NOT NULL, `Disbursed_ThisMonth` INTEGER, `Disbursed_PastMonth` INTEGER, `NewCustomer_ThisMonth` INTEGER, `NewCustomer_PastMonth` INTEGER, `OldCustomer_ThisMonth` INTEGER, `OldCustomer_PastMonth` INTEGER, `CustomerInArrear_ThisMonth` INTEGER, `CustomerInArrear_PastMonth` INTEGER, `CustomerInPAR_PastMonth` INTEGER, `CustomerInCGT` INTEGER, `RegisteredCustomer` INTEGER, `OtherCustomer` INTEGER, `LOCaseLoad` INTEGER, `LOOutstanding` INTEGER, `LORegCustomer` INTEGER, `LOGTR` INTEGER, `LODisbursement` INTEGER, `Meetings` INTEGER, `ActiveCustomer` INTEGER, `Due` INTEGER, `PastDue` INTEGER, `AmountCollected` INTEGER, `Customer` INTEGER, PRIMARY KEY(`LoanofficerID`))",
+        "fields": [
+          {
+            "fieldPath": "LoanofficerID",
+            "columnName": "LoanofficerID",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "Disbursed_ThisMonth",
+            "columnName": "Disbursed_ThisMonth",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "Disbursed_PastMonth",
+            "columnName": "Disbursed_PastMonth",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "NewCustomer_ThisMonth",
+            "columnName": "NewCustomer_ThisMonth",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "NewCustomer_PastMonth",
+            "columnName": "NewCustomer_PastMonth",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "OldCustomer_ThisMonth",
+            "columnName": "OldCustomer_ThisMonth",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "OldCustomer_PastMonth",
+            "columnName": "OldCustomer_PastMonth",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "CustomerInArrear_ThisMonth",
+            "columnName": "CustomerInArrear_ThisMonth",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "CustomerInArrear_PastMonth",
+            "columnName": "CustomerInArrear_PastMonth",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "CustomerInPAR_PastMonth",
+            "columnName": "CustomerInPAR_PastMonth",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "CustomerInCGT",
+            "columnName": "CustomerInCGT",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "RegisteredCustomer",
+            "columnName": "RegisteredCustomer",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "OtherCustomer",
+            "columnName": "OtherCustomer",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "LOCaseLoad",
+            "columnName": "LOCaseLoad",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "LOOutstanding",
+            "columnName": "LOOutstanding",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "LORegCustomer",
+            "columnName": "LORegCustomer",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "LOGTR",
+            "columnName": "LOGTR",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "LODisbursement",
+            "columnName": "LODisbursement",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "Meetings",
+            "columnName": "Meetings",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "ActiveCustomer",
+            "columnName": "ActiveCustomer",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "Due",
+            "columnName": "Due",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "PastDue",
+            "columnName": "PastDue",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "AmountCollected",
+            "columnName": "AmountCollected",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "Customer",
+            "columnName": "Customer",
+            "affinity": "INTEGER"
+          }
+            ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "LoanofficerID"
+            "UserId"
           ]
         }
       },
@@ -4034,7 +4168,7 @@
             "affinity": "TEXT",
             "notNull": true
           },
-          {
+          { 
             "fieldPath": "Username",
             "columnName": "Username",
             "affinity": "TEXT"
@@ -4049,7 +4183,7 @@
             "columnName": "RoleId",
             "affinity": "TEXT"
           }
-        ],
+       ],
         "primaryKey": {
           "autoGenerate": false,
           "columnNames": [
@@ -4060,6 +4194,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+
       "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b25e30ceb4f80bfff998afac935eda7d')"
     ]
   }

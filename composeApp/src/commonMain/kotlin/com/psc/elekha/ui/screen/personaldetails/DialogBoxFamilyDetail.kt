@@ -183,7 +183,7 @@ fun CustomAlertFamilyDetails(
                             onOkClick = {
                                 onSubmit()
                             },
-                            stringResource(Res.string.ok),
+                            stringResource(Res.string.gtr_saves),
                             modifier = Modifier.weight(1f),
                             textSize = 12
                         )

@@ -24,6 +24,7 @@ import com.psc.elekha.database.dao.KYCStatusDao
 import com.psc.elekha.database.dao.LoanClosureDao
 import com.psc.elekha.database.dao.LoanRepaymentDao
 import com.psc.elekha.database.dao.LoanScheduleDao
+import com.psc.elekha.database.dao.LoanofficerDashBoardDataDao
 import com.psc.elekha.database.dao.MSTAssetsValuationDao
 import com.psc.elekha.database.dao.MSTBankBranchDao
 import com.psc.elekha.database.dao.MSTBankDao
@@ -41,6 +42,7 @@ import com.psc.elekha.database.dao.MSTVillageDao
 import com.psc.elekha.database.dao.RegistrationStatusDao
 import com.psc.elekha.database.dao.TabletMenuDao
 import com.psc.elekha.database.dao.TabletMenuRoleDao
+import com.psc.elekha.database.dao.TrainingGroupDao
 import com.psc.elekha.database.dao.TrainingGroupStatusDao
 import com.psc.elekha.database.dao.UserBranchDao
 import com.psc.elekha.database.dao.UserResponseDao
@@ -63,6 +65,7 @@ import com.psc.elekha.database.entity.KYCStatusEntity
 import com.psc.elekha.database.entity.LoanClosureEntity
 import com.psc.elekha.database.entity.LoanRepaymentEntity
 import com.psc.elekha.database.entity.LoanScheduleEntity
+import com.psc.elekha.database.entity.LoanofficerDashBoardDataEntity
 import com.psc.elekha.database.entity.MSTAssetsValuationEntity
 import com.psc.elekha.database.entity.MSTBankBranchEntity
 import com.psc.elekha.database.entity.MSTBankEntity
@@ -82,6 +85,7 @@ import com.psc.elekha.database.entity.MstLoanDetailsEntity
 import com.psc.elekha.database.entity.RegistrationStatusEntity
 import com.psc.elekha.database.entity.TabletMenuEntity
 import com.psc.elekha.database.entity.TabletMenuRoleEntity
+import com.psc.elekha.database.entity.TrainingGroup
 import com.psc.elekha.database.entity.UserBranchEntity
 import com.psc.elekha.database.entity.UserResponseEntity
 import com.psc.elekha.database.entity.UsersEntity
@@ -99,7 +103,8 @@ import com.psc.elekha.database.entity.BranchManagerDashbordEntity
     CustomerFamilyMemberDetailsEntity::class, LoanClosureEntity::class, LoanRepaymentEntity::class, LoanScheduleEntity::class,
     CustomerLoanDisbursementEntity::class, ImageTrackingRecordEntity::class, ImageDetailEntity::class, UserResponseEntity::class,
     CustomerDefaultEntity::class, MstLoanDetailsEntity::class, RegistrationStatusEntity::class, CustomerTransactionDataEntity::class,
-    CustomerTransactionsDetailsEntity::class, AdminDashbordEntity::class, BranchManagerDashbordEntity::class, TrainingGroupStatusEntity::class],
+    CustomerTransactionsDetailsEntity::class, TrainingGroup::class, LoanofficerDashBoardDataEntity::class,
+    AdminDashbordEntity::class, BranchManagerDashbordEntity::class, TrainingGroupStatusEntity::class],
     version = 1, exportSchema = true)
 @ConstructedBy(AppDatabaseConstructor::class)
 abstract class AppDatabase : RoomDatabase() {
@@ -143,16 +148,11 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun registrationStatusDao(): RegistrationStatusDao
     abstract fun customerTransactionDataDao(): CustomerTransactionDataDao
     abstract fun customerTransactionsDetailsDao(): CustomerTransactionsDetailsDao
-
+    abstract fun trainingGroupDao(): TrainingGroupDao
+    abstract fun loanofficerDashBoardDataDao(): LoanofficerDashBoardDataDao
     abstract fun admissionDashboardDao(): AdminDashboardDao
-
     abstract fun branchManagerDashboardDao(): BranchManagerDashbordDao
-
     abstract fun trainingGroupStatusDao(): TrainingGroupStatusDao
-
-
-
-
 
 }
 
