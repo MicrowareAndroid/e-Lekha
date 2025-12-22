@@ -1,21 +1,17 @@
 package com.psc.elekha.ui.screen.repayment
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.material3.*
-import androidx.compose.material3.FloatingActionButtonDefaults.elevation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -26,23 +22,14 @@ import org.jetbrains.compose.resources.painterResource
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.unit.sp
-
 import com.psc.elekha.ui.screen.repayment.model.RepaymentItem
-import com.psc.elekha.ui.theme.LightMint
-import com.psc.elekha.ui.theme.LightSkyBlue
-import com.psc.elekha.ui.theme.LightTeal
-import com.psc.elekha.ui.theme.PrimaryDark
 import com.psc.elekha.ui.theme.btn_color
 import com.psc.elekha.ui.theme.toolbar_color
 import org.jetbrains.compose.resources.stringResource
-
-import androidx.compose.foundation.layout.BoxScope
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.window.Dialog
 import androidx.navigation.compose.rememberNavController
 import com.psc.elekha.ui.screen.home.HomeScreen
-import com.psc.elekha.ui.theme.homedatareportsColor
+import com.psc.elekha.ui.theme.*
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -199,7 +186,9 @@ fun RepaymentList(
                             {
                                 Row(verticalAlignment = Alignment.CenterVertically) {
                                     ReusableTextView(
-                                        text = stringResource(Res.string.select_customer_center).plus(":"),
+                                        text = stringResource(Res.string.select_customer_center).plus(
+                                            ":"
+                                        ),
                                         textColor = toolbar_color
                                     )
                                     Spacer(Modifier.width(6.dp))
@@ -207,7 +196,9 @@ fun RepaymentList(
                                 }
                                 Row(verticalAlignment = Alignment.CenterVertically) {
                                     ReusableTextView(
-                                        text = stringResource(Res.string.select_customer_next).plus(":"),
+                                        text = stringResource(Res.string.select_customer_next).plus(
+                                            ":"
+                                        ),
                                         textColor = toolbar_color
                                     )
                                     Spacer(Modifier.width(6.dp))
@@ -261,14 +252,14 @@ fun RepaymentList(
                             } else {
                                 selectedItems + index
                             }
-
-
-                            selectedDialogItem = sampleRepaymentList[index]
                         },
                         onFilterClick = { showFilterDialog = true },
                         modifier = Modifier
                             .weight(1f)
-                            .padding(bottom = 45.dp)
+                            .padding(bottom = 45.dp),
+                        onCardClicked = { index ->
+                            selectedDialogItem = sampleRepaymentList[index]
+                        }
                     )
                 }
                 Box(
@@ -339,7 +330,8 @@ fun CollectionDetailsCard(
     selectedItems: Set<Int>,
     onItemSelected: (Int) -> Unit,
     onFilterClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onCardClicked: (Int) -> Unit
 ) {
     Column(modifier = modifier) {
         // Header with Filter Icon
@@ -375,7 +367,8 @@ fun CollectionDetailsCard(
                 RepaymentItemCard(
                     item = items[index],
                     isSelected = selectedItems.contains(index),
-                    onSelected = { onItemSelected(index) }
+                    onSelected = { onItemSelected(index) },
+                    onClicked = { onCardClicked(index) }
                 )
 
                 if (index < items.size - 1) {
@@ -409,13 +402,18 @@ fun FilterLoanDetailsDialog(
         title = {
             Column {
                 ReusableTextView(
-                    text = stringResource(Res.string.select_customer_filter_details).plus(":"),
+                    text = stringResource(Res.string.select_customer_filter_details).plus(" :"),
                     fontWeight = FontWeight.Bold,
                     fontSize = 20,
                     textColor = Color.Black
                 )
-                Spacer(modifier = Modifier.height(8.dp))
-                CommonDivider(color = LightSkyBlue, thickness = 1.dp)
+                Spacer(modifier = Modifier.height(5.dp))
+                CommonDivider(
+                    color = dark_gray,
+                    thickness = 1.dp,
+                    startPadding = 0.dp,
+                    endPadding = 0.dp
+                )
             }
         },
 
@@ -424,23 +422,32 @@ fun FilterLoanDetailsDialog(
                 modifier = Modifier
                     .width(320.dp)     // <-- THIS MAKES DIALOG SMALL
                     .padding(vertical = 16.dp),
-                verticalArrangement = Arrangement.spacedBy(20.dp)
+                verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
 
-                FormSpinner(
+                FilterSpinner(
                     label = stringResource(Res.string.village),
                     options = villages,
                     selectedOption = selectedVillage,
                     onOptionSelected = { selectedVillage = it },
+                    fontWeight = FontWeight.Bold
                 )
 
-                CommonDivider(color = Color(0xFFE0E0E0), thickness = 1.dp)
+                CommonDivider(
+                    color = light_pink,
+                    thickness = 1.dp,
+                    topPadding = 5.dp,
+                    bottomPadding = 5.dp,
+                    startPadding = 0.dp,
+                    endPadding = 0.dp
+                )
 
-                FormSpinner(
+                FilterSpinner(
                     label = stringResource(Res.string.select_center),
                     options = centers,
                     selectedOption = selectedCenter,
-                    onOptionSelected = { selectedCenter = it }
+                    onOptionSelected = { selectedCenter = it },
+                    fontWeight = FontWeight.Bold
                 )
 
                 ReusableTextView(
@@ -452,7 +459,7 @@ fun FilterLoanDetailsDialog(
                     textAlignment = androidx.compose.ui.text.style.TextAlign.Center
                 )
 
-                FormFieldCompact(
+                FilterFieldCompact(
                     label = stringResource(Res.string.select_customer_id),
                     value = customerIds,
                     onValueChange = { customerIds = it },
@@ -467,7 +474,7 @@ fun FilterLoanDetailsDialog(
                 ) {
                     Button(
                         onClick = onDismiss,
-                        shape=RoundedCornerShape(0.dp),
+                        shape = RoundedCornerShape(0.dp),
                         modifier = Modifier.weight(1f).height(45.dp),
                         colors = ButtonDefaults.buttonColors(containerColor = Color.LightGray),
                         elevation = ButtonDefaults.buttonElevation(
@@ -486,7 +493,7 @@ fun FilterLoanDetailsDialog(
                             )
                         },
                         modifier = Modifier.weight(1f).height(45.dp),
-                        shape=RoundedCornerShape(0.dp),
+                        shape = RoundedCornerShape(0.dp),
                         colors = ButtonDefaults.buttonColors(containerColor = btn_color),
                         elevation = ButtonDefaults.buttonElevation(
                             defaultElevation = 4.dp,
@@ -503,6 +510,7 @@ fun FilterLoanDetailsDialog(
     )
 
 }
+
 @Preview
 @Composable
 fun RepaymentList() {
