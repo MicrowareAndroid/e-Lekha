@@ -23,32 +23,32 @@ class CustomerTransactionDataRepository(
     }
 
     // Get all transactions to upload
-    fun getAllCustomerTransactionDataUpload(): List<CustomerTransactionDataEntity> {
+    suspend fun getAllCustomerTransactionDataUpload(): List<CustomerTransactionDataEntity> {
         return dao.getAllCustomerTransactionDataUpload()
     }
 
     // Get all transaction data by GUID
-    fun getAllCustomerTransactionData(GUID: String): List<CustomerTransactionDataEntity> {
+    suspend fun getAllCustomerTransactionData(GUID: String): List<CustomerTransactionDataEntity> {
         return dao.getAllCustomerTransactionData(GUID)
     }
 
     // Count of all transaction data by GUID
-    fun getAllCustomerTransactionDataCount(GUID: String): Int {
+    suspend fun getAllCustomerTransactionDataCount(GUID: String): Int {
         return dao.getAllCustomerTransactionDataCount(GUID)
     }
 
     // Count of all transaction data for upload
-    fun getAllCustomerTransactionDataCount(): Int {
+    suspend fun getAllCustomerTransactionDataCount(): Int {
         return dao.getAllCustomerTransactionDataCount()
     }
 
     // Get transaction by MerchantTransactionID
-    fun getDatabyMerchantTransID(MerchantTransactionID: String, GUID: String): CustomerTransactionDataEntity {
+    suspend fun getDatabyMerchantTransID(MerchantTransactionID: String, GUID: String): CustomerTransactionDataEntity {
         return dao.getDatabyMerchantTransID(MerchantTransactionID, GUID)
     }
 
     // Update uploaded transactions
-    fun updateUploaded() {
+    suspend fun updateUploaded() {
         dao.updateUploaded()
     }
 }

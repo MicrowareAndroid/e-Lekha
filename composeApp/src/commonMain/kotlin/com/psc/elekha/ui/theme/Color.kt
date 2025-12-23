@@ -87,29 +87,16 @@ val homerepaymentColor =Color(0xFFCBFFC8)
 val homedatareportsColor =Color(0xFFF0D480)
 val homemenuGreyColor =Color(0xFFBABBBC)
 val loginbgGradientTop =Color(0xFFDAF0FE)
-
-
 val loginbgGradientBottom =Color(0xFF106594)
-
 val loginSmallGradientTop =Color(0xFFACCBDD)
-
 val loginSmallGradientBottom =Color(0xFF5C94B5)
 val viewmorebgColor =Color(0xFFE5E5E5)
-
-
-
-
-
-
-
-
-
+val transaperentBgColor =Color(0x66000000)
 
 
 
 
 val appleblue =Color(0xFF0A84FF)
-
 val lightblues=Color(0xFFEAF2FF)
 
 

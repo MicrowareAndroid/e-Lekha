@@ -2,7 +2,9 @@ package com.psc.elekha.database.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import kotlinx.serialization.Serializable
 
+@Serializable
 @Entity(tableName = "MstComboBox_N", primaryKeys = ["ID", "Flag"])
 data class MSTComboBox_NEntity(
     @ColumnInfo(name = "ID") val ID: Int,

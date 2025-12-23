@@ -30,6 +30,7 @@ import platform.Foundation.NSFileManager
 import platform.Foundation.NSHomeDirectory
 import platform.Foundation.NSURL
 import platform.Foundation.NSUserDomainMask
+import platform.Foundation.NSXMLParser
 import platform.Photos.PHAuthorizationStatusAuthorized
 import platform.Photos.PHAuthorizationStatusDenied
 import platform.Photos.PHAuthorizationStatusLimited
@@ -40,6 +41,7 @@ import platform.UIKit.UIApplication
 import platform.UIKit.UIApplicationOpenSettingsURLString
 import platform.UIKit.popoverPresentationController
 import kotlin.coroutines.resume
+import platform.Foundation.*
 
 actual fun getDatabaseBuilder(): RoomDatabase.Builder<AppDatabase> {
     val dbFilePath = NSHomeDirectory() + "/${dbFileName}"
@@ -240,3 +242,5 @@ private fun shareFiles(files: List<NSURL>) {
 
     rootVC.presentViewController(controller, true, null)
 }
+
+

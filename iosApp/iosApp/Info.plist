@@ -34,9 +34,10 @@
         <dict>
             <key>NSAllowsArbitraryLoads</key>
             <true/>
+
             <key>NSExceptionDomains</key>
             <dict>
-                <key>New Exception Domain</key>
+                <key>donordashboard.microwarecomp.com</key>
                 <dict>
                     <key>NSExceptionAllowsInsecureHTTPLoads</key>
                     <true/>

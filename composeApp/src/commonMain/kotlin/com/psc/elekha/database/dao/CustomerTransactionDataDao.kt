@@ -16,23 +16,23 @@ interface CustomerTransactionDataDao {
     suspend fun deleteAllCustomerTransactionData()
 
     @Query("Select * from CustomerTransactionData where IsDeleted=0 and IsEdited=1")
-    fun getAllCustomerTransactionDataUpload(): List<CustomerTransactionDataEntity>
+    suspend fun getAllCustomerTransactionDataUpload(): List<CustomerTransactionDataEntity>
 
     @Query("Select * from CustomerTransactionData where IsDeleted=0 and GUID=:GUID order by date(TransactionOn) DESC")
-    fun getAllCustomerTransactionData(GUID: String): List<CustomerTransactionDataEntity>
+    suspend fun getAllCustomerTransactionData(GUID: String): List<CustomerTransactionDataEntity>
 
     @Query("Select Count(*) from CustomerTransactionData where IsDeleted=0 and GUID=:GUID")
-    fun getAllCustomerTransactionDataCount(GUID: String): Int
+    suspend fun getAllCustomerTransactionDataCount(GUID: String): Int
 
     @Query("Select Count(*) from CustomerTransactionData where IsDeleted=0 and IsEdited=1")
-    fun getAllCustomerTransactionDataCount(): Int
+    suspend fun getAllCustomerTransactionDataCount(): Int
 
     @Query("Select * from CustomerTransactionData where IsDeleted=0 and MerchantTransactionID=:MerchantTransactionID and GUID=:GUID")
-    fun getDatabyMerchantTransID(
+    suspend fun getDatabyMerchantTransID(
         MerchantTransactionID: String,
         GUID: String
     ): CustomerTransactionDataEntity
 
     @Query("Update CustomerTransactionData set IsEdited=0, IsUpload=1 where IsEdited=1 and IsDeleted=0")
-    fun updateUploaded()
+    suspend fun updateUploaded()
 }
