@@ -107,6 +107,10 @@ import com.psc.elekha.ui.theme.homeTopIconsBg
 import com.psc.elekha.ui.theme.lightGrey
 import com.psc.elekha.ui.theme.loginBg
 import com.psc.elekha.ui.theme.loginTitle
+import com.psc.elekha.ui.theme.loginbgGradientBottom
+import com.psc.elekha.ui.theme.repaymentColor
+import com.psc.elekha.ui.theme.rose
+import com.psc.elekha.ui.theme.teal700
 import com.psc.elekha.ui.theme.text_fiiled_color
 import com.psc.elekha.ui.theme.textview_color
 import com.psc.elekha.ui.theme.toolbar_color
@@ -431,10 +435,10 @@ fun CommonActionButtons(
             ),
             shape = RoundedCornerShape(1.dp)
         ) {
-            Text(saveText, fontFamily = FontFamily(Font(Res.font.inter_medium)),)
+            Text(saveText, fontFamily = FontFamily(Font(Res.font.inter_medium)))
         }
 
-Spacer(modifier = Modifier.width(5.dp))
+        Spacer(modifier = Modifier.width(5.dp))
 
         Button(
             onClick = onCloseClick,
@@ -447,7 +451,7 @@ Spacer(modifier = Modifier.width(5.dp))
             ),
             shape = RoundedCornerShape(1.dp)
         ) {
-            Text(closeText,fontFamily = FontFamily(Font(Res.font.inter_medium)))
+            Text(closeText, fontFamily = FontFamily(Font(Res.font.inter_medium)))
         }
     }
 }
@@ -479,7 +483,7 @@ fun CommonSaveButton(
             ),
             shape = RoundedCornerShape(1.dp)
         ) {
-            Text(saveText,fontFamily = FontFamily(Font(Res.font.inter_medium)))
+            Text(saveText, fontFamily = FontFamily(Font(Res.font.inter_medium)))
         }
     }
 }
@@ -504,7 +508,10 @@ fun CommonSingleButtons(
             ),
             shape = RoundedCornerShape(8.dp)
         ) {
-            Text(stringResource(Res.string.save),fontFamily = FontFamily(Font(Res.font.inter_medium)))
+            Text(
+                stringResource(Res.string.save),
+                fontFamily = FontFamily(Font(Res.font.inter_medium))
+            )
         }
 
     }
@@ -656,7 +663,112 @@ fun FormFieldCompact(
     }
 }
 
+@Composable
+fun FilterFieldCompact(
+    label: String? = null,
+    value: String,
+    onValueChange: (String) -> Unit,
+    maxLength: Int = Int.MAX_VALUE,
+    trailingIcon: @Composable (() -> Unit)? = null,
+    inputType: KeyboardType = KeyboardType.Text,
+    placeholder: String = stringResource(Res.string.type_here),
+    isEnable: Boolean = true,
+    isReadable: Boolean = false,
+    labelColor: Color = black,
+    placeholderColor: Color = Color.Black,
+    backgroundColor: Color = white,
+    borderColor: Color = rose,
+    disabledBackgroundColor: Color = formborder,
+    maxLines: Int = 1,
+    modifier: Modifier = Modifier,
+    placeholderTextSize: Int = 12,
+) {
 
+    Column(modifier) {
+
+        if (!label.isNullOrEmpty()) {
+            ReusableTextView(
+                text = label,
+                fontSize = 14,
+                textColor = labelColor,
+                fontFamily = FontFamily(Font(Res.font.inter_regular)),
+                fontWeight = FontWeight.Bold
+            )
+        }
+
+        Spacer(Modifier.height(5.dp))
+
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(40.dp)
+                .background(
+                    color = if (isEnable) backgroundColor else disabledBackgroundColor,
+                    shape = RoundedCornerShape(15.dp)
+                )
+                .border(1.dp, borderColor, RoundedCornerShape(15.dp))
+                .clickable(enabled = isEnable) { /* triggers keyboard focus */ },
+            contentAlignment = Alignment.CenterStart
+        ) {
+
+            BasicTextField(
+                value = value,
+                enabled = isEnable,
+                readOnly = isReadable,
+                onValueChange = { newValue ->
+                    val filtered = when (inputType) {
+                        KeyboardType.Number, KeyboardType.Phone -> newValue.filter { it.isDigit() }
+                        else -> newValue
+                    }
+                    if (filtered.length <= maxLength) onValueChange(filtered)
+                },
+
+                textStyle = TextStyle(
+                    fontSize = 16.sp,
+                    lineHeight = 14.sp,
+                    color = Color.Black,
+                    fontFamily = FontFamily(Font(Res.font.inter_regular)),
+                    textAlign = TextAlign.Start
+                ),
+
+                maxLines = maxLines,
+                keyboardOptions = KeyboardOptions(keyboardType = inputType),
+
+                modifier = Modifier
+                    .matchParentSize()
+                    .padding(horizontal = 12.dp, vertical = 8.dp),
+
+                decorationBox = { innerTextField ->
+
+                    Row(
+                        modifier = Modifier.fillMaxSize(),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+
+
+                        Box(
+                            modifier = Modifier.weight(1f),
+                            contentAlignment = Alignment.CenterStart
+                        ) {
+                            if (value.isEmpty()) {
+                                ReusableTextView(
+                                    text = placeholder,
+                                    fontSize = placeholderTextSize,
+                                    textColor = placeholderColor
+                                )
+                            }
+                            innerTextField()
+                        }
+
+                        if (trailingIcon != null) {
+                            trailingIcon()
+                        }
+                    }
+                }
+            )
+        }
+    }
+}
 
 @Composable
 fun DynamicCheckBox(
@@ -683,8 +795,6 @@ fun DynamicCheckBox(
         )
     }
 }
-
-
 
 
 @Composable
@@ -766,7 +876,6 @@ fun FormDatePickerCompact(
         }
     }
 }
-
 
 
 @Composable
@@ -865,9 +974,6 @@ fun isAge18Plus(dob: String): Boolean {
 
     return today >= eighteenthBirthday  // true if 18 or older
 }
-
-
-
 
 
 @Composable
@@ -970,7 +1076,7 @@ fun CustomAlertDialog(
                             textColor = white,
                             textAlignment = TextAlign.Center,
                             modifier = Modifier.padding(start = 10.dp),
-                             fontFamily =FontFamily(Font(Res.font.inter_medium)),
+                            fontFamily = FontFamily(Font(Res.font.inter_medium)),
                         )
                     }
 
@@ -1048,8 +1154,6 @@ fun ProgressDialog(
 }
 
 
-
-
 @Composable
 fun FormSpinner(
     label: String,
@@ -1082,6 +1186,105 @@ fun FormSpinner(
             fontSize = 14,
             textColor = labelColor,
             fontFamily = fontFamily
+        )
+
+        Spacer(modifier = Modifier.height(5.dp))
+
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(40.dp)
+                .border(1.dp, borderColor, RoundedCornerShape(15.dp))
+                .background(backgroundColor, RoundedCornerShape(15.dp))
+                .clickable { expanded = true }
+                .onGloballyPositioned { coords ->
+                    // SAFE: No composable call inside callback
+                    spinnerWidth = with(density) { coords.size.width.toDp() }
+                },
+            contentAlignment = Alignment.CenterStart
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 10.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                ReusableTextView(
+                    text = selectedOption.ifEmpty { stringResource(Res.string.spinner_select) },
+                    textColor = textColor,
+                    fontFamily = fontFamily
+                )
+
+                Spacer(modifier = Modifier.weight(1f))
+
+                Icon(
+                    vectorResource(Res.drawable.ic_arrow_drop_down),
+                    contentDescription = null
+                )
+            }
+
+            DropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { expanded = false },
+                modifier = Modifier
+                    .width(spinnerWidth)        // FULL WIDTH MATCH
+                    .background(Color.White)
+            ) {
+                optionsList.forEach { option ->
+                    DropdownMenuItem(
+                        text = {
+                            ReusableTextView(
+                                text = option,
+                                textColor = Color.Black,
+                                modifier = Modifier.fillMaxWidth(),
+                                fontFamily = FontFamily(Font(Res.font.inter_regular)),
+                            )
+                        },
+                        onClick = {
+                            onOptionSelected(option)
+                            expanded = false
+                        }
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun FilterSpinner(
+    label: String,
+    options: List<String>?,
+    selectedOption: String,
+    onOptionSelected: (String) -> Unit,
+    modifier: Modifier = Modifier,
+    labelColor: Color = black,
+    backgroundColor: Color = white,
+    textColor: Color = Color.Black,
+    fontFamily: FontFamily = FontFamily(Font(Res.font.inter_regular)),
+    borderColor: Color = rose,
+    fontWeight: FontWeight = FontWeight.Normal
+) {
+    var expanded by remember { mutableStateOf(false) }
+    var spinnerWidth by remember { mutableStateOf(0.dp) }
+
+    // FIX: Get density only once in Composable scope
+    val density = LocalDensity.current
+    val select = stringResource(Res.string.spinner_select)
+    val optionsList = remember(options) {
+        val list = mutableListOf(select)
+        options?.forEach { list.add(it) }
+        list
+    }
+
+    Column(modifier = modifier) {
+
+        ReusableTextView(
+            text = label,
+            fontSize = 14,
+            textColor = labelColor,
+            fontFamily = fontFamily,
+            fontWeight = fontWeight
         )
 
         Spacer(modifier = Modifier.height(5.dp))
@@ -1346,7 +1549,7 @@ fun <T : Any> FillDynamicSpinner(
                     .padding(horizontal = 10.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-               ReusableTextView(
+                ReusableTextView(
                     text = selectedText,
                     textColor = textColor,
                     fontFamily = fontFamily
@@ -1371,7 +1574,7 @@ fun <T : Any> FillDynamicSpinner(
                             ReusableTextView(
                                 text = name,
                                 modifier = Modifier.fillMaxWidth(),
-                                fontFamily=fontFamily
+                                fontFamily = fontFamily
                             )
                         },
                         onClick = {
@@ -1385,7 +1588,6 @@ fun <T : Any> FillDynamicSpinner(
         }
     }
 }
-
 
 
 val ALLOWED_USERNAME_CHARS: Set<Char> =
@@ -1411,11 +1613,12 @@ fun UsernameField(
     maxLength: Int = 50
 ) {
     Column(modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp)) {
-        ReusableTextViews(text = label, fontSize = 16,
+        ReusableTextViews(
+            text = label, fontSize = 16,
             fontWeight = FontWeight.Thin,
             textColor = Color.White,
             fontFamily = FontFamily(Font(Res.font.inter_regular)),
-            )
+        )
         Spacer(modifier = Modifier.height(8.dp))
         OutlinedTextField(
             value = value,
@@ -1455,8 +1658,10 @@ fun PasswordField(
 ) {
     var passwordVisible by remember { mutableStateOf(false) }
     Column(modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp)) {
-        ReusableTextViews(text = label, fontSize = 16, fontWeight = FontWeight.Thin, textColor = Color.White,
-            fontFamily = FontFamily(Font(Res.font.inter_regular)),)
+        ReusableTextViews(
+            text = label, fontSize = 16, fontWeight = FontWeight.Thin, textColor = Color.White,
+            fontFamily = FontFamily(Font(Res.font.inter_regular)),
+        )
         Spacer(modifier = Modifier.height(8.dp))
         OutlinedTextField(
             value = password,
@@ -1993,8 +2198,10 @@ fun <T : Any> FillDynamicSpinner(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
 
-                ReusableTextView(text = displayText, textColor = textColor,
-                    fontFamily = FontFamily(Font(Res.font.inter_regular)),)
+                ReusableTextView(
+                    text = displayText, textColor = textColor,
+                    fontFamily = FontFamily(Font(Res.font.inter_regular)),
+                )
 
                 Icon(
                     painter = painterResource(Res.drawable.ic_arrow_drop_down),
@@ -2013,7 +2220,12 @@ fun <T : Any> FillDynamicSpinner(
             ) {
 
                 DropdownMenuItem(
-                    text = { Text(placeholder,fontFamily = FontFamily(Font(Res.font.inter_regular)),) },
+                    text = {
+                        Text(
+                            placeholder,
+                            fontFamily = FontFamily(Font(Res.font.inter_regular)),
+                        )
+                    },
 
                     onClick = {
                         onOptionSelected(0)
@@ -2023,7 +2235,12 @@ fun <T : Any> FillDynamicSpinner(
 
                 options?.forEach { item ->
                     DropdownMenuItem(
-                        text = { Text(getOptionLabel(item),fontFamily = FontFamily(Font(Res.font.inter_regular)),) },
+                        text = {
+                            Text(
+                                getOptionLabel(item),
+                                fontFamily = FontFamily(Font(Res.font.inter_regular)),
+                            )
+                        },
                         onClick = {
                             onOptionSelected(getOptionId(item))
                             expanded = false
@@ -2037,7 +2254,7 @@ fun <T : Any> FillDynamicSpinner(
 
 
 @Composable
-fun LabelValueText(label: String, value: String,) {
+fun LabelValueText(label: String, value: String) {
     Row(
         modifier = Modifier.fillMaxWidth()
             .height(IntrinsicSize.Min),
@@ -2047,12 +2264,12 @@ fun LabelValueText(label: String, value: String,) {
             text = label,
             fontSize = 13,
 
-      )
+            )
         Spacer(modifier = Modifier.width(4.dp))
         ReusableTextViewBlackCard(
             text = value,
             fontSize = 12,
-            )
+        )
     }
 }
 
@@ -2101,8 +2318,14 @@ fun CustomerItemCard(
                     stringResource(Res.string.select_customer_id).plus(":"),
                     customer.id.toString()
                 )
-                LabelValueText(stringResource(Res.string.select_customer_name).plus(":"), customer.name)
-                LabelValueText(stringResource(Res.string.select_customer_mobile).plus(":"), customer.mobile)
+                LabelValueText(
+                    stringResource(Res.string.select_customer_name).plus(":"),
+                    customer.name
+                )
+                LabelValueText(
+                    stringResource(Res.string.select_customer_mobile).plus(":"),
+                    customer.mobile
+                )
                 LabelValueText(
                     stringResource(Res.string.select_customer_loan).plus(":"),
                     "Rs ${customer.amount}"
@@ -2151,7 +2374,6 @@ fun FormFieldCompacts(
     var text by remember { mutableStateOf(value) }
 
     Column(modifier) {
-
 
 
         Box(
@@ -2214,7 +2436,6 @@ fun FormFieldCompacts(
         }
     }
 }
-
 
 
 @Composable
@@ -2401,11 +2622,14 @@ fun CommonDivider(
     color: Color = Color.Black,
     thickness: Dp = 2.dp,
     startPadding: Dp = 5.dp,
-    endPadding: Dp = 5.dp
+    endPadding: Dp = 5.dp,
+    topPadding: Dp = 0.dp,
+    bottomPadding: Dp = 0.dp
 ) {
     Box(
         modifier = modifier
-            .padding(startPadding, 0.dp, endPadding, 0.dp)
+            .fillMaxWidth()
+            .padding(startPadding, topPadding, endPadding, bottomPadding)
             .height(thickness)
             .background(color)
     )
@@ -2441,6 +2665,25 @@ fun CustomAlertDialogRegistrationExisting(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
 
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center,
+                    modifier = Modifier.fillMaxWidth().background(
+                        appleblue,
+                        shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp)
+                    )
+                        .heightIn(50.dp)
+                ) {
+                    ReusableTextView(
+                        text = title,
+                        fontSize = 20,
+                        fontWeight = FontWeight.Bold,
+                        textColor = white,
+                        textAlignment = TextAlign.Center,
+                        modifier = Modifier.padding(start = 10.dp),
+
+                        )
+                }
 
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
@@ -2564,6 +2807,7 @@ fun AddCircleButton(
             fontWeight = FontWeight.Bold
         )
     }
+
 }
 
 

@@ -28,6 +28,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.input.KeyboardType
@@ -38,11 +39,13 @@ import com.psc.elekha.ui.theme.blue
 import com.psc.elekha.ui.theme.appleblue
 import com.psc.elekha.ui.theme.lightblues
 import com.psc.elekha.ui.theme.white
+import com.psc.elekha.utils.CameraPicker
 import com.psc.elekha.utils.CommonSaveButton
 import com.psc.elekha.utils.CustomAlertDialog
 
 import com.psc.elekha.utils.FormFieldCompact
 import com.psc.elekha.utils.ReusableTextView
+import com.psc.elekha.utils.loadImageFromPath
 import e_lekha.composeapp.generated.resources.Res
 import e_lekha.composeapp.generated.resources.aadhar_no
 import e_lekha.composeapp.generated.resources.account_no
@@ -80,6 +83,17 @@ fun KycDetailsScreen(
     onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = {}
 ) {
     var selectedTab by remember { mutableStateOf(0) }
+    var openCamera by remember { mutableStateOf(false) }
+    var currentCameraTarget by remember { mutableStateOf("") }
+    var ebFrontImage by remember { mutableStateOf<ImageBitmap?>(null) }
+    var aadhaarFrontImage by remember { mutableStateOf<ImageBitmap?>(null) }
+    var aadhaarBackImage by remember { mutableStateOf<ImageBitmap?>(null) }
+
+    var vidFrontImage by remember { mutableStateOf<ImageBitmap?>(null) }
+// VID usually doesn’t have back image, so you can skip if not needed
+
+    var panFrontImage by remember { mutableStateOf<ImageBitmap?>(null) }
+    var panBackImage by remember { mutableStateOf<ImageBitmap?>(null) } // optional
 
     val tabs = listOf("Electricity bill", "Aadhaar Card", "Voter ID")
     var viewModel = koinViewModel<KycDetailViewModel>()
@@ -219,7 +233,13 @@ fun KycDetailsScreen(
 
                 Spacer(Modifier.height(20.dp))
                 when (selectedTab) {
-                    0 -> ElectricityBillForm(viewModel)
+                    0 -> ElectricityBillForm(viewModel,
+                        ebFrontImage = ebFrontImage,
+                        onCameraClick = {
+                            currentCameraTarget = "EB_FRONT"
+                            openCamera = true
+                        }
+                        )
                     1 -> AadhaarCardForm(viewModel)
                     2 -> VidForm(viewModel)
                 }
@@ -271,10 +291,29 @@ fun KycDetailsScreen(
             }
         }
     }
+    if (openCamera) {
+        CameraPicker(
+            openCamera = openCamera,
+            onImagePicked = { path ->
+                val bitmap = path?.let { loadImageFromPath(it) }
+
+                when (currentCameraTarget) {
+                    "EB_FRONT" -> ebFrontImage = bitmap
+                    // later you can add:
+                    // "AADHAAR_FRONT" -> aadhaarFrontImage = bitmap
+                    // "PAN" -> panImage = bitmap
+                }
+
+                openCamera = false
+            }
+        )
+    }
+
 }
 
 @Composable
-fun ElectricityBillForm(viewModel: KycDetailViewModel) {
+fun ElectricityBillForm(viewModel: KycDetailViewModel, ebFrontImage: ImageBitmap?,
+                        onCameraClick: () -> Unit) {
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -334,22 +373,34 @@ fun ElectricityBillForm(viewModel: KycDetailViewModel) {
             Box(
                 modifier = Modifier
                     .size(120.dp)
-                    .background(Color(0xFFE8E8E8)), // Light Grey Box
+                    .background(Color(0xFFE8E8E8)),
                 contentAlignment = Alignment.Center
             ) {
-                // Preview can go here
+                ebFrontImage?.let {img ->
+                    Image(
+                        bitmap = img,
+                        contentDescription = null,
+                        modifier = Modifier.fillMaxSize(),
+                        contentScale = ContentScale.Crop
+                    )
+                }
             }
+
             Spacer(modifier = Modifier.height(6.dp))
+
             Icon(
                 painter = painterResource(Res.drawable.camera),
                 tint = blue,
                 contentDescription = stringResource(Res.string.front_image),
-                modifier = Modifier.size(28.dp)
+                modifier = Modifier
+                    .size(28.dp)
+                    .clickable { onCameraClick() }
             )
             Spacer(modifier = Modifier.height(4.dp))
             ReusableTextView(text = stringResource(Res.string.front_image))
         }
     }
+
 }
 
 @Composable
@@ -808,4 +859,5 @@ fun PanCardForm(viewModel: KycDetailViewModel) {
             ReusableTextView(text = stringResource(Res.string.front_image))
         }
     }
+
 }

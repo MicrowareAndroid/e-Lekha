@@ -56,6 +56,9 @@ val btn_color = Color(0xFFFCC739)
 
 val text_fiiled_color= Color(0xFFE8F2FF)
 val toolbar_color = Color(0xFF527BC0)
+val light_pink = Color(0xFFD7C7C7)
+val rose = Color(0xFFC9B0B0)
+val dark_gray = Color(0xFF999999)
 //val toolbar_color = Color(0xFF106594)
 
 
