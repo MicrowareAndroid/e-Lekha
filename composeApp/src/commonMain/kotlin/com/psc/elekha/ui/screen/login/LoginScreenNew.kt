@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
@@ -15,29 +16,31 @@ import androidx.compose.ui.draw.dropShadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.psc.elekha.apicall.APiState
 import com.psc.elekha.database.entity.MSTComboBox_NEntity
 import com.psc.elekha.database.viewmodel.MSTComboBox_NViewModel
-import com.psc.elekha.database.viewmodel.UsersViewModel
 import com.psc.elekha.getAppVersion
+import com.psc.elekha.ui.screen.kycdetails.KycDetailViewModel
 
 import com.psc.elekha.ui.theme.*
+import com.psc.elekha.utils.CustomAlertDialog
 import com.psc.elekha.utils.PasswordField
+import com.psc.elekha.utils.ProgressDialog
+import com.psc.elekha.utils.ReusableImageView
 import com.psc.elekha.utils.ReusableTextView
-import com.psc.elekha.utils.ReusableTextViews
 import com.psc.elekha.utils.RouteName
 import com.psc.elekha.utils.SimpleOtp
 import com.psc.elekha.utils.UsernameField
 
 import e_lekha.composeapp.generated.resources.Res
 import e_lekha.composeapp.generated.resources.*
-import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -46,12 +49,47 @@ import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun LoginScreenNew(navController: NavController) {
-    val viewModel = koinViewModel<LoginViewModel>()
+    var viewModel = koinViewModel<LoginViewModel>()
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var otp by remember { mutableStateOf("") }
     var showOtpField by remember { mutableStateOf(false) }
     val versionName = getAppVersion()
+    var showProgress by remember { mutableStateOf(false) }
+    var dialogMessage by remember { mutableStateOf("") }
+    val loginState = viewModel.loginState.collectAsState().value
+    var showDialog by remember { mutableStateOf(false) }
+
+    LaunchedEffect(loginState) {
+        when (loginState) {
+            is APiState.loading -> {
+                showProgress = true
+                dialogMessage = "Please wait..."
+            }
+
+            is APiState.success -> {
+                showProgress = false
+                navController.navigate(RouteName.home)
+
+            }
+
+            is APiState.error -> {
+                showProgress = false
+                showDialog = true
+                dialogMessage = loginState.message
+            }
+
+            is APiState.finish -> {
+                showProgress = false
+                navController.navigate(RouteName.home){
+                    popUpTo(RouteName.login) { inclusive = true }
+                    launchSingleTop = true
+                }
+            }
+
+            else -> {}
+        }
+    }
 
 
     Box(
@@ -89,7 +127,7 @@ fun LoginScreenNew(navController: NavController) {
 
                         ) {
                         Text(
-                            text = stringResource(Res.string.registered_office_address).plus(":"),
+                            text = stringResource(Res.string.registered_office_address),
                             style = MaterialTheme.typography.bodyMedium.copy(
                                 fontWeight = FontWeight.Bold,
                                 color = white
@@ -144,11 +182,11 @@ fun LoginScreenNew(navController: NavController) {
                         .fillMaxWidth(),
                     contentAlignment = Alignment.Center
                 ) {
-                    ReusableTextViews(
+                    ReusableTextView(
                         text = stringResource(Res.string.planned_social_concern),
                         textColor = loginTitle,
-                        fontSize = 36,
-                        textAlignment = TextAlign.Center,
+                        fontSize = 34,
+                        textAlignment = TextAlign.Center
                     )
                 }
                 Spacer(modifier = Modifier.height(7.dp))
@@ -158,9 +196,7 @@ fun LoginScreenNew(navController: NavController) {
                         .padding(horizontal = 5.dp)
                         .verticalScroll(rememberScrollState())
                         .padding(bottom = 20.dp)
-                )
-                {
-
+                ) {
 
                     Card(
                         modifier = Modifier
@@ -200,7 +236,7 @@ fun LoginScreenNew(navController: NavController) {
                                 horizontalAlignment = Alignment.CenterHorizontally
                             ) {
 
-                                ReusableTextViews(
+                                ReusableTextView(
                                     text = stringResource(Res.string.log_in),
                                     textColor = white,
                                     fontSize = 30
@@ -229,13 +265,11 @@ fun LoginScreenNew(navController: NavController) {
                                 Button(
                                     onClick = {
                                         if (!showOtpField) {
-                                            showOtpField = true
+                                           // showOtpField = true
+                                            viewModel.getMaster(username,password)
                                         } else {
-                                            viewModel.updateData()
                                             navController.navigate(RouteName.home)
-
                                         }
-
                                     },
                                     modifier = Modifier
                                         .width(200.dp)
@@ -265,6 +299,18 @@ fun LoginScreenNew(navController: NavController) {
                 }
                 Spacer(modifier = Modifier.height(60.dp))
             }
+        }
+
+
+        if (showDialog) {
+            CustomAlertDialog(
+                showDialog,
+                message = dialogMessage,
+                onConfirm = { showDialog = false })
+        }
+
+        if (showProgress) {
+            ProgressDialog(showProgress, dialogMessage)
         }
     }
 }

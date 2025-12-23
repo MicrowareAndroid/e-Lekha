@@ -140,19 +140,12 @@ fun HomeScreen(
         Scaffold(
             modifier = Modifier
                 .fillMaxSize()
-
-
-            ,
-
-            //containerColor = loginBg
+        //containerColor = loginBg
         ) { innerPadding ->
 
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(innerPadding)
-
-                    .statusBarsPadding()
                     .background(
                         brush = Brush.verticalGradient(
                             colors = listOf(
@@ -161,6 +154,8 @@ fun HomeScreen(
                             )
                         )
                     )
+                    .statusBarsPadding()
+                    .padding(innerPadding)
             ) {
 
                 Row(

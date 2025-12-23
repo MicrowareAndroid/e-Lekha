@@ -1,6 +1,8 @@
 package com.psc.elekha.di
 
 import CustomerRepository
+import com.psc.elekha.apicall.ApiRepository
+import com.psc.elekha.apicall.ApiService
 import com.psc.elekha.database.repository.CustomerDefaultRepository
 import com.psc.elekha.database.repository.CustomerExistingLoanDetailRepository
 import com.psc.elekha.database.repository.CustomerFamilyMemberDetailsRepository
@@ -37,6 +39,7 @@ import com.psc.elekha.database.repository.RegistrationStatusRepository
 import com.psc.elekha.database.repository.TabletMenuRepository
 import com.psc.elekha.database.repository.TabletMenuRoleRepository
 import com.psc.elekha.database.repository.TrainingGroupRepository
+import com.psc.elekha.database.repository.TrainingGroupStatusRepository
 import com.psc.elekha.database.repository.UserBranchRepository
 import com.psc.elekha.database.repository.UserContactDetailRepository
 import com.psc.elekha.database.repository.UserResponseRepository
@@ -44,7 +47,9 @@ import com.psc.elekha.database.repository.UsersRepository
 import org.koin.dsl.module
 
 val repositoryModule = module {
-    single {CustomerRepository( get())  }
+    single { ApiService(get()) }
+    single { ApiRepository(get()) }
+    single { CustomerRepository( get())  }
     single { CustomerDefaultRepository( get()) }
     single { CustomerExistingLoanDetailRepository( get()) }
     single { CustomerFamilyMemberDetailsRepository( get()) }
@@ -85,6 +90,7 @@ val repositoryModule = module {
     single { UsersRepository(get()) }
     single { TrainingGroupRepository(get()) }
     single { UserContactDetailRepository(get()) }
+    single { TrainingGroupStatusRepository(get()) }
 
 
 

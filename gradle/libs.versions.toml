@@ -13,6 +13,8 @@ coil3 = "3.3.0"
 ktor = "3.2.3"
 lifecycleViewmodel = "2.9.1"
 navigationCompose = "2.9.0-beta03"
+serialization = "0.91.3"
+simpleXml = "2.7.1"
 sqlite = "2.5.2"
 androidx-room = "2.7.2"
 ksp = "2.2.0-2.0.2"
@@ -28,7 +30,10 @@ permissionsCompose = "0.18.1"
 androidbrowserhelper = "2.6.2"
 
 
+
+
 [libraries]
+io-ktor-ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity" }
 androidx-lifecycle-viewmodelCompose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "androidx-lifecycle" }
@@ -59,6 +64,8 @@ coil-mp = { module = "io.coil-kt.coil3:coil", version.ref = "coil3" }
 navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "androidx-room" }
 androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "androidx-room" }
+serialization = { module = "io.github.pdvrieze.xmlutil:serialization", version.ref = "serialization" }
+simple-xml = { module = "org.simpleframework:simple-xml", version.ref = "simpleXml" }
 sqlite-bundled = { module = "androidx.sqlite:sqlite-bundled", version.ref = "sqlite" }
 androidx-lifecycle-viewmodel = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel", version.ref = "lifecycleViewmodel" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
@@ -71,6 +78,7 @@ androidx-camera-view = { module = "androidx.camera:camera-view", version.ref = "
 
 permissions-compose = { module = "dev.icerock.moko:permissions-compose", version.ref = "permissionsCompose" }
 androidbrowserhelper = { group = "com.google.androidbrowserhelper", name = "androidbrowserhelper", version.ref = "androidbrowserhelper" }
+
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

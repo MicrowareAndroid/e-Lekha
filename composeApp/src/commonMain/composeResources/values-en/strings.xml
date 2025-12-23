@@ -280,5 +280,9 @@
     <string name="personal_full_name">Please Enter Full Name Applicant</string>
     <string name="personal_remarks">Please Enter Remarks</string>
     <string name="view_more">View more</string>
+    <string name="pls_enter_name_on_account">Please Enter name on Account</string>
+    <string name="pls_enter_account_number">Please Enter Account Number</string>
+    <string name="pls_select_bank_name">Please Select Bank Name</string>
+    <string name="pls_select_branch_name">Please Select Branch Name</string>
 
 </resources>
