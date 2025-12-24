@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "d4d3f327cfeced4f03ef35512bf77e48",
+    "identityHash": "d098c4451a26e289f86c1cdbd457eec2",
     "entities": [
       {
         "tableName": "CustomerStatus",
@@ -968,7 +968,7 @@
       },
       {
         "tableName": "Customer",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`GUID` TEXT NOT NULL, `CustomerID` TEXT, `CustomerTypeID` INTEGER, `UserID` TEXT, `LivingStatusID` INTEGER, `MaritalStatusID` INTEGER, `FirstName` TEXT, `MiddleName` TEXT, `LastName` TEXT, `CustomerImage` TEXT, `HusbandFName` TEXT, `HusbandMName` TEXT, `HusbandLName` TEXT, `GuarantorID` INTEGER, `GurantorFName` TEXT, `GurantorMName` TEXT, `GurantorLName` TEXT, `GuarantorImage` TEXT, `DOB` TEXT, `AgeAsOnYear` INTEGER, `Age` INTEGER, `ContactNoOwner` INTEGER, `ContactNo` TEXT, `PhoneNo` TEXT, `ReligionID` INTEGER, `CasteID` INTEGER, `EducationID` INTEGER, `OccuptionID` INTEGER, `MonthlyIncomeID` INTEGER, `LoanPurposeID` INTEGER, `HouseNo` TEXT, `PlotNo` TEXT, `Gali` TEXT, `Mohalla` TEXT, `Road` TEXT, `VillageID` INTEGER, `City` TEXT, `PinCode` TEXT, `Assets_HouseEvaluation` INTEGER, `Assets_HouseStatus` INTEGER, `Assets_CeilingStatus` INTEGER, `Assets_Wall` INTEGER, `Assets_Rooms` INTEGER, `Assets_Electricity` INTEGER, `Assets_WaterSupply` INTEGER, `Assets_Sanitation` INTEGER, `Assets_LandHolding` INTEGER, `Assets_Animal_Cow` INTEGER, `Assets_Animal_Cow_Quantity` INTEGER, `Assets_Animal_Buffalo` INTEGER, `Assets_Animal_Buffalo_Quantity` INTEGER, `Assets_Animal_Goat` INTEGER, `Assets_Animal_Goat_Quantity` INTEGER, `Assets_Animal_Sheep` INTEGER, `Assets_Animal_Sheep_Quantity` INTEGER, `Assets_Animal_Other` INTEGER, `Assets_Animal_Other_Quantity` INTEGER, `Assets_Other_Television` INTEGER, `Assets_Other_Refrigerator` INTEGER, `Assets_Other_WaterCooler` INTEGER, `Assets_Other_WashingMachine` INTEGER, `Assets_Other_Sofa` INTEGER, `Assets_AddVehicle_Quantity` INTEGER, `Assets_AddVehicle` INTEGER, `Assets_PrimaryVehicle_Quantity` INTEGER, `Assets_PrimaryVehicle` INTEGER, `CKYC_UID` TEXT, `CKYC_UID_Image` TEXT, `CKYC_UID_Image2` TEXT, `CKYC_VoterCard` TEXT, `CKYC_VoterCard_Image` TEXT, `CKYC_VoterCard_Image2` TEXT, `CKYC_Passport` TEXT, `CKYC_Passport_Image` TEXT, `CKYC_Passport_Image2` TEXT, `CKYC_DL` TEXT, `CKYC_DL_Image` TEXT, `CKYC_PANCard` TEXT, `CKYC_PANCard_Image` TEXT, `CKYC_OtherID` TEXT, `CKYC_OtherID_Image` TEXT, `CKYC_ElectricityBill` TEXT, `CKYC_ElectricityBillRelationID` INTEGER, `CKYC_ElectricityBill_Image` TEXT, `CKYC_ElectricityBill_Name` TEXT, `CKYC_WaterBill` TEXT, `CKYC_WaterBillRelationID` INTEGER, `CKYC_WaterBill_Image` TEXT, `CKYC_WaterBill_Name` TEXT, `CKYC_JobCard` TEXT, `CKYC_JobCardRelationID` INTEGER, `CKYC_JobCard_Image` TEXT, `CKYC_JobCard_Name` TEXT, `CKYC_OtherAP` TEXT, `CKYC_OtherAP_RelationID` INTEGER, `CKYC_OtherAP_Image` TEXT, `CKYC_OtherAP_Name` TEXT, `CKYC_RationCard` TEXT, `CKYC_RationCard_Image` TEXT, `CKYC_Bank` INTEGER, `CKYC_BankAccountNumber` TEXT, `CKYC_Bank_Image` TEXT, `GKYC_UID` TEXT, `GKYC_UID_Image` TEXT, `GKYC_UID_Image2` TEXT, `GKYC_VoterCard` TEXT, `GKYC_VoterCard_Image` TEXT, `GKYC_VoterCard_Image2` TEXT, `GKYC_Passport` TEXT, `GKYC_Passport_Image` TEXT, `GKYC_Passport_Image2` TEXT, `GKYC_DL` TEXT, `GKYC_DL_Image` TEXT, `GKYC_PANCard` TEXT, `GKYC_PANCard_Image` TEXT, `GKYC_OtherID` TEXT, `GKYC_OtherID_Image` TEXT, `GKYC_ElectricityBill` TEXT, `GKYC_ElectricityBillRelationID` INTEGER, `GKYC_ElectricityBill_Image` TEXT, `GKYC_ElectricityBill_Name` TEXT, `GKYC_WaterBill` TEXT, `GKYC_WaterBilRelationID` INTEGER, `GKYC_WaterBill_Image` TEXT, `GKYC_WaterBill_Name` TEXT, `GKYC_JobCard` TEXT, `GKYC_JobCardRelationID` INTEGER, `GKYC_JobCard_Image` TEXT, `GKYC_JobCard_Name` TEXT, `GKYC_OtherAP` TEXT, `GKYC_OtherAP_RelationID` INTEGER, `GKYC_OtherAP_Image` TEXT, `GKYC_OtherAP_Name` TEXT, `GKYC_RationCard` TEXT, `GKYC_RationCard_Image` TEXT, `GKYC_Bank` INTEGER, `GKYC_BankAccountNumber` TEXT, `GKYC_Bank_Image` TEXT, `TotalMFI` INTEGER, `ToatalActiveMFI` INTEGER, `DisbursedAmtMFI` INTEGER, `LoanMFIOutstandingSelf` INTEGER, `LoanMFIOutstandingCreditEnquiry` INTEGER, `CreditEnquiryRemarks` TEXT, `PovertyStatus` TEXT, `KYCStatus` TEXT, `CGTMarks` INTEGER, `GRTDate` TEXT, `GRTPlace` TEXT, `CutomerStatusID` INTEGER, `RegistrationStatusID` INTEGER, `RegistrationDate` TEXT, `LoanAppliedID` INTEGER, `LoanSanctionedID` INTEGER, `LoanDisbursedID` INTEGER, `LoanDisbursedDate` TEXT, `LoanDisbRemarks` TEXT, `LoanEMIDate` TEXT, `LoanApprovedID` INTEGER, `LoanApprovalDate` TEXT, `LoanChequeBankID` INTEGER, `LoanChequeNo` TEXT, `LoanApprovedAmt` INTEGER, `LoanApprovedInterestRate` REAL, `LoanApprovedInsuranceAmt` INTEGER, `LoanApprovedFeesAmt` INTEGER, `LoanApprovedInstallmentAmt` INTEGER, `LoanApprovedPaymentWeeks` INTEGER, `LoanApprovedCloserMinWeeks` INTEGER, `LoanApprovedRemarks` TEXT, `IsLoanClosed` INTEGER, `TabletID` TEXT, `FundSourceID` INTEGER, `CreatedBy` TEXT, `CreatedOn` TEXT, `UpdatedBy` TEXT, `UpdatedOn` TEXT, `IsDeleted` INTEGER, `LoanApprovalDoneBy` TEXT, `LoanDisbursalDoneBy` TEXT, `GRTDoneBy` TEXT, `CreditEnquiryDoneBy` TEXT, `CGTDoneBy` TEXT, `ExistingLoanAmount` INTEGER, `ExistingLoanCurrentOutstanding` INTEGER, `ExistingLoanCurrentWeek` INTEGER, `CKYC_JobCard_Image2` TEXT, `CKYC_RationCard_Image2` TEXT, `GKYC_JobCard_Image2` TEXT, `GRTLat` TEXT, `GRTLong` TEXT, `RegPlace` TEXT, `RegLat` TEXT, `RegLong` TEXT, `IsOldCustomer` INTEGER, `CustomerNickName` TEXT, `IsMobileNoValidated` INTEGER, `GurantorAge` INTEGER, `Assets_Other_Gas` INTEGER, `KElectricNumber` TEXT, `GurantorKElectricNumber` TEXT, `CustomerBankNameEditable` TEXT, `IsWriteOff` INTEGER, `LoanCycle` INTEGER, `CreditEquiryPDF` TEXT, `CustomerBankIFSCCode` TEXT, `MandatePrint` INTEGER, `MandateStartDate` TEXT, `MandateEndDate` TEXT, `MandateApproved` INTEGER, `MandateRemark` INTEGER, `HouseHoldAssesment_Image` TEXT, `TabletVersionName` TEXT, `GKYC_IFSCCode` TEXT, `GKYC_BankNameEditable` TEXT, `Duplicate_Customer_Remark` TEXT, `GuarantorDOB` TEXT, `UploadedOn` TEXT, `Remarks` TEXT, `IsEdited` INTEGER, `OTPCODE` TEXT, `IsUpload` INTEGER, `FamilyMonthlyIncome` INTEGER, `GKYC_OtherID_Image2` TEXT, PRIMARY KEY(`GUID`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`GUID` TEXT NOT NULL, `CustomerID` TEXT, `CustomerTypeID` INTEGER, `UserID` TEXT, `LivingStatusID` INTEGER, `MaritalStatusID` INTEGER, `FirstName` TEXT, `MiddleName` TEXT, `LastName` TEXT, `CustomerImage` TEXT, `HusbandFName` TEXT, `HusbandMName` TEXT, `HusbandLName` TEXT, `GuarantorID` INTEGER, `GurantorFName` TEXT, `GurantorMName` TEXT, `GurantorLName` TEXT, `GuarantorImage` TEXT, `DOB` TEXT, `AgeAsOnYear` INTEGER, `Age` INTEGER, `ContactNoOwner` INTEGER, `ContactNo` TEXT, `PhoneNo` TEXT, `ReligionID` INTEGER, `CasteID` INTEGER, `EducationID` INTEGER, `OccuptionID` INTEGER, `MonthlyIncomeID` INTEGER, `LoanPurposeID` INTEGER, `HouseNo` TEXT, `PlotNo` TEXT, `Gali` TEXT, `Mohalla` TEXT, `Road` TEXT, `VillageID` INTEGER, `City` TEXT, `PinCode` TEXT, `Assets_HouseEvaluation` INTEGER, `Assets_HouseStatus` INTEGER, `Assets_CeilingStatus` INTEGER, `Assets_Wall` INTEGER, `Assets_Rooms` INTEGER, `Assets_Electricity` INTEGER, `Assets_WaterSupply` INTEGER, `Assets_Sanitation` INTEGER, `Assets_LandHolding` INTEGER, `Assets_Animal_Cow` INTEGER, `Assets_Animal_Cow_Quantity` INTEGER, `Assets_Animal_Buffalo` INTEGER, `Assets_Animal_Buffalo_Quantity` INTEGER, `Assets_Animal_Goat` INTEGER, `Assets_Animal_Goat_Quantity` INTEGER, `Assets_Animal_Sheep` INTEGER, `Assets_Animal_Sheep_Quantity` INTEGER, `Assets_Animal_Other` INTEGER, `Assets_Animal_Other_Quantity` INTEGER, `Assets_Other_Television` INTEGER, `Assets_Other_Refrigerator` INTEGER, `Assets_Other_WaterCooler` INTEGER, `Assets_Other_WashingMachine` INTEGER, `Assets_Other_Sofa` INTEGER, `Assets_AddVehicle_Quantity` INTEGER, `Assets_AddVehicle` INTEGER, `Assets_PrimaryVehicle_Quantity` INTEGER, `Assets_PrimaryVehicle` INTEGER, `CKYC_UID` TEXT, `CKYC_UID_Image` TEXT, `CKYC_UID_Image2` TEXT, `CKYC_VoterCard` TEXT, `CKYC_VoterCard_Image` TEXT, `CKYC_VoterCard_Image2` TEXT, `CKYC_Passport` TEXT, `CKYC_Passport_Image` TEXT, `CKYC_Passport_Image2` TEXT, `CKYC_DL` TEXT, `CKYC_DL_Image` TEXT, `CKYC_PANCard` TEXT, `CKYC_PANCard_Image` TEXT, `CKYC_OtherID` TEXT, `CKYC_OtherID_Image` TEXT, `CKYC_ElectricityBill` TEXT, `CKYC_ElectricityBillRelationID` INTEGER, `CKYC_ElectricityBill_Image` TEXT, `CKYC_ElectricityBill_Name` TEXT, `CKYC_WaterBill` TEXT, `CKYC_WaterBillRelationID` INTEGER, `CKYC_WaterBill_Image` TEXT, `CKYC_WaterBill_Name` TEXT, `CKYC_JobCard` TEXT, `CKYC_JobCardRelationID` INTEGER, `CKYC_JobCard_Image` TEXT, `CKYC_JobCard_Name` TEXT, `CKYC_OtherAP` TEXT, `CKYC_OtherAP_RelationID` INTEGER, `CKYC_OtherAP_Image` TEXT, `CKYC_OtherAP_Name` TEXT, `CKYC_RationCard` TEXT, `CKYC_RationCard_Image` TEXT, `CKYC_Bank` INTEGER, `CKYC_BankAccountNumber` TEXT, `CKYC_Bank_Image` TEXT, `GKYC_UID` TEXT, `GKYC_UID_Image` TEXT, `GKYC_UID_Image2` TEXT, `GKYC_VoterCard` TEXT, `GKYC_VoterCard_Image` TEXT, `GKYC_VoterCard_Image2` TEXT, `GKYC_Passport` TEXT, `GKYC_Passport_Image` TEXT, `GKYC_Passport_Image2` TEXT, `GKYC_DL` TEXT, `GKYC_DL_Image` TEXT, `GKYC_PANCard` TEXT, `GKYC_PANCard_Image` TEXT, `GKYC_OtherID` TEXT, `GKYC_OtherID_Image` TEXT, `GKYC_ElectricityBill` TEXT, `GKYC_ElectricityBillRelationID` INTEGER, `GKYC_ElectricityBill_Image` TEXT, `GKYC_ElectricityBill_Name` TEXT, `GKYC_WaterBill` TEXT, `GKYC_WaterBilRelationID` INTEGER, `GKYC_WaterBill_Image` TEXT, `GKYC_WaterBill_Name` TEXT, `GKYC_JobCard` TEXT, `GKYC_JobCardRelationID` INTEGER, `GKYC_JobCard_Image` TEXT, `GKYC_JobCard_Name` TEXT, `GKYC_OtherAP` TEXT, `GKYC_OtherAP_RelationID` INTEGER, `GKYC_OtherAP_Image` TEXT, `GKYC_OtherAP_Name` TEXT, `GKYC_RationCard` TEXT, `GKYC_RationCard_Image` TEXT, `GKYC_Bank` INTEGER, `GKYC_BankAccountNumber` TEXT, `GKYC_Bank_Image` TEXT, `TotalMFI` INTEGER, `ToatalActiveMFI` INTEGER, `DisbursedAmtMFI` INTEGER, `LoanMFIOutstandingSelf` INTEGER, `LoanMFIOutstandingCreditEnquiry` INTEGER, `CreditEnquiryRemarks` TEXT, `PovertyStatus` TEXT, `KYCStatus` TEXT, `CGTMarks` INTEGER, `GRTDate` TEXT, `GRTPlace` TEXT, `CutomerStatusID` INTEGER, `RegistrationStatusID` INTEGER, `RegistrationDate` TEXT, `LoanAppliedID` INTEGER, `LoanSanctionedID` INTEGER, `LoanDisbursedID` INTEGER, `LoanDisbursedDate` TEXT, `LoanDisbRemarks` TEXT, `LoanEMIDate` TEXT, `LoanApprovedID` INTEGER, `LoanApprovalDate` TEXT, `LoanChequeBankID` INTEGER, `LoanChequeNo` TEXT, `LoanApprovedAmt` INTEGER, `LoanApprovedInterestRate` REAL, `LoanApprovedInsuranceAmt` INTEGER, `LoanApprovedFeesAmt` INTEGER, `LoanApprovedInstallmentAmt` INTEGER, `LoanApprovedPaymentWeeks` INTEGER, `LoanApprovedCloserMinWeeks` INTEGER, `LoanApprovedRemarks` TEXT, `IsLoanClosed` INTEGER, `TabletID` TEXT, `FundSourceID` INTEGER, `CreatedBy` TEXT, `CreatedOn` TEXT, `UpdatedBy` TEXT, `UpdatedOn` TEXT, `IsDeleted` INTEGER, `LoanApprovalDoneBy` TEXT, `LoanDisbursalDoneBy` TEXT, `GRTDoneBy` TEXT, `CreditEnquiryDoneBy` TEXT, `CGTDoneBy` TEXT, `ExistingLoanAmount` INTEGER, `ExistingLoanCurrentOutstanding` INTEGER, `ExistingLoanCurrentWeek` INTEGER, `CKYC_JobCard_Image2` TEXT, `CKYC_RationCard_Image2` TEXT, `GKYC_JobCard_Image2` TEXT, `GRTLat` TEXT, `GRTLong` TEXT, `RegPlace` TEXT, `RegLat` TEXT, `RegLong` TEXT, `IsOldCustomer` INTEGER, `CustomerNickName` TEXT, `IsMobileNoValidated` INTEGER, `GurantorAge` INTEGER, `Assets_Other_Gas` INTEGER, `KElectricNumber` TEXT, `GurantorKElectricNumber` TEXT, `CustomerBankNameEditable` TEXT, `IsWriteOff` INTEGER, `LoanCycle` INTEGER, `CreditEquiryPDF` TEXT, `CustomerBankIFSCCode` TEXT, `MandatePrint` INTEGER, `MandateStartDate` TEXT, `MandateEndDate` TEXT, `MandateApproved` INTEGER, `MandateRemark` INTEGER, `HouseHoldAssesment_Image` TEXT, `TabletVersionName` TEXT, `GKYC_IFSCCode` TEXT, `GKYC_BankNameEditable` TEXT, `Duplicate_Customer_Remark` TEXT, `GuarantorDOB` TEXT, `UploadedOn` TEXT, `Remarks` TEXT, `IsEdited` INTEGER, `OTPCODE` TEXT, `IsUpload` INTEGER, `FamilyMonthlyIncome` INTEGER, `GKYC_OtherID_Image2` TEXT, `CKYC_Bank_Branch` TEXT, `CKYC_Aadhar_Name` TEXT, `CKYC_VoterId_Name` TEXT, `CKYC_Pancard_Name` TEXT, `GKYC_Aadhar_Name` TEXT, `GKYC_VoterId_Name` TEXT, `GKYC_Pancard_Name` TEXT, `StateID` INTEGER, `DistrictID` INTEGER, `Tehsil` TEXT, `Landmark` TEXT, `GuarantorMobileNo` TEXT, `IsMobileNoValidatedGuarantor` INTEGER, `Address` TEXT, `MaternalAddress` TEXT, `MaternalMobileNo` TEXT, `MaternalStateID` INTEGER, `MaternalVillageName` TEXT, `MaternalFatherName` TEXT, `DailyExpense` INTEGER, `MedicalExpense` INTEGER, `EducationExpense` INTEGER, `OtherExpense` INTEGER, `TotalMonthlyExpenditure` INTEGER, `TotalAnnualExpenditure` INTEGER, PRIMARY KEY(`GUID`))",
         "fields": [
           {
             "fieldPath": "GUID",
@@ -2090,6 +2090,131 @@
             "fieldPath": "GKYC_OtherID_Image2",
             "columnName": "GKYC_OtherID_Image2",
             "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CKYC_Bank_Branch",
+            "columnName": "CKYC_Bank_Branch",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CKYC_Aadhar_Name",
+            "columnName": "CKYC_Aadhar_Name",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CKYC_VoterId_Name",
+            "columnName": "CKYC_VoterId_Name",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "CKYC_Pancard_Name",
+            "columnName": "CKYC_Pancard_Name",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GKYC_Aadhar_Name",
+            "columnName": "GKYC_Aadhar_Name",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GKYC_VoterId_Name",
+            "columnName": "GKYC_VoterId_Name",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GKYC_Pancard_Name",
+            "columnName": "GKYC_Pancard_Name",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "StateID",
+            "columnName": "StateID",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "DistrictID",
+            "columnName": "DistrictID",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "Tehsil",
+            "columnName": "Tehsil",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "Landmark",
+            "columnName": "Landmark",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "GurarantorMobileNo",
+            "columnName": "GuarantorMobileNo",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "IsMobileNoValidatedGuarantor",
+            "columnName": "IsMobileNoValidatedGuarantor",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "Address",
+            "columnName": "Address",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "MaternalAddress",
+            "columnName": "MaternalAddress",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "MaternalMobileNo",
+            "columnName": "MaternalMobileNo",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "MaternalStateID",
+            "columnName": "MaternalStateID",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "MaternalVillageName",
+            "columnName": "MaternalVillageName",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "MaternalFatherName",
+            "columnName": "MaternalFatherName",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "DailyExpense",
+            "columnName": "DailyExpense",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "MedicalExpense",
+            "columnName": "MedicalExpense",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "EducationExpense",
+            "columnName": "EducationExpense",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "OtherExpense",
+            "columnName": "OtherExpense",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "TotalMonthlyExpenditure",
+            "columnName": "TotalMonthlyExpenditure",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "TotalAnnualExpenditure",
+            "columnName": "TotalAnnualExpenditure",
+            "affinity": "INTEGER"
           }
         ],
         "primaryKey": {
@@ -2101,7 +2226,7 @@
       },
       {
         "tableName": "CustomerExistingLoanDetail",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`MFIGUID` TEXT NOT NULL, `GUID` TEXT, `ExistingLoanID` INTEGER, `LoanAmount` INTEGER, `LoanPurposeID` INTEGER, `MFIID` INTEGER, `OutStandingAmount` INTEGER, `IsUpload` INTEGER, `MemberName` TEXT, `EMI` INTEGER, `IsEdited` INTEGER, `IsDeleted` INTEGER, PRIMARY KEY(`MFIGUID`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`MFIGUID` TEXT NOT NULL, `GUID` TEXT, `ExistingLoanID` INTEGER, `LoanAmount` INTEGER, `LoanPurposeID` INTEGER, `MFIID` INTEGER, `OutStandingAmount` INTEGER, `IsUpload` INTEGER, `MemberName` TEXT, `EMI` INTEGER, `IsEdited` INTEGER, `IsDeleted` INTEGER, `MFIBankAccountName` TEXT, `Remarks` TEXT, PRIMARY KEY(`MFIGUID`))",
         "fields": [
           {
             "fieldPath": "MFIGUID",
@@ -2163,6 +2288,16 @@
             "fieldPath": "IsDeleted",
             "columnName": "IsDeleted",
             "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "MFIBankAccountName",
+            "columnName": "MFIBankAccountName",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "Remarks",
+            "columnName": "Remarks",
+            "affinity": "TEXT"
           }
         ],
         "primaryKey": {
@@ -4367,7 +4502,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd4d3f327cfeced4f03ef35512bf77e48')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd098c4451a26e289f86c1cdbd457eec2')"
     ]
   }
 }
