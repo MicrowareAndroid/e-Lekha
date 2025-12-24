@@ -77,7 +77,7 @@ class BankDetailViewModel(
 
  fun saveData() {
   viewModelScope.launch {
-   //saveBankDetail()
+   saveBankDetail()
 
   }
  }

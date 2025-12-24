@@ -1,6 +1,7 @@
 package com.psc.elekha.di
 
 
+import FamilyMemberDetailViewModel
 import com.psc.elekha.database.viewmodel.CustomerDefaultViewModel
 import com.psc.elekha.database.viewmodel.CustomerExistingLoanDetailViewModel
 import com.psc.elekha.database.viewmodel.CustomerFamilyMemberDetailsViewModel
@@ -46,6 +47,7 @@ import com.psc.elekha.ui.screen.bankdetails.BankDetailViewModel
 import com.psc.elekha.ui.screen.kycdetails.KycDetailViewModel
 import com.psc.elekha.ui.screen.login.LoginViewModel
 import com.psc.elekha.ui.screen.personaldetails.PersonalDetailViewModel
+import org.koin.core.module.dsl.viewModel
 import org.koin.core.module.dsl.viewModelOf
 
 import org.koin.dsl.module
@@ -90,7 +92,6 @@ val viewmodelModule = module {
     viewModelOf(::UserBranchViewModel)
     viewModelOf(::UsersViewModel)
     viewModelOf(::UserResponseViewModel)
-
     viewModelOf(::KycDetailViewModel)
     viewModelOf(::BankDetailViewModel)
     viewModelOf(::PersonalDetailViewModel)
@@ -98,7 +99,39 @@ val viewmodelModule = module {
     viewModelOf(::UserContactDetailViewModel)
     viewModelOf(::TrainingGroupStatusViewModel)
     viewModelOf(::MSTLoanTypeViewModel)
-    viewModelOf(::LoginViewModel)
+    viewModelOf(::FamilyMemberDetailViewModel)
+
+    viewModel {
+        LoginViewModel(
+
+            mstComboBoxNViewModel = get(),
+            apiRepository = get(),
+            usersViewModel = get(),
+            tabletMenuViewModel = get(),
+            tabletMenuRoleViewModel = get(),
+            mstStateViewModel = get(),
+            mstDistrictViewModel = get(),
+            mstBranchViewModel = get(),
+            mstVillageViewModel = get(),
+            mstAssetsValuationViewModel = get(),
+            mstBankViewModel = get(),
+            mstCenterViewModel = get(),
+            mstPovertyStatusViewModel = get(),
+            customerStatusViewModel = get(),
+            mstLoanTypeViewModel = get(),
+            trainingGroupStatusViewModel = get(),
+            mstMonthlyIncomeMarksViewModel = get(),
+            userBranchViewModel = get(),
+            mstLoanOfficerViewModel = get(),
+            kycDocCategoryViewModel = get(),
+            kycDocConfigurationViewModel = get(),
+            kycDocumentViewModel = get(),
+            kycStatusViewModel = get(),
+            kycStatusConditionViewModel = get(),
+            appPreferences = get()
+        )
+    }
+
 
 
 

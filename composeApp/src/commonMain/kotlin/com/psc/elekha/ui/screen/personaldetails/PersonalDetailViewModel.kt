@@ -6,63 +6,67 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.focus.FocusRequester
 import androidx.lifecycle.viewModelScope
-import com.psc.elekha.database.entity.CustomerDefaultEntity
 import com.psc.elekha.database.entity.CustomerEntity
-import com.psc.elekha.database.viewmodel.CustomerDefaultViewModel
 import com.psc.elekha.database.viewmodel.CustomerViewModel
 import com.psc.elekha.model.ValidationModelContorl
 import com.psc.elekha.ui.screen.base.BaseValidationViewModel
 import com.psc.elekha.utils.AppPreferences
 import com.psc.elekha.utils.AppSP
-import com.psc.elekha.utils.Validator.checkValidation
+import com.psc.elekha.utils.calculateAgeFromDobKMP
 import com.psc.elekha.utils.convertDateFormatDDMMYYYY
 import com.psc.elekha.utils.convertDateFormatYYYYMMDD
 import com.psc.elekha.utils.currentDatetime
 import com.psc.elekha.utils.generateRandomId
+import com.psc.elekha.utils.parseNameDynamic
 import com.psc.elekha.utils.returnIntegerValue
 import com.psc.elekha.utils.returnStringValue
 import e_lekha.composeapp.generated.resources.Res
 import e_lekha.composeapp.generated.resources.data_saved_successfully
+import e_lekha.composeapp.generated.resources.data_updated_successfully
+import e_lekha.composeapp.generated.resources.personal_annual
 import e_lekha.composeapp.generated.resources.personal_customer_name
 import e_lekha.composeapp.generated.resources.personal_district
 import e_lekha.composeapp.generated.resources.personal_education
 import e_lekha.composeapp.generated.resources.personal_education_selection
+import e_lekha.composeapp.generated.resources.personal_emi_enter
 import e_lekha.composeapp.generated.resources.personal_father
 import e_lekha.composeapp.generated.resources.personal_full_address
+import e_lekha.composeapp.generated.resources.personal_full_name
 import e_lekha.composeapp.generated.resources.personal_gurantor_mobile
 import e_lekha.composeapp.generated.resources.personal_gurantor_name
 import e_lekha.composeapp.generated.resources.personal_husband_name
 import e_lekha.composeapp.generated.resources.personal_landmark
+import e_lekha.composeapp.generated.resources.personal_loan_enter
 
 import e_lekha.composeapp.generated.resources.personal_marital
 import e_lekha.composeapp.generated.resources.personal_maternal_address
 import e_lekha.composeapp.generated.resources.personal_maternal_mobile
 import e_lekha.composeapp.generated.resources.personal_medical
+import e_lekha.composeapp.generated.resources.personal_mfi
 import e_lekha.composeapp.generated.resources.personal_mobile_number
+import e_lekha.composeapp.generated.resources.personal_others
+import e_lekha.composeapp.generated.resources.personal_outstanding
 import e_lekha.composeapp.generated.resources.personal_payment_daily
 import e_lekha.composeapp.generated.resources.personal_pincode
 import e_lekha.composeapp.generated.resources.personal_purpose
 import e_lekha.composeapp.generated.resources.personal_relation
 import e_lekha.composeapp.generated.resources.personal_religion
+import e_lekha.composeapp.generated.resources.personal_remarks
 import e_lekha.composeapp.generated.resources.personal_state
 import e_lekha.composeapp.generated.resources.personal_tehsil
+import e_lekha.composeapp.generated.resources.personal_total_monthly
 import e_lekha.composeapp.generated.resources.personal_village
 
 import kotlinx.coroutines.launch
-import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.getString
-import kotlin.collections.get
-import kotlin.compareTo
-
-
 
 
 class PersonalDetailViewModel(
     val appPreferences: AppPreferences,
-  val customerViewModel: CustomerViewModel):
-    BaseValidationViewModel()
-{
-    var customerName  by mutableStateOf("")
+    val customerViewModel: CustomerViewModel
+) :
+    BaseValidationViewModel() {
+    var customerName by mutableStateOf("")
     var dateOfBirth by mutableStateOf("")
     var religionId by mutableStateOf(0)
     var purposeId by mutableStateOf(0)
@@ -77,7 +81,8 @@ class PersonalDetailViewModel(
     var fulladdresss by mutableStateOf("")
     var stateId by mutableStateOf(0)
     var districtId by mutableStateOf(0)
-    var villageName by mutableStateOf("")
+    var villageId by mutableStateOf(0)
+    var branchId by mutableStateOf<Int?>(null)
     var tehsilName by mutableStateOf("")
     var landMark by mutableStateOf("")
     var pinCode by mutableStateOf("")
@@ -103,10 +108,7 @@ class PersonalDetailViewModel(
     var emiExpense by mutableStateOf("")
     var fullNameExpense by mutableStateOf("")
     var remarksExpense by mutableStateOf("")
-
-
-
-
+    var name by mutableStateOf("")
 
 
     val bringIntoViewRequesterCustomerName = BringIntoViewRequester()
@@ -146,8 +148,11 @@ class PersonalDetailViewModel(
     val bringIntoViewRequesterEmiExpense = BringIntoViewRequester()
 
     val bringIntoViewRequesterMaternalAddress = BringIntoViewRequester()
+    val focusRequesterMovableAssetId = FocusRequester()
+    val focusRequesterVehicleNo = FocusRequester()
 
     val focusRequesterCustomerName = FocusRequester()
+
     val focusRequesterMaternalMobileNo = FocusRequester()
     val focusRequesterFatherName = FocusRequester()
     val focusRequesterVillageNames = FocusRequester()
@@ -186,6 +191,10 @@ class PersonalDetailViewModel(
 
     suspend fun savePersonalDetail() {
         val guid = appPreferences.getString(AppSP.customerGuid)
+        val name = parseNameDynamic(returnStringValue(customerName))
+        val husName = parseNameDynamic(returnStringValue(husbandName))
+        val gurName = parseNameDynamic(returnStringValue(gurantorName))
+
         if (returnStringValue(guid).isEmpty()) {
             val newguid = generateRandomId()
             val entity = CustomerEntity(
@@ -195,21 +204,21 @@ class PersonalDetailViewModel(
                 "",
                 0,
                 maritalStatusId,
-                customerName,
+                returnStringValue(name.firstName),
+                returnStringValue(name.middleName),
+                returnStringValue(name.lastName),
                 "",
-                "",
-                "",
-                "",
-                husbandName,
-                "",
+                returnStringValue(husName.firstName),
+                returnStringValue(husName.middleName),
+                returnStringValue(husName.lastName),
                 0,
-                gurantorName,
-                "",
-                "",
+                returnStringValue(gurName.firstName),
+                returnStringValue(gurName.middleName),
+                returnStringValue(gurName.lastName),
                 "",
                 convertDateFormatYYYYMMDD(returnStringValue(dateOfBirth)),
                 0,
-                0,
+                calculateAgeFromDobKMP(dateOfBirth),
                 0,
                 mobileNumber,
                 gurantormobileNumber,
@@ -224,7 +233,7 @@ class PersonalDetailViewModel(
                 "",
                 "",
                 "",
-                returnIntegerValue(villageName),
+                villageId,
                 "",
                 pinCode,
                 0,
@@ -331,7 +340,7 @@ class PersonalDetailViewModel(
                 0,
                 0,
                 0,
-                0,
+                returnIntegerValue(outStandingExpense),
                 "",
                 "",
                 "",
@@ -407,7 +416,7 @@ class PersonalDetailViewModel(
                 "",
                 convertDateFormatYYYYMMDD(returnStringValue(appPreferences.getString(AppSP.dateOfBirth))),
                 "",
-                "",
+                remarksExpense,
                 1,
                 "",
                 0,
@@ -419,6 +428,33 @@ class PersonalDetailViewModel(
             appPreferences.putString(AppSP.customerGuid, newguid)
             saveMessage = getString(Res.string.data_saved_successfully)
             showSaveAlert = true
+        }
+        else {
+            customerViewModel.updateCustomerBasicDetails(
+                guid,
+                name.firstName,
+                name.middleName,
+                name.lastName,
+                maritalStatusId,
+                educationId,
+                religionId,
+                mobileNumber,
+                husName.firstName,
+                husName.middleName,
+                husName.lastName,
+                calculateAgeFromDobKMP(dateOfBirth),
+                gurName.firstName,
+                gurName.middleName,
+                gurName.lastName,
+                gurantormobileNumber,
+                dateOfBirth,
+                appPreferences.getString(AppSP.userId),
+                currentDatetime()
+            )
+            saveMessage = getString(Res.string.data_updated_successfully)
+            showSaveAlert = true
+
+
         }
     }
 
@@ -436,17 +472,16 @@ class PersonalDetailViewModel(
                     customerName = returnStringValue(data.FirstName)
                     maritalStatusId = returnIntegerValue(data.MaritalStatusID?.toString())
                     educationId = returnIntegerValue(data.EducationID?.toString())
-
                     religionId = returnIntegerValue(data.ReligionID?.toString())
                     mobileNumber = returnStringValue(listData[0].ContactNo)
-                    husbandName = returnStringValue(listData[0].HusbandMName)
-                    gurantorName = returnStringValue(listData[0].GurantorMName)
-                    dateOfBirth= convertDateFormatDDMMYYYY(returnStringValue(listData[0].DOB))
+                    husbandName = returnStringValue(listData[0].HusbandFName)
+                    gurantorName = returnStringValue(listData[0].GurantorFName)
+                    dateOfBirth = convertDateFormatDDMMYYYY(returnStringValue(listData[0].DOB))
                     //  relationId = returnIntegerValue(data.Re.toString())
-
+                    remarksExpense = returnStringValue(data.Remarks)
                     //  gurantormobileNumber = returnIntegerValue(data..toString())
                     //districtId = returnIntegerValue(data.DistrictId.toString())
-                    villageName = returnStringValue(data.VillageID?.toString())
+                    villageId =returnIntegerValue(data.VillageID?.toString())
 
 
                     // tehsilName = returnStringValue(data.TehsilName)
@@ -460,15 +495,15 @@ class PersonalDetailViewModel(
 
     fun saveData() {
         viewModelScope.launch {
-            savePersonalDetail()
-            /*val validation = checkValidation()
+
+            val validation = checkValidation()
             if (validation.isValid) {
                 savePersonalDetail()
                 showSaveAlert = true
                 saveFlag = 1
             } else {
                 showValidationError(validation)
-            }*/
+            }
         }
     }
 
@@ -493,8 +528,6 @@ class PersonalDetailViewModel(
                     bringIntoViewRequester = bringIntoViewRequesterCustomerName
                 )
             }
-
-
 
 
             returnIntegerValue(maritalStatusId.toString()) == 0 -> {
@@ -523,6 +556,7 @@ class PersonalDetailViewModel(
                     bringIntoViewRequester = bringIntoViewRequesterReligionId
                 )
             }
+
             returnIntegerValue(purposeId.toString()) == 0 -> {
                 ValidationModelContorl(
                     isValid = false,
@@ -531,6 +565,7 @@ class PersonalDetailViewModel(
                     bringIntoViewRequester = bringIntoViewRequesterPurposeId
                 )
             }
+
             returnStringValue(mobileNumber).length < 10 -> {
                 val msg = getString(Res.string.personal_mobile_number)
                 ValidationModelContorl(
@@ -540,6 +575,7 @@ class PersonalDetailViewModel(
                     bringIntoViewRequester = bringIntoViewRequesterMobileNumber
                 )
             }
+
             returnStringValue(husbandName).isBlank() -> {
                 val nameLabel = getString(Res.string.personal_husband_name)
                 ValidationModelContorl(
@@ -559,6 +595,7 @@ class PersonalDetailViewModel(
                     bringIntoViewRequester = bringIntoViewRequesterGurantorName
                 )
             }
+
             returnIntegerValue(relationId.toString()) == 0 -> {
                 ValidationModelContorl(
                     isValid = false,
@@ -587,6 +624,7 @@ class PersonalDetailViewModel(
                     bringIntoViewRequester = bringIntoViewRequesterFullAddress
                 )
             }
+
             returnIntegerValue(stateId.toString()) == 0 -> {
                 ValidationModelContorl(
                     isValid = false,
@@ -595,6 +633,7 @@ class PersonalDetailViewModel(
                     bringIntoViewRequester = bringIntoViewRequesterStateId
                 )
             }
+
             returnIntegerValue(districtId.toString()) == 0 -> {
                 ValidationModelContorl(
                     isValid = false,
@@ -603,7 +642,8 @@ class PersonalDetailViewModel(
                     bringIntoViewRequester = bringIntoViewRequesterDistrictId
                 )
             }
-            returnStringValue(villageName).isBlank() -> {
+
+            returnIntegerValue(villageId.toString()) == 0 -> {
                 val nameLabel = getString(Res.string.personal_village)
                 ValidationModelContorl(
                     isValid = false,
@@ -612,6 +652,7 @@ class PersonalDetailViewModel(
                     bringIntoViewRequester = bringIntoViewRequesterVillageName
                 )
             }
+
             returnStringValue(tehsilName).isBlank() -> {
                 val nameLabel = getString(Res.string.personal_tehsil)
                 ValidationModelContorl(
@@ -621,6 +662,7 @@ class PersonalDetailViewModel(
                     bringIntoViewRequester = bringIntoViewRequesterTehsilName
                 )
             }
+
             returnStringValue(landMark).isBlank() -> {
                 val nameLabel = getString(Res.string.personal_landmark)
                 ValidationModelContorl(
@@ -630,6 +672,7 @@ class PersonalDetailViewModel(
                     bringIntoViewRequester = bringIntoViewRequesterLandMark
                 )
             }
+
             returnStringValue(pinCode).length < 6 -> {
                 val nameLabel = getString(Res.string.personal_pincode)
                 ValidationModelContorl(
@@ -639,6 +682,7 @@ class PersonalDetailViewModel(
                     bringIntoViewRequester = bringIntoViewRequesterPinCode
                 )
             }
+
             returnStringValue(maternalAddress).isBlank() -> {
                 val nameLabel = getString(Res.string.personal_maternal_address)
                 ValidationModelContorl(
@@ -658,6 +702,7 @@ class PersonalDetailViewModel(
                     bringIntoViewRequester = bringIntoViewRequesterMaternalMobileNo
                 )
             }
+
             returnStringValue(fatherName).isBlank() -> {
                 val nameLabel = getString(Res.string.personal_father)
                 ValidationModelContorl(
@@ -667,15 +712,8 @@ class PersonalDetailViewModel(
                     bringIntoViewRequester = bringIntoViewRequesterFatherName
                 )
             }
-            returnStringValue(husbandName).isBlank() -> {
-                val nameLabel = getString(Res.string.personal_husband_name)
-                ValidationModelContorl(
-                    isValid = false,
-                    errorMessage = nameLabel,
-                    focusRequester = focusRequesterHusbandName,
-                    bringIntoViewRequester = bringIntoViewRequesterHusbandName
-                )
-            }
+
+
             returnStringValue(dailyExpense).isBlank() -> {
                 val nameLabel = getString(Res.string.personal_payment_daily)
                 ValidationModelContorl(
@@ -685,31 +723,114 @@ class PersonalDetailViewModel(
                     bringIntoViewRequester = bringIntoViewRequesterDailyExpense
                 )
             }
+
             returnStringValue(educationExpense).isBlank() -> {
                 val nameLabel = getString(Res.string.personal_education_selection)
                 ValidationModelContorl(
                     isValid = false,
                     errorMessage = nameLabel,
-                    focusRequester = focusRequesterHusbandName,
-                    bringIntoViewRequester = bringIntoViewRequesterHusbandName
+                    focusRequester = focusRequesterEducationExpense,
+                    bringIntoViewRequester = bringIntoViewRequesterEducationExpense
                 )
             }
+
             returnStringValue(medicalExpense).isBlank() -> {
                 val nameLabel = getString(Res.string.personal_medical)
                 ValidationModelContorl(
                     isValid = false,
                     errorMessage = nameLabel,
-                    focusRequester = focusRequesterHusbandName,
-                    bringIntoViewRequester = bringIntoViewRequesterHusbandName
+                    focusRequester = focusRequesterMedicalExpense,
+                    bringIntoViewRequester = bringIntoViewRequesterMedicalExpense
                 )
             }
-            returnStringValue(husbandName).isBlank() -> {
-                val nameLabel = getString(Res.string.personal_husband_name)
+
+            returnStringValue(othersExpense).isBlank() -> {
+                val nameLabel = getString(Res.string.personal_others)
                 ValidationModelContorl(
                     isValid = false,
                     errorMessage = nameLabel,
-                    focusRequester = focusRequesterHusbandName,
-                    bringIntoViewRequester = bringIntoViewRequesterHusbandName
+                    focusRequester = focusRequesterOthersExpense,
+                    bringIntoViewRequester = bringIntoViewRequesterOthersExpense
+                )
+            }
+
+            returnStringValue(totalMonthlyExpense).isBlank() -> {
+                val nameLabel = getString(Res.string.personal_total_monthly)
+                ValidationModelContorl(
+                    isValid = false,
+                    errorMessage = nameLabel,
+                    focusRequester = focusRequesterTotalMonthlyExpense,
+                    bringIntoViewRequester = bringIntoViewRequesterTotalMonthlyExpense
+                )
+            }
+
+            returnStringValue(annualExpense).isBlank() -> {
+                val nameLabel = getString(Res.string.personal_annual)
+                ValidationModelContorl(
+                    isValid = false,
+                    errorMessage = nameLabel,
+                    focusRequester = focusRequesterAnnualExpense,
+                    bringIntoViewRequester = bringIntoViewRequesterAnnualExpense
+                )
+            }
+
+            returnStringValue(mfiBankExpense).isBlank() -> {
+                val nameLabel = getString(Res.string.personal_mfi)
+                ValidationModelContorl(
+                    isValid = false,
+                    errorMessage = nameLabel,
+                    focusRequester = focusRequesterMfiBankExpense,
+                    bringIntoViewRequester = bringIntoViewRequesterMfiBankExpense
+                )
+            }
+
+            returnStringValue(loanAmountExpense).isBlank() -> {
+                val nameLabel = getString(Res.string.personal_loan_enter)
+                ValidationModelContorl(
+                    isValid = false,
+                    errorMessage = nameLabel,
+                    focusRequester = focusRequesterLoanAmountExpense,
+                    bringIntoViewRequester = bringIntoViewRequesterLoanAmountExpense
+                )
+            }
+
+            returnStringValue(outStandingExpense).isBlank() -> {
+                val nameLabel = getString(Res.string.personal_outstanding)
+                ValidationModelContorl(
+                    isValid = false,
+                    errorMessage = nameLabel,
+                    focusRequester = focusRequesterOutStandingExpense,
+                    bringIntoViewRequester = bringIntoViewRequesterOutStandingExpense
+                )
+            }
+
+            returnStringValue(emiExpense).isBlank() -> {
+                val nameLabel = getString(Res.string.personal_emi_enter)
+                ValidationModelContorl(
+                    isValid = false,
+                    errorMessage = nameLabel,
+                    focusRequester = focusRequesterEmiExpense,
+                    bringIntoViewRequester = bringIntoViewRequesterEmiExpense
+                )
+            }
+
+            returnStringValue(fullNameExpense).isBlank() -> {
+                val nameLabel = getString(Res.string.personal_full_name)
+                ValidationModelContorl(
+                    isValid = false,
+                    errorMessage = nameLabel,
+                    focusRequester = focusRequesterFullNameExpense,
+                    bringIntoViewRequester = bringIntoViewRequesterFullNameExpense
+                )
+            }
+
+            returnStringValue(remarksExpense).isBlank() -> {
+                val nameLabel = getString(Res.string.personal_remarks)
+                ValidationModelContorl(
+                    isValid = false,
+                    errorMessage = nameLabel,
+                    focusRequester = focusRequesterRemarksExpense,
+                    bringIntoViewRequester = bringIntoViewRequesterRemarksExpense
                 )
             }
 
@@ -718,7 +839,6 @@ class PersonalDetailViewModel(
 
         }
     }
-
 
 
 }

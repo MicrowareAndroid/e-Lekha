@@ -88,4 +88,12 @@ class MSTVillageViewModel(
             villageCount.value = 0
         }
     }
+
+    fun loadVillageBybranchID() {
+        viewModelScope.launch {
+            val result = repository.getAllVillageBybrachID()
+            _villageList.value = result
+        }
+    }
+
 }

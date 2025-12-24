@@ -34,6 +34,8 @@ import com.psc.elekha.database.viewmodel.UserBranchViewModel
 import com.psc.elekha.database.viewmodel.UsersViewModel
 import com.psc.elekha.model.MasterRequest
 import com.psc.elekha.response.MasterResponse
+import com.psc.elekha.utils.AppPreferences
+import com.psc.elekha.utils.AppSP
 import com.psc.elekha.utils.MasterXmlParser
 import e_lekha.composeapp.generated.resources.Res
 import e_lekha.composeapp.generated.resources.data_saved_successfully
@@ -50,13 +52,13 @@ import org.jetbrains.compose.resources.getString
 
 
 class LoginViewModel(
-    private val mSTComboBoxNViewModel: MSTComboBox_NViewModel,
-    private val apiRepository: ApiRepository,
 
-   private val usersViewModel: UsersViewModel,
-    /*private val tabletMenuViewModel: TabletMenuViewModel,
-   private val tabletMenuRoleViewModel: TabletMenuRoleViewModel,
-   private val mstStateViewModel: MSTStateViewModel,
+    private val mstComboBoxNViewModel: MSTComboBox_NViewModel,
+    private val apiRepository: ApiRepository,
+    private val usersViewModel: UsersViewModel,
+    private val tabletMenuViewModel: TabletMenuViewModel,
+    private val tabletMenuRoleViewModel: TabletMenuRoleViewModel,
+    private val mstStateViewModel: MSTStateViewModel,
    private val mstDistrictViewModel: MSTDistrictViewModel,
    private val mstBranchViewModel: MSTBranchViewModel,
    private val mstVillageViewModel: MSTVillageViewModel,
@@ -74,57 +76,12 @@ class LoginViewModel(
    private val kycDocConfigurationViewModel: KYCDocConfigurationViewModel,
    private val kycDocumentViewModel: KYCDocumentViewModel,
    private val kycStatusViewModel: KYCStatusViewModel,
-   private val kycStatusConditionViewModel: KYCStatusConditionViewModel,*/
+   private val kycStatusConditionViewModel: KYCStatusConditionViewModel,
+   private val appPreferences: AppPreferences,
 ) : ViewModel() {
 
     private val _loginState = MutableStateFlow<APiState>(APiState.idle)
     val loginState: StateFlow<APiState> = _loginState
-
-
-    fun updateData() {
-        val maritalStatusList = listOf(
-            MSTComboBox_NEntity(1, "Single", 1, "en", false),
-            MSTComboBox_NEntity(2, "Married", 1, "en", false),
-            MSTComboBox_NEntity(3, "Divorced", 1, "en", false),
-            MSTComboBox_NEntity(1, "12th", 2, "en", false),
-            MSTComboBox_NEntity(2, "Graduation", 2, "en", false),
-            MSTComboBox_NEntity(3, "Post Graduation", 2, "en", false),
-            MSTComboBox_NEntity(1, "Hindu", 3, "en", false),
-            MSTComboBox_NEntity(2, "Muslim", 3, "en", false),
-            MSTComboBox_NEntity(1, "Business", 4, "en", false),
-            MSTComboBox_NEntity(2,  "Study Loan", 4, "en", false),
-            MSTComboBox_NEntity(2,  "Home Loan", 4, "en", false),
-            MSTComboBox_NEntity(1, "Brother", 5, "en", false),
-            MSTComboBox_NEntity(2,   "Husband", 5, "en", false),
-            MSTComboBox_NEntity(1, "West", 6, "en", false),
-            MSTComboBox_NEntity(2,   "South" , 6, "en", false),
-            MSTComboBox_NEntity(1, "Delhi", 7, "en", false),
-            MSTComboBox_NEntity(2,   "Punjab" , 7, "en", false),
-            MSTComboBox_NEntity(1, "Male", 8, "en", false),
-            MSTComboBox_NEntity(2, "Female", 8, "en", false),
-            MSTComboBox_NEntity(3, "Other", 8, "en", false),
-            MSTComboBox_NEntity(1, "Doctor", 9, "en", false),
-            MSTComboBox_NEntity(2, "Teacher", 9, "en", false),
-            MSTComboBox_NEntity(3, "Driver", 9, "en", false),
-            MSTComboBox_NEntity(4, "Engineer", 9, "en", false),
-            MSTComboBox_NEntity(5, "Business", 9, "en", false),
-            MSTComboBox_NEntity(6, "Other", 9, "en", false),
-            MSTComboBox_NEntity(1, "Card", 10, "en", false),
-            MSTComboBox_NEntity(2, "Bank", 10, "en", false),
-            MSTComboBox_NEntity(1, "Truck", 10, "en", false),
-            MSTComboBox_NEntity(1, "SBI", 11, "en", false),
-            MSTComboBox_NEntity(2, "HDFC", 11, "en", false),
-            MSTComboBox_NEntity(3, "AXIS", 11, "en", false),
-            MSTComboBox_NEntity(1, "SBI Delhi", 12, "en", false),
-            MSTComboBox_NEntity(2, "SBI Gurgaon", 12, "en", false),
-            MSTComboBox_NEntity(3, "HDFC Delhi", 12, "en", false),
-            MSTComboBox_NEntity(4, "HDFC Gurgaon", 12, "en", false),
-            MSTComboBox_NEntity(5, "AXIS Delhi", 12, "en", false),
-            MSTComboBox_NEntity(6, "AXIS Gurgaon", 12, "en", false),
-        )
-
-        mSTComboBoxNViewModel.insertAllComboBox(maritalStatusList)
-    }
 
 
     fun getMaster(username: String, password: String) {
@@ -139,8 +96,35 @@ class LoginViewModel(
                 if (code == 200){
 
                     val body = response.body<MasterResponse>()
+                    appPreferences.putString(AppSP.username, username)
+                    appPreferences.putString(AppSP.password, password)
+
                     body.let{
                         usersViewModel.insertAllUsers(it.user)
+                        tabletMenuViewModel.insertAllTabletMenu(it.tabletMenu)
+                        tabletMenuRoleViewModel.insertAllTabletMenuRole(it.tabletMenuRole)
+                        mstStateViewModel.insertAllState(it.state)
+                        mstDistrictViewModel.insertAllDistrict(it.district)
+                        mstBranchViewModel.insertAllBranch(it.branch)
+                        mstVillageViewModel.insertAllVillage(it.village)
+                        mstAssetsValuationViewModel.insertAllAssetsValuation(it.assetValuation)
+                        mstBankViewModel.insertAllBank(it.bank)
+                        mstCenterViewModel.insertAllCenter(it.center)
+                        mstPovertyStatusViewModel.insertAllPovertyStatus(it.povertyStatus)
+                        customerStatusViewModel.insertAllCustomerStatus(it.customerStatus)
+                        mstLoanTypeViewModel.insertAllLoanType(it.loanType)
+                        trainingGroupStatusViewModel.insertAllTrainingGroupStatus(it.trainingGroupStatus)
+                        mstMonthlyIncomeMarksViewModel.insertAllMonthlyIncomeMarks(it.monthlyIncomeMarks)
+                        userBranchViewModel.insertAllUserBranch(it.userBranch)
+                        mstLoanOfficerViewModel.insertAllLoanOfficer(it.loanOfficer)
+                        kycDocCategoryViewModel.insertAllCategories(it.kycDocCategory)
+                        kycDocConfigurationViewModel.insertAllConfigurations(it.kycDocConfiguration)
+                        kycDocumentViewModel.insertAllDocuments(it.kycDocument)
+                        kycStatusViewModel.insertAllStatus(it.kycStatus)
+                        kycStatusConditionViewModel.insertAllConditions(it.kycStatusCondition)
+                        mstComboBoxNViewModel.insertAllComboBox(it.mstComboBoxN)
+
+
 
                     }
                     _loginState.value=APiState.success("Login successfully")

@@ -69,6 +69,7 @@ import androidx.compose.ui.focus.focusTarget
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onGloballyPositioned
@@ -165,6 +166,7 @@ import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.resources.vectorResource
+import com.psc.elekha.model.NameParts
 
 @Composable
 fun ReusableTextView(
@@ -887,7 +889,7 @@ fun FormDatePickerCompacts(
     trailingIcon: @Composable (() -> Unit)? = null,
     placeholder: String = stringResource(Res.string.dd_mm_yy),
     isEnable: Boolean = true,
-    labelColor: Color = textview_color,
+    labelColor: Color = black,
     placeholderColor: Color = Color(0xFF212121),
     backgroundColor: Color = text_fiiled_color,
     borderColor: Color = boderColor,
@@ -2823,7 +2825,185 @@ object MasterXmlParser {
     }
 }
 
+@Composable
+fun <T : Any> FillDynamicSpinnerespt(
+    label: String,
+    options: List<T>?,
+    selectedOption: Int?,
+    onOptionSelected: (Int) -> Unit,
+    getOptionId: (T) -> Int,
+    getOptionLabel: (T) -> String,
+    modifier: Modifier = Modifier,
+    labelColor: Color = black,
+    backgroundColor: Color = text_fiiled_color,
+    textColor: Color = Color.Black,
+    fontFamily: FontFamily = FontFamily(Font(Res.font.inter_regular)), // ESP wala font
+    borderColor: Color = boderColor,
+    focusRequester: FocusRequester? = null,
+    bringIntoViewRequester: BringIntoViewRequester? = null,
+    placeholder: String = stringResource(Res.string.spinner_select),
+    isMandatory: Int = 1
+) {
+    var expanded by remember { mutableStateOf(false) }
+    var hasFocus by remember { mutableStateOf(false) }
+    var spinnerWidth by remember { mutableStateOf(0.dp) }
+
+    val density = LocalDensity.current
+
+    val displayText = if (selectedOption == null || selectedOption == 0) {
+        placeholder
+    } else {
+        options?.find { getOptionId(it) == selectedOption }?.let { getOptionLabel(it) }
+            ?: placeholder
+    }
+
+    //  SAME focus behaviour as ESP spinner
+    LaunchedEffect(hasFocus) {
+        if (hasFocus) {
+            delay(120)
+            bringIntoViewRequester?.bringIntoView()
+            expanded = true
+        }
+    }
+
+    Column(modifier = modifier) {
+        ReusableTextView(
+            text = label,
+            fontSize = 14,
+            textColor = labelColor,
+            fontFamily = fontFamily,
+           // isMandatory = isMandatory
+        )
+
+        Spacer(modifier = Modifier.height(5.dp))
+
+        Box(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+
+            // ESP STYLE size / border / background
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(min = 40.dp) // ESP height
+                    .border(1.dp, borderColor, RoundedCornerShape(15.dp))
+                    .background(backgroundColor, RoundedCornerShape(15.dp))
+                    .focusTarget()
+                    .focusable()
+                    .focusProperties { canFocus = true }
+                    .then(if (focusRequester != null) Modifier.focusRequester(focusRequester) else Modifier)
+                    .onFocusChanged { state -> hasFocus = state.isFocused }
+                    .clickable { expanded = true }
+                    .onGloballyPositioned { spinnerWidth = with(density) { it.size.width.toDp() } },
+                contentAlignment = Alignment.CenterStart
+            ) {
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(text_fiiled_color, RoundedCornerShape(15.dp)) // ESP inner white bg
+                        .padding(horizontal = 12.dp, vertical = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    ReusableTextView(
+                        text = displayText,
+                        textColor = textColor,
+                        fontFamily = fontFamily
+                    )
+
+                    Spacer(modifier = Modifier.weight(1f))
+
+                    Icon(
+                        imageVector = vectorResource(Res.drawable.ic_arrow_drop_down),
+                        contentDescription = "Dropdown",
+                        tint = textColor
+                    )
+                }
+            }
+
+            //  DROPDOWN MENU
+            DropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { expanded = false },
+                modifier = Modifier
+                    .width(spinnerWidth)
+                    .background(White)
+            ) {
+                DropdownMenuItem(
+                    text = {
+                        ReusableTextView(
+                            text = placeholder,
+                            modifier = Modifier.fillMaxWidth(),
+                            fontSize = 14
+                        )
+                    },
+                    onClick = {
+                        onOptionSelected(0)
+                        expanded = false
+                    }
+                )
+                options?.forEach { item ->
+                    DropdownMenuItem(
+                        text = {
+                            ReusableTextView(
+                                text = getOptionLabel(item),
+                                modifier = Modifier.fillMaxWidth(),
+                                fontSize = 14
+                            )
+                        },
+                        onClick = {
+                            onOptionSelected(getOptionId(item))
+                            expanded = false
+                        }
+                    )
+                }
+            }
+        }
+    }
+}
 
 
+fun parseNameDynamic(fullName: String): NameParts {
+    val parts = fullName.trim()
+        .split("\\s+".toRegex())
 
+    val firstName = parts.firstOrNull().orEmpty()
+    val lastName = if (parts.size > 1) parts.last() else ""
 
+    val middleName = if (parts.size > 2) {
+        parts.subList(1, parts.size - 1).joinToString(" ")
+    } else ""
+
+    return NameParts(firstName, middleName, lastName)
+}
+fun calculateAgeFromDobKMP(dob: String): Int {
+    if (dob.isBlank()) return 0
+
+    return try {
+        // DOB format: dd-MM-yyyy
+        val parts = dob.split("-")
+        if (parts.size != 3) return 0
+
+        val day = parts[0].toInt()
+        val month = parts[1].toInt()
+        val year = parts[2].toInt()
+
+        val birthDate = LocalDate(year, month, day)
+        val today = Clock.System.todayIn(TimeZone.currentSystemDefault())
+
+        var age = today.year - birthDate.year
+
+        // Birthday abhi aaya ya nahi
+        if (
+            today.monthNumber < birthDate.monthNumber ||
+            (today.monthNumber == birthDate.monthNumber && today.dayOfMonth < birthDate.dayOfMonth)
+        ) {
+            age--
+        }
+
+        age
+    } catch (e: Exception) {
+        0
+    }
+}
