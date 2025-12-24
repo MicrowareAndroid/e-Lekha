@@ -31,14 +31,16 @@ class KycDetailViewModel(
 ): BaseValidationViewModel()
 {
  var billName by   mutableStateOf("")
- var billNameIdProof by   mutableStateOf("")
+ var billNameIdProof by mutableStateOf("")
  var accountNumber by mutableStateOf("")
  var accountNumberIdProof by mutableStateOf("")
  var kNumber by  mutableStateOf("")
  var kNumberIdProof by  mutableStateOf("")
-
+ var ebImagePath by mutableStateOf("")
  var aadharno by  mutableStateOf("")
  var aadharnoIdProof by  mutableStateOf("")
+
+ var adharbackproof by  mutableStateOf("")
  var nameonadhar by  mutableStateOf("")
  var nameonadharIdProof by  mutableStateOf("")
  var voterno by mutableStateOf("")
@@ -46,6 +48,7 @@ class KycDetailViewModel(
  var nameonvid by mutableStateOf("")
  var nameonvidIdProof by mutableStateOf("")
  var panNumber by mutableStateOf("")
+ var panFrontImagePath by mutableStateOf("")
  var nameOnPan by  mutableStateOf("")
 
 
@@ -115,12 +118,12 @@ private suspend  fun updateKycUpdate()
 customerViewModel.updateKyc(
  CKYC_UID = aadharno,
  CKYC_UID_Image = aadharnoIdProof,
- CKYC_UID_Image2 = "",
+ CKYC_UID_Image2 = adharbackproof,
  CKYC_VoterCard = voterno,
  CKYC_VoterCardImage = voternoIdProof,
  CKYC_VoterCardImage2 = "",
  CKYC_ElectricityBill = accountNumber,
- CKYC_ElectricityBill_Image = billNameIdProof,
+ CKYC_ElectricityBill_Image = ebImagePath,
  CKYC_ElectricityBillRelationID = 0,
  CKYC_ElectricityBill_Name = billName,
  KElectricNumber = kNumber,
@@ -154,7 +157,26 @@ customerViewModel.updateKyc(
 //   saveMessage= getString(Res.string.data_saved_successfully)
   saveMessage = getString(Res.string.data_saved_successfully)
   }
+ fun setEbImage(path: String) {
+  ebImagePath = path
  }
+ fun setAadhaarFrontImage(path: String) {
+  aadharnoIdProof = path
+ }
+
+ fun setAadhaarBackImage(path: String) {
+  adharbackproof = path
+ }
+
+ fun setVidFrontImage(path: String) {
+  voternoIdProof = path
+ }
+
+ fun setPanFrontImage(path: String) {
+  panFrontImagePath = path
+ }
+
+}
 
 /* fun loadSaveData(){
 
