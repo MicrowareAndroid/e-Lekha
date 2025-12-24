@@ -116,7 +116,7 @@ fun CustomerDetailScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .verticalScroll(rememberScrollState())
-                    .padding(horizontal = 15.dp, vertical = 5.dp),
+                    .padding(horizontal = 15.dp, vertical = 80.dp),
 
 
             )
@@ -206,13 +206,6 @@ fun CustomerDetailScreen(
                         fontSize = 16,
                         textColor = black
                     )
-
-
-                    ReusableTextView(
-                        text = stringResource(Res.string.user_name_details),
-                        fontSize = 16,
-                        textColor = black
-                    )
                 }
                 Spacer(modifier = Modifier.height(15.dp))
                 Row(
@@ -220,19 +213,59 @@ fun CustomerDetailScreen(
                         .fillMaxWidth()
                         .padding(horizontal = 10.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalAlignment = Alignment.Top
                 ) {
-                    Box(
-                        modifier = Modifier
-                            .size(100.dp)
-                            .background(Color(0xFFE8E8E8), RoundedCornerShape(6.dp))
-                    )
-                    Box(
-                        modifier = Modifier
-                            .size(100.dp)
-                            .background((Color(0xFFE8E8E8)), RoundedCornerShape(6.dp))
-                    )
+
+                    // -------- LEFT IMAGE + CAMERA --------
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .size(100.dp)
+                                .background(Color(0xFFE8E8E8), RoundedCornerShape(6.dp))
+                        )
+
+                        Spacer(modifier = Modifier.height(6.dp))
+
+                        Icon(
+                            painter = painterResource(Res.drawable.camera),
+                            contentDescription = "",
+                            tint = blue,
+                            modifier = Modifier
+                                .size(32.dp)
+                                .clickable {
+                                    // left image camera click
+                                }
+                        )
+                    }
+
+                    // -------- RIGHT IMAGE + CAMERA --------
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .size(100.dp)
+                                .background(Color(0xFFE8E8E8), RoundedCornerShape(6.dp))
+                        )
+
+                        Spacer(modifier = Modifier.height(6.dp))
+
+                        Icon(
+                            painter = painterResource(Res.drawable.camera),
+                            contentDescription = "",
+                            tint = blue,
+                            modifier = Modifier
+                                .size(32.dp)
+                                .clickable {
+                                    // right image camera click
+                                }
+                        )
+                    }
                 }
+
+
                 Spacer(modifier = Modifier.height(15.dp))
 
                 Divider(color = LightSkyBlue, thickness = 1.dp)
@@ -259,15 +292,13 @@ fun CustomerDetailScreen(
                         )
 
                         Spacer(modifier = Modifier.width(8.dp))
-
-
-
                         FormFieldCompact(
-                            value = textfiledPSC,
-                            onValueChange = { textfiledPSC=it },
-                            placeholder = stringResource(Res.string.type_here),
-                            modifier = Modifier.weight(1f),
-                            maxLength = 30
+                            value = "₹ 15,000",
+                            onValueChange = {},
+                            isReadable = true,
+                            isEnable = true,
+                            placeholder = "",
+                            modifier = Modifier.weight(1f)
                         )
                     }
 
@@ -285,11 +316,12 @@ fun CustomerDetailScreen(
                         )
                         Spacer(modifier = Modifier.width(8.dp))
                         FormFieldCompact(
-                            value = textfiledLoan,
-                            onValueChange = { textfiledLoan=it },
-                            placeholder = stringResource(Res.string.type_here),
-                            modifier = Modifier.weight(1f),
-                            maxLength = 30
+                            value = "₹ 25,000",
+                            onValueChange = {},
+                            isReadable = true,
+                            isEnable = true,
+                            placeholder = "",
+                            modifier = Modifier.weight(1f)
                         )
                     }
                     Spacer(modifier = Modifier.height(10.dp))
@@ -307,11 +339,12 @@ fun CustomerDetailScreen(
                         )
                         Spacer(modifier = Modifier.width(7.dp))
                         FormFieldCompact(
-                            value = textfiledMFI,
-                            onValueChange = { textfiledMFI=it },
-                            placeholder = stringResource(Res.string.type_here),
-                            modifier = Modifier.weight(1f),
-                            maxLength = 30
+                            value = "₹ 32,000",
+                            onValueChange = {},
+                            isReadable = true,
+                            isEnable = true,
+                            placeholder = "",
+                            modifier = Modifier.weight(1f)
                         )
                     }
 
@@ -329,11 +362,12 @@ fun CustomerDetailScreen(
                         )
                         Spacer(modifier = Modifier.width(7.dp))
                         FormFieldCompact(
-                            value = textfiledLoanPurpose,
-                            onValueChange = { textfiledLoanPurpose=it },
-                            placeholder = stringResource(Res.string.type_here),
-                            modifier = Modifier.weight(1f),
-                            maxLength = 30
+                            value = "Business Expansion",
+                            onValueChange = {},
+                            isReadable = true,
+                            isEnable = true,
+                            placeholder = "",
+                            modifier = Modifier.weight(1f)
                         )
                     }
                     Spacer(modifier = Modifier.height(12.dp))
@@ -355,11 +389,12 @@ fun CustomerDetailScreen(
                             )
                         Spacer(modifier = Modifier.width(7.dp))
                         FormFieldCompact(
-                            value = textfiledExisting,
-                            onValueChange = { textfiledExisting=it },
-                            placeholder = stringResource(Res.string.type_here),
-                            modifier = Modifier.weight(1f),
-                            maxLength = 30
+                            value = "₹ 45,000",
+                            onValueChange = {},
+                            isReadable = true,
+                            isEnable = true,
+                            placeholder = "",
+                            modifier = Modifier.weight(1f)
                         )
                     }
                     Spacer(modifier = Modifier.height(12.dp))
@@ -378,11 +413,12 @@ fun CustomerDetailScreen(
                             )
                         Spacer(modifier = Modifier.width(7.dp))
                         FormFieldCompact(
-                            value = textfiledEbill,
-                            onValueChange = { textfiledEbill=it },
-                            placeholder = stringResource(Res.string.user_billno),
-                            modifier = Modifier.weight(1f),
-                            maxLength = 30
+                            value = "EB12345",
+                            onValueChange = {},
+                            isReadable = true,
+                            isEnable = true,
+                            placeholder = "",
+                            modifier = Modifier.weight(1f)
                         )
                     }
                     Spacer(modifier = Modifier.height(7.dp))
@@ -398,58 +434,53 @@ fun CustomerDetailScreen(
 
                     Spacer(modifier = Modifier.height(10.dp))
                     Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.End
-                    )
-                    {
-                        Column(
-                            modifier = Modifier.fillMaxWidth().padding(horizontal = 10.dp),
-                            horizontalAlignment = Alignment.End
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 10.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        // LEFT → Text
+                        Text(
+                            text = stringResource(Res.string.user_electricity).plus(":"), // "Electricity Meter"
+                            fontSize = 14.sp,
+                            color = Color.Black,
+                            fontFamily = FontFamily(Font(Res.font.roboto_medium)),
+                            fontWeight = FontWeight.SemiBold,
+                            modifier = Modifier.weight(1f) // left side space
                         )
-                        {
+
+                        // RIGHT → Box + Camera Icon (Column)
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
                             Box(
                                 modifier = Modifier
                                     .size(100.dp)
-                                    .background((Color(0xFFE8E8E8)))
+                                    .background(Color(0xFFE8E8E8))
                             ) {
                                 customerImage?.let { img ->
                                     Image(
                                         bitmap = img,
-                                        contentDescription = "Customer Image",
+                                        contentDescription = "Electricity Meter Image",
                                         modifier = Modifier.fillMaxSize(),
                                         contentScale = ContentScale.Crop
                                     )
                                 }
                             }
 
-                            Spacer(Modifier.height(8.dp))
+                            Spacer(modifier = Modifier.height(6.dp))
 
-
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.SpaceBetween,
-                                verticalAlignment = Alignment.CenterVertically
+                            Icon(
+                                painter = painterResource(Res.drawable.camera),
+                                contentDescription = null,
+                                tint = blue,
+                                modifier = Modifier
+                                    .size(32.dp)
+                                    .clickable { openCamera = true }
                             )
-                            {
-                                Text(
-                                    text = stringResource(Res.string.user_electricity).plus(":"), // left side text
-                                    fontSize = 14.sp,
-                                    color = Color.Black,
-                                    fontFamily = FontFamily(Font(Res.font.roboto_medium)),
-                                    fontWeight = FontWeight.SemiBold
-                                )
-
-                                Icon(
-                                    painter = painterResource(Res.drawable.camera),
-                                    contentDescription = null,
-                                    tint = blue,
-                                    modifier = Modifier
-                                        .size(45.dp).padding(end = 15.dp)
-                                        .clickable { openCamera = true }
-                                )
-                            }
                         }
                     }
+
                     Spacer(modifier = Modifier.height(10.dp))
 
                     Divider(color = LightSkyBlue, thickness = 1.dp)
@@ -459,59 +490,62 @@ fun CustomerDetailScreen(
 
 
                     Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.End
-                    )
-                    {
-                        Column(
-                            modifier = Modifier.fillMaxWidth().padding(horizontal = 10.dp),
-                            horizontalAlignment = Alignment.End
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 10.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        // LEFT → Text
+                        Text(
+                            text = stringResource(Res.string.user_house).plus(":"), // "House Verification"
+                            fontSize = 14.sp,
+                            color = Color.Black,
+                            fontFamily = FontFamily(Font(Res.font.roboto_medium)),
+                            fontWeight = FontWeight.SemiBold,
+                            modifier = Modifier.weight(1f) // take available space on left
                         )
-                        {
+
+                        // RIGHT → Box + Camera Icon
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
                             Box(
                                 modifier = Modifier
                                     .size(100.dp)
-                                    .background((Color(0xFFE8E8E8)))
+                                    .background(Color(0xFFE8E8E8))
                             ) {
                                 customerImage?.let { img ->
                                     Image(
                                         bitmap = img,
-                                        contentDescription = "Customer Image",
+                                        contentDescription = "House Verification Image",
                                         modifier = Modifier.fillMaxSize(),
                                         contentScale = ContentScale.Crop
                                     )
                                 }
                             }
 
-                            Spacer(Modifier.height(8.dp))
+                            Spacer(modifier = Modifier.height(6.dp))
 
-
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.SpaceBetween,
-                                verticalAlignment = Alignment.CenterVertically
+                            Icon(
+                                painter = painterResource(Res.drawable.camera),
+                                contentDescription = null,
+                                tint = blue,
+                                modifier = Modifier
+                                    .size(32.dp)
+                                    .clickable { openCamera = true }
                             )
-                            {
-                                Text(
-                                    text = stringResource(Res.string.user_house).plus(":"), // left side text
-                                    fontSize = 14.sp,
-                                    color = Color.Black,
-                                    fontFamily = FontFamily(Font(Res.font.roboto_medium)),
-                                    fontWeight = FontWeight.SemiBold,
-
-                                )
-
-                                Icon(
-                                    painter = painterResource(Res.drawable.camera),
-                                    contentDescription = null,
-                                    tint = blue,
-                                    modifier = Modifier
-                                        .size(45.dp).padding(end = 15.dp)
-                                        .clickable { openCamera = true }
-                                )
-                            }
                         }
                     }
+
+                    FormFieldCompact(
+                        value = textfiledRemarks,
+                        onValueChange = { textfiledRemarks=it },
+                        placeholder = stringResource(Res.string.user_remarks),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 10.dp),
+                        maxLength = 30
+                    )
                     Spacer(Modifier.height(10.dp))
                     Row(
                         modifier = Modifier

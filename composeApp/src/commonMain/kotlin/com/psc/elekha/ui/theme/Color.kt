@@ -60,7 +60,7 @@ val light_pink = Color(0xFFD7C7C7)
 val rose = Color(0xFFC9B0B0)
 val dark_gray = Color(0xFF999999)
 //val toolbar_color = Color(0xFF106594)
-
+val greys=Color(0xFF9E9E9E)
 
 
 val blue =Color(0xFF527BC0)
