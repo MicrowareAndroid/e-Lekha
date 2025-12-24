@@ -28,28 +28,30 @@ import org.jetbrains.compose.resources.getString
 class KycDetailViewModel(
     var appPreferences: AppPreferences,
     var customerViewModel: CustomerViewModel
-): BaseValidationViewModel()
-{
- var billName by   mutableStateOf("")
- var billNameIdProof by mutableStateOf("")
- var accountNumber by mutableStateOf("")
- var accountNumberIdProof by mutableStateOf("")
- var kNumber by  mutableStateOf("")
- var kNumberIdProof by  mutableStateOf("")
- var ebImagePath by mutableStateOf("")
- var aadharno by  mutableStateOf("")
- var aadharnoIdProof by  mutableStateOf("")
+): BaseValidationViewModel() {
+    var billName by mutableStateOf("")
+    var billNameIdProof by mutableStateOf("")
+    var accountNumber by mutableStateOf("")
+    var accountNumberIdProof by mutableStateOf("")
+    var kNumber by mutableStateOf("")
+    var kNumberIdProof by mutableStateOf("")
+    var ebImagePath by mutableStateOf("")
+    var aadharno by mutableStateOf("")
+    var aadharnoIdProof by mutableStateOf("")
 
- var adharbackproof by  mutableStateOf("")
- var nameonadhar by  mutableStateOf("")
- var nameonadharIdProof by  mutableStateOf("")
- var voterno by mutableStateOf("")
- var voternoIdProof by mutableStateOf("")
- var nameonvid by mutableStateOf("")
- var nameonvidIdProof by mutableStateOf("")
- var panNumber by mutableStateOf("")
- var panFrontImagePath by mutableStateOf("")
- var nameOnPan by  mutableStateOf("")
+    var adharbackproof by mutableStateOf("")
+    var nameonadhar by mutableStateOf("")
+    var nameonadharIdProof by mutableStateOf("")
+    var voterno by mutableStateOf("")
+    var voternoIdProof by mutableStateOf("")
+    var nameonvid by mutableStateOf("")
+    var nameonvidIdProof by mutableStateOf("")
+    var panNumber by mutableStateOf("")
+    var panFrontImagePath by mutableStateOf("")
+    var nameOnPan by mutableStateOf("")
+
+
+}
 
 
 /*    val bringIntoViewRequesterCustomerName = BringIntoViewRequester()
@@ -100,83 +102,7 @@ class KycDetailViewModel(
  val focusRequesterElectricityAccountNo2 = FocusRequester()
  val focusRequesterElectricityRelation2 = FocusRequester()*/
 
-fun updateKyc(onSuccess: () -> Unit) {
- viewModelScope.launch {
-  updateKycUpdate()
-  showSaveAlert = true
-  onSuccess()
- }
-}
-private suspend  fun updateKycUpdate()
- {
-//  val guid=appPreferences.getString(AppSP.customerGuid)
- /* if(returnStringValue(guid).isEmpty())
-  {*/
-   val newGuid= generateRandomId()
-  val guid = returnStringValue(appPreferences.getString(AppSP.customerGuid))
-  if (guid.isEmpty()) return
-customerViewModel.updateKyc(
- CKYC_UID = aadharno,
- CKYC_UID_Image = aadharnoIdProof,
- CKYC_UID_Image2 = adharbackproof,
- CKYC_VoterCard = voterno,
- CKYC_VoterCardImage = voternoIdProof,
- CKYC_VoterCardImage2 = "",
- CKYC_ElectricityBill = accountNumber,
- CKYC_ElectricityBill_Image = ebImagePath,
- CKYC_ElectricityBillRelationID = 0,
- CKYC_ElectricityBill_Name = billName,
- KElectricNumber = kNumber,
- CKYC_JobCard = "",
- CKYC_JobCard_Image = "",
- CKYC_JobCardRelationID = 0,
- CKYC_JobCard_Name = "",
- CKYC_JobCard_Image2 = "",
- GKYC_UID = "",
- GKYC_UID_Image = "",
- GKYC_UID_Image2 = "",
- IsEdited = 1,
- UpdatedBy = returnStringValue(appPreferences.getString(AppSP.userId)),
- UpdatedOn = currentDatetime(),
- CKYC_Bank = 1,
- CKYC_BankAccountNumber = "",
- CKYC_Bank_Image = "",
- CustomerBankIFSCCode = "",
- CustomerBankNameEditable = "",
- CKYC_RationCard = "",
- CKYC_RationCard_Image = "",
- CKYC_RationCard_Image2 = "",
- RegPlace = "",
- RegLat = "",
- RegLong = "",
- GUID = guid
-)
 
-
-//   appPreferences.putString(AppSP.customerGuid,newGuid)
-//   saveMessage= getString(Res.string.data_saved_successfully)
-  saveMessage = getString(Res.string.data_saved_successfully)
-  }
- fun setEbImage(path: String) {
-  ebImagePath = path
- }
- fun setAadhaarFrontImage(path: String) {
-  aadharnoIdProof = path
- }
-
- fun setAadhaarBackImage(path: String) {
-  adharbackproof = path
- }
-
- fun setVidFrontImage(path: String) {
-  voternoIdProof = path
- }
-
- fun setPanFrontImage(path: String) {
-  panFrontImagePath = path
- }
-
-}
 
 /* fun loadSaveData(){
 

@@ -379,8 +379,15 @@ fun EconomicDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
                 ) {
                     items(economicMovableAssetsModel.size) { index ->
                         EconomicMovableAssetsCard(
-                            economicMovableAssetsModel[index]
+                            economicMovableAssetsModel = economicMovableAssetsModel[index],
+                            onDelete = {
+                                economicMovableAssetsModel =
+                                    economicMovableAssetsModel.toMutableList().also {
+                                        it.removeAt(index)
+                                    }
+                            }
                         )
+
                     }
                 }
 

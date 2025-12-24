@@ -40,15 +40,17 @@ fun FamilyDetailListScreen(
                     "Test",
                     "Brother",
                     "Graduate",
-                    "Teacher"
+                    "Teacher",
+                    "2000"
                 ),
                 FamilyDetailModel(
                     "XYZ",
                     "Sister",
                     "PostGraduate",
-                    "Doctor"
+                    "Doctor",
+                    "4000"
                 ),
-                FamilyDetailModel("ABC", "Father", "12th", "Driver")
+                FamilyDetailModel("ABC", "Father", "12th", "Driver","5000")
             )
         )
     }
@@ -92,9 +94,7 @@ fun FamilyDetailListScreen(
                     items(familyDetailModel) { item ->
                         FamilyDetailCard(
                             familyDetailModel = item,
-                            onEdit = {
-                                /*edit click listener here*/
-                            },
+
                             onDelete = {
                                 /*delete code goes here*/
                             }

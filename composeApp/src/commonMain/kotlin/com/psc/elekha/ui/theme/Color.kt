@@ -64,7 +64,8 @@ val dark_gray = Color(0xFF999999)
 
 
 val blue =Color(0xFF527BC0)
-
+val lightGray=Color(0xFFF2F2F2)
+val lightBlack = Color(0xFF666666)
 
 fun blendColors(color1: Color, color2: Color, ratio: Float): Color {
     val inverseRatio = 1 - ratio

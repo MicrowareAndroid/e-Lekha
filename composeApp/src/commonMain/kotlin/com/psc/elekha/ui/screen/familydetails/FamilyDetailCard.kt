@@ -34,6 +34,7 @@ import e_lekha.composeapp.generated.resources.Res
 import e_lekha.composeapp.generated.resources.delete
 import e_lekha.composeapp.generated.resources.edit
 import e_lekha.composeapp.generated.resources.education
+import e_lekha.composeapp.generated.resources.income
 import e_lekha.composeapp.generated.resources.marital_status
 import e_lekha.composeapp.generated.resources.mobile_number
 import e_lekha.composeapp.generated.resources.name
@@ -45,7 +46,6 @@ import org.jetbrains.compose.resources.stringResource
 @Composable
 fun FamilyDetailCard(
     familyDetailModel: FamilyDetailModel,
-    onEdit: () -> Unit,
     onDelete: () -> Unit
 ) {
 
@@ -55,79 +55,107 @@ fun FamilyDetailCard(
         colors = CardDefaults.cardColors(containerColor = loginBg),
         modifier = Modifier
             .fillMaxWidth()
-
             .padding(bottom = 8.dp)
     ) {
-        Row(
+
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(10.dp),
-            verticalAlignment = Alignment.Top
+                .padding(12.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
 
-            Column(
-                modifier = Modifier.weight(1f),
-                verticalArrangement = Arrangement.spacedBy(6.dp)
+            /* ---------- ROW 1 : Name + Delete ---------- */
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
             ) {
 
-                DetailRow(
-                    label = stringResource(Res.string.name).plus(":"),
-                    value = familyDetailModel.name
-                )
+                Row(
+                    modifier = Modifier.weight(1f),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    ReusableTextViewGrayCard(
+                        "Name:",
+                        fontSize = 12,
+                        modifier = Modifier.width(80.dp)
+                    )
 
-                DetailRow(
-                    label = stringResource(Res.string.relation).plus(":"),
-                    value = familyDetailModel.relation
-                )
+                    ReusableTextViewBlackCard(
+                        familyDetailModel.name,
+                        fontSize = 12,
 
-                DetailRow(
-                    label = stringResource(Res.string.education).plus(":"),
-                    value = familyDetailModel.education
-                )
-
-                DetailRow(
-                    label = stringResource(Res.string.occupation).plus(":"),
-                    value = familyDetailModel.occupation
-                )
-            }
-
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
+                    )
+                }
 
                 IconButton(onClick = onDelete) {
                     Icon(
                         painter = painterResource(Res.drawable.delete),
                         contentDescription = "Delete",
-                        modifier = Modifier.size(28.dp),
                         tint = black
                     )
                 }
+            }
+
+            /* ---------- ROW 2 : Relation | Education ---------- */
+
+            Row(modifier = Modifier.fillMaxWidth()) {
+
+                FamilyDetailItem(
+                    label = "Relation:",
+                    value = familyDetailModel.relation,
+                    modifier = Modifier.weight(1f)
+                )
+
+                FamilyDetailItem(
+                    label = "Education:",
+                    value = familyDetailModel.education,
+                    modifier = Modifier.weight(1f)
+                )
+            }
+
+            /* ---------- ROW 3 : Occupation | Income ---------- */
+
+            Row(modifier = Modifier.fillMaxWidth()) {
+
+                FamilyDetailItem(
+                    label = "Occupation:",
+                    value = familyDetailModel.occupation,
+                    modifier = Modifier.weight(1f)
+                )
+
+                FamilyDetailItem(
+                    label = "Income:",
+                    value = familyDetailModel.income,
+                    modifier = Modifier.weight(1f)
+                )
             }
         }
     }
 }
 
 @Composable
-private fun DetailRow(
+fun FamilyDetailItem(
     label: String,
-    value: String
+    value: String,
+    modifier: Modifier = Modifier
 ) {
     Row(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier.padding(end = 6.dp),
         verticalAlignment = Alignment.Top
     ) {
 
         ReusableTextViewGrayCard(
             label,
-            modifier = Modifier.width(110.dp)   //  80 → 110
+            fontSize = 13,
+            modifier = Modifier.width(75.dp)   // FIXED WIDTH
         )
-
-        Spacer(modifier = Modifier.width(6.dp))
 
         ReusableTextViewBlackCard(
             value,
-            modifier = Modifier.weight(1f)
+            fontSize = 13,
+
         )
     }
 }

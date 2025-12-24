@@ -153,13 +153,16 @@ fun PersonalDetailsScreen(
                     "Test",
                     "Brother",
                     "Graduate",
-                    "Teacher"
+                    "Teacher",
+                    "2000",
                 ),
                 FamilyDetailModel(
                     "XYZ",
                     "Sister",
                     "PostGraduate",
-                    "Doctor"
+                    "Doctor",
+                    "5000",
+
                 ),
             )
         )
@@ -501,22 +504,30 @@ fun PersonalDetailsScreen(
                         },
                         placeholder = stringResource(Res.string.type_here),
                         maxLength = 10,
-                        modifier = Modifier.weight(2f)
+                        modifier = Modifier.fillMaxWidth()
                             .focusRequester(viewModel.focusRequesterMobileNumber)
                             .bringIntoViewRequester(viewModel.bringIntoViewRequesterMobileNumber),
                         inputType = KeyboardType.Number,
 
                         )
 
+                }
+                Spacer(modifier = Modifier.height(8.dp))
+
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    verticalAlignment = Alignment.Bottom   // THIS aligns button with EditText
+                ) {
                     FormFieldCompact(
                         label = stringResource(Res.string.enter_otp),
-                        value = enter_otp,
-                        onValueChange = { enterotp ->
-                            enter_otp = enterotp
+                        value = gurantor_enter_otp,
+                        onValueChange = { gurantorotp ->
+                            gurantor_enter_otp = gurantorotp
                         },
-                        maxLength = 6,
                         placeholder = stringResource(Res.string.type_here),
-                        modifier = Modifier.weight(1f),
+                        modifier = Modifier.weight(2f),
                         inputType = KeyboardType.Number
                     )
 
@@ -526,7 +537,7 @@ fun PersonalDetailsScreen(
                         },
                         stringResource(Res.string.send_otp),
                         modifier = Modifier.weight(1f),
-                        textSize = 10
+                        textSize =12
                     )
                 }
 
@@ -665,7 +676,7 @@ fun PersonalDetailsScreen(
                         },
                         stringResource(Res.string.send_otp),
                         modifier = Modifier.weight(1f),
-                        textSize = 12
+                        textSize =12
                     )
                 }
 
@@ -806,16 +817,19 @@ fun PersonalDetailsScreen(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(10.dp)
                 ) {
-                    FillDynamicSpinnerespt(
+
+                    FormFieldCompact(
                         label = stringResource(Res.string.village_name),
-                        options = villageList,
-                        selectedOption = viewModel.villageId,
-                        onOptionSelected = {viewModel.villageId = it },
-                        focusRequester = viewModel.focusRequesterStateId,
-                        bringIntoViewRequester = viewModel.bringIntoViewRequesterStateId,
-                        getOptionId = { it.VillageID },
-                        getOptionLabel = { it.Village.toString() },
-                        modifier = Modifier.weight(1f)
+                        value = "",
+                        onValueChange = {},
+                        placeholder = stringResource(Res.string.type_here),
+                        modifier = Modifier.weight(1f),
+                            /*.focusRequester(viewModel.focusRequesterMaternalMobileNo)
+                            .bringIntoViewRequester(viewModel.bringIntoViewRequesterMaternalMobileNo),
+                     */
+                        inputType = KeyboardType.Text,
+
+
                     )
 
                     FormFieldCompact(
@@ -904,7 +918,7 @@ fun PersonalDetailsScreen(
                 familyDetailModel.forEach { item ->
                     FamilyDetailCard(
                         familyDetailModel = item,
-                        onEdit = {},
+
                         onDelete = {}
                     )
                     Spacer(modifier = Modifier.height(10.dp))
@@ -1208,8 +1222,15 @@ fun PersonalDetailsScreen(
                 ) {
                     items(economicMovableAssetsModel.size) { index ->
                         EconomicMovableAssetsCard(
-                            economicMovableAssetsModel[index]
+                            economicMovableAssetsModel = economicMovableAssetsModel[index],
+                            onDelete = {
+                                economicMovableAssetsModel =
+                                    economicMovableAssetsModel.toMutableList().also {
+                                        it.removeAt(index)
+                                    }
+                            }
                         )
+
                     }
                 }
 
