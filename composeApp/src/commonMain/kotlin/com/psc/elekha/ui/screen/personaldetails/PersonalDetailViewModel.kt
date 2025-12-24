@@ -75,7 +75,7 @@ class PersonalDetailViewModel(
     var husbandName by mutableStateOf("")
     var gurantorName by mutableStateOf("")
     var relationId by mutableStateOf(0)
-    var dateOfBirths by mutableStateOf("")
+    var gurantordateOfBirth by mutableStateOf("")
     var gurantormobileNumber by mutableStateOf("")
     var otpNumbers by mutableStateOf("")
     var fulladdresss by mutableStateOf("")
@@ -91,7 +91,7 @@ class PersonalDetailViewModel(
     var maternalMobileNo by mutableStateOf("")
     var fatherName by mutableStateOf("")
     var villageNames by mutableStateOf("")
-    var statesId by mutableStateOf("")
+    var materalStatesId by mutableStateOf(0)
     var maternalAddress by mutableStateOf("")
     var maritalStatusId by mutableStateOf(0)
 
@@ -211,7 +211,7 @@ class PersonalDetailViewModel(
                 returnStringValue(husName.firstName),
                 returnStringValue(husName.middleName),
                 returnStringValue(husName.lastName),
-                0,
+                relationId,
                 returnStringValue(gurName.firstName),
                 returnStringValue(gurName.middleName),
                 returnStringValue(gurName.lastName),
@@ -221,7 +221,7 @@ class PersonalDetailViewModel(
                 calculateAgeFromDobKMP(dateOfBirth),
                 0,
                 mobileNumber,
-                gurantormobileNumber,
+                "",
                 religionId,
                 0,
                 educationId,
@@ -414,7 +414,7 @@ class PersonalDetailViewModel(
                 "",
                 "",
                 "",
-                convertDateFormatYYYYMMDD(returnStringValue(appPreferences.getString(AppSP.dateOfBirth))),
+                convertDateFormatYYYYMMDD(returnStringValue(appPreferences.getString(AppSP.gurantorDateOfBirth))),
                 "",
                 remarksExpense,
                 1,
@@ -422,8 +422,33 @@ class PersonalDetailViewModel(
                 0,
                 0,
                 "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                stateId,
+                districtId,
+                tehsilName,
+                landMark,
+                gurantormobileNumber,
+                false,
+                fulladdresss,
+                maternalAddress,
+                maternalMobileNo,
+                materalStatesId,
+                "",
+                fatherName,
+                returnIntegerValue(dailyExpense),
+                returnIntegerValue(medicalExpense),
+                returnIntegerValue(educationExpense),
+                returnIntegerValue(othersExpense),
+                returnIntegerValue(totalMonthlyExpense),
+                returnIntegerValue(annualExpense)
 
-                )
+            )
             customerViewModel.insertCustomer(entity)
             appPreferences.putString(AppSP.customerGuid, newguid)
             saveMessage = getString(Res.string.data_saved_successfully)
