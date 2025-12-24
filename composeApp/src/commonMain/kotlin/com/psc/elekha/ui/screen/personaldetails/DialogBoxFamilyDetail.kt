@@ -153,11 +153,9 @@ fun CustomAlertFamilyDetails(
                             onOptionSelected = { viewModel.occupationId = it },
                             modifier = Modifier.weight(1f)
                         )
-                        Spacer(Modifier.height(24.dp))
-
-
                     }
 
+                   // Spacer(Modifier.height(24.dp)) //  Row ke bahar
                     Spacer(Modifier.height(10.dp))
                     FormFieldCompact(
                         label = stringResource(Res.string.monthly_income),

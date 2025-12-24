@@ -102,6 +102,8 @@ kotlin {
 
             implementation(libs.kotlinx.datetime)
             implementation(libs.remember.settings)
+
+            implementation(libs.serialization)
         }
 
 

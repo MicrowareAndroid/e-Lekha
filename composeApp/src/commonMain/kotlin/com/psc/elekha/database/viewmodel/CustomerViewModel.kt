@@ -122,6 +122,7 @@ class CustomerViewModel(private val customerRepository: CustomerRepository) : Vi
             loadCustomers() // refresh
         }
     }
+
     fun updateKyc(
         CKYC_UID: String,
         CKYC_UID_Image: String,
@@ -198,6 +199,7 @@ class CustomerViewModel(private val customerRepository: CustomerRepository) : Vi
             loadCustomers()
         }
     }
+
     fun searchCustomerByName(search: String) {
         viewModelScope.launch {
             val result = customerRepository.searchCustomerByName(search)
@@ -220,11 +222,62 @@ class CustomerViewModel(private val customerRepository: CustomerRepository) : Vi
     ) {
         viewModelScope.launch {
             customerRepository.updateBankDetail(
-                customerGuid,accountNo,bankId,ifscCode,UpdatedBy,UpdatedOn
+                customerGuid, accountNo, bankId, ifscCode, UpdatedBy, UpdatedOn
             )
         }
     }
+
+    fun updateCustomerBasicDetails(
+        guid: String?,
+        firstName: String?,
+        middleName: String?,
+        lastName: String?,
+        maritalStatusId: Int?,
+        educationId: Int?,
+        religionId: Int?,
+        contactNo: String?,
+        husbandFName: String?,
+        husbandMName: String?,
+        husbandLName: String?,
+        age: Int?,
+        guarantorFName: String?,
+        guarantorMName: String?,
+        guarantorLName: String?,
+        phoneNo: String?,
+        dob: String?,
+        UpdatedOn: String?,
+        UpdatedBy: String?
+
+
+    ) {
+        viewModelScope.launch {
+            customerRepository.updateCustomerBasicDetails(
+                guid,
+                firstName,
+                middleName,
+                lastName,
+                maritalStatusId,
+                educationId,
+                religionId,
+                contactNo,
+                husbandFName,
+                husbandMName,
+                husbandLName,
+                guarantorFName,
+                guarantorMName,
+                guarantorLName,
+                age,
+                phoneNo,
+                dob,
+                UpdatedOn,
+                UpdatedBy
+            )
+
+            // optional: list refresh
+        }
+
     }
+}
 
 
 

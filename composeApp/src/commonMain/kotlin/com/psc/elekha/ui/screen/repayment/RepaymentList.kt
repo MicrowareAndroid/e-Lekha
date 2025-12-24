@@ -30,6 +30,7 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.compose.rememberNavController
 import com.psc.elekha.ui.screen.home.HomeScreen
+import com.psc.elekha.ui.screen.login.LoginScreenNew
 import com.psc.elekha.ui.theme.*
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -513,7 +514,7 @@ fun FilterLoanDetailsDialog(
 
 }
 
-@Preview()
+@Preview
 @Composable
 fun RepaymentList() {
     MaterialTheme {

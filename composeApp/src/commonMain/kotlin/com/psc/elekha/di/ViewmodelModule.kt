@@ -1,5 +1,6 @@
 package com.psc.elekha.di
 
+
 import FamilyMemberDetailViewModel
 import com.psc.elekha.database.viewmodel.CustomerDefaultViewModel
 import com.psc.elekha.database.viewmodel.CustomerExistingLoanDetailViewModel
@@ -28,6 +29,7 @@ import com.psc.elekha.database.viewmodel.MSTComboBox_NViewModel
 import com.psc.elekha.database.viewmodel.MSTDistrictViewModel
 import com.psc.elekha.database.viewmodel.MSTLoanOfficerViewModel
 import com.psc.elekha.database.viewmodel.MSTLoanProductViewModel
+import com.psc.elekha.database.viewmodel.MSTLoanTypeViewModel
 import com.psc.elekha.database.viewmodel.MSTMonthlyIncomeMarksViewModel
 import com.psc.elekha.database.viewmodel.MSTPovertyStatusViewModel
 import com.psc.elekha.database.viewmodel.MSTStateViewModel
@@ -35,6 +37,7 @@ import com.psc.elekha.database.viewmodel.MSTVillageViewModel
 import com.psc.elekha.database.viewmodel.RegistrationStatusViewModel
 import com.psc.elekha.database.viewmodel.TabletMenuRoleViewModel
 import com.psc.elekha.database.viewmodel.TabletMenuViewModel
+import com.psc.elekha.database.viewmodel.TrainingGroupStatusViewModel
 import com.psc.elekha.database.viewmodel.TrainingGroupViewModel
 import com.psc.elekha.database.viewmodel.UserBranchViewModel
 import com.psc.elekha.database.viewmodel.UserContactDetailViewModel
@@ -44,10 +47,14 @@ import com.psc.elekha.ui.screen.bankdetails.BankDetailViewModel
 import com.psc.elekha.ui.screen.kycdetails.KycDetailViewModel
 import com.psc.elekha.ui.screen.login.LoginViewModel
 import com.psc.elekha.ui.screen.personaldetails.PersonalDetailViewModel
+import org.koin.core.module.dsl.viewModel
 import org.koin.core.module.dsl.viewModelOf
+
 import org.koin.dsl.module
 
 val viewmodelModule = module {
+
+
     viewModelOf(::CustomerViewModel)
     viewModelOf(::CustomerDefaultViewModel)
     viewModelOf(::CustomerExistingLoanDetailViewModel)
@@ -85,12 +92,47 @@ val viewmodelModule = module {
     viewModelOf(::UserBranchViewModel)
     viewModelOf(::UsersViewModel)
     viewModelOf(::UserResponseViewModel)
-    viewModelOf(::FamilyMemberDetailViewModel)
     viewModelOf(::KycDetailViewModel)
     viewModelOf(::BankDetailViewModel)
     viewModelOf(::PersonalDetailViewModel)
-    viewModelOf(::LoginViewModel)
     viewModelOf(::TrainingGroupViewModel)
     viewModelOf(::UserContactDetailViewModel)
+    viewModelOf(::TrainingGroupStatusViewModel)
+    viewModelOf(::MSTLoanTypeViewModel)
+    viewModelOf(::FamilyMemberDetailViewModel)
+
+    viewModel {
+        LoginViewModel(
+
+            mstComboBoxNViewModel = get(),
+            apiRepository = get(),
+            usersViewModel = get(),
+            tabletMenuViewModel = get(),
+            tabletMenuRoleViewModel = get(),
+            mstStateViewModel = get(),
+            mstDistrictViewModel = get(),
+            mstBranchViewModel = get(),
+            mstVillageViewModel = get(),
+            mstAssetsValuationViewModel = get(),
+            mstBankViewModel = get(),
+            mstCenterViewModel = get(),
+            mstPovertyStatusViewModel = get(),
+            customerStatusViewModel = get(),
+            mstLoanTypeViewModel = get(),
+            trainingGroupStatusViewModel = get(),
+            mstMonthlyIncomeMarksViewModel = get(),
+            userBranchViewModel = get(),
+            mstLoanOfficerViewModel = get(),
+            kycDocCategoryViewModel = get(),
+            kycDocConfigurationViewModel = get(),
+            kycDocumentViewModel = get(),
+            kycStatusViewModel = get(),
+            kycStatusConditionViewModel = get(),
+            appPreferences = get()
+        )
+    }
+
+
+
 
 }

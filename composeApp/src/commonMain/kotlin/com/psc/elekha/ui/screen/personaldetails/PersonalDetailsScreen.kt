@@ -1,7 +1,6 @@
 package com.psc.elekha.ui.screen.personaldetails
 
 import CustomAlertMovableAssets
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -26,9 +25,11 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -39,47 +40,43 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import coil3.Uri
 import coil3.compose.LocalPlatformContext
 import com.psc.elekha.database.viewmodel.MSTComboBox_NViewModel
+import com.psc.elekha.database.viewmodel.MSTDistrictViewModel
+import com.psc.elekha.database.viewmodel.MSTStateViewModel
+import com.psc.elekha.database.viewmodel.MSTVillageViewModel
+import com.psc.elekha.database.viewmodel.UserBranchViewModel
 import com.psc.elekha.model.EconomicMonthlyIncomeModel
 import com.psc.elekha.model.EconomicMovableAssetsModel
 import com.psc.elekha.model.FamilyDetailModel
 import com.psc.elekha.ui.screen.economicdetails.EconomicMovableAssetsCard
 import com.psc.elekha.ui.screen.familydetails.FamilyDetailCard
 import com.psc.elekha.ui.theme.black
-import com.psc.elekha.ui.theme.blue
 import com.psc.elekha.ui.theme.btn_color
-import com.psc.elekha.utils.AddCircleButton
+import com.psc.elekha.ui.theme.formborder
+import com.psc.elekha.ui.theme.text_fiiled_color
+import com.psc.elekha.utils.AppPreferences
+import com.psc.elekha.utils.AppSP
 import com.psc.elekha.utils.CommonSaveButton
 import com.psc.elekha.utils.CommonSingleButtonsBottomString
 import com.psc.elekha.utils.CustomAlertDialog
 import com.psc.elekha.utils.DynamicCheckBox
-import com.psc.elekha.utils.FillDynamicSpinners
-import com.psc.elekha.utils.FormDatePickerCompact
+
+import com.psc.elekha.utils.FillDynamicSpinnerespt
 import com.psc.elekha.utils.FormDatePickerCompacts
 import com.psc.elekha.utils.FormFieldCompact
-import com.psc.elekha.utils.FormSpinner
 import com.psc.elekha.utils.ReusableTextView
-import com.psc.elekha.utils.StaticComboBoxData
 import com.psc.elekha.utils.getMaxDateInstant
 import com.psc.elekha.utils.getMinDateInstant
 import com.psc.elekha.utils.isAge18Plus
-import com.psc.elekha.utils.pickDate
 import com.psc.elekha.utils.pickMinMaxDate
-import com.psc.elekha.utils.toValueList
 import e_lekha.composeapp.generated.resources.Res
 import e_lekha.composeapp.generated.resources.add
-import e_lekha.composeapp.generated.resources.add_more_family
 import e_lekha.composeapp.generated.resources.add_more_family_member
 import e_lekha.composeapp.generated.resources.annual
-import e_lekha.composeapp.generated.resources.camera
-import e_lekha.composeapp.generated.resources.customer_id
-import e_lekha.composeapp.generated.resources.customer_image
 import e_lekha.composeapp.generated.resources.customer_name
 import e_lekha.composeapp.generated.resources.daily_expenses
 import e_lekha.composeapp.generated.resources.date
@@ -88,7 +85,6 @@ import e_lekha.composeapp.generated.resources.district
 import e_lekha.composeapp.generated.resources.education
 import e_lekha.composeapp.generated.resources.emi
 import e_lekha.composeapp.generated.resources.enter_otp
-import e_lekha.composeapp.generated.resources.family_econonic
 import e_lekha.composeapp.generated.resources.family_econonic_profile
 import e_lekha.composeapp.generated.resources.father_name
 import e_lekha.composeapp.generated.resources.full_name_of_applicant
@@ -96,8 +92,6 @@ import e_lekha.composeapp.generated.resources.guarantor_mobile_number
 import e_lekha.composeapp.generated.resources.guarantor_name
 import e_lekha.composeapp.generated.resources.husband_name
 import e_lekha.composeapp.generated.resources.ic_add
-import e_lekha.composeapp.generated.resources.ic_customer
-import e_lekha.composeapp.generated.resources.ic_gurantor
 import e_lekha.composeapp.generated.resources.income
 import e_lekha.composeapp.generated.resources.landmark
 import e_lekha.composeapp.generated.resources.marital_status
@@ -108,7 +102,6 @@ import e_lekha.composeapp.generated.resources.mfi_bank_name
 import e_lekha.composeapp.generated.resources.mobile_number
 import e_lekha.composeapp.generated.resources.movable_assets
 import e_lekha.composeapp.generated.resources.next
-import e_lekha.composeapp.generated.resources.no_vehicle
 import e_lekha.composeapp.generated.resources.not_same_as_customer_mobile_number
 import e_lekha.composeapp.generated.resources.others
 import e_lekha.composeapp.generated.resources.outstanding
@@ -124,13 +117,12 @@ import e_lekha.composeapp.generated.resources.state
 import e_lekha.composeapp.generated.resources.tehsil
 import e_lekha.composeapp.generated.resources.total_monthly_expenditure
 import e_lekha.composeapp.generated.resources.type_here
-import e_lekha.composeapp.generated.resources.vehicle_no
 import e_lekha.composeapp.generated.resources.village_name
 import e_lekha.composeapp.generated.resources.your_full_address
 import e_lekha.composeapp.generated.resources.your_monthly_expenditure
-import e_lekha.composeapp.generated.resources.your_photo_with_guarantor
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 
 
@@ -138,7 +130,10 @@ import org.koin.compose.viewmodel.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = {}) {
+fun PersonalDetailsScreen(
+    onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = {},
+
+) {
     val context = LocalPlatformContext.current
     var showDialog by remember { mutableStateOf(false) }
 //    val stateViewModel = koinViewModel<StateViewModel>()
@@ -223,12 +218,7 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
 
     val viewModel = koinViewModel<PersonalDetailViewModel>()
     val coroutineScope = rememberCoroutineScope()
-    var maritalStatusValue by remember { mutableStateOf("") }
-    var educationValue by remember { mutableStateOf("") }
-    var religionValue by remember { mutableStateOf("") }
-    var purposeValue by remember { mutableStateOf("") }
-    var relationValue by remember { mutableStateOf("") }
-    var stateValue by remember { mutableStateOf("") }
+
     var distictValue by remember { mutableStateOf("") }
     var showFamilyDialog by remember { mutableStateOf(false) }
 
@@ -238,20 +228,43 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
     val religionList by mstComboViewModel.religionValue.collectAsState()
     val relationList by mstComboViewModel.relationValue.collectAsState()
     val locationList by mstComboViewModel.locationValue.collectAsState()
-    val genderList by mstComboViewModel.genderValue.collectAsState()
-    val stateList by mstComboViewModel.genderValue.collectAsState()
+    val purposeList by mstComboViewModel.genderValue.collectAsState()
+
+
+    val stateViewModel = koinViewModel<MSTStateViewModel>()
+    val branchViewModel = koinViewModel<UserBranchViewModel>()
+    val mstVillageModel = koinViewModel<MSTVillageViewModel>()
+    val districtViewModel = koinViewModel<MSTDistrictViewModel>()
+    val stateList by stateViewModel.stateList.collectAsState()
+    val districtList by districtViewModel.districtList.collectAsState()
+    val villageList by mstVillageModel.villageList.collectAsState()
 
     LaunchedEffect(Unit) {
-        mstComboViewModel.loadLookUpValues(lookupTypeFk = 1)
+
+        mstComboViewModel.loadLookUpValues(lookupTypeFk = 27)
         mstComboViewModel.loadLookUpValues(lookupTypeFk = 2)
-        mstComboViewModel.loadLookUpValues(lookupTypeFk = 3)
         mstComboViewModel.loadLookUpValues(lookupTypeFk = 4)
-        mstComboViewModel.loadLookUpValues(lookupTypeFk = 5)
+        mstComboViewModel.loadLookUpValues(lookupTypeFk = 1)
         mstComboViewModel.loadLookUpValues(lookupTypeFk = 6)
+        mstComboViewModel.loadLookUpValues(lookupTypeFk = 7)
+        districtViewModel.loadDistrictByStateID()
+        branchViewModel.loadAllUserBranches()
 
-
+        /*var branchId=appPreferences.getInt(AppSP.branchId)
+        mstVillageModel.loadVillagesByBranchID(branchId )*/
+        stateViewModel.loadAllStates()
         viewModel.loadSavedData()
     }
+    val filteredDistrictList by remember(districtList, viewModel.stateId) {
+        derivedStateOf {
+            districtList.filter { it.StateID == viewModel.stateId }
+        }
+    }
+   /* val filterVillageList by remember(villageList, viewModel.branchId) {
+        derivedStateOf {
+            villageList.filter { it.BranchID == viewModel.branchId }
+        }
+    }*/
 
     Box(
         modifier = Modifier
@@ -270,15 +283,15 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
                 modifier = Modifier
                     .weight(1f)
                     .verticalScroll(rememberScrollState())
-                    .padding(horizontal = 12.dp)
+
                     .padding(bottom = 16.dp)
             )
             {
 
                 Spacer(modifier = Modifier.height(6.dp))
-                ReusableTextView(
+                /*ReusableTextView(
                     text = stringResource(Res.string.customer_id)
-                )
+                )*/
 //                Row(
 //                    modifier = Modifier
 //                        .fillMaxWidth()
@@ -410,7 +423,7 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
                         modifier = Modifier.weight(1f)
                     )
 
-                    FillDynamicSpinners(
+                    FillDynamicSpinnerespt(
                         label = stringResource(Res.string.marital_status),
                         options = maritalList,
                         selectedOption = viewModel.maritalStatusId,
@@ -430,20 +443,20 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
                     horizontalArrangement = Arrangement.spacedBy(10.dp)
                 ) {
 
-                    FillDynamicSpinners(
+                    FillDynamicSpinnerespt(
                         label = stringResource(Res.string.education),
                         options = qualificationList,
                         selectedOption = viewModel.educationId,
                         onOptionSelected = { viewModel.educationId = it },
-                        focusRequester = viewModel.focusRequesterMaritalStatusId,
-                        bringIntoViewRequester = viewModel.bringIntoViewRequesterMaritalStatusId,
+                        focusRequester = viewModel.focusRequesterEducationId,
+                        bringIntoViewRequester = viewModel.bringIntoViewRequesterEducationId,
                         getOptionId = { it.ID },
                         getOptionLabel = { it.Value.toString() },
                         modifier = Modifier.weight(1f)
                     )
 
 
-                    FillDynamicSpinners(
+                    FillDynamicSpinnerespt(
                         label = stringResource(Res.string.religion),
                         options = religionList,
                         selectedOption = viewModel.religionId,
@@ -458,9 +471,10 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
 
                 }
                 Spacer(modifier = Modifier.height(8.dp))
-                FillDynamicSpinners(
+
+                FillDynamicSpinnerespt(
                     label = stringResource(Res.string.purpose),
-                    options = locationList,
+                    options = purposeList,
                     selectedOption = viewModel.purposeId,
                     onOptionSelected = {viewModel.purposeId = it },
                     focusRequester = viewModel.focusRequesterPurposeId,
@@ -565,7 +579,7 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(10.dp)
                 ) {
-                    FillDynamicSpinners(
+                    FillDynamicSpinnerespt(
                         label = stringResource(Res.string.relation),
                         options = relationList,
                         selectedOption = viewModel.relationId,
@@ -677,31 +691,30 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(10.dp)
                 ) {
-                    FillDynamicSpinners(
+                    FillDynamicSpinnerespt(
                         label = stringResource(Res.string.state),
                         options = stateList,
                         selectedOption = viewModel.stateId,
                         onOptionSelected = {viewModel.stateId = it },
                         focusRequester = viewModel.focusRequesterStateId,
                         bringIntoViewRequester = viewModel.bringIntoViewRequesterStateId,
-                        getOptionId = { it.ID },
-                        getOptionLabel = { it.Value.toString() },
+                        getOptionId = { it.StateID },
+                        getOptionLabel = { it.State.toString() },
                         modifier = Modifier.weight(1f)
                     )
 
-
-                    FormSpinner(
+                    FillDynamicSpinnerespt(
                         label = stringResource(Res.string.district),
-                        options = StaticComboBoxData.districtList.toValueList(),
-                        selectedOption = distictValue,
-                        onOptionSelected = { selectedValue ->
-                            distictValue = selectedValue
-                            viewModel.districtId =
-                                StaticComboBoxData.districtList.firstOrNull { it.Value == selectedValue }?.ID
-                                    ?: 0
-                        },
-                        modifier = Modifier.weight(1f),
+                        options = filteredDistrictList,
+                        selectedOption = viewModel.districtId,
+                        onOptionSelected = {viewModel.districtId = it },
+                        focusRequester = viewModel.focusRequesterStateId,
+                        bringIntoViewRequester = viewModel.bringIntoViewRequesterStateId,
+                        getOptionId = { it.DistrictID },
+                        getOptionLabel = { it.District.toString() },
+                        modifier = Modifier.weight(1f)
                     )
+
                 }
 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -710,19 +723,18 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(10.dp)
                 ) {
-                    FormFieldCompact(
+                    FillDynamicSpinnerespt(
                         label = stringResource(Res.string.village_name),
-                        value = viewModel.villageName,
-                        onValueChange = { villagename ->
-                            viewModel.villageName = villagename
-                        },
-                        placeholder = stringResource(Res.string.type_here),
+                        options = villageList,
+                        selectedOption = viewModel.villageId,
+                        onOptionSelected = {viewModel.villageId = it },
+                        focusRequester = viewModel.focusRequesterStateId,
+                        bringIntoViewRequester = viewModel.bringIntoViewRequesterStateId,
+                        getOptionId = { it.VillageID },
+                        getOptionLabel = { it.Village.toString() },
                         modifier = Modifier.weight(1f)
-                            .focusRequester(viewModel.focusRequesterVillageName)
-                            .bringIntoViewRequester(viewModel.bringIntoViewRequesterVillageName),
+                    )
 
-
-                        )
 
                     FormFieldCompact(
                         label = stringResource(Res.string.tehsil),
@@ -794,19 +806,17 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(10.dp)
                 ) {
-                    FormFieldCompact(
+                    FillDynamicSpinnerespt(
                         label = stringResource(Res.string.village_name),
-                        value = viewModel.villageName,
-                        onValueChange = { gurantorvillagename ->
-                            viewModel.villageName = gurantorvillagename
-                        },
-                        placeholder = stringResource(Res.string.type_here),
+                        options = villageList,
+                        selectedOption = viewModel.villageId,
+                        onOptionSelected = {viewModel.villageId = it },
+                        focusRequester = viewModel.focusRequesterStateId,
+                        bringIntoViewRequester = viewModel.bringIntoViewRequesterStateId,
+                        getOptionId = { it.VillageID },
+                        getOptionLabel = { it.Village.toString() },
                         modifier = Modifier.weight(1f)
-                            .focusRequester(viewModel.focusRequesterVillageNames)
-                            .bringIntoViewRequester(viewModel.bringIntoViewRequesterVillageNames),
-
-
-                        )
+                    )
 
                     FormFieldCompact(
                         label = stringResource(Res.string.maternal_mob_no),
@@ -841,17 +851,18 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
 
 
                         )
-                    FillDynamicSpinners(
+                    FillDynamicSpinnerespt(
                         label = stringResource(Res.string.state),
                         options = stateList,
                         selectedOption = viewModel.stateId,
                         onOptionSelected = {viewModel.stateId = it },
                         focusRequester = viewModel.focusRequesterStateId,
                         bringIntoViewRequester = viewModel.bringIntoViewRequesterStateId,
-                        getOptionId = { it.ID },
-                        getOptionLabel = { it.Value.toString() },
+                        getOptionId = { it.StateID },
+                        getOptionLabel = { it.State.toString() },
                         modifier = Modifier.weight(1f)
                     )
+
 
                 }
                 Spacer(modifier = Modifier.height(8.dp))
@@ -907,9 +918,8 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(10.dp),
-                    verticalAlignment = Alignment.Bottom
-                )
-                {
+                    verticalAlignment = Alignment.CenterVertically //  IMPORTANT
+                ) {
                     ReusableTextView(
                         text = stringResource(Res.string.income),
                         textColor = black,
@@ -917,10 +927,25 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
                         modifier = Modifier.weight(1f)
                     )
 
-                    ReusableTextView(
-                        text = "20000",
-                        modifier = Modifier.weight(1f)
-                    )
+                    Box(
+                        modifier = Modifier
+                            .weight(1f)
+                            .height(48.dp)
+                            .background(
+                                color = text_fiiled_color,
+                                shape = RoundedCornerShape(8.dp)
+                            )
+                            .border(
+                                width = 1.dp,
+                                color = formborder,
+                                shape = RoundedCornerShape(8.dp)
+                            ),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        ReusableTextView(
+                            text = "20000"
+                        )
+                    }
                 }
                 Spacer(modifier = Modifier.height(20.dp))
                 ReusableTextView(
@@ -935,21 +960,39 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
                 ) {
                     FormFieldCompact(
                         label = stringResource(Res.string.daily_expenses),
-                        value = "",
-                        onValueChange = { "" },
+                        value = viewModel.dailyExpense,
+                        onValueChange = { viewModel.dailyExpense=it },
                         placeholder = stringResource(Res.string.type_here),
                         maxLength = 10,
-                        modifier = Modifier.weight(1f),
-                    )
+                        modifier = Modifier.weight(1f)
+                            .focusRequester(viewModel.focusRequesterDailyExpense)
+                            .bringIntoViewRequester(viewModel.bringIntoViewRequesterDailyExpense),
+
+                        )
                     Spacer(modifier = Modifier.width(30.dp))
                     FormFieldCompact(
                         label = stringResource(Res.string.education),
-                        value = "",
-                        onValueChange = { "" },
+                        value = viewModel.educationExpense,
+                        onValueChange = { viewModel.educationExpense=it },
                         placeholder = stringResource(Res.string.type_here),
                         maxLength = 10,
-                        modifier = Modifier.weight(1f),
-                    )
+                        modifier = Modifier.weight(1f)
+                            .focusRequester(viewModel.focusRequesterEducationExpense)
+                            .bringIntoViewRequester(viewModel.bringIntoViewRequesterEducationExpense),
+
+                        )
+
+                    /* FormFieldCompact(
+                         label = stringResource(Res.string.education),
+                         value = viewModel.educationExpense,
+                         onValueChange = {  viewModel.educationExpense = it},
+                         placeholder = stringResource(Res.string.type_here),
+                         maxLength = 10,
+                         modifier = Modifier.weight(1f)
+                             .focusRequester(viewModel.focusRequesterEducationExpense)
+                             .bringIntoViewRequester(viewModel.bringIntoViewRequesterEducationExpense),
+
+                     )*/
                 }
                 Spacer(modifier = Modifier.height(10.dp))
                 Row(
@@ -960,21 +1003,27 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
                 ) {
                     FormFieldCompact(
                         label = stringResource(Res.string.medical),
-                        value = "",
-                        onValueChange = { "" },
+                        value = viewModel.medicalExpense,
+                        onValueChange = { viewModel.medicalExpense = it},
                         placeholder = stringResource(Res.string.type_here),
                         maxLength = 10,
-                        modifier = Modifier.weight(1f),
-                    )
+                        modifier = Modifier.weight(1f)
+                            .focusRequester(viewModel.focusRequesterMedicalExpense)
+                            .bringIntoViewRequester(viewModel.bringIntoViewRequesterMedicalExpense),
+
+                        )
                     Spacer(modifier = Modifier.width(30.dp))
                     FormFieldCompact(
                         label = stringResource(Res.string.others),
-                        value = "",
-                        onValueChange = { "" },
+                        value = viewModel.othersExpense,
+                        onValueChange = { viewModel.othersExpense = it},
                         placeholder = stringResource(Res.string.type_here),
                         maxLength = 10,
-                        modifier = Modifier.weight(1f),
-                    )
+                        modifier = Modifier.weight(1f)
+                            .focusRequester(viewModel.focusRequesterOthersExpense)
+                            .bringIntoViewRequester(viewModel.bringIntoViewRequesterOthersExpense),
+
+                        )
                 }
                 Spacer(modifier = Modifier.height(10.dp))
                 Row(
@@ -985,21 +1034,27 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
                 ) {
                     FormFieldCompact(
                         label = stringResource(Res.string.total_monthly_expenditure),
-                        value = "",
-                        onValueChange = { "" },
+                        value = viewModel.totalMonthlyExpense,
+                        onValueChange = { viewModel.totalMonthlyExpense = it},
                         placeholder = stringResource(Res.string.type_here),
                         maxLength = 10,
-                        modifier = Modifier.weight(1f),
+                        modifier = Modifier.weight(1f)
+                            .focusRequester(viewModel.focusRequesterTotalMonthlyExpense)
+                            .bringIntoViewRequester(viewModel.bringIntoViewRequesterTotalMonthlyExpense),
                     )
                     Spacer(modifier = Modifier.width(30.dp))
+
                     FormFieldCompact(
                         label = stringResource(Res.string.annual),
-                        value = "",
-                        onValueChange = { "" },
+                        value = viewModel.annualExpense,
+                        onValueChange = { viewModel.annualExpense = it },
                         placeholder = stringResource(Res.string.type_here),
                         maxLength = 10,
-                        modifier = Modifier.weight(1f),
-                    )
+                        modifier = Modifier.weight(1f)
+                            .focusRequester(viewModel.focusRequesterAnnualExpense)
+                            .bringIntoViewRequester(viewModel.bringIntoViewRequesterAnnualExpense),
+
+                        )
                 }
                 Spacer(modifier = Modifier.height(10.dp))
                 Row(
@@ -1010,21 +1065,27 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
                 ) {
                     FormFieldCompact(
                         label = stringResource(Res.string.mfi_bank_name),
-                        value = "",
-                        onValueChange = { "" },
+                        value = viewModel.mfiBankExpense,
+                        onValueChange = { viewModel.mfiBankExpense = it },
                         placeholder = stringResource(Res.string.type_here),
                         maxLength = 10,
-                        modifier = Modifier.weight(1f),
-                    )
+                        modifier = Modifier.weight(1f)
+                            .focusRequester(viewModel.focusRequesterMfiBankExpense)
+                            .bringIntoViewRequester(viewModel.bringIntoViewRequesterMfiBankExpense),
+
+                        )
                     Spacer(modifier = Modifier.width(30.dp))
                     FormFieldCompact(
                         label = stringResource(Res.string.select_customer_loan),
-                        value = "",
-                        onValueChange = { "" },
+                        value = viewModel.loanAmountExpense,
+                        onValueChange = {viewModel.loanAmountExpense = it},
                         placeholder = stringResource(Res.string.type_here),
                         maxLength = 10,
-                        modifier = Modifier.weight(1f),
-                    )
+                        modifier = Modifier.weight(1f)
+                            .focusRequester(viewModel.focusRequesterLoanAmountExpense)
+                            .bringIntoViewRequester(viewModel.bringIntoViewRequesterLoanAmountExpense),
+
+                        )
                 }
                 Spacer(modifier = Modifier.height(10.dp))
                 Row(
@@ -1035,21 +1096,27 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
                 ) {
                     FormFieldCompact(
                         label = stringResource(Res.string.outstanding),
-                        value = "",
-                        onValueChange = { "" },
+                        value = viewModel.outStandingExpense,
+                        onValueChange = { viewModel.outStandingExpense = it },
                         placeholder = stringResource(Res.string.type_here),
                         maxLength = 10,
-                        modifier = Modifier.weight(1f),
-                    )
+                        modifier = Modifier.weight(1f)
+                            .focusRequester(viewModel.focusRequesterOutStandingExpense)
+                            .bringIntoViewRequester(viewModel.bringIntoViewRequesterOutStandingExpense),
+
+                        )
                     Spacer(modifier = Modifier.width(30.dp))
                     FormFieldCompact(
                         label = stringResource(Res.string.emi),
-                        value = "",
-                        onValueChange = { "" },
+                        value = viewModel.emiExpense,
+                        onValueChange = { viewModel.emiExpense = it },
                         placeholder = stringResource(Res.string.type_here),
                         maxLength = 10,
-                        modifier = Modifier.weight(1f),
-                    )
+                        modifier = Modifier.weight(1f)
+                            .focusRequester(viewModel.focusRequesterEmiExpense)
+                            .bringIntoViewRequester(viewModel.bringIntoViewRequesterEmiExpense),
+
+                        )
                 }
                 Spacer(modifier = Modifier.height(10.dp))
                 Row(
@@ -1060,21 +1127,27 @@ fun PersonalDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = 
                 ) {
                     FormFieldCompact(
                         label = stringResource(Res.string.full_name_of_applicant),
-                        value = "",
-                        onValueChange = { "" },
+                        value = viewModel.fullNameExpense,
+                        onValueChange = { viewModel.fullNameExpense = it},
                         placeholder = stringResource(Res.string.type_here),
                         maxLength = 10,
-                        modifier = Modifier.weight(1f),
-                    )
+                        modifier = Modifier.weight(1f)
+                            .focusRequester(viewModel.focusRequesterFullNameExpense)
+                            .bringIntoViewRequester(viewModel.bringIntoViewRequesterFullNameExpense),
+
+                        )
                     Spacer(modifier = Modifier.width(30.dp))
                     FormFieldCompact(
                         label = stringResource(Res.string.remarks),
-                        value = "",
-                        onValueChange = { "" },
+                        value =viewModel.remarksExpense,
+                        onValueChange = { viewModel.remarksExpense = it},
                         placeholder = stringResource(Res.string.type_here),
                         maxLength = 10,
-                        modifier = Modifier.weight(1f),
-                    )
+                        modifier = Modifier.weight(1f)
+                            .focusRequester(viewModel.focusRequesterRemarksExpense)
+                            .bringIntoViewRequester(viewModel.bringIntoViewRequesterRemarksExpense),
+
+                        )
                 }
 
 
@@ -1264,7 +1337,7 @@ fun SelectUserPopupDialog(
                                     text = mobile,
                                     fontWeight = FontWeight.Normal,
                                     textColor = black,
-                                    
+
                                 )
                             }
 
@@ -1301,3 +1374,14 @@ fun SelectUserPopupDialog(
 }*/
 
 
+@Preview(showBackground = true)
+@Composable
+fun PersonalDetailsScreenPreview() {
+    MaterialTheme {
+        PersonalDetailsScreen(
+            onNextTab = {},
+            onCancelTab = {},
+
+        )
+    }
+}

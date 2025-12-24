@@ -46,4 +46,11 @@ class MSTDistrictViewModel(
             _districtList.value = emptyList()
         }
     }
+    fun loadDistrictByStateID() {
+        viewModelScope.launch {
+            val result = repository.getAllDistictsByStateID()
+            _districtList.value = result
+        }
+    }
+
 }

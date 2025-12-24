@@ -181,6 +181,49 @@ class CustomerRepository(private val customerDao: CustomerDao) {
         )
     }
 
+    suspend fun updateCustomerBasicDetails(
+        guid: String?,
+        firstName: String?,
+        middleName: String?,
+        lastName: String?,
+        maritalStatusId: Int?,
+        educationId: Int?,
+        religionId: Int?,
+        contactNo: String?,
+        husbandFName: String?,
+        husbandMName: String?,
+        husbandLName: String?,
+        guarantorFName: String?,
+        gurantorMName: String?,
+        gurantorLName:String?,
+        age: Int?,
+        phoneNo: String?,
+        dob: String?,
+        updatedOn: String?,
+        updatedBy: String?
 
+    ) {
+        customerDao.updateCustomerBasicDetails(
+            guid,
+            firstName,
+            middleName,
+            lastName,
+            maritalStatusId,
+            educationId,
+            religionId,
+            contactNo,
+            husbandFName,
+            husbandMName,
+            husbandLName,
+            guarantorFName,
+            gurantorMName,
+            gurantorLName,
+            age,
+            phoneNo,
+            dob,
+            updatedOn,
+            updatedBy
+        )
+    }
 
 }

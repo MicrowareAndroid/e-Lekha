@@ -18,4 +18,7 @@ interface MSTDistrictDao {
     @Query("Delete from MSTDistrict")
     suspend  fun deleteAllDistrict()
 
+    @Query("SELECT * FROM mstDistrict")
+    suspend fun  getAllDistictByStateid():List<MSTDistrictEntity>
+
 }

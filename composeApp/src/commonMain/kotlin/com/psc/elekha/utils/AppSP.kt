@@ -9,6 +9,7 @@ object AppSP {
     var customerGuid = "customerGuid"
     var dateOfBirth = "dateOfBirth"
     var userId = "userId"
+    var branchId = "branchId"
 
     var familyGuid="familyGuid"
 

@@ -14,6 +14,6 @@ data class CustomerLoanDisbursementEntity(
     @ColumnInfo(name = "LoanFees") val LoanFees: Int?,
     @ColumnInfo(name = "ReceiptFlag") val ReceiptFlag: Boolean?,
     @ColumnInfo(name = "IsWorkingDayClosed") val IsWorkingDayClosed: Boolean?,
-    @ColumnInfo(name = "IsDeleted") val IsDeleted: Boolean?
+    @ColumnInfo(name = "IsDeleted") val IsDeleted: Int?
 
 )

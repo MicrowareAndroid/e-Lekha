@@ -10,14 +10,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.IntrinsicSize
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -34,14 +30,11 @@ import androidx.compose.foundation.relocation.BringIntoViewRequester
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
-import androidx.compose.material.icons.filled.CameraAlt
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -57,26 +50,18 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
-import androidx.compose.material3.RadioButton
-import androidx.compose.material3.RadioButtonDefaults
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.focus.focusRequester
@@ -84,12 +69,8 @@ import androidx.compose.ui.focus.focusTarget
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.graphics.RenderEffect
-import androidx.compose.ui.graphics.Shader
-import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.input.key.Key.Companion.Calendar
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
@@ -103,42 +84,28 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
-import androidx.compose.ui.window.DialogProperties
-import coil3.Uri
-import coil3.compose.rememberAsyncImagePainter
-import com.psc.elekha.database.entity.MSTComboBox_NEntity
 import com.psc.elekha.model.SliderItem
+import com.psc.elekha.response.MasterResponse
 import com.psc.elekha.ui.screen.gtrlist.CustomerData
 import com.psc.elekha.ui.screen.gtrlist.GroupCardData
 import com.psc.elekha.ui.theme.CardColor
-import com.psc.elekha.ui.theme.LightBlueBackground
-import com.psc.elekha.ui.theme.LightMint
-import com.psc.elekha.ui.theme.LightSkyBlue
-import com.psc.elekha.ui.theme.LightTeal
 import com.psc.elekha.ui.theme.LoginTextBox
 import com.psc.elekha.ui.theme.PrimaryDark
 import com.psc.elekha.ui.theme.appleblue
-import com.psc.elekha.ui.theme.assureOrange
 import com.psc.elekha.ui.theme.bgColor
 import com.psc.elekha.ui.theme.black
 import com.psc.elekha.ui.theme.boderColor
 import com.psc.elekha.ui.theme.btn_color
-import com.psc.elekha.ui.theme.darkBluishGrey
 import com.psc.elekha.ui.theme.desire_orange
-import com.psc.elekha.ui.theme.editext_bg_color
 import com.psc.elekha.ui.theme.formborder
 import com.psc.elekha.ui.theme.hintColor
 import com.psc.elekha.ui.theme.homeTopIconsBg
-import com.psc.elekha.ui.theme.homedatareportsColor
 import com.psc.elekha.ui.theme.lightGrey
-import com.psc.elekha.ui.theme.lightgreens
 import com.psc.elekha.ui.theme.loginBg
 import com.psc.elekha.ui.theme.loginTitle
 import com.psc.elekha.ui.theme.loginbgGradientBottom
@@ -148,47 +115,23 @@ import com.psc.elekha.ui.theme.teal700
 import com.psc.elekha.ui.theme.text_fiiled_color
 import com.psc.elekha.ui.theme.textview_color
 import com.psc.elekha.ui.theme.toolbar_color
+import com.psc.elekha.ui.theme.transaperentBgColor
 import com.psc.elekha.ui.theme.white
 import e_lekha.composeapp.generated.resources.Res
 import e_lekha.composeapp.generated.resources.add_more_family
-import e_lekha.composeapp.generated.resources.add_more_family_member
-import e_lekha.composeapp.generated.resources.age
-import e_lekha.composeapp.generated.resources.annual
 import e_lekha.composeapp.generated.resources.app_name
-import e_lekha.composeapp.generated.resources.back
-import e_lekha.composeapp.generated.resources.camera
 import e_lekha.composeapp.generated.resources.cancel
-import e_lekha.composeapp.generated.resources.close
 import e_lekha.composeapp.generated.resources.dd_mm_yy
-import e_lekha.composeapp.generated.resources.document_icon
-import e_lekha.composeapp.generated.resources.education
 import e_lekha.composeapp.generated.resources.enter_here
 import e_lekha.composeapp.generated.resources.enter_otp
 import e_lekha.composeapp.generated.resources.existing_customer
-import e_lekha.composeapp.generated.resources.gender
-import e_lekha.composeapp.generated.resources.gtr_add
 import e_lekha.composeapp.generated.resources.gtr_next_meeting
-import e_lekha.composeapp.generated.resources.gtr_save
 import e_lekha.composeapp.generated.resources.hh_mm
 import e_lekha.composeapp.generated.resources.ic_arrow_drop_down
-import e_lekha.composeapp.generated.resources.ic_close
-import e_lekha.composeapp.generated.resources.income
 import e_lekha.composeapp.generated.resources.inter_medium
 import e_lekha.composeapp.generated.resources.inter_regular
-import e_lekha.composeapp.generated.resources.inter_semibold
-import e_lekha.composeapp.generated.resources.login_subtitle
-import e_lekha.composeapp.generated.resources.mobile_number
-import e_lekha.composeapp.generated.resources.movable_assets
-import e_lekha.composeapp.generated.resources.name
 import e_lekha.composeapp.generated.resources.new_registration
-import e_lekha.composeapp.generated.resources.next
-import e_lekha.composeapp.generated.resources.occupation
-import e_lekha.composeapp.generated.resources.ok
 import e_lekha.composeapp.generated.resources.password
-import e_lekha.composeapp.generated.resources.purpose
-import e_lekha.composeapp.generated.resources.relation
-import e_lekha.composeapp.generated.resources.religion
-import e_lekha.composeapp.generated.resources.remarks
 import e_lekha.composeapp.generated.resources.roboto_medium
 import e_lekha.composeapp.generated.resources.roboto_regular
 import e_lekha.composeapp.generated.resources.save
@@ -203,17 +146,12 @@ import e_lekha.composeapp.generated.resources.select_customer_please
 import e_lekha.composeapp.generated.resources.select_disbursement
 import e_lekha.composeapp.generated.resources.select_formation
 import e_lekha.composeapp.generated.resources.select_group
-import e_lekha.composeapp.generated.resources.select_information
 import e_lekha.composeapp.generated.resources.select_loan
 import e_lekha.composeapp.generated.resources.select_meeting
-import e_lekha.composeapp.generated.resources.select_new_customer
 import e_lekha.composeapp.generated.resources.select_village
 import e_lekha.composeapp.generated.resources.spinner_select
-import e_lekha.composeapp.generated.resources.total_monthly_expenditure
 import e_lekha.composeapp.generated.resources.type_here
-import e_lekha.composeapp.generated.resources.user_default
 import e_lekha.composeapp.generated.resources.username
-import e_lekha.composeapp.generated.resources.vehicle_no
 import kotlinx.coroutines.delay
 import kotlinx.datetime.Clock
 import kotlinx.datetime.DatePeriod
@@ -221,15 +159,14 @@ import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.plus
 import kotlinx.datetime.todayIn
-import org.jetbrains.compose.resources.DrawableResource
+import kotlinx.serialization.decodeFromString
+import nl.adaptivity.xmlutil.serialization.XML
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.Font
-import org.jetbrains.compose.resources.StringResource
-import org.jetbrains.compose.resources.imageResource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.resources.vectorResource
-import kotlin.String
+import com.psc.elekha.model.NameParts
 
 @Composable
 fun ReusableTextView(
@@ -952,7 +889,7 @@ fun FormDatePickerCompacts(
     trailingIcon: @Composable (() -> Unit)? = null,
     placeholder: String = stringResource(Res.string.dd_mm_yy),
     isEnable: Boolean = true,
-    labelColor: Color = textview_color,
+    labelColor: Color = black,
     placeholderColor: Color = Color(0xFF212121),
     backgroundColor: Color = text_fiiled_color,
     borderColor: Color = boderColor,
@@ -2718,17 +2655,18 @@ fun CustomAlertDialogRegistrationExisting(
                 .wrapContentWidth()
                 .widthIn(min = 400.dp, max = 500.dp)
                 .heightIn(max = 500.dp)
-                .background(lightGrey, RoundedCornerShape(16.dp))
-                .border(1.dp, lightGrey, RoundedCornerShape(16.dp))
+                .background(transaperentBgColor, RoundedCornerShape(16.dp))
+
         ) {
             Column(
                 modifier = Modifier
                     .wrapContentWidth()
                     .widthIn(400.dp)
-                    .background(lightGrey, shape = RoundedCornerShape(16.dp))
-                    .border(1.dp, Color.LightGray, shape = RoundedCornerShape(16.dp)),
+                    .background(transaperentBgColor, shape = RoundedCornerShape(16.dp)),
+                    //.border(1.dp, Color.LightGray, shape = RoundedCornerShape(16.dp)),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
+
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center,
@@ -2749,8 +2687,6 @@ fun CustomAlertDialogRegistrationExisting(
                         )
                 }
 
-                Spacer(Modifier.height(5.dp))
-
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center,
@@ -2761,7 +2697,6 @@ fun CustomAlertDialogRegistrationExisting(
                     // Middle 1/3: a box that centers the button inside it
                     Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.Center) {
                         CommonSaveButton(
-                            backgroundColor = LightMint,
                             onSaveClick = {
                                 onRegistration()
                             },
@@ -2783,7 +2718,6 @@ fun CustomAlertDialogRegistrationExisting(
                     // Middle 1/3: a box that centers the button inside it
                     Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.Center) {
                         CommonSaveButton(
-                            backgroundColor = repaymentColor,
                             onSaveClick = {
                                 onExitsing()
                             },
@@ -2879,5 +2813,197 @@ fun AddCircleButton(
 }
 
 
+object MasterXmlParser {
+
+    private val xml = XML {
+        autoPolymorphic = true
+
+    }
+
+    fun parse(xmlResponse: String): MasterResponse {
+        return xml.decodeFromString(xmlResponse)
+    }
+}
+
+@Composable
+fun <T : Any> FillDynamicSpinnerespt(
+    label: String,
+    options: List<T>?,
+    selectedOption: Int?,
+    onOptionSelected: (Int) -> Unit,
+    getOptionId: (T) -> Int,
+    getOptionLabel: (T) -> String,
+    modifier: Modifier = Modifier,
+    labelColor: Color = black,
+    backgroundColor: Color = text_fiiled_color,
+    textColor: Color = Color.Black,
+    fontFamily: FontFamily = FontFamily(Font(Res.font.inter_regular)), // ESP wala font
+    borderColor: Color = boderColor,
+    focusRequester: FocusRequester? = null,
+    bringIntoViewRequester: BringIntoViewRequester? = null,
+    placeholder: String = stringResource(Res.string.spinner_select),
+    isMandatory: Int = 1
+) {
+    var expanded by remember { mutableStateOf(false) }
+    var hasFocus by remember { mutableStateOf(false) }
+    var spinnerWidth by remember { mutableStateOf(0.dp) }
+
+    val density = LocalDensity.current
+
+    val displayText = if (selectedOption == null || selectedOption == 0) {
+        placeholder
+    } else {
+        options?.find { getOptionId(it) == selectedOption }?.let { getOptionLabel(it) }
+            ?: placeholder
+    }
+
+    //  SAME focus behaviour as ESP spinner
+    LaunchedEffect(hasFocus) {
+        if (hasFocus) {
+            delay(120)
+            bringIntoViewRequester?.bringIntoView()
+            expanded = true
+        }
+    }
+
+    Column(modifier = modifier) {
+        ReusableTextView(
+            text = label,
+            fontSize = 14,
+            textColor = labelColor,
+            fontFamily = fontFamily,
+           // isMandatory = isMandatory
+        )
+
+        Spacer(modifier = Modifier.height(5.dp))
+
+        Box(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+
+            // ESP STYLE size / border / background
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(min = 40.dp) // ESP height
+                    .border(1.dp, borderColor, RoundedCornerShape(15.dp))
+                    .background(backgroundColor, RoundedCornerShape(15.dp))
+                    .focusTarget()
+                    .focusable()
+                    .focusProperties { canFocus = true }
+                    .then(if (focusRequester != null) Modifier.focusRequester(focusRequester) else Modifier)
+                    .onFocusChanged { state -> hasFocus = state.isFocused }
+                    .clickable { expanded = true }
+                    .onGloballyPositioned { spinnerWidth = with(density) { it.size.width.toDp() } },
+                contentAlignment = Alignment.CenterStart
+            ) {
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(text_fiiled_color, RoundedCornerShape(15.dp)) // ESP inner white bg
+                        .padding(horizontal = 12.dp, vertical = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    ReusableTextView(
+                        text = displayText,
+                        textColor = textColor,
+                        fontFamily = fontFamily
+                    )
+
+                    Spacer(modifier = Modifier.weight(1f))
+
+                    Icon(
+                        imageVector = vectorResource(Res.drawable.ic_arrow_drop_down),
+                        contentDescription = "Dropdown",
+                        tint = textColor
+                    )
+                }
+            }
+
+            //  DROPDOWN MENU
+            DropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { expanded = false },
+                modifier = Modifier
+                    .width(spinnerWidth)
+                    .background(White)
+            ) {
+                DropdownMenuItem(
+                    text = {
+                        ReusableTextView(
+                            text = placeholder,
+                            modifier = Modifier.fillMaxWidth(),
+                            fontSize = 14
+                        )
+                    },
+                    onClick = {
+                        onOptionSelected(0)
+                        expanded = false
+                    }
+                )
+                options?.forEach { item ->
+                    DropdownMenuItem(
+                        text = {
+                            ReusableTextView(
+                                text = getOptionLabel(item),
+                                modifier = Modifier.fillMaxWidth(),
+                                fontSize = 14
+                            )
+                        },
+                        onClick = {
+                            onOptionSelected(getOptionId(item))
+                            expanded = false
+                        }
+                    )
+                }
+            }
+        }
+    }
+}
 
 
+fun parseNameDynamic(fullName: String): NameParts {
+    val parts = fullName.trim()
+        .split("\\s+".toRegex())
+
+    val firstName = parts.firstOrNull().orEmpty()
+    val lastName = if (parts.size > 1) parts.last() else ""
+
+    val middleName = if (parts.size > 2) {
+        parts.subList(1, parts.size - 1).joinToString(" ")
+    } else ""
+
+    return NameParts(firstName, middleName, lastName)
+}
+fun calculateAgeFromDobKMP(dob: String): Int {
+    if (dob.isBlank()) return 0
+
+    return try {
+        // DOB format: dd-MM-yyyy
+        val parts = dob.split("-")
+        if (parts.size != 3) return 0
+
+        val day = parts[0].toInt()
+        val month = parts[1].toInt()
+        val year = parts[2].toInt()
+
+        val birthDate = LocalDate(year, month, day)
+        val today = Clock.System.todayIn(TimeZone.currentSystemDefault())
+
+        var age = today.year - birthDate.year
+
+        // Birthday abhi aaya ya nahi
+        if (
+            today.monthNumber < birthDate.monthNumber ||
+            (today.monthNumber == birthDate.monthNumber && today.dayOfMonth < birthDate.dayOfMonth)
+        ) {
+            age--
+        }
+
+        age
+    } catch (e: Exception) {
+        0
+    }
+}

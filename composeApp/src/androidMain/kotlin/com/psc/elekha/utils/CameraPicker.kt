@@ -36,12 +36,14 @@ actual fun CameraPicker(
             ActivityResultContracts.StartActivityForResult()
         ) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
-                onImagePicked(photoFile?.absolutePath)
+                photoFile?.let { file ->
+                    val compressedFile = ImageCompressor.compressToKB(file)
+                    onImagePicked(compressedFile.absolutePath)
+                }
             } else {
                 onImagePicked(null)
             }
         }
-
 
     val permissionLauncher =
         rememberLauncherForActivityResult(
@@ -111,11 +113,11 @@ private fun launchCamera(
     context: Context,
     onReady: (File, Uri) -> Unit
 ) {
-    val dir = File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        , "camera")
-    if (!dir.exists()) dir.mkdirs()
 
-    val file = File(dir, "IMG_${System.currentTimeMillis()}.jpg")
+//    val dir = File(context.filesDir, "camera")
+//    if (!dir.exists()) dir.mkdirs()
+
+    val file = File(context.filesDir, "IMG_${System.currentTimeMillis()}.jpg")
 
     val uri = FileProvider.getUriForFile(
         context,

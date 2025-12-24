@@ -42,7 +42,7 @@ fun EconomicMovableAssetsCard(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(12.dp),
+                .padding(10.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
 
@@ -70,7 +70,7 @@ private fun DetailRow(
     ) {
         ReusableTextViewGrayCard(
             label,
-            modifier = Modifier.width(100.dp)
+            modifier = Modifier.width(120.dp)
         )
         ReusableTextViewBlackCard(
             value,
