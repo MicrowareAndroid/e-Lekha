@@ -287,5 +287,12 @@
     <string name="data_updated_successfully">Data Updated SuccessFully</string>
     <string name="address">Address</string>
     <string name="mfi_details">MFI Details</string>
+    <string name="loan_details">Loan Details</string>
+    <string name="emi_no">EMI No. </string>
+    <string name="loan">Loan </string>
+    <string name="disburse_date">Disburse Date </string>
+    <string name="pre_closure_amt">Pre closure amount </string>
+    <string name="total_due">Total Due</string>
+    <string name="payment_details">Payment Details</string>
 
 </resources>

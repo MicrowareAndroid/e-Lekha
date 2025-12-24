@@ -8,6 +8,7 @@ object AppSP {
     var caseIdentifier = "caseIdentifier"
     var customerGuid = "customerGuid"
     var dateOfBirth = "dateOfBirth"
+    var gurantorDateOfBirth = "gurantorDateOfBirth"
     var userId = "userId"
     var branchId = "branchId"
 
