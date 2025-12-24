@@ -250,9 +250,9 @@ data class CustomerEntity(
     @ColumnInfo(name = "MaternalVillageName") val MaternalVillageName: String?,
     @ColumnInfo(name = "MaternalFatherName") val MaternalFatherName: String?,
     @ColumnInfo(name = "DailyExpense") val DailyExpense: Int?,
-    @ColumnInfo(name = "Medical") val Medical: Int?,
-    @ColumnInfo(name = "Education") val Education: Int?,
-    @ColumnInfo(name = "Other") val Other: Int?,
+    @ColumnInfo(name = "MedicalExpense") val MedicalExpense: Int?,
+    @ColumnInfo(name = "EducationExpense") val EducationExpense: Int?,
+    @ColumnInfo(name = "OtherExpense") val OtherExpense: Int?,
     @ColumnInfo(name = "TotalMonthlyExpenditure") val TotalMonthlyExpenditure: Int?,
     @ColumnInfo(name = "TotalAnnualExpenditure") val TotalAnnualExpenditure: Int?,
 
