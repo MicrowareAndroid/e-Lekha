@@ -83,49 +83,74 @@ interface CustomerDao {
         GUID: String
     )
 
-
     @Query(
-        "Update Customer set CKYC_UID=:CKYC_UID, CKYC_UID_Image=:CKYC_UID_Image, CKYC_UID_Image2=:CKYC_UID_Image2, CKYC_VoterCard=:CKYC_VoterCard, CKYC_VoterCard_Image=:CKYC_VoterCardImage, CKYC_VoterCard_Image2=:CKYC_VoterCardImage2, CKYC_ElectricityBill=:CKYC_ElectricityBill , CKYC_ElectricityBill_Image=:CKYC_ElectricityBill_Image, CKYC_ElectricityBillRelationID=:CKYC_ElectricityBillRelationID, CKYC_ElectricityBill_Name=:CKYC_ElectricityBill_Name, KElectricNumber=:KElectricNumber, CKYC_JobCard=:CKYC_JobCard, CKYC_JobCard_Image=:CKYC_JobCard_Image, CKYC_JobCardRelationID=:CKYC_JobCardRelationID, CKYC_JobCard_Name=:CKYC_JobCard_Name, CKYC_JobCard_Image2=:CKYC_JobCard_Image2,GKYC_UID=:GKYC_UID, GKYC_UID_Image=:GKYC_UID_Image, GKYC_UID_Image2=:GKYC_UID_Image2, IsEdited=:IsEdited, UpdatedBy=:UpdatedBy, UpdatedOn=:UpdatedOn,CKYC_Bank=:CKYC_Bank,CKYC_BankAccountNumber=:CKYC_BankAccountNumber,CKYC_Bank_Image=:CKYC_Bank_Image,CustomerBankIFSCCode=:CustomerBankIFSCCode,CustomerBankNameEditable=:CustomerBankNameEditable, CKYC_RationCard=:CKYC_RationCard, CKYC_RationCard_Image=:CKYC_RationCard_Image, CKYC_RationCard_Image2=:CKYC_RationCard_Image2, RegPlace=:RegPlace, RegLat=:RegLat, RegLong=:RegLong where GUID=:GUID"
+        """
+    UPDATE Customer SET
+        -- CKYC
+        CKYC_Aadhar_Name = :CKYC_Aadhar_Name,
+        CKYC_UID = :CKYC_UID,
+        CKYC_UID_Image = :CKYC_UID_Image,
+        CKYC_ElectricityBill = :CKYC_ElectricityBill,
+        CKYC_ElectricityBill_Image = :CKYC_ElectricityBill_Image,
+        CKYC_ElectricityBill_Name = :CKYC_ElectricityBill_Name,
+        KElectricNumber = :KElectricNumber,
+        CKYC_VoterCard = :CKYC_VoterCard,
+        CKYC_VoterCard_Image = :CKYC_VoterCard_Image,
+        CKYC_VoterId_Name = :CKYC_VoterId_Name,
+
+        -- GKYC
+        GKYC_Aadhar_Name = :GKYC_Aadhar_Name,
+        GKYC_UID = :GKYC_UID,
+        GKYC_UID_Image = :GKYC_UID_Image,
+        GKYC_UID_Image2 = :GKYC_UID_Image2,
+        GKYC_ElectricityBill = :GKYC_ElectricityBill,
+        GKYC_ElectricityBill_Image = :GKYC_ElectricityBill_Image,
+        GurantorKElectricNumber = :GurantorKElectricNumber,
+        GKYC_VoterCard = :GKYC_VoterCard,
+        GKYC_VoterCard_Image = :GKYC_VoterCard_Image,
+        GKYC_VoterId_Name = :GKYC_VoterId_Name,
+        GKYC_PANCard = :GKYC_PANCard,
+        GKYC_PANCard_Image = :GKYC_PANCard_Image,
+        GKYC_Pancard_Name = :GKYC_Pancard_Name,
+
+        -- common audit
+        IsEdited = 1,
+        UpdatedBy = :UpdatedBy,
+        UpdatedOn = :UpdatedOn
+
+    WHERE GUID = :GUID
+    """
     )
     suspend fun updateMyKYC(
-        CKYC_UID: String,
-        CKYC_UID_Image: String,
-        CKYC_UID_Image2: String,
-        CKYC_VoterCard: String,
-        CKYC_VoterCardImage: String,
-        CKYC_VoterCardImage2: String,
-        CKYC_ElectricityBill: String,
-        CKYC_ElectricityBill_Image: String,
-        CKYC_ElectricityBillRelationID: Int,
-        CKYC_ElectricityBill_Name: String,
-        KElectricNumber: String,
-        CKYC_JobCard: String,
-        CKYC_JobCard_Image: String,
-        CKYC_JobCardRelationID: Int,
-        CKYC_JobCard_Name: String,
-        CKYC_JobCard_Image2: String,
-        GKYC_UID: String,
-        GKYC_UID_Image: String,
-        GKYC_UID_Image2: String,
-        IsEdited: Int,
+        CKYC_Aadhar_Name: String?,
+        CKYC_UID: String?,
+        CKYC_UID_Image: String?,
+        CKYC_ElectricityBill: String?,
+        CKYC_ElectricityBill_Image: String?,
+        CKYC_ElectricityBill_Name: String?,
+        KElectricNumber: String?,
+        CKYC_VoterCard: String?,
+        CKYC_VoterCard_Image: String?,
+        CKYC_VoterId_Name: String?,
+        GKYC_Aadhar_Name: String?,
+        GKYC_UID: String?,
+        GKYC_UID_Image: String?,
+        GKYC_UID_Image2: String?,
+        GKYC_ElectricityBill: String?,
+        GKYC_ElectricityBill_Image: String?,
+        GurantorKElectricNumber: String?,
+        GKYC_VoterCard: String?,
+        GKYC_VoterCard_Image: String?,
+        GKYC_VoterId_Name: String?,
+        GKYC_PANCard: String?,
+        GKYC_PANCard_Image: String?,
+        GKYC_Pancard_Name: String?,
+        // audit
         UpdatedBy: String,
         UpdatedOn: String,
-//        GKYC_OtherID: String,
-//        GKYC_OtherID_Image: String,
-//        GKYC_OtherID_Image2: String,
-        CKYC_Bank: Int,
-        CKYC_BankAccountNumber: String,
-        CKYC_Bank_Image: String,
-        CustomerBankIFSCCode: String,
-        CustomerBankNameEditable: String,
-        CKYC_RationCard: String,
-        CKYC_RationCard_Image: String,
-        CKYC_RationCard_Image2: String,
-        RegPlace: String,
-        RegLat: String,
-        RegLong: String,
         GUID: String
     )
+
 
     @Query("Update Customer set LoanAppliedID=:LoanAppliedID, FamilyMonthlyIncome=:FamilyMonthlyIncome, LoanPurposeID=:LoanPurposeID,CutomerStatusID=:CutomerStatusID,RegistrationDate=:RegistrationDate, IsEdited=:IsEdited, UpdatedBy=:UpdatedBy, UpdatedOn=:UpdatedOn, RegPlace=:RegPlace, RegLat=:RegLat, RegLong=:RegLong where GUID=:GUID")
     suspend fun updateMyLoan(
