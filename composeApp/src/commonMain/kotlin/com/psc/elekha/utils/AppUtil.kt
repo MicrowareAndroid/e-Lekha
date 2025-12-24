@@ -209,6 +209,55 @@ fun ReusableTextView(
         textAlign = textAlignment
     )
 }
+@Composable
+fun ReusableTextViewes(
+    text: String,
+    modifier: Modifier = Modifier,
+    textColor: Color = appleblue,
+    fontSize: Int = 16,
+    fontWeight: FontWeight = FontWeight.Bold,
+    fontFamily: FontFamily = FontFamily(Font(Res.font.inter_medium)),
+    backgroundColor: Color = Color.Transparent,
+    cornerRadius: Dp = 0.dp,
+    padding: Dp = 0.dp,
+    textAlignment: TextAlign = TextAlign.Start,
+    isMandatory: Int = 0,
+    asteriskColor: Color = Color.Red
+) {
+
+    val displayText = if (isMandatory == 1) {
+        buildAnnotatedString {
+            withStyle(
+                style = SpanStyle(
+                    color = asteriskColor,
+                    fontWeight = FontWeight.Bold
+                )
+            ) {
+                append("* ")
+            }
+            append(text)
+        }
+    } else {
+        AnnotatedString(text)
+    }
+
+    Text(
+        text = displayText,
+        modifier = modifier
+            .background(
+                color = backgroundColor,
+                shape = RoundedCornerShape(cornerRadius)
+            )
+            .padding(padding),
+        style = TextStyle(
+            color = textColor,
+            fontSize = fontSize.sp,
+            fontWeight = fontWeight,
+            fontFamily = fontFamily
+        ),
+        textAlign = textAlignment
+    )
+}
 
 @Composable
 fun ReusableTextViews(
