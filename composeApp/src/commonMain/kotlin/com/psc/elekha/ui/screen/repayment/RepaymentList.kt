@@ -26,11 +26,7 @@ import com.psc.elekha.ui.screen.repayment.model.RepaymentItem
 import com.psc.elekha.ui.theme.btn_color
 import com.psc.elekha.ui.theme.toolbar_color
 import org.jetbrains.compose.resources.stringResource
-import androidx.compose.ui.window.Dialog
-import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.compose.rememberNavController
-import com.psc.elekha.ui.screen.home.HomeScreen
-import com.psc.elekha.ui.screen.login.LoginScreenNew
 import com.psc.elekha.ui.theme.*
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -163,15 +159,13 @@ fun RepaymentList(
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(horizontal = 12.dp)
                 ) {
 
                     ReusableCard(
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(7.dp),
+                            .fillMaxWidth(),
                         backgroundColor = homedatareportsColor,
-                        cornerRadius = 12
+                        cornerRadius = 0
                     )
                     {
 
@@ -258,6 +252,7 @@ fun RepaymentList(
                         onFilterClick = { showFilterDialog = true },
                         modifier = Modifier
                             .weight(1f)
+                            .padding(horizontal = 12.dp)
                             .padding(bottom = 45.dp),
                         onCardClicked = { index ->
                             selectedDialogItem = sampleRepaymentList[index]
@@ -297,30 +292,12 @@ fun RepaymentList(
 
     }
     selectedDialogItem?.let { item ->
-        Dialog(
-            onDismissRequest = { selectedDialogItem = null },
-            properties = DialogProperties(usePlatformDefaultWidth = false)
-        ) {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                RepaymentDialog(
-                    item = item,
-                    isSelected = true,
-                    onSelected = {
-                        selectedDialogItem = null
-                    },
-                    onCameraClick = {
-                        // camera logic yahan
-                    },
-                    onBack = {
-                        selectedDialogItem = null
-                    }
-                )
-
+        RepaymentDialog(
+            item = item,
+            onBack = {
+                selectedDialogItem = null
             }
-        }
+        )
     }
 
 
@@ -375,7 +352,7 @@ fun CollectionDetailsCard(
                 )
 
                 if (index < items.size - 1) {
-                    Spacer(modifier = Modifier.height(8.dp))
+                    Spacer(modifier = Modifier.height(Dimens.tendp))
                 }
             }
         }

@@ -47,7 +47,7 @@ fun RepaymentItemCard(
         onClick = { onClicked() },
         modifier = Modifier
             .fillMaxWidth()
-            .padding(8.dp)
+            .padding(2.dp)
             .defaultMinSize(minHeight = 80.dp)
 
     ) {
@@ -127,7 +127,7 @@ fun RepaymentItemCard(
                             modifier = Modifier.weight(1f)
                         )
                     }
-                    Spacer(modifier = Modifier.height(10.dp))
+                  /*  Spacer(modifier = Modifier.height(10.dp))
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         verticalAlignment = Alignment.CenterVertically
@@ -154,7 +154,7 @@ fun RepaymentItemCard(
                             fontSize = 13,
                             modifier = Modifier.weight(1f)
                         )
-                    }
+                    }*/
                 }
             }
         }

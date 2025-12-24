@@ -2534,7 +2534,7 @@ fun ReusableTextViewGrayCard(
 @Composable
 fun ReusableTextViewBlackCard(
     text: String,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier.fillMaxWidth(),
     textColor: Color = Color.Black,
     fontSize: Int = 14,
     fontWeight: FontWeight = FontWeight.SemiBold,
@@ -2561,7 +2561,6 @@ fun ReusableTextViewBlackCard(
     Text(
         text = displayText,
         modifier = modifier
-            .fillMaxWidth()
             .background(color = backgroundColor, shape = RoundedCornerShape(cornerRadius))
             .padding(padding),
         style = style.copy(
