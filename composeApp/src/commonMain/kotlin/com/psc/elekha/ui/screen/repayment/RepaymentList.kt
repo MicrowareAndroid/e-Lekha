@@ -27,6 +27,7 @@ import com.psc.elekha.ui.theme.btn_color
 import com.psc.elekha.ui.theme.toolbar_color
 import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.compose.rememberNavController
 import com.psc.elekha.ui.screen.home.HomeScreen
 import com.psc.elekha.ui.screen.login.LoginScreenNew
@@ -297,7 +298,8 @@ fun RepaymentList(
     }
     selectedDialogItem?.let { item ->
         Dialog(
-            onDismissRequest = { selectedDialogItem = null }
+            onDismissRequest = { selectedDialogItem = null },
+            properties = DialogProperties(usePlatformDefaultWidth = false)
         ) {
             Box(
                 modifier = Modifier.fillMaxSize(),
@@ -511,17 +513,6 @@ fun FilterLoanDetailsDialog(
     )
 
 }
-
-//@Preview
-//@Composable
-//fun RepaymentList() {
-//    MaterialTheme {
-//        HomeScreen(
-//            navController = rememberNavController(),
-//            onMenuClick = {}
-//        )
-//    }
-//}
 
 @Preview
 @Composable

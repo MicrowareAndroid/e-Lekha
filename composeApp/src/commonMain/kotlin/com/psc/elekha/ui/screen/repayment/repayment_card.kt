@@ -51,12 +51,10 @@ fun RepaymentItemCard(
             .defaultMinSize(minHeight = 80.dp)
 
     ) {
-
         Column(
             modifier = Modifier.fillMaxWidth()
                 .padding(horizontal = 10.dp, vertical = 10.dp)
         ) {
-
 
             Row(
                 modifier = Modifier
@@ -64,106 +62,12 @@ fun RepaymentItemCard(
                 verticalAlignment = Alignment.CenterVertically
             )
             {
-
-                Column(
-                    modifier = Modifier.weight(1f)
-                ) {
-                    // CUSTOMER ROW
-                    Row(verticalAlignment = Alignment.Top) {
-                        ReusableTextViewGrayCard(
-                            stringResource(Res.string.personal_customer).plus(":"),
-                            fontSize = 13
-                        )
-                        Spacer(modifier = Modifier.width(4.dp))
-                        ReusableTextViewBlackCard(
-                            "${item.customerId}  ${item.customerName}",
-                            fontSize = 13
-                        )
-                    }
-
-                    Spacer(modifier = Modifier.height(10.dp))
-
-                    // Loan + EMI
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-
-                        // Loan Amount Label
-                        ReusableTextViewGrayCard(
-                            stringResource(Res.string.personal_loan).plus(":"),
-                            fontSize = 13,
-                            modifier = Modifier.weight(1.5f)
-                        )
-
-                        // Loan Amount Value
-                        ReusableTextViewBlackCard(
-                            item.loanAmount,
-                            fontSize = 13,
-                            modifier = Modifier.weight(1f)
-                        )
-
-                        // EMI Label
-                        ReusableTextViewGrayCard(
-                            stringResource(Res.string.personal_emi).plus(":"),
-                            fontSize = 13,
-                            modifier = Modifier.weight(0.6f)
-                        )
-
-                        // EMI Value
-                        ReusableTextViewBlackCard(
-                            item.emiAmount,
-                            fontSize = 13,
-                            modifier = Modifier.weight(1f)
-                        )
-                    }
-
-
-                    Spacer(modifier = Modifier.height(10.dp))
-
-                    // Total Due + Weeks
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-
-                        Row(
-                            modifier = Modifier.weight(1f),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            ReusableTextViewGrayCard(
-                                stringResource(Res.string.personal_total_due).plus(
-                                    ":"
-                                ), fontSize = 13
-                            )
-                            Spacer(modifier = Modifier.width(6.dp))
-                            ReusableTextViewBlackCard(item.totalDue, fontSize = 13)
-                        }
-                        Spacer(modifier = Modifier.width(6.dp))
-                        Row(
-                            modifier = Modifier.weight(1f),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            ReusableTextViewGrayCard(
-                                stringResource(Res.string.personal_weeks_arrear).plus(
-                                    ":"
-                                ), fontSize = 13
-                            )
-                            Spacer(modifier = Modifier.width(6.dp))
-                            ReusableTextViewBlackCard(item.weeksInArrear, fontSize = 13)
-                        }
-                    }
-                }
-
-                Spacer(modifier = Modifier.width(10.dp))
-
-
                 Column(
                     verticalArrangement = Arrangement.Top,
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier
                         .width(60.dp)
-                        .padding(top = 10.dp)
+                        .fillMaxHeight()
 
                 ) {
                     Box(
@@ -171,49 +75,89 @@ fun RepaymentItemCard(
                             .size(55.dp)
                             .background(Color.LightGray)
                     )
-
-
                 }
-
                 Spacer(modifier = Modifier.width(10.dp))
-                Checkbox(
-                    checked = isSelected,
-                    onCheckedChange = { onSelected() },
-                    modifier = Modifier.size(22.dp),
-                )
-
-
-            }
-
-
-
-
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-
-                ReusableTextViewGrayCard(
-                    stringResource(Res.string.personal_payment_mode).plus(":"),
-                    fontSize = 13
-                )
-                Spacer(modifier = Modifier.width(6.dp))
-
-                ReusableTextViewGrayCard(
-                    stringResource(Res.string.personal_payment_mode),
-                    fontSize = 13
-                )
-
-
-                Spacer(modifier = Modifier.width(10.dp))
-
-                ReusableTextViewGrayCard(
-                    stringResource(Res.string.personal_payment_mode),
-                    fontSize = 13
-                )
-
+                Column(
+                    modifier = Modifier.weight(1f)
+                ) {
+                    Row(verticalAlignment = Alignment.Top,
+                        modifier = Modifier.fillMaxWidth()) {
+                        ReusableTextViewGrayCard(
+                            stringResource(Res.string.personal_customer).plus(":"),
+                            fontSize = 13,
+                            modifier = Modifier.wrapContentWidth()
+                        )
+                        Spacer(modifier = Modifier.width(4.dp))
+                        ReusableTextViewBlackCard(
+                            "${item.customerId}  ${item.customerName}",
+                            fontSize = 13,
+                            modifier = Modifier.weight(1f)
+                        )
+                        Checkbox(
+                            checked = isSelected,
+                            onCheckedChange = { onSelected() },
+                            modifier = Modifier.size(22.dp),
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(10.dp))
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        ReusableTextViewGrayCard(
+                            stringResource(Res.string.personal_loan).plus(":"),
+                            fontSize = 13,
+                            modifier = Modifier.wrapContentWidth()
+                        )
+                        Spacer(modifier = Modifier.width(4.dp))
+                        ReusableTextViewBlackCard(
+                            item.loanAmount,
+                            fontSize = 13,
+                            modifier = Modifier.weight(1f)
+                        )
+                        ReusableTextViewGrayCard(
+                            stringResource(Res.string.personal_emi).plus(":"),
+                            fontSize = 13,
+                            modifier = Modifier.wrapContentWidth()
+                        )
+                        Spacer(modifier = Modifier.width(4.dp))
+                        ReusableTextViewBlackCard(
+                            item.emiAmount,
+                            fontSize = 13,
+                            modifier = Modifier.weight(1f)
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(10.dp))
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        ReusableTextViewGrayCard(
+                            stringResource(Res.string.personal_total_due).plus(":"),
+                            fontSize = 13,
+                            modifier = Modifier.wrapContentWidth()
+                        )
+                        Spacer(modifier = Modifier.width(4.dp))
+                        ReusableTextViewBlackCard(
+                            item.totalDue,
+                            fontSize = 13,
+                            modifier = Modifier.weight(1f)
+                        )
+                        ReusableTextViewGrayCard(
+                            stringResource(Res.string.personal_payment_mode).plus(":"),
+                            fontSize = 13,
+                            modifier = Modifier.wrapContentWidth()
+                        )
+                        Spacer(modifier = Modifier.width(4.dp))
+                        ReusableTextViewBlackCard(
+                            "Cash",
+                            fontSize = 13,
+                            modifier = Modifier.weight(1f)
+                        )
+                    }
+                }
             }
         }
     }
 }
+
