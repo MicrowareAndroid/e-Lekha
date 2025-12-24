@@ -2,34 +2,22 @@ package com.psc.elekha.ui.screen.repayment
 
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.CameraAlt
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.navigation.compose.rememberNavController
-import com.psc.elekha.ui.screen.home.HomeScreen
 import com.psc.elekha.ui.screen.repayment.model.RepaymentItem
-import com.psc.elekha.ui.theme.black
 import com.psc.elekha.ui.theme.blue
-import com.psc.elekha.ui.theme.editext_bg_color
 import com.psc.elekha.ui.theme.lightGrey
-import com.psc.elekha.ui.theme.loginBg
-import com.psc.elekha.ui.theme.repaymentColor
 import com.psc.elekha.ui.theme.toolbar_color
 import com.psc.elekha.ui.theme.white
 import com.psc.elekha.utils.CommonActionButtons
-import com.psc.elekha.utils.CommonSingleButtonsBottomString
 import com.psc.elekha.utils.FormFieldCompacts
 import com.psc.elekha.utils.ReusableDynamicSpinner
 import com.psc.elekha.utils.ReusableTextView
@@ -39,8 +27,6 @@ import e_lekha.composeapp.generated.resources.Res
 import e_lekha.composeapp.generated.resources.call
 import e_lekha.composeapp.generated.resources.camera
 import e_lekha.composeapp.generated.resources.front_image
-import e_lekha.composeapp.generated.resources.gtr_save
-import e_lekha.composeapp.generated.resources.mobile_number
 import e_lekha.composeapp.generated.resources.personal_current
 import e_lekha.composeapp.generated.resources.personal_current_payment
 import e_lekha.composeapp.generated.resources.personal_customer
@@ -59,7 +45,6 @@ import e_lekha.composeapp.generated.resources.personal_weeks_arrear
 import e_lekha.composeapp.generated.resources.type_here
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun RepaymentDialog(
@@ -89,7 +74,6 @@ fun RepaymentDialog(
                 .fillMaxWidth()
                 .background(lightGrey)
         ) {
-
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -110,243 +94,157 @@ fun RepaymentDialog(
                     .fillMaxWidth()
                     .padding(10.dp)
             ) {
-
-                // CUSTOMER
-
-
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
-                )
-                {
-
-                    Column(
+                Row(verticalAlignment = Alignment.Top) {
+                    ReusableTextViewGrayCard(
+                        stringResource(Res.string.personal_customer),
+                        fontSize = 13,
+                        modifier = Modifier.wrapContentWidth()
+                    )
+                    Spacer(modifier = Modifier.width(4.dp))
+                    ReusableTextViewBlackCard(
+                        "${item.customerId}  ${item.customerName}",
+                        fontSize = 13,
                         modifier = Modifier.weight(1f)
                     )
-                    {
-                        // CUSTOMER ROW
-                        Row(verticalAlignment = Alignment.Top) {
-                            ReusableTextViewGrayCard(
-                                stringResource(Res.string.personal_customer),
-                                fontSize = 13
-                            )
-                            Spacer(modifier = Modifier.width(4.dp))
-                            ReusableTextViewBlackCard(
-                                "${item.customerId}  ${item.customerName}",
-                                fontSize = 13
-                            )
-                        }
-
-                        Spacer(modifier = Modifier.height(6.dp))
-
-                        // Loan + EMI
-
-                        Column(
-                            modifier = Modifier.fillMaxWidth()
-                        )
-                        {
-
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                Icon(
-                                    painter = painterResource(Res.drawable.call),
-                                    tint = blue,
-                                    contentDescription = stringResource(Res.string.front_image),
-                                    modifier = Modifier.size(15.dp)
-                                )
-                                Spacer(modifier = Modifier.width(6.dp))
-                                ReusableTextViewBlackCard(
-                                    item.mobileNumber,
-                                    fontSize = 13
-                                )
-                            }
-
-                            Spacer(modifier = Modifier.height(6.dp))
-
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                ReusableTextViewGrayCard(
-                                    stringResource(Res.string.personal_emi),
-                                    fontSize = 13
-                                )
-                                Spacer(modifier = Modifier.width(6.dp))
-                                ReusableTextViewBlackCard(
-                                    item.emiAmount,
-                                    fontSize = 13
-                                )
-                            }
-                        }
-                        Spacer(modifier = Modifier.height(6.dp))
-
-                        Column(
-                            modifier = Modifier.fillMaxWidth()
-                        )
-                        {
-
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                ReusableTextViewGrayCard(
-                                    stringResource(Res.string.personal_total_due),
-                                    fontSize = 13
-                                )
-                                Spacer(modifier = Modifier.height(6.dp))
-                                ReusableTextViewBlackCard(
-                                    item.totalDue,
-                                    fontSize = 13
-                                )
-                            }
-
-                            Spacer(modifier = Modifier.height(6.dp))
-
-
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                ReusableTextViewGrayCard(
-                                    stringResource(Res.string.personal_weeks_arrear),
-                                    fontSize = 13
-                                )
-                                Spacer(modifier = Modifier.width(6.dp))
-                                ReusableTextViewBlackCard(
-                                    item.weeksInArrear,
-                                    fontSize = 13
-                                )
-                            }
-                        }
-                        // Total Due + Weeks
-
-
-                    }
                 }
                 Spacer(modifier = Modifier.height(6.dp))
-                Column(
-                    modifier = Modifier.fillMaxWidth()
-                )
-                {
-
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        ReusableTextViewGrayCard(
-                            stringResource(Res.string.personal_loan),
-                            fontSize = 13
-                        )
-                        Spacer(modifier = Modifier.width(6.dp))
-                        ReusableTextViewBlackCard(
-                            item.loanAmount,
-                            fontSize = 13
-                        )
-                    }
-
-                    Spacer(modifier = Modifier.height(6.dp))
-
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        ReusableTextViewGrayCard(
-                            stringResource(Res.string.personal_current).plus(":"),
-                            fontSize = 13
-                        )
-                        Spacer(modifier = Modifier.height(6.dp))
-                        ReusableTextViewBlackCard(
-                            item.currentDue,
-                            fontSize = 13
-                        )
-                    }
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        painter = painterResource(Res.drawable.call),
+                        tint = blue,
+                        contentDescription = stringResource(Res.string.front_image),
+                        modifier = Modifier.size(15.dp)
+                    )
+                    Spacer(modifier = Modifier.width(4.dp))
+                    ReusableTextViewBlackCard(
+                        item.mobileNumber,
+                        fontSize = 13
+                    )
                 }
-
-
-
-
                 Spacer(modifier = Modifier.height(6.dp))
-
-                Column(
-                    modifier = Modifier.fillMaxWidth()
-                )
-                {
-
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        ReusableTextViewGrayCard(
-                            stringResource(Res.string.personal_emi_number).plus(":"),
-                            fontSize = 13
-                        )
-                        Spacer(modifier = Modifier.width(6.dp))
-                        ReusableTextViewBlackCard(
-                            item.emiNumber,
-                            fontSize = 13
-                        )
-                    }
-
-                    Spacer(modifier = Modifier.height(6.dp))
-
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        ReusableTextViewGrayCard(
-                            stringResource(Res.string.personal_distribute_date).plus(":"),
-                            fontSize = 13
-                        )
-                        Spacer(modifier = Modifier.width(6.dp))
-                        ReusableTextViewBlackCard(
-                            item.distributeDate,
-                            fontSize = 13
-                        )
-                    }
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    ReusableTextViewGrayCard(
+                        stringResource(Res.string.personal_emi),
+                        fontSize = 13,
+                        modifier = Modifier.wrapContentWidth()
+                    )
+                    Spacer(modifier = Modifier.width(4.dp))
+                    ReusableTextViewBlackCard(
+                        item.emiAmount,
+                        fontSize = 13,
+                        modifier = Modifier.weight(1f)
+                    )
+                    ReusableTextViewGrayCard(
+                        stringResource(Res.string.personal_emi_number).plus(":"),
+                        fontSize = 13, modifier = Modifier.wrapContentWidth()
+                    )
+                    Spacer(modifier = Modifier.width(4.dp))
+                    ReusableTextViewBlackCard(
+                        item.emiNumber,
+                        fontSize = 13, modifier = Modifier.weight(1f)
+                    )
                 }
-
                 Spacer(modifier = Modifier.height(6.dp))
-                Column(
-                    modifier = Modifier.fillMaxWidth()
-                )
-                {
-
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        ReusableTextViewGrayCard(
-                            stringResource(Res.string.personal_pre_closure).plus(":"),
-                            fontSize = 13
-                        )
-                        Spacer(modifier = Modifier.width(6.dp))
-                        ReusableTextViewBlackCard(
-                            item.preClosureAmount,
-                            fontSize = 13
-                        )
-                    }
-
-                    Spacer(modifier = Modifier.height(6.dp))
-
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        ReusableTextViewGrayCard(
-                            stringResource(Res.string.personal_past).plus(":"),
-                            fontSize = 13
-                        )
-                        Spacer(modifier = Modifier.height(6.dp))
-                        ReusableTextViewBlackCard(
-                            item.pastDue,
-                            fontSize = 13
-                        )
-                    }
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    ReusableTextViewGrayCard(
+                        stringResource(Res.string.personal_current),
+                        fontSize = 13,
+                        modifier = Modifier.wrapContentWidth()
+                    )
+                    Spacer(modifier = Modifier.width(4.dp))
+                    ReusableTextViewBlackCard(
+                        item.currentDue,
+                        fontSize = 13,
+                        modifier = Modifier.weight(1f)
+                    )
+                    ReusableTextViewGrayCard(
+                        stringResource(Res.string.personal_total_due).plus(":"),
+                        fontSize = 13, modifier = Modifier.wrapContentWidth()
+                    )
+                    Spacer(modifier = Modifier.width(4.dp))
+                    ReusableTextViewBlackCard(
+                        item.totalDue,
+                        fontSize = 13, modifier = Modifier.weight(1f)
+                    )
                 }
-
+                Spacer(modifier = Modifier.height(6.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    ReusableTextViewGrayCard(
+                        stringResource(Res.string.personal_loan),
+                        fontSize = 13,
+                        modifier = Modifier.wrapContentWidth()
+                    )
+                    Spacer(modifier = Modifier.width(4.dp))
+                    ReusableTextViewBlackCard(
+                        item.loanAmount,
+                        fontSize = 13,
+                        modifier = Modifier.weight(1f)
+                    )
+                    ReusableTextViewGrayCard(
+                        stringResource(Res.string.personal_weeks_arrear).plus(":"),
+                        fontSize = 13, modifier = Modifier.wrapContentWidth()
+                    )
+                    Spacer(modifier = Modifier.width(4.dp))
+                    ReusableTextViewBlackCard(
+                        item.weeksInArrear,
+                        fontSize = 13, modifier = Modifier.weight(1f)
+                    )
+                }
+                Spacer(modifier = Modifier.height(6.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    ReusableTextViewGrayCard(
+                        stringResource(Res.string.personal_distribute_date),
+                        fontSize = 13,
+                        modifier = Modifier.wrapContentWidth()
+                    )
+                    Spacer(modifier = Modifier.width(4.dp))
+                    ReusableTextViewBlackCard(
+                        item.distributeDate,
+                        fontSize = 13,
+                        modifier = Modifier.weight(1f)
+                    )
+                    ReusableTextViewGrayCard(
+                        stringResource(Res.string.personal_pre_closure).plus(":"),
+                        fontSize = 13, modifier = Modifier.wrapContentWidth()
+                    )
+                    Spacer(modifier = Modifier.width(4.dp))
+                    ReusableTextViewBlackCard(
+                        item.preClosureAmount,
+                        fontSize = 13, modifier = Modifier.weight(1f)
+                    )
+                }
+                Spacer(modifier = Modifier.height(6.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    ReusableTextViewGrayCard(
+                        stringResource(Res.string.personal_past),
+                        fontSize = 13,
+                        modifier = Modifier.wrapContentWidth()
+                    )
+                    Spacer(modifier = Modifier.width(4.dp))
+                    ReusableTextViewBlackCard(
+                        item.pastDue,
+                        fontSize = 13,
+                        modifier = Modifier.weight(1f)
+                    )
+                }
                 Spacer(modifier = Modifier.height(6.dp))
 
                 Column(
@@ -355,12 +253,11 @@ fun RepaymentDialog(
                 {
                     ReusableTextViewGrayCard(
                         stringResource(Res.string.personal_payment_mode),
-                        fontSize = 13
+                        fontSize = 13, modifier = Modifier.wrapContentWidth()
                     )
 
                     Spacer(modifier = Modifier.height(6.dp))
 
-                    //  Spinner
                     ReusableDynamicSpinner(
                         selectedValue = selectedPaymentMode,
                         options = paymentOptions,
@@ -381,7 +278,6 @@ fun RepaymentDialog(
 
                     Spacer(modifier = Modifier.height(6.dp))
 
-                    //  Spinner
                     FormFieldCompacts(
                         value = repaymentAmounts,
                         onValueChange = { repaymentAmounts = it },
@@ -405,7 +301,6 @@ fun RepaymentDialog(
 
                     Spacer(modifier = Modifier.height(6.dp))
 
-                    //  Spinner
                     FormFieldCompacts(
                         value = repaymentAmount,
                         onValueChange = { repaymentAmount = it },
@@ -418,15 +313,11 @@ fun RepaymentDialog(
                 }
 
                 Spacer(modifier = Modifier.height(6.dp))
-                // Front Image Box
-
-
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    // Front Image Box
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -466,20 +357,6 @@ fun RepaymentDialog(
                 }
 
             }
-
-
         }
-    }
-}
-
-
-@Preview
-@Composable
-fun RepaymentDialog() {
-    MaterialTheme {
-        HomeScreen(
-            navController = rememberNavController(),
-            onMenuClick = {}
-        )
     }
 }
