@@ -29,6 +29,7 @@ import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.window.Dialog
 import androidx.navigation.compose.rememberNavController
 import com.psc.elekha.ui.screen.home.HomeScreen
+import com.psc.elekha.ui.screen.login.LoginScreenNew
 import com.psc.elekha.ui.theme.*
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -511,13 +512,21 @@ fun FilterLoanDetailsDialog(
 
 }
 
+//@Preview
+//@Composable
+//fun RepaymentList() {
+//    MaterialTheme {
+//        HomeScreen(
+//            navController = rememberNavController(),
+//            onMenuClick = {}
+//        )
+//    }
+//}
+
 @Preview
 @Composable
 fun RepaymentList() {
     MaterialTheme {
-        HomeScreen(
-            navController = rememberNavController(),
-            onMenuClick = {}
-        )
+        RepaymentList(navController = rememberNavController())
     }
 }

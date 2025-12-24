@@ -17,6 +17,8 @@ data class CustomerExistingLoanDetailEntity(
     @ColumnInfo(name = "MemberName") val MemberName: String?,
     @ColumnInfo(name = "EMI") val EMI: Int?,
     @ColumnInfo(name = "IsEdited") val IsEdited: Int?,
-    @ColumnInfo(name = "IsDeleted") val IsDeleted: Int?
+    @ColumnInfo(name = "IsDeleted") val IsDeleted: Int?,
+    @ColumnInfo(name = "MFIBankAccountName") val MFIBankAccountName: String?,
+    @ColumnInfo(name = "Remarks") val Remarks: String?
 
 )
