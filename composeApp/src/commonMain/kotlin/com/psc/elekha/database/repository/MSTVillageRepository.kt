@@ -1,6 +1,7 @@
 package com.psc.elekha.database.repository
 
 import com.psc.elekha.database.dao.MSTVillageDao
+import com.psc.elekha.database.entity.MSTDistrictEntity
 import com.psc.elekha.database.entity.MSTVillageEntity
 
 class MSTVillageRepository(
@@ -50,5 +51,8 @@ class MSTVillageRepository(
     // Delete all villages
     suspend fun deleteAllVillage() {
         villageDao.deleteAllVillage()
+    }
+    suspend fun getAllVillageBybrachID():List<MSTVillageEntity> {
+        return villageDao.getAllVillageBybranchId()
     }
 }

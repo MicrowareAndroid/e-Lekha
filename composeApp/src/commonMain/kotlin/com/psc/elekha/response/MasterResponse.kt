@@ -106,14 +106,16 @@ data class MasterResponse(
     @SerialName("KYCStatusCondition")
     val kycStatusCondition: List<KYCStatusConditionEntity> = emptyList(),
 
-     /*@SerialName("NoName1")
-     val noName1: List<NoNaame1> = emptyList(),
 
-    @SerialName("NoName2")
-     val noName2: List<MstLanguageEntity> = emptyList(),
 
-    @SerialName("NoName3")
-     val noName3: List<Any> = emptyList()*/
+    /*@SerialName("NoName1")
+    val noName1: List<NoNaame1> = emptyList(),
+
+   @SerialName("NoName2")
+    val noName2: List<MstLanguageEntity> = emptyList(),
+
+   @SerialName("NoName3")
+    val noName3: List<Any> = emptyList()*/
 )
 
 

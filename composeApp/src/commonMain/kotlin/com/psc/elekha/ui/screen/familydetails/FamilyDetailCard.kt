@@ -61,7 +61,7 @@ fun FamilyDetailCard(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(12.dp),
+                .padding(10.dp),
             verticalAlignment = Alignment.Top
         ) {
 
@@ -94,14 +94,7 @@ fun FamilyDetailCard(
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                IconButton(onClick = onEdit) {
-                    Icon(
-                        painter = painterResource(Res.drawable.edit),
-                        contentDescription = "Edit",
-                        modifier = Modifier.size(28.dp),
-                        tint = black
-                    )
-                }
+
                 IconButton(onClick = onDelete) {
                     Icon(
                         painter = painterResource(Res.drawable.delete),
@@ -122,12 +115,16 @@ private fun DetailRow(
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.Top
     ) {
+
         ReusableTextViewGrayCard(
             label,
-            modifier = Modifier.width(80.dp)
+            modifier = Modifier.width(110.dp)   //  80 → 110
         )
+
+        Spacer(modifier = Modifier.width(6.dp))
+
         ReusableTextViewBlackCard(
             value,
             modifier = Modifier.weight(1f)

@@ -164,7 +164,7 @@
     <string name="annual">Annual</string>
     <string name="movable_assets">Movable assets</string>
     <string name="no_vehicle">No. of vehicle</string>
-    <string name="vehicle_no">Vehicle no.</string>
+    <string name="vehicle_no">Vehicle no</string>
     <string name="data_saved_successfully">Data Saved SuccessFully</string>
     <string name="personal_customer_name">Please Enter Customer Name</string>
     <string name="personal_date_birth">Please Enter Date Of Birth</string>
@@ -180,7 +180,7 @@
     <string name="personal_full_address">Please Enter Full Address</string>
     <string name="personal_state">Please Select State</string>
     <string name="personal_district">Please Select District</string>
-    <string name="personal_village">Please Enter Village</string>
+    <string name="personal_village">Please Select Village</string>
     <string name="personal_tehsil">Please Enter Tehsil</string>
     <string name="personal_landmark">Please Enter LandMark</string>
     <string name="personal_pincode">Please Enter PinCode</string>
@@ -284,5 +284,6 @@
     <string name="pls_enter_account_number">Please Enter Account Number</string>
     <string name="pls_select_bank_name">Please Select Bank Name</string>
     <string name="pls_select_branch_name">Please Select Branch Name</string>
+    <string name="data_updated_successfully">Data Updated SuccessFully</string>
 
 </resources>

@@ -83,6 +83,7 @@ interface CustomerDao {
         GUID: String
     )
 
+
     @Query(
         "Update Customer set CKYC_UID=:CKYC_UID, CKYC_UID_Image=:CKYC_UID_Image, CKYC_UID_Image2=:CKYC_UID_Image2, CKYC_VoterCard=:CKYC_VoterCard, CKYC_VoterCard_Image=:CKYC_VoterCardImage, CKYC_VoterCard_Image2=:CKYC_VoterCardImage2, CKYC_ElectricityBill=:CKYC_ElectricityBill , CKYC_ElectricityBill_Image=:CKYC_ElectricityBill_Image, CKYC_ElectricityBillRelationID=:CKYC_ElectricityBillRelationID, CKYC_ElectricityBill_Name=:CKYC_ElectricityBill_Name, KElectricNumber=:KElectricNumber, CKYC_JobCard=:CKYC_JobCard, CKYC_JobCard_Image=:CKYC_JobCard_Image, CKYC_JobCardRelationID=:CKYC_JobCardRelationID, CKYC_JobCard_Name=:CKYC_JobCard_Name, CKYC_JobCard_Image2=:CKYC_JobCard_Image2,GKYC_UID=:GKYC_UID, GKYC_UID_Image=:GKYC_UID_Image, GKYC_UID_Image2=:GKYC_UID_Image2, IsEdited=:IsEdited, UpdatedBy=:UpdatedBy, UpdatedOn=:UpdatedOn,CKYC_Bank=:CKYC_Bank,CKYC_BankAccountNumber=:CKYC_BankAccountNumber,CKYC_Bank_Image=:CKYC_Bank_Image,CustomerBankIFSCCode=:CustomerBankIFSCCode,CustomerBankNameEditable=:CustomerBankNameEditable, CKYC_RationCard=:CKYC_RationCard, CKYC_RationCard_Image=:CKYC_RationCard_Image, CKYC_RationCard_Image2=:CKYC_RationCard_Image2, RegPlace=:RegPlace, RegLat=:RegLat, RegLong=:RegLong where GUID=:GUID"
     )
@@ -215,6 +216,28 @@ interface CustomerDao {
         UpdatedBy: Int?,
         UpdatedOn: String?)
 
+    @Query(" UPDATE Customer SET FirstName = :firstName,MiddleName = :middleName,LastName= :lastName, MaritalStatusID = :maritalStatusId, EducationID = :educationId, ReligionID = :religionId, ContactNo = :contactNo, HusbandFName = :husbandFName, HusbandMName=:hubandMName, HusbandLName=:husbandLName, GurantorFName=:gurantorFName, GurantorMName=:gurantorMName,GurantorLName=:gurantorLName,Age=:age, PhoneNo = :phoneNo, DOB = :dob,UpdatedOn = :updatedOn, UpdatedBy = :updatedBy WHERE GUID = :guid")
+    suspend fun updateCustomerBasicDetails(
+        guid: String?,
+        firstName: String?,
+        middleName:String?,
+        lastName:String?,
+        maritalStatusId: Int?,
+        educationId: Int?,
+        religionId: Int?,
+        contactNo: String?,
+        husbandFName: String?,
+        hubandMName:String?,
+        husbandLName:String?,
+        gurantorFName:String?,
+        gurantorMName:String?,
+        gurantorLName:String?,
+        age:Int?,
+        phoneNo: String?,
+        dob: String?,
+        updatedOn: String?,
+        updatedBy: String?
 
+    )
 
 }

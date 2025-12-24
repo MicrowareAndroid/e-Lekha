@@ -26,4 +26,8 @@ class MSTDistrictRepository(
     suspend fun deleteAllDistrict() {
         districtDao.deleteAllDistrict()
     }
+
+    suspend fun getAllDistictsByStateID():List<MSTDistrictEntity> {
+        return districtDao.getAllDistictByStateid()
+    }
 }

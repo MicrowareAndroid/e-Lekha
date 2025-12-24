@@ -1,6 +1,7 @@
 package com.psc.elekha.database.dao
 
 import androidx.room.*
+import com.psc.elekha.database.entity.MSTDistrictEntity
 import com.psc.elekha.database.entity.MSTVillageEntity
 
 @Dao
@@ -32,5 +33,8 @@ interface MSTVillageDao {
 
     @Query("Delete from MSTVillage")
     suspend fun deleteAllVillage()
+
+    @Query("SELECT * FROM MSTVillage")
+    suspend fun  getAllVillageBybranchId():List<MSTVillageEntity>
 
 }
