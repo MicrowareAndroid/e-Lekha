@@ -82,16 +82,9 @@ fun DrawerContent() {
     Box(
         modifier = Modifier
             .fillMaxSize()
-    ) {
-
-
-        Image(
-            painter = painterResource(Res.drawable.background),
-            contentDescription = null,
-            modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.FillBounds
-        )
-
+            .background(white)
+    )
+    {
 
         Column(
             modifier = Modifier
@@ -106,7 +99,8 @@ fun DrawerContent() {
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.fillMaxWidth(),
 
-                ) {
+                )
+            {
                 // Profile Picture
                 Box(
                     modifier = Modifier

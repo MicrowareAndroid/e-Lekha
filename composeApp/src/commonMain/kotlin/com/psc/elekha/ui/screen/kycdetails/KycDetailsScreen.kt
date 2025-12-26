@@ -276,19 +276,7 @@ fun KycDetailsScreen(
                             // Handle error: e.g., set showSaveAlert=true with error message
                         }
                     }*/
-                    viewModel.updateKyc {
-                        viewModel.kNumber
-                        viewModel.kNumberIdProof
-                        viewModel.billNameIdProof
-                        viewModel.accountNumber
-                        viewModel.nameonadhar
-                        viewModel.aadharnoIdProof
-                        viewModel.voterno
-                        viewModel.nameonvid
-                        viewModel.voternoIdProof
-                        viewModel.panNumber
-                        viewModel.nameOnPan
-                    }
+
                     onNextTab
                 },
                 saveText = stringResource(Res.string.next)
@@ -318,19 +306,19 @@ fun KycDetailsScreen(
                     when(currentCameraTarget) {
                         "EB_FRONT" -> {
                             ebFrontImage = imgBitmap
-                            viewModel.setEbImage(it)
+                           // viewModel.setEbImage(it)
                         }
                         "AADHAAR_FRONT" -> {
                             aadhaarFrontImage = imgBitmap
-                            viewModel.setAadhaarFrontImage(it)
+                          //  viewModel.setAadhaarFrontImage(it)
                         }
                         "AADHAAR_BACK" -> {
                             aadhaarBackImage = imgBitmap
-                            viewModel.setAadhaarBackImage(it)
+                          //  viewModel.setAadhaarBackImage(it)
                         }
                         "VID_FRONT" -> {
                             vidFrontImage = imgBitmap
-                            viewModel.setVidFrontImage(it)
+                            //viewModel.setVidFrontImage(it)
                         }
                     }
                 }
@@ -695,11 +683,11 @@ fun IdProofSection(viewModel: KycDetailViewModel) {
                 path?.let {
                     val bitmap = loadImageFromPath(it)
                     when(currentCameraTarget) {
-                        "ID_EB_FRONT" -> { idEbFrontImage = bitmap; viewModel.setEbImage(it) }
-                        "ID_AADHAAR_FRONT" -> { idAadhaarFrontImage = bitmap; viewModel.setAadhaarFrontImage(it) }
-                        "ID_AADHAAR_BACK" -> { idAadhaarBackImage = bitmap; viewModel.setAadhaarBackImage(it) }
-                        "ID_VID_FRONT" -> { idVidFrontImage = bitmap; viewModel.setVidFrontImage(it) }
-                        "ID_PAN_FRONT" -> { idPanFrontImage = bitmap; viewModel.setPanFrontImage(it) }
+                      //  "ID_EB_FRONT" -> { idEbFrontImage = bitmap; viewModel.setEbImage(it) }
+                      //  "ID_AADHAAR_FRONT" -> { idAadhaarFrontImage = bitmap; viewModel.setAadhaarFrontImage(it) }
+                      //  "ID_AADHAAR_BACK" -> { idAadhaarBackImage = bitmap; viewModel.setAadhaarBackImage(it) }
+                      //  "ID_VID_FRONT" -> { idVidFrontImage = bitmap; viewModel.setVidFrontImage(it) }
+                     //   "ID_PAN_FRONT" -> { idPanFrontImage = bitmap; viewModel.setPanFrontImage(it) }
                     }
                 }
                 openCamera = false

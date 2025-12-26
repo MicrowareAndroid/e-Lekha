@@ -4,10 +4,12 @@ import FamilyMemberDetailViewModel
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.relocation.bringIntoViewRequester
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
@@ -163,6 +165,18 @@ fun CustomAlertFamilyDetails(
                         placeholder = stringResource(Res.string.type_here),
                         onValueChange = { viewModel.memberFirstName = it }
                     )
+
+                    Spacer(Modifier.height(10.dp))
+
+                    FormFieldCompact(
+                        label = stringResource(Res.string.remarks),
+                        value ="",
+                        onValueChange = { ""},
+                        placeholder = stringResource(Res.string.type_here),
+                        maxLength = 10,
+                        modifier = Modifier.fillMaxWidth(),
+
+                        )
                     Spacer(Modifier.height(24.dp))
                     // BUTTONS
                     Row(

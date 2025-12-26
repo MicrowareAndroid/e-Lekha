@@ -28,48 +28,49 @@ import org.jetbrains.compose.resources.getString
 class KycDetailViewModel(
     var appPreferences: AppPreferences,
     var customerViewModel: CustomerViewModel
-): BaseValidationViewModel()
-{
- var billName by   mutableStateOf("")
- var billNameIdProof by mutableStateOf("")
- var accountNumber by mutableStateOf("")
- var accountNumberIdProof by mutableStateOf("")
- var kNumber by  mutableStateOf("")
- var kNumberIdProof by  mutableStateOf("")
- var ebImagePath by mutableStateOf("")
- var aadharno by  mutableStateOf("")
- var aadharnoIdProof by  mutableStateOf("")
+): BaseValidationViewModel() {
+    var billName by mutableStateOf("")
+    var billNameIdProof by mutableStateOf("")
+    var accountNumber by mutableStateOf("")
+    var accountNumberIdProof by mutableStateOf("")
+    var kNumber by mutableStateOf("")
+    var kNumberIdProof by mutableStateOf("")
+    var ebImagePath by mutableStateOf("")
+    var aadharno by mutableStateOf("")
+    var aadharnoIdProof by mutableStateOf("")
 
- var adharbackproof by  mutableStateOf("")
- var nameonadhar by  mutableStateOf("")
- var nameonadharIdProof by  mutableStateOf("")
- var voterno by mutableStateOf("")
- var voternoIdProof by mutableStateOf("")
- var nameonvid by mutableStateOf("")
- var nameonvidIdProof by mutableStateOf("")
- var panNumber by mutableStateOf("")
- var panFrontImagePath by mutableStateOf("")
- var nameOnPan by  mutableStateOf("")
- var gAadharNo by mutableStateOf("")
- var gAadharFrontPath by mutableStateOf("")
- var gAadharBackPath by mutableStateOf("")
- var gAadharName by mutableStateOf("")
+    var adharbackproof by mutableStateOf("")
+    var nameonadhar by mutableStateOf("")
+    var nameonadharIdProof by mutableStateOf("")
+    var voterno by mutableStateOf("")
+    var voternoIdProof by mutableStateOf("")
+    var nameonvid by mutableStateOf("")
+    var nameonvidIdProof by mutableStateOf("")
+    var panNumber by mutableStateOf("")
+    var panFrontImagePath by mutableStateOf("")
+    var nameOnPan by mutableStateOf("")
+    var gAadharNo by mutableStateOf("")
+    var gAadharFrontPath by mutableStateOf("")
+    var gAadharBackPath by mutableStateOf("")
+    var gAadharName by mutableStateOf("")
 
- // -------- GKYC Electricity --------
- var gBillName by mutableStateOf("")
- var gAccountNumber by mutableStateOf("")
- var gKNumber by mutableStateOf("")
- var gEbImagePath by mutableStateOf("")
+     // -------- GKYC Electricity --------
+     var gBillName by mutableStateOf("")
+     var gAccountNumber by mutableStateOf("")
+     var gKNumber by mutableStateOf("")
+     var gEbImagePath by mutableStateOf("")
 
- // -------- GKYC Voter --------
- var gVoterNo by mutableStateOf("")
- var gVoterName by mutableStateOf("")
- var gVoterImagePath by mutableStateOf("")
+     // -------- GKYC Voter --------
+     var gVoterNo by mutableStateOf("")
+     var gVoterName by mutableStateOf("")
+     var gVoterImagePath by mutableStateOf("")
 
- // -------- GKYC PAN --------
- var gPanNumber by mutableStateOf("")
- var gPanName by mutableStateOf("")
- var gPanImagePath by mutableStateOf("")
+     // -------- GKYC PAN --------
+     var gPanNumber by mutableStateOf("")
+     var gPanName by mutableStateOf("")
+     var gPanImagePath by mutableStateOf("")
+
+}
 
 
 /*    val bringIntoViewRequesterCustomerName = BringIntoViewRequester()
@@ -120,6 +121,7 @@ class KycDetailViewModel(
  val focusRequesterElectricityAccountNo2 = FocusRequester()
  val focusRequesterElectricityRelation2 = FocusRequester()*/
 
+
 fun updateKyc(onSuccess: () -> Unit) {
  viewModelScope.launch {
   updateKycUpdate()
@@ -127,6 +129,7 @@ fun updateKyc(onSuccess: () -> Unit) {
   onSuccess()
  }
 }
+
  private suspend fun updateKycUpdate() {
 
   val guid = returnStringValue(appPreferences.getString(AppSP.customerGuid))

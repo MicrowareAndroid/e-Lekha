@@ -2704,14 +2704,14 @@ fun CustomAlertDialogRegistrationExisting(
                 .wrapContentWidth()
                 .widthIn(min = 400.dp, max = 500.dp)
                 .heightIn(max = 500.dp)
-                .background(transaperentBgColor, RoundedCornerShape(16.dp))
+                .background(white, RoundedCornerShape(16.dp))
 
         ) {
             Column(
                 modifier = Modifier
                     .wrapContentWidth()
                     .widthIn(400.dp)
-                    .background(transaperentBgColor, shape = RoundedCornerShape(16.dp)),
+                    .background(white, shape = RoundedCornerShape(16.dp)),
                     //.border(1.dp, Color.LightGray, shape = RoundedCornerShape(16.dp)),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
@@ -2886,7 +2886,7 @@ fun <T : Any> FillDynamicSpinnerespt(
     labelColor: Color = black,
     backgroundColor: Color = text_fiiled_color,
     textColor: Color = Color.Black,
-    fontFamily: FontFamily = FontFamily(Font(Res.font.inter_regular)), // ESP wala font
+    fontFamily: FontFamily = FontFamily(Font(Res.font.inter_regular)),
     borderColor: Color = boderColor,
     focusRequester: FocusRequester? = null,
     bringIntoViewRequester: BringIntoViewRequester? = null,
@@ -2899,14 +2899,19 @@ fun <T : Any> FillDynamicSpinnerespt(
 
     val density = LocalDensity.current
 
-    val displayText = if (selectedOption == null || selectedOption == 0) {
+    //  Light Black color for placeholder
+    val lightBlack = Color(0xFF666666)
+
+    val isPlaceholder = selectedOption == null || selectedOption == 0
+
+    val displayText = if (isPlaceholder) {
         placeholder
     } else {
-        options?.find { getOptionId(it) == selectedOption }?.let { getOptionLabel(it) }
-            ?: placeholder
+        options?.find { getOptionId(it) == selectedOption }?.let {
+            getOptionLabel(it)
+        } ?: placeholder
     }
 
-    //  SAME focus behaviour as ESP spinner
     LaunchedEffect(hasFocus) {
         if (hasFocus) {
             delay(120)
@@ -2916,48 +2921,51 @@ fun <T : Any> FillDynamicSpinnerespt(
     }
 
     Column(modifier = modifier) {
+
         ReusableTextView(
             text = label,
             fontSize = 14,
             textColor = labelColor,
-            fontFamily = fontFamily,
-           // isMandatory = isMandatory
+            fontFamily = fontFamily
         )
 
         Spacer(modifier = Modifier.height(5.dp))
 
-        Box(
-            modifier = Modifier.fillMaxWidth()
-        ) {
+        Box(modifier = Modifier.fillMaxWidth()) {
 
-            // ESP STYLE size / border / background
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .heightIn(min = 40.dp) // ESP height
+                    .heightIn(min = 40.dp)
                     .border(1.dp, borderColor, RoundedCornerShape(15.dp))
                     .background(backgroundColor, RoundedCornerShape(15.dp))
                     .focusTarget()
                     .focusable()
                     .focusProperties { canFocus = true }
-                    .then(if (focusRequester != null) Modifier.focusRequester(focusRequester) else Modifier)
+                    .then(
+                        if (focusRequester != null)
+                            Modifier.focusRequester(focusRequester)
+                        else Modifier
+                    )
                     .onFocusChanged { state -> hasFocus = state.isFocused }
                     .clickable { expanded = true }
-                    .onGloballyPositioned { spinnerWidth = with(density) { it.size.width.toDp() } },
+                    .onGloballyPositioned {
+                        spinnerWidth = with(density) { it.size.width.toDp() }
+                    },
                 contentAlignment = Alignment.CenterStart
             ) {
 
                 Row(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(text_fiiled_color, RoundedCornerShape(15.dp)) // ESP inner white bg
+                        .background(text_fiiled_color, RoundedCornerShape(15.dp))
                         .padding(horizontal = 12.dp, vertical = 8.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
+
                     ReusableTextView(
                         text = displayText,
-                        textColor = textColor,
+                        textColor = if (isPlaceholder) lightBlack else textColor,
                         fontFamily = fontFamily
                     )
 
@@ -2966,12 +2974,11 @@ fun <T : Any> FillDynamicSpinnerespt(
                     Icon(
                         imageVector = vectorResource(Res.drawable.ic_arrow_drop_down),
                         contentDescription = "Dropdown",
-                        tint = textColor
+                        tint = if (isPlaceholder) lightBlack else textColor
                     )
                 }
             }
 
-            //  DROPDOWN MENU
             DropdownMenu(
                 expanded = expanded,
                 onDismissRequest = { expanded = false },
@@ -2979,12 +2986,13 @@ fun <T : Any> FillDynamicSpinnerespt(
                     .width(spinnerWidth)
                     .background(White)
             ) {
+
                 DropdownMenuItem(
                     text = {
                         ReusableTextView(
                             text = placeholder,
-                            modifier = Modifier.fillMaxWidth(),
-                            fontSize = 14
+                            fontSize = 14,
+                            textColor = lightBlack
                         )
                     },
                     onClick = {
@@ -2992,13 +3000,14 @@ fun <T : Any> FillDynamicSpinnerespt(
                         expanded = false
                     }
                 )
+
                 options?.forEach { item ->
                     DropdownMenuItem(
                         text = {
                             ReusableTextView(
                                 text = getOptionLabel(item),
-                                modifier = Modifier.fillMaxWidth(),
-                                fontSize = 14
+                                fontSize = 14,
+                                textColor = textColor
                             )
                         },
                         onClick = {
@@ -3011,7 +3020,6 @@ fun <T : Any> FillDynamicSpinnerespt(
         }
     }
 }
-
 
 fun parseNameDynamic(fullName: String): NameParts {
     val parts = fullName.trim()
