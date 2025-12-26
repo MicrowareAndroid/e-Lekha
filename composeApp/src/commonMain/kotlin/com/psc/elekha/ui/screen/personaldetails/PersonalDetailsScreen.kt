@@ -26,6 +26,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -69,6 +70,7 @@ import com.psc.elekha.utils.FillDynamicSpinnerespt
 import com.psc.elekha.utils.FormDatePickerCompacts
 import com.psc.elekha.utils.FormFieldCompact
 import com.psc.elekha.utils.ReusableTextView
+import com.psc.elekha.utils.ReusableTextViewes
 import com.psc.elekha.utils.getMaxDateInstant
 import com.psc.elekha.utils.getMinDateInstant
 import com.psc.elekha.utils.isAge18Plus
@@ -76,6 +78,7 @@ import com.psc.elekha.utils.pickMinMaxDate
 import e_lekha.composeapp.generated.resources.Res
 import e_lekha.composeapp.generated.resources.add
 import e_lekha.composeapp.generated.resources.add_more_family_member
+import e_lekha.composeapp.generated.resources.address
 import e_lekha.composeapp.generated.resources.annual
 import e_lekha.composeapp.generated.resources.customer_name
 import e_lekha.composeapp.generated.resources.daily_expenses
@@ -85,6 +88,7 @@ import e_lekha.composeapp.generated.resources.district
 import e_lekha.composeapp.generated.resources.education
 import e_lekha.composeapp.generated.resources.emi
 import e_lekha.composeapp.generated.resources.enter_otp
+import e_lekha.composeapp.generated.resources.enter_your_kyc_details
 import e_lekha.composeapp.generated.resources.family_econonic_profile
 import e_lekha.composeapp.generated.resources.father_name
 import e_lekha.composeapp.generated.resources.full_name_of_applicant
@@ -99,6 +103,7 @@ import e_lekha.composeapp.generated.resources.maternal_address
 import e_lekha.composeapp.generated.resources.maternal_mob_no
 import e_lekha.composeapp.generated.resources.medical
 import e_lekha.composeapp.generated.resources.mfi_bank_name
+import e_lekha.composeapp.generated.resources.mfi_details
 import e_lekha.composeapp.generated.resources.mobile_number
 import e_lekha.composeapp.generated.resources.movable_assets
 import e_lekha.composeapp.generated.resources.next
@@ -798,8 +803,12 @@ fun PersonalDetailsScreen(
                     )
                 }
                 Spacer(modifier = Modifier.height(8.dp))
+                ReusableTextViewes(
+                    text = stringResource(Res.string.maternal_address)
+                )
+                Spacer(modifier = Modifier.height(8.dp))
                 FormFieldCompact(
-                    label = stringResource(Res.string.maternal_address),
+                    label = stringResource(Res.string.address),
                     value = viewModel.maternalAddress,
                     placeholder = stringResource(Res.string.type_here),
                     onValueChange = { maternaladdress ->
@@ -885,9 +894,9 @@ fun PersonalDetailsScreen(
                     horizontalArrangement = Arrangement.spacedBy(10.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    ReusableTextView(
+                    ReusableTextViewes(
                         text = stringResource(Res.string.add_more_family_member),
-                        modifier = Modifier.weight(1f)
+                                modifier = Modifier.weight(1f)
                     )
 
                     FloatingActionButton(
@@ -924,7 +933,7 @@ fun PersonalDetailsScreen(
                     Spacer(modifier = Modifier.height(10.dp))
                 }
                 Spacer(modifier = Modifier.height(10.dp))
-                ReusableTextView(
+                ReusableTextViewes(
                     text = stringResource(Res.string.family_econonic_profile)
                 )
                 Spacer(modifier = Modifier.height(20.dp))
@@ -962,7 +971,7 @@ fun PersonalDetailsScreen(
                     }
                 }
                 Spacer(modifier = Modifier.height(20.dp))
-                ReusableTextView(
+                ReusableTextViewes(
                     text = stringResource(Res.string.your_monthly_expenditure)
                 )
                 Spacer(modifier = Modifier.height(20.dp))
@@ -1071,12 +1080,17 @@ fun PersonalDetailsScreen(
                         )
                 }
                 Spacer(modifier = Modifier.height(10.dp))
+                ReusableTextViewes(
+                    text = stringResource(Res.string.mfi_details)
+                )
+                Spacer(modifier = Modifier.height(10.dp))
                 Row(
                     modifier = Modifier
                         .fillMaxWidth(),
                     horizontalArrangement = Arrangement.Start,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
+
                     FormFieldCompact(
                         label = stringResource(Res.string.mfi_bank_name),
                         value = viewModel.mfiBankExpense,
@@ -1172,10 +1186,11 @@ fun PersonalDetailsScreen(
                     verticalAlignment = Alignment.CenterVertically
                 )
                 {
-                    ReusableTextView(
+                    ReusableTextViewes(
                         text = stringResource(Res.string.movable_assets),
                         modifier = Modifier.weight(1f)
                     )
+
 
                     // Right FAB
                     FloatingActionButton(

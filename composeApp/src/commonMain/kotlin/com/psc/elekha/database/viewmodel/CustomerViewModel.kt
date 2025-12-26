@@ -124,6 +124,75 @@ class CustomerViewModel(private val customerRepository: CustomerRepository) : Vi
     }
 
 
+    fun updateMyKyc(
+        // CKYC
+        CKYC_Aadhar_Name: String?,
+        CKYC_UID: String?,
+        CKYC_UID_Image: String?,
+        CKYC_ElectricityBill: String?,
+        CKYC_ElectricityBill_Image: String?,
+        CKYC_ElectricityBill_Name: String?,
+        KElectricNumber: String?,
+        CKYC_VoterCard: String?,
+        CKYC_VoterCard_Image: String?,
+        CKYC_VoterId_Name: String?,
+
+        // GKYC
+        GKYC_Aadhar_Name: String?,
+        GKYC_UID: String?,
+        GKYC_UID_Image: String?,
+        GKYC_UID_Image2: String?,
+        GKYC_ElectricityBill: String?,
+        GKYC_ElectricityBill_Image: String?,
+        GurantorKElectricNumber: String?,
+        GKYC_VoterCard: String?,
+        GKYC_VoterCard_Image: String?,
+        GKYC_VoterId_Name: String?,
+        GKYC_PANCard: String?,
+        GKYC_PANCard_Image: String?,
+        GKYC_Pancard_Name: String?,
+
+        // audit
+        UpdatedBy: String,
+        UpdatedOn: String,
+        GUID: String
+    ) {
+        viewModelScope.launch {
+            customerRepository.updateKyc(
+                CKYC_Aadhar_Name,
+                CKYC_UID,
+                CKYC_UID_Image,
+                CKYC_ElectricityBill,
+                CKYC_ElectricityBill_Image,
+                CKYC_ElectricityBill_Name,
+                KElectricNumber,
+                CKYC_VoterCard,
+                CKYC_VoterCard_Image,
+                CKYC_VoterId_Name,
+
+                GKYC_Aadhar_Name,
+                GKYC_UID,
+                GKYC_UID_Image,
+                GKYC_UID_Image2,
+                GKYC_ElectricityBill,
+                GKYC_ElectricityBill_Image,
+                GurantorKElectricNumber,
+                GKYC_VoterCard,
+                GKYC_VoterCard_Image,
+                GKYC_VoterId_Name,
+                GKYC_PANCard,
+                GKYC_PANCard_Image,
+                GKYC_Pancard_Name,
+
+                UpdatedBy,
+                UpdatedOn,
+                GUID
+            )
+
+            // optional refresh
+            loadCustomers()
+        }
+    }
 
     fun searchCustomerByName(search: String) {
         viewModelScope.launch {

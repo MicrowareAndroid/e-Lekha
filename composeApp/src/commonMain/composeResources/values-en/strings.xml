@@ -138,7 +138,7 @@
     <string name="customer_details">Customer Details</string>
     <string name="customer_image">Customer image</string>
     <string name="guarantor_image">Guarantor image</string>
-    <string name="customer_bank_details">Enter Account Details</string>
+    <string name="customer_bank_details">Account Details</string>
     <string name="customer_name_in_bank_dairy">Name on account</string>
     <string name="bank_account_number">Account no.</string>
     <string name="bank_name">Bank name</string>
@@ -285,5 +285,14 @@
     <string name="pls_select_bank_name">Please Select Bank Name</string>
     <string name="pls_select_branch_name">Please Select Branch Name</string>
     <string name="data_updated_successfully">Data Updated SuccessFully</string>
+    <string name="address">Address</string>
+    <string name="mfi_details">MFI Details</string>
+    <string name="loan_details">Loan Details</string>
+    <string name="emi_no">EMI No. </string>
+    <string name="loan">Loan </string>
+    <string name="disburse_date">Disburse Date </string>
+    <string name="pre_closure_amt">Pre closure amount </string>
+    <string name="total_due">Total Due</string>
+    <string name="payment_details">Payment Details</string>
 
 </resources>

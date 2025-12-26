@@ -49,7 +49,26 @@ class KycDetailViewModel(
     var panNumber by mutableStateOf("")
     var panFrontImagePath by mutableStateOf("")
     var nameOnPan by mutableStateOf("")
+    var gAadharNo by mutableStateOf("")
+    var gAadharFrontPath by mutableStateOf("")
+    var gAadharBackPath by mutableStateOf("")
+    var gAadharName by mutableStateOf("")
 
+     // -------- GKYC Electricity --------
+     var gBillName by mutableStateOf("")
+     var gAccountNumber by mutableStateOf("")
+     var gKNumber by mutableStateOf("")
+     var gEbImagePath by mutableStateOf("")
+
+     // -------- GKYC Voter --------
+     var gVoterNo by mutableStateOf("")
+     var gVoterName by mutableStateOf("")
+     var gVoterImagePath by mutableStateOf("")
+
+     // -------- GKYC PAN --------
+     var gPanNumber by mutableStateOf("")
+     var gPanName by mutableStateOf("")
+     var gPanImagePath by mutableStateOf("")
 
 }
 
@@ -103,6 +122,92 @@ class KycDetailViewModel(
  val focusRequesterElectricityRelation2 = FocusRequester()*/
 
 
+fun updateKyc(onSuccess: () -> Unit) {
+ viewModelScope.launch {
+  updateKycUpdate()
+  showSaveAlert = true
+  onSuccess()
+ }
+}
+
+ private suspend fun updateKycUpdate() {
+
+  val guid = returnStringValue(appPreferences.getString(AppSP.customerGuid))
+  if (guid.isEmpty()) return
+
+  customerViewModel.updateMyKyc(
+
+   CKYC_Aadhar_Name = nameonadhar,
+   CKYC_UID = aadharno,
+   CKYC_UID_Image = aadharnoIdProof,
+   CKYC_ElectricityBill = accountNumber,
+   CKYC_ElectricityBill_Image = ebImagePath,
+   CKYC_ElectricityBill_Name = billName,
+   KElectricNumber = kNumber,
+   CKYC_VoterCard = voterno,
+   CKYC_VoterCard_Image = voternoIdProof,
+   CKYC_VoterId_Name = nameonvid,
+   GKYC_Aadhar_Name = null,
+   GKYC_UID = null,
+   GKYC_UID_Image = null,
+   GKYC_UID_Image2 = null,
+   GKYC_ElectricityBill = null,
+   GKYC_ElectricityBill_Image = null,
+   GurantorKElectricNumber = null,
+   GKYC_VoterCard = null,
+   GKYC_VoterCard_Image = null,
+   GKYC_VoterId_Name = null,
+   GKYC_PANCard = panNumber,
+   GKYC_PANCard_Image = panFrontImagePath,
+   GKYC_Pancard_Name = nameOnPan,
+   UpdatedBy = returnStringValue(appPreferences.getString(AppSP.userId)),
+   UpdatedOn = currentDatetime(),
+   GUID = guid
+  )
+
+  saveMessage = getString(Res.string.data_saved_successfully)
+ }
+
+ fun setEbImage(path: String) {
+  ebImagePath = path
+ }
+ fun setAadhaarFrontImage(path: String) {
+  aadharnoIdProof = path
+ }
+
+ fun setAadhaarBackImage(path: String) {
+  adharbackproof = path
+ }
+
+ fun setVidFrontImage(path: String) {
+  voternoIdProof = path
+ }
+
+ fun setPanFrontImage(path: String) {
+  panFrontImagePath = path
+ }
+ fun setGAadhaarFront(path: String) {
+  gAadharFrontPath = path
+ }
+
+ fun setGAadhaarBack(path: String) {
+  gAadharBackPath = path
+ }
+
+ fun setGEbImage(path: String) {
+  gEbImagePath = path
+ }
+
+ fun setGVoterImage(path: String) {
+  gVoterImagePath = path
+ }
+
+ fun setGPanImage(path: String) {
+  gPanImagePath = path
+ }
+
+
+}
 
 /* fun loadSaveData(){
 

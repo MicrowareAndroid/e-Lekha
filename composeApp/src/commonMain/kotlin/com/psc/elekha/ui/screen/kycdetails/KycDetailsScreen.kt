@@ -45,6 +45,7 @@ import com.psc.elekha.utils.CustomAlertDialog
 
 import com.psc.elekha.utils.FormFieldCompact
 import com.psc.elekha.utils.ReusableTextView
+import com.psc.elekha.utils.ReusableTextViewes
 import com.psc.elekha.utils.loadImageFromPath
 import e_lekha.composeapp.generated.resources.Res
 import e_lekha.composeapp.generated.resources.aadhar_no
@@ -195,11 +196,9 @@ fun KycDetailsScreen(
                     }
                 }
                 Spacer(modifier = Modifier.height(20.dp))
-                ReusableTextView(
-                    text = stringResource(Res.string.enter_your_kyc_details)
-                )
-                Spacer(Modifier.height(12.dp))
-                ReusableTextView(
+//
+//                Spacer(Modifier.height(12.dp))
+                ReusableTextViewes(
                     text = stringResource(Res.string.customer_kyc)
                 )
 
@@ -608,7 +607,7 @@ fun IdProofSection(viewModel: KycDetailViewModel) {
     Column(
         modifier = Modifier.fillMaxWidth(),
     ) {
-        ReusableTextView(text = stringResource(Res.string.gurantor_kyc))
+        ReusableTextViewes(text = stringResource(Res.string.gurantor_kyc))
         Spacer(Modifier.height(10.dp))
 
         Row(
@@ -656,8 +655,12 @@ fun IdProofSection(viewModel: KycDetailViewModel) {
                 viewModel = viewModel,
                 idAadhaarFrontImage = idAadhaarFrontImage,
                 idAadhaarBackImage = idAadhaarBackImage,
-                onCameraClick = {
+                onFrontCameraClick = {
                     currentCameraTarget = "ID_AADHAAR_FRONT"
+                    openCamera = true
+                },
+                onBackCameraClick = {
+                    currentCameraTarget = "ID_AADHAAR_BACK"
                     openCamera = true
                 }
             )
@@ -782,7 +785,8 @@ fun IdProofAadhaarCardForm(
     viewModel: KycDetailViewModel,
     idAadhaarFrontImage: ImageBitmap?,
     idAadhaarBackImage: ImageBitmap?,
-    onCameraClick: () -> Unit
+    onFrontCameraClick: () -> Unit,
+    onBackCameraClick: () -> Unit
                            ) {
     Column {
         FormFieldCompact(
@@ -839,7 +843,7 @@ fun IdProofAadhaarCardForm(
                     contentDescription = stringResource(Res.string.front_image),
                     modifier = Modifier
                         .size(28.dp)
-                        .clickable { onCameraClick() }
+                        .clickable { onFrontCameraClick() }
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 ReusableTextView(text = stringResource(Res.string.front_image))
@@ -869,7 +873,7 @@ fun IdProofAadhaarCardForm(
                     contentDescription = stringResource(Res.string.front_image),
                     modifier = Modifier
                         .size(28.dp)
-                        .clickable { onCameraClick() }
+                        .clickable { onBackCameraClick() }
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 ReusableTextView(text = stringResource(Res.string.back_image))

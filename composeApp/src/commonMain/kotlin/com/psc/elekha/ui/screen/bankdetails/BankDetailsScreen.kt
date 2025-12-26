@@ -34,6 +34,7 @@ import com.psc.elekha.utils.CustomAlertDialog
 import com.psc.elekha.utils.FormFieldCompact
 import com.psc.elekha.utils.FormSpinner
 import com.psc.elekha.utils.ReusableTextView
+import com.psc.elekha.utils.ReusableTextViewes
 import com.psc.elekha.utils.StaticComboBoxData
 import com.psc.elekha.utils.toValueList
 import e_lekha.composeapp.generated.resources.Res
@@ -85,7 +86,7 @@ fun BankDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = {}) 
                     .padding(bottom = 15.dp)
             ) {
 
-                ReusableTextView(
+                ReusableTextViewes(
                     text = stringResource(Res.string.customer_bank_details)
                 )
 

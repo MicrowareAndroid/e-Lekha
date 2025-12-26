@@ -167,6 +167,7 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.resources.vectorResource
 import com.psc.elekha.model.NameParts
+import com.psc.elekha.ui.theme.greys
 
 @Composable
 fun ReusableTextView(
@@ -619,7 +620,7 @@ fun FormFieldCompact(
     isEnable: Boolean = true,
     isReadable: Boolean = false,
     labelColor: Color = black,
-    placeholderColor: Color = Color.Black,
+    placeholderColor: Color = greys,
     backgroundColor: Color = text_fiiled_color,
     borderColor: Color = boderColor,
     disabledBackgroundColor: Color = formborder,
@@ -2534,7 +2535,7 @@ fun ReusableTextViewGrayCard(
 @Composable
 fun ReusableTextViewBlackCard(
     text: String,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier.fillMaxWidth(),
     textColor: Color = Color.Black,
     fontSize: Int = 14,
     fontWeight: FontWeight = FontWeight.SemiBold,
@@ -2561,7 +2562,6 @@ fun ReusableTextViewBlackCard(
     Text(
         text = displayText,
         modifier = modifier
-            .fillMaxWidth()
             .background(color = backgroundColor, shape = RoundedCornerShape(cornerRadius))
             .padding(padding),
         style = style.copy(
