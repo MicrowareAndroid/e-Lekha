@@ -1,5 +1,6 @@
 import com.psc.elekha.database.dao.CustomerDao
 import com.psc.elekha.database.entity.CustomerEntity
+import com.psc.elekha.database.entity.MSTVillageEntity
 
 
 class CustomerRepository(private val customerDao: CustomerDao) {
@@ -173,7 +174,7 @@ class CustomerRepository(private val customerDao: CustomerDao) {
     }
 
     suspend fun updateCustomerBasicDetails(
-        guid: String?,
+        guid: String,
         firstName: String?,
         middleName: String?,
         lastName: String?,
@@ -182,17 +183,35 @@ class CustomerRepository(private val customerDao: CustomerDao) {
         religionId: Int?,
         contactNo: String?,
         husbandFName: String?,
-        husbandMName: String?,
+        hubandMName: String?,
         husbandLName: String?,
-        guarantorFName: String?,
+        gurantorFName: String?,
         gurantorMName: String?,
-        gurantorLName:String?,
+        gurantorLName: String?,
         age: Int?,
-        phoneNo: String?,
+        outStanding:Int?,
+        address: String?,
+
+        gurantorDOB: String?,
+        stateID: Int?,
+        districtId: Int?,
+        villageId: Int?,
+        guarantorID: Int?,
+        gurantorMobile: String?,
+        tehsil: String?,
+        landmark: String?,
+        maternalAddress: String?,
+        villageName: String?,
+        maternalMobile: String?,
+        maternalFather: String?,
+        dailyExpenses: Int?,
+        medicalExpense: Int?,
+        others: Int?,
+        totalMonthlyExpendture: Int?,
+        totalAnnual: Int?,
         dob: String?,
         updatedOn: String?,
         updatedBy: String?
-
     ) {
         customerDao.updateCustomerBasicDetails(
             guid,
@@ -204,17 +223,38 @@ class CustomerRepository(private val customerDao: CustomerDao) {
             religionId,
             contactNo,
             husbandFName,
-            husbandMName,
+            hubandMName,
             husbandLName,
-            guarantorFName,
+            gurantorFName,
             gurantorMName,
             gurantorLName,
             age,
-            phoneNo,
+            outStanding,
+            address,
+
+            gurantorDOB,
+            stateID,
+            districtId,
+            villageId,
+            guarantorID,
+            gurantorMobile,
+            tehsil,
+            landmark,
+            maternalAddress,
+            villageName,
+            maternalMobile,
+            maternalFather,
+            dailyExpenses,
+            medicalExpense,
+            others,
+            totalMonthlyExpendture,
+            totalAnnual,
             dob,
             updatedOn,
             updatedBy
         )
     }
+
+
 
 }

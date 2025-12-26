@@ -15,10 +15,12 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import com.psc.elekha.database.viewmodel.MSTComboBox_NViewModel
 import com.psc.elekha.ui.theme.lightGrey
 import com.psc.elekha.ui.theme.toolbar_color
 import com.psc.elekha.ui.theme.white
 import com.psc.elekha.utils.CommonSingleButtonsBottomString
+import com.psc.elekha.utils.FillDynamicSpinnerespt
 import com.psc.elekha.utils.FormFieldCompact
 import com.psc.elekha.utils.FormSpinner
 import com.psc.elekha.utils.ReusableTextView
@@ -39,13 +41,19 @@ fun CustomAlertFamilyDetails(
 ) {
     val viewModel = koinViewModel<FamilyMemberDetailViewModel>()
     // Reset function
-    fun resetForm() {
-        viewModel.memberFirstName = ""
-        viewModel.gender = ""
-        viewModel.age = ""
-        viewModel.relationId = ""
-        viewModel.educationId = ""
-        viewModel.occupationId = ""
+    var mstComboViewModel=koinViewModel<MSTComboBox_NViewModel>()
+    val genderList by mstComboViewModel.genderValue.collectAsState()
+    val occupationList by mstComboViewModel.occupationValue.collectAsState()
+    val relationList by mstComboViewModel.relationValue.collectAsState()
+    val educationList by mstComboViewModel.mstQualificationValue.collectAsState()
+
+    LaunchedEffect(Unit) {
+
+        mstComboViewModel.loadLookUpValues(lookupTypeFk = 31)
+        mstComboViewModel.loadLookUpValues(lookupTypeFk = 4)
+        mstComboViewModel.loadLookUpValues(lookupTypeFk = 6)
+        mstComboViewModel.loadLookUpValues(lookupTypeFk = 5)
+
     }
     Dialog(onDismissRequest = {}) {
         Box(
@@ -92,20 +100,27 @@ fun CustomAlertFamilyDetails(
                     // NAME FIELD
                     FormFieldCompact(
                         label = stringResource(Res.string.name),
-                        value = viewModel.memberFirstName,
+                        value = viewModel.memberName,
                         placeholder = stringResource(Res.string.type_here),
-                        onValueChange = { viewModel.memberFirstName = it }
+                        onValueChange = { viewModel.memberName = it }
                     )
 
                     Spacer(Modifier.height(12.dp))
 
-                    // GENDER SPINNER
-                    FormSpinner(
+                    FillDynamicSpinnerespt(
                         label = stringResource(Res.string.gender),
-                        options = StaticComboBoxData.gender.toValueList(),
+                        options = genderList,
                         selectedOption = viewModel.gender,
-                        onOptionSelected = { viewModel.gender = it }
+                        onOptionSelected = {viewModel.gender = it },
+                       /* focusRequester = viewModel.focusRequesterStateId,
+                        bringIntoViewRequester = viewModel.bringIntoViewRequesterStateId*/
+                        getOptionId = { it.ID },
+                        getOptionLabel = { it.Value.toString() },
+                        modifier = Modifier.fillMaxWidth()
                     )
+
+                    // GENDER SPINNER
+
 
                     Spacer(Modifier.height(12.dp))
 
@@ -124,13 +139,18 @@ fun CustomAlertFamilyDetails(
                             modifier = Modifier.weight(1f)
                         )
 
-                        FormSpinner(
+                        FillDynamicSpinnerespt(
                             label = stringResource(Res.string.relation),
-                            options = StaticComboBoxData.religionList.toValueList(),
+                            options = relationList,
                             selectedOption = viewModel.relationId,
-                            onOptionSelected = { viewModel.relationId = it },
+                            onOptionSelected = {viewModel.relationId = it },
+                            /* focusRequester = viewModel.focusRequesterStateId,
+                             bringIntoViewRequester = viewModel.bringIntoViewRequesterStateId*/
+                            getOptionId = { it.ID },
+                            getOptionLabel = { it.Value.toString() },
                             modifier = Modifier.weight(1f)
                         )
+
                     }
 
                     Spacer(Modifier.height(12.dp))
@@ -140,40 +160,50 @@ fun CustomAlertFamilyDetails(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.spacedBy(10.dp)
                     ) {
-                        FormSpinner(
+                        FillDynamicSpinnerespt(
                             label = stringResource(Res.string.education),
-                            options = StaticComboBoxData.educationList.toValueList(),
+                            options = educationList,
                             selectedOption = viewModel.educationId,
-                            onOptionSelected = { viewModel.educationId = it },
+                            onOptionSelected = {viewModel.educationId = it },
+                            /* focusRequester = viewModel.focusRequesterStateId,
+                             bringIntoViewRequester = viewModel.bringIntoViewRequesterStateId*/
+                            getOptionId = { it.ID },
+                            getOptionLabel = { it.Value.toString() },
                             modifier = Modifier.weight(1f)
                         )
 
-                        FormSpinner(
+                        FillDynamicSpinnerespt(
                             label = stringResource(Res.string.occupation),
-                            options = StaticComboBoxData.occupatin.toValueList(),
+                            options = educationList,
                             selectedOption = viewModel.occupationId,
-                            onOptionSelected = { viewModel.occupationId = it },
+                            onOptionSelected = {viewModel.occupationId = it },
+                            /* focusRequester = viewModel.focusRequesterStateId,
+                             bringIntoViewRequester = viewModel.bringIntoViewRequesterStateId*/
+                            getOptionId = { it.ID },
+                            getOptionLabel = { it.Value.toString() },
                             modifier = Modifier.weight(1f)
                         )
+
+
                     }
 
                    // Spacer(Modifier.height(24.dp)) //  Row ke bahar
                     Spacer(Modifier.height(10.dp))
                     FormFieldCompact(
                         label = stringResource(Res.string.monthly_income),
-                        value ="",
+                        value =viewModel.monthlyIncome,
                         placeholder = stringResource(Res.string.type_here),
-                        onValueChange = { viewModel.memberFirstName = it }
+                        onValueChange = { viewModel.monthlyIncome = it }
                     )
 
                     Spacer(Modifier.height(10.dp))
 
                     FormFieldCompact(
                         label = stringResource(Res.string.remarks),
-                        value ="",
-                        onValueChange = { ""},
+                        value =viewModel.remarks,
+                        onValueChange = { viewModel.remarks},
                         placeholder = stringResource(Res.string.type_here),
-                        maxLength = 10,
+
                         modifier = Modifier.fillMaxWidth(),
 
                         )
@@ -193,7 +223,7 @@ fun CustomAlertFamilyDetails(
                         )
                         CommonSingleButtonsBottomString(
                             onOkClick = {
-                                onSubmit()
+                                viewModel.saveData()
                             },
                             stringResource(Res.string.save),
                             modifier = Modifier.weight(1f),

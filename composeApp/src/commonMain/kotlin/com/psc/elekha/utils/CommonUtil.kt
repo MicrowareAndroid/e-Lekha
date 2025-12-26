@@ -69,6 +69,10 @@ fun returnStringValue(myString: String?): String {
         ?: ""
 }
 
+fun returnIntToString(value: Int?): String {
+    return if (value != null && value != 0) value.toString() else ""
+}
+
 fun returnJson(
     abc: Array<ArrayList<*>>,
     tableNames: Array<String>

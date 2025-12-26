@@ -2,6 +2,7 @@ package com.psc.elekha.database.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.psc.elekha.database.entity.CustomerEntity
 import com.psc.elekha.database.entity.CustomerExistingLoanDetailEntity
 import com.psc.elekha.database.repository.CustomerExistingLoanDetailRepository
 import kotlinx.coroutines.Dispatchers
@@ -29,7 +30,8 @@ class CustomerExistingLoanDetailViewModel(
 
     private val _uploadCount = MutableStateFlow<Int>(0)
     val uploadCount: StateFlow<Int> = _uploadCount
-
+    private val _customerByMFIGuid = MutableStateFlow<List<CustomerExistingLoanDetailEntity>>(emptyList())
+    val customerByMFIGuid: StateFlow<List<CustomerExistingLoanDetailEntity>> = _customerByMFIGuid
 
     // -------------------------------------------------
     // LOAD ALL LOANS BY GUID
@@ -165,5 +167,35 @@ class CustomerExistingLoanDetailViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             _uploadCount.value = repository.getUploadCount()
         }
+    }
+
+    fun updateLoan(
+        mfiGuid: String,
+        loanAmount: Int?,
+        loanPurposeId: Int?,
+        outStandingAmount: Int?,
+        memberName: String?,
+        emi: Int?,
+        bankName: String?,
+        remarks: String?,
+
+    ) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.updateLoan(
+                mfiGuid = mfiGuid,
+                loanAmount = loanAmount,
+                loanPurposeId = loanPurposeId,
+                outStandingAmount = outStandingAmount,
+                memberName = memberName,
+                emi = emi,
+                bankName = bankName,
+                remarks = remarks
+            )
+
+        }
+    }
+
+    suspend fun getLoanCustomerDetailGuid(mfiGuid: String): List<CustomerExistingLoanDetailEntity> {
+        return repository.getLoanCustomerByGuid(mfiGuid)
     }
 }

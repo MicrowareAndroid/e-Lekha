@@ -7,6 +7,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.focus.FocusRequester
 import androidx.lifecycle.viewModelScope
 import com.psc.elekha.database.entity.CustomerEntity
+import com.psc.elekha.database.entity.CustomerExistingLoanDetailEntity
+import com.psc.elekha.database.viewmodel.CustomerExistingLoanDetailViewModel
 import com.psc.elekha.database.viewmodel.CustomerViewModel
 import com.psc.elekha.model.ValidationModelContorl
 import com.psc.elekha.ui.screen.base.BaseValidationViewModel
@@ -17,7 +19,9 @@ import com.psc.elekha.utils.convertDateFormatDDMMYYYY
 import com.psc.elekha.utils.convertDateFormatYYYYMMDD
 import com.psc.elekha.utils.currentDatetime
 import com.psc.elekha.utils.generateRandomId
+
 import com.psc.elekha.utils.parseNameDynamic
+import com.psc.elekha.utils.returnIntToString
 import com.psc.elekha.utils.returnIntegerValue
 import com.psc.elekha.utils.returnStringValue
 import e_lekha.composeapp.generated.resources.Res
@@ -41,6 +45,7 @@ import e_lekha.composeapp.generated.resources.personal_loan_enter
 import e_lekha.composeapp.generated.resources.personal_marital
 import e_lekha.composeapp.generated.resources.personal_maternal_address
 import e_lekha.composeapp.generated.resources.personal_maternal_mobile
+import e_lekha.composeapp.generated.resources.personal_maternal_village
 import e_lekha.composeapp.generated.resources.personal_medical
 import e_lekha.composeapp.generated.resources.personal_mfi
 import e_lekha.composeapp.generated.resources.personal_mobile_number
@@ -63,7 +68,8 @@ import org.jetbrains.compose.resources.getString
 
 class PersonalDetailViewModel(
     val appPreferences: AppPreferences,
-    val customerViewModel: CustomerViewModel
+    val customerViewModel: CustomerViewModel,
+    val customerExistingLoanDetailViewModel: CustomerExistingLoanDetailViewModel
 ) :
     BaseValidationViewModel() {
     var customerName by mutableStateOf("")
@@ -108,6 +114,8 @@ class PersonalDetailViewModel(
     var emiExpense by mutableStateOf("")
     var fullNameExpense by mutableStateOf("")
     var remarksExpense by mutableStateOf("")
+
+
     var name by mutableStateOf("")
 
 
@@ -148,6 +156,7 @@ class PersonalDetailViewModel(
     val bringIntoViewRequesterEmiExpense = BringIntoViewRequester()
 
     val bringIntoViewRequesterMaternalAddress = BringIntoViewRequester()
+    val bringIntoViewRequesterMaternalVillage = BringIntoViewRequester()
     val focusRequesterMovableAssetId = FocusRequester()
     val focusRequesterVehicleNo = FocusRequester()
 
@@ -158,6 +167,7 @@ class PersonalDetailViewModel(
     val focusRequesterVillageNames = FocusRequester()
     val focusRequesterStatesId = FocusRequester()
     val focusRequesterMaternalAddress = FocusRequester()
+    val focusRequesterMaternalVillage = FocusRequester()
     val focusRequesterMaritalStatusId = FocusRequester()
     val focusRequesterEducationId = FocusRequester()
     val focusRequesterReligionId = FocusRequester()
@@ -190,15 +200,16 @@ class PersonalDetailViewModel(
     val focusRequesterEmiExpense = FocusRequester()
 
     suspend fun savePersonalDetail() {
-        val guid = appPreferences.getString(AppSP.customerGuid)
+
+        var customerGuid = returnStringValue(appPreferences.getString(AppSP.customerGuid))
         val name = parseNameDynamic(returnStringValue(customerName))
         val husName = parseNameDynamic(returnStringValue(husbandName))
         val gurName = parseNameDynamic(returnStringValue(gurantorName))
 
-        if (returnStringValue(guid).isEmpty()) {
-            val newguid = generateRandomId()
+        if (customerGuid.isEmpty()) {
+            customerGuid = generateRandomId()
             val entity = CustomerEntity(
-                newguid,
+                customerGuid,
                 "",
                 0,
                 "",
@@ -416,7 +427,7 @@ class PersonalDetailViewModel(
                 "",
                 convertDateFormatYYYYMMDD(returnStringValue(appPreferences.getString(AppSP.gurantorDateOfBirth))),
                 "",
-                remarksExpense,
+                "",
                 1,
                 "",
                 0,
@@ -439,7 +450,7 @@ class PersonalDetailViewModel(
                 maternalAddress,
                 maternalMobileNo,
                 materalStatesId,
-                "",
+                villageNames,
                 fatherName,
                 returnIntegerValue(dailyExpense),
                 returnIntegerValue(medicalExpense),
@@ -450,13 +461,12 @@ class PersonalDetailViewModel(
 
             )
             customerViewModel.insertCustomer(entity)
-            appPreferences.putString(AppSP.customerGuid, newguid)
+            appPreferences.putString(AppSP.customerGuid, customerGuid)
             saveMessage = getString(Res.string.data_saved_successfully)
             showSaveAlert = true
-        }
-        else {
+        } else {
             customerViewModel.updateCustomerBasicDetails(
-                guid,
+                customerGuid,
                 name.firstName,
                 name.middleName,
                 name.lastName,
@@ -467,11 +477,29 @@ class PersonalDetailViewModel(
                 husName.firstName,
                 husName.middleName,
                 husName.lastName,
-                calculateAgeFromDobKMP(dateOfBirth),
                 gurName.firstName,
                 gurName.middleName,
                 gurName.lastName,
+                calculateAgeFromDobKMP(dateOfBirth),
+                returnIntegerValue(outStandingExpense),
+                fulladdresss,
+                gurantordateOfBirth,
+                stateId,
+                districtId,
+                villageId,
+                religionId,
                 gurantormobileNumber,
+                tehsilName,
+                landMark,
+                maternalAddress,
+                villageNames,
+                maternalMobileNo,
+                fatherName,
+                returnIntegerValue(dailyExpense),
+                returnIntegerValue(medicalExpense),
+                returnIntegerValue(othersExpense),
+                returnIntegerValue(totalMonthlyExpense),
+                returnIntegerValue(annualExpense),
                 dateOfBirth,
                 appPreferences.getString(AppSP.userId),
                 currentDatetime()
@@ -481,10 +509,56 @@ class PersonalDetailViewModel(
 
 
         }
+        saveLoanDetail(customerGuid)
     }
+
+    fun saveLoanDetail(customerGuid: String) {
+
+        val savedMfiGuid = returnStringValue(appPreferences.getString(AppSP.mfiGuid))
+
+        if (savedMfiGuid.isEmpty()) {
+
+            val newMfiGuid = generateRandomId()
+
+            val entity = CustomerExistingLoanDetailEntity(
+                newMfiGuid,
+                customerGuid,
+                0,
+                returnIntegerValue(loanAmountExpense),
+                purposeId,
+                0,
+                returnIntegerValue(outStandingExpense),
+                0,
+                fullNameExpense,
+                returnIntegerValue(emiExpense),
+                1,
+                0,
+                mfiBankExpense,
+                remarksExpense
+            )
+
+            customerExistingLoanDetailViewModel.insertCustomerExistingLoan(entity)
+            appPreferences.putString(AppSP.mfiGuid, newMfiGuid)
+
+        } else {
+
+            customerExistingLoanDetailViewModel.updateLoan(
+                savedMfiGuid,
+                returnIntegerValue(loanAmountExpense),
+                purposeId,
+                returnIntegerValue(outStandingExpense),
+                fullNameExpense,
+                returnIntegerValue(emiExpense),
+                mfiBankExpense,
+                remarksExpense
+            )
+        }
+    }
+
 
     fun loadSavedData() {
         viewModelScope.launch {
+            val mfiLoanGuid = returnStringValue(appPreferences.getString(AppSP.mfiGuid))
 
             val savedGuid = returnStringValue(appPreferences.getString(AppSP.customerGuid))
             if (savedGuid.isNotEmpty()) {
@@ -495,23 +569,53 @@ class PersonalDetailViewModel(
                     val data = listData[0]
 
                     customerName = returnStringValue(data.FirstName)
+
                     maritalStatusId = returnIntegerValue(data.MaritalStatusID?.toString())
                     educationId = returnIntegerValue(data.EducationID?.toString())
                     religionId = returnIntegerValue(data.ReligionID?.toString())
-                    mobileNumber = returnStringValue(listData[0].ContactNo)
-                    husbandName = returnStringValue(listData[0].HusbandFName)
-                    gurantorName = returnStringValue(listData[0].GurantorFName)
-                    dateOfBirth = convertDateFormatDDMMYYYY(returnStringValue(listData[0].DOB))
-                    //  relationId = returnIntegerValue(data.Re.toString())
+                    mobileNumber = returnStringValue(data.ContactNo)
+                    husbandName = returnStringValue(data.HusbandFName)
+                    gurantorName = returnStringValue(data.GurantorFName)
+                    dateOfBirth = convertDateFormatDDMMYYYY(returnStringValue(data.DOB))
+                    relationId = returnIntegerValue(data.GuarantorID?.toString())
                     remarksExpense = returnStringValue(data.Remarks)
-                    //  gurantormobileNumber = returnIntegerValue(data..toString())
-                    //districtId = returnIntegerValue(data.DistrictId.toString())
-                    villageId =returnIntegerValue(data.VillageID?.toString())
-
-
-                    // tehsilName = returnStringValue(data.TehsilName)
-                    // landMark = returnStringValue(data.Landmark)
+                    gurantordateOfBirth = returnStringValue(data.GuarantorDOB)
+                    fulladdresss = returnStringValue(data.Address)
+                    gurantormobileNumber = returnStringValue(data.GurarantorMobileNo)
+                    stateId = returnIntegerValue(data.StateID?.toString())
+                    districtId = returnIntegerValue(data.DistrictID?.toString())
+                    villageId = returnIntegerValue(data.VillageID?.toString())
+                    tehsilName = returnStringValue(data.Tehsil)
+                    landMark = returnStringValue(data.Landmark)
                     pinCode = returnStringValue(data.PinCode)
+                    maternalAddress = returnStringValue(data.MaternalAddress)
+                    villageNames = returnStringValue(data.MaternalVillageName)
+                    maternalMobileNo = returnStringValue(data.MaternalMobileNo)
+                    fatherName = returnStringValue(data.MaternalFatherName)
+                    dailyExpense = returnIntToString(data.DailyExpense)
+                    educationExpense = returnIntToString(data.EducationExpense)
+                    medicalExpense = returnIntToString(data.MedicalExpense)
+                    annualExpense = returnIntToString(data.TotalAnnualExpenditure)
+                    totalMonthlyExpense = returnIntToString(data.TotalMonthlyExpenditure)
+                    othersExpense = returnIntToString(data.OtherExpense)
+                    outStandingExpense = returnIntToString(data.LoanMFIOutstandingCreditEnquiry)
+
+                }
+            }
+            if (mfiLoanGuid.isNotEmpty()) {
+                var listMfiData =
+                    customerExistingLoanDetailViewModel.getLoanCustomerDetailGuid(mfiLoanGuid)
+                if (listMfiData.isNotEmpty()) {
+                    val dataLoan = listMfiData[0]
+                    mfiBankExpense = returnStringValue(dataLoan.MFIBankAccountName)
+                    loanAmountExpense = returnIntToString(dataLoan.LoanAmount)
+                    purposeId = returnIntegerValue(dataLoan.LoanPurposeID?.toString())
+                    outStandingExpense = returnIntToString(dataLoan.OutStandingAmount)
+                    emiExpense = returnIntToString(dataLoan.EMI)
+                    fullNameExpense = returnStringValue(dataLoan.MemberName)
+                    remarksExpense = returnStringValue(dataLoan.Remarks)
+
+
                 }
             }
         }
@@ -668,7 +772,7 @@ class PersonalDetailViewModel(
                 )
             }
 
-            returnIntegerValue(villageId.toString()) == 0 -> {
+            /*returnIntegerValue(villageId.toString()) == 0 -> {
                 val nameLabel = getString(Res.string.personal_village)
                 ValidationModelContorl(
                     isValid = false,
@@ -676,7 +780,7 @@ class PersonalDetailViewModel(
                     focusRequester = focusRequesterVillageName,
                     bringIntoViewRequester = bringIntoViewRequesterVillageName
                 )
-            }
+            }*/
 
             returnStringValue(tehsilName).isBlank() -> {
                 val nameLabel = getString(Res.string.personal_tehsil)
@@ -715,6 +819,16 @@ class PersonalDetailViewModel(
                     errorMessage = nameLabel,
                     focusRequester = focusRequesterMaternalAddress,
                     bringIntoViewRequester = bringIntoViewRequesterMaternalAddress
+                )
+            }
+
+            returnStringValue(villageNames).isBlank() -> {
+                val nameLabel = getString(Res.string.personal_maternal_village)
+                ValidationModelContorl(
+                    isValid = false,
+                    errorMessage = nameLabel,
+                    focusRequester = focusRequesterMaternalVillage,
+                    bringIntoViewRequester = bringIntoViewRequesterMaternalVillage
                 )
             }
 

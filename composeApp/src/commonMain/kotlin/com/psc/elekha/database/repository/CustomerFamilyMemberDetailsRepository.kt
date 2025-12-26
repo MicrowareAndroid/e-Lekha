@@ -1,6 +1,8 @@
 package com.psc.elekha.database.repository
 
 import com.psc.elekha.database.dao.CustomerFamilyMemberDetailsDao
+import com.psc.elekha.database.entity.CustomerEntity
+import com.psc.elekha.database.entity.CustomerExistingLoanDetailEntity
 import com.psc.elekha.database.entity.CustomerFamilyMemberDetailsEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
@@ -28,14 +30,14 @@ class CustomerFamilyMemberDetailsRepository(
     //  UPDATE — repository only delegates
     suspend fun updateCustomerFamilyMemberByGuid(
         guid: String,
-        firstName: String,
-        middleName: String,
-        lastName: String,
-        relationId: Int,
-        age: Int,
-        gender: String,
-        educationId: Int,
-        occupationId: Int
+        firstName: String?,
+        middleName: String?,
+        lastName: String?,
+        relationId: Int?,
+        age: Int?,
+        gender: String?,
+        educationId: Int?,
+        occupationId: Int?
     ) {
         dao.updateCustomerFamilyMemberByGuid(
             guid,
@@ -49,5 +51,9 @@ class CustomerFamilyMemberDetailsRepository(
             occupationId
         )
     }
+    suspend fun getCustomerByGuid(guId: String): List<CustomerFamilyMemberDetailsEntity> {
+        return dao.getCustomerByGuid(guId)
+    }
+
 }
 

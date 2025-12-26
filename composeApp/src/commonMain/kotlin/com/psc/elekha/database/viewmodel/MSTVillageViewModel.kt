@@ -96,4 +96,11 @@ class MSTVillageViewModel(
         }
     }
 
+    fun loadVillagesByUsername(username: String) {
+        viewModelScope.launch {
+            val result = repository.getVillagesByUsername(username)
+            _villageList.value = result
+        }
+    }
+
 }

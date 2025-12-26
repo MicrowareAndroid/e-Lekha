@@ -13,5 +13,6 @@ object AppSP {
     var branchId = "branchId"
 
     var familyGuid="familyGuid"
+    var mfiGuid="mfiGuid"
 
 }

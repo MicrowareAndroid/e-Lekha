@@ -1,6 +1,7 @@
 package com.psc.elekha.database.dao
 
 import androidx.room.*
+import com.psc.elekha.database.entity.CustomerEntity
 import com.psc.elekha.database.entity.CustomerExistingLoanDetailEntity
 
 @Dao
@@ -52,4 +53,33 @@ interface CustomerExistingLoanDetailDao {
 
     @Query("Select Count(*) from CustomerExistingLoanDetail where IsDeleted=0 and IsEdited=1")
     suspend fun getAllCustomerExistingLoanUploadCount(): Int
+
+
+    @Query("""
+        UPDATE CustomerExistingLoanDetail
+        SET
+           
+            LoanAmount = :loanAmount,
+            LoanPurposeID = :loanPurposeId,
+            OutStandingAmount = :outStandingAmount,
+            MemberName = :memberName,
+            EMI = :emi,
+            MFIBankAccountName = :bankName,
+            Remarks = :remarks
+            
+        WHERE MFIGUID = :mfiGuid
+    """)
+    suspend fun updateLoan(
+        mfiGuid: String,
+        loanAmount: Int?,
+        loanPurposeId: Int?,
+        outStandingAmount: Int?,
+        memberName: String?,
+        emi: Int?,
+        bankName: String?,
+        remarks: String?
+    )
+
+    @Query(" SELECT * FROM CustomerExistingLoanDetail WHERE  MFIGUID =:mfiGuid")
+    suspend fun getLoanCustomerByGuid(mfiGuid: String): List<CustomerExistingLoanDetailEntity>
 }

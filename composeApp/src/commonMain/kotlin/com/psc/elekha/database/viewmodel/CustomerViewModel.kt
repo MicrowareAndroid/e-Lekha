@@ -70,6 +70,7 @@ class CustomerViewModel(private val customerRepository: CustomerRepository) : Vi
         guarantorImage: String,
         dob: String,
         age: Int,
+
         villageId: Int,
         pincode: String,
         guarantorAge: Int,
@@ -101,6 +102,7 @@ class CustomerViewModel(private val customerRepository: CustomerRepository) : Vi
                 guarantorImage,
                 dob,
                 age,
+
                 villageId,
                 pincode,
                 guarantorAge,
@@ -222,7 +224,7 @@ class CustomerViewModel(private val customerRepository: CustomerRepository) : Vi
     }
 
     fun updateCustomerBasicDetails(
-        guid: String?,
+        guid: String,
         firstName: String?,
         middleName: String?,
         lastName: String?,
@@ -231,18 +233,35 @@ class CustomerViewModel(private val customerRepository: CustomerRepository) : Vi
         religionId: Int?,
         contactNo: String?,
         husbandFName: String?,
-        husbandMName: String?,
+        hubandMName: String?,
         husbandLName: String?,
+        gurantorFName: String?,
+        gurantorMName: String?,
+        gurantorLName: String?,
         age: Int?,
-        guarantorFName: String?,
-        guarantorMName: String?,
-        guarantorLName: String?,
-        phoneNo: String?,
+        outStanding:Int,
+        address: String?,
+
+        gurantorDOB: String?,
+        stateID: Int?,
+        districtId: Int?,
+        villageId: Int?,
+        guarantorID: Int?,
+        gurantorMobile: String?,
+        tehsil: String?,
+        landmark: String?,
+        maternalAddress: String?,
+        villageName: String?,
+        maternalMobile: String?,
+        maternalFather: String?,
+        dailyExpenses: Int?,
+        medicalExpense: Int?,
+        others: Int?,
+        totalMonthlyExpendture: Int?,
+        totalAnnual: Int?,
         dob: String?,
-        UpdatedOn: String?,
-        UpdatedBy: String?
-
-
+        updatedOn: String?,
+        updatedBy: String?
     ) {
         viewModelScope.launch {
             customerRepository.updateCustomerBasicDetails(
@@ -255,23 +274,40 @@ class CustomerViewModel(private val customerRepository: CustomerRepository) : Vi
                 religionId,
                 contactNo,
                 husbandFName,
-                husbandMName,
+                hubandMName,
                 husbandLName,
-                guarantorFName,
-                guarantorMName,
-                guarantorLName,
+                gurantorFName,
+                gurantorMName,
+                gurantorLName,
                 age,
-                phoneNo,
+                outStanding,
+                address,
+
+                gurantorDOB,
+                stateID,
+                districtId,
+                villageId,
+                guarantorID,
+                gurantorMobile,
+                tehsil,
+                landmark,
+                maternalAddress,
+                villageName,
+                maternalMobile,
+                maternalFather,
+                dailyExpenses,
+                medicalExpense,
+                others,
+                totalMonthlyExpendture,
+                totalAnnual,
                 dob,
-                UpdatedOn,
-                UpdatedBy
+                updatedOn,
+                updatedBy
             )
-
-            // optional: list refresh
         }
-
     }
 }
+
 
 
 

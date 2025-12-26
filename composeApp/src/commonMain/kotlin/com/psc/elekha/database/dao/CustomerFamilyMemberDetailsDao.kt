@@ -1,6 +1,7 @@
 package com.psc.elekha.database.dao
 
 import androidx.room.*
+import com.psc.elekha.database.entity.CustomerEntity
 import com.psc.elekha.database.entity.CustomerFamilyMemberDetailsEntity
 
 @Dao
@@ -33,16 +34,17 @@ interface CustomerFamilyMemberDetailsDao {
     """)
     suspend fun updateCustomerFamilyMemberByGuid(
         guid: String,
-        firstName: String,
-        middleName: String,
-        lastName: String,
-        relationId: Int,
-        age: Int,
-        gender: String,
-        educationId: Int,
-        occupationId: Int
+        firstName: String?,
+        middleName: String?,
+        lastName: String?,
+        relationId: Int?,
+        age: Int?,
+        gender: String?,
+        educationId: Int?,
+        occupationId: Int?
     )
 
-
+    @Query(" SELECT * FROM CustomerFamilyMemberDetails WHERE GUID =:guId")
+    suspend fun getCustomerByGuid(guId: String): List<CustomerFamilyMemberDetailsEntity>
 
 }
