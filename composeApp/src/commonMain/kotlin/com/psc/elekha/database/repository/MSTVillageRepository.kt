@@ -55,4 +55,8 @@ class MSTVillageRepository(
     suspend fun getAllVillageBybrachID():List<MSTVillageEntity> {
         return villageDao.getAllVillageBybranchId()
     }
+
+    suspend fun getVillagesByUsername(username: String): List<MSTVillageEntity> {
+        return villageDao.getVillagesByUsername(username)
+    }
 }

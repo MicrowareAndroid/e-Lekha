@@ -78,4 +78,30 @@ class CustomerExistingLoanDetailRepository(
     suspend fun getUploadCount(): Int {
         return customerExistingLoanDetailDao.getAllCustomerExistingLoanUploadCount()
     }
+
+    suspend fun updateLoan(
+        mfiGuid: String,
+        loanAmount: Int?,
+        loanPurposeId: Int?,
+        outStandingAmount: Int?,
+        memberName: String?,
+        emi: Int?,
+        bankName: String?,
+        remarks: String?
+    ) {
+        customerExistingLoanDetailDao.updateLoan(
+            mfiGuid = mfiGuid,
+            loanAmount = loanAmount,
+            loanPurposeId = loanPurposeId,
+            outStandingAmount = outStandingAmount,
+            memberName = memberName,
+            emi = emi,
+            bankName = bankName,
+            remarks = remarks
+        )
+    }
+
+    suspend fun getLoanCustomerByGuid(mfiGuid: String): List<CustomerExistingLoanDetailEntity> {
+        return customerExistingLoanDetailDao.getLoanCustomerByGuid(mfiGuid)
+    }
 }

@@ -37,4 +37,15 @@ interface MSTVillageDao {
     @Query("SELECT * FROM MSTVillage")
     suspend fun  getAllVillageBybranchId():List<MSTVillageEntity>
 
+    @Query("""
+        SELECT * FROM MSTVillage 
+        WHERE BranchID IN (
+            SELECT BranchID FROM UserBranch 
+            WHERE UserId IN (
+                SELECT UserId FROM Users WHERE Username = :username
+            )
+        )
+    """)
+    suspend fun getVillagesByUsername(username: String): List<MSTVillageEntity>
+
 }

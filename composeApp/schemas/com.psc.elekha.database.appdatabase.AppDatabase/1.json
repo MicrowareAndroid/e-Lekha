@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "d098c4451a26e289f86c1cdbd457eec2",
+    "identityHash": "a8e15e8fe487d92e200929172bf30e66",
     "entities": [
       {
         "tableName": "CustomerStatus",
@@ -2309,7 +2309,7 @@
       },
       {
         "tableName": "CustomerFamilyMemberDetails",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`GUID` TEXT NOT NULL, `MemberID` INTEGER, `MFirstName` TEXT, `MMiddleName` TEXT, `MLastName` TEXT, `RelationID` INTEGER, `Age` INTEGER, `IsSchooling` INTEGER, `EducationID` INTEGER, `IsEarning` INTEGER, `OccupationID` INTEGER, `MonthlyIncomeID` INTEGER, `Gender` TEXT, `IsOld` INTEGER, `MonthlyIncome` INTEGER, `IsUpload` INTEGER, PRIMARY KEY(`GUID`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`GUID` TEXT NOT NULL, `MemberID` INTEGER, `MFirstName` TEXT, `MMiddleName` TEXT, `MLastName` TEXT, `RelationID` INTEGER, `Age` INTEGER, `IsSchooling` INTEGER, `EducationID` INTEGER, `IsEarning` INTEGER, `OccupationID` INTEGER, `MonthlyIncomeID` INTEGER, `Gender` TEXT, `IsOld` INTEGER, `MonthlyIncome` INTEGER, `IsUpload` INTEGER, `Remarks` TEXT, PRIMARY KEY(`GUID`))",
         "fields": [
           {
             "fieldPath": "GUID",
@@ -2391,6 +2391,11 @@
             "fieldPath": "IsUpload",
             "columnName": "IsUpload",
             "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "Remarks",
+            "columnName": "Remarks",
+            "affinity": "TEXT"
           }
         ],
         "primaryKey": {
@@ -4502,7 +4507,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd098c4451a26e289f86c1cdbd457eec2')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a8e15e8fe487d92e200929172bf30e66')"
     ]
   }
 }

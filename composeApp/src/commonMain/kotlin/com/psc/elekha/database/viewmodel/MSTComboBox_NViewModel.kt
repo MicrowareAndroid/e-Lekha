@@ -118,6 +118,11 @@ class MSTComboBox_NViewModel(
     private val _bankNameLocation = MutableStateFlow<List<MSTComboBox_NEntity>>(emptyList())
     val bankNameLocation: StateFlow<List<MSTComboBox_NEntity>> = _bankNameLocation
 
+    private val _assetVehicle = MutableStateFlow<List<MSTComboBox_NEntity>>(emptyList())
+    val assetVehicle: StateFlow<List<MSTComboBox_NEntity>> = _assetVehicle
+
+    private val _purposeValue = MutableStateFlow<List<MSTComboBox_NEntity>>(emptyList())
+    val purposeValue: StateFlow<List<MSTComboBox_NEntity>> = _purposeValue
 
 
     fun loadLookUpValues(lookupTypeFk:Int) {
@@ -128,8 +133,9 @@ class MSTComboBox_NViewModel(
                 2-> _religionValue.value = result
                 3->_casteValue.value=result
                 4-> _mstQualificationValue.value = result
+                6->_relationValue.value=result
                 5-> _occupationValue.value = result
-                7-> _genderValue.value = result
+                7-> _purposeValue.value = result
                 8->_salaryRangeValue.value=result
                 10-> _rangeValue.value = result
                 11-> _organizationValue.value = result
@@ -150,6 +156,8 @@ class MSTComboBox_NViewModel(
                 28-> _processStatusValue.value= result
                 29-> _loanStatusValue.value= result
                 30-> _loanActiveStatusValue.value=result
+                31->_genderValue.value=result
+                32-> _assetVehicle.value=result
 
             }
         }

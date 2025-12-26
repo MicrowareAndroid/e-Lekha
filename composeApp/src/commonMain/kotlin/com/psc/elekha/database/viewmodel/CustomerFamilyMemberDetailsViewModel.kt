@@ -2,6 +2,7 @@ package com.psc.elekha.database.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.psc.elekha.database.entity.CustomerEntity
 import com.psc.elekha.database.entity.CustomerFamilyMemberDetailsEntity
 import com.psc.elekha.database.repository.CustomerFamilyMemberDetailsRepository
 import kotlinx.coroutines.Dispatchers
@@ -41,14 +42,14 @@ class CustomerFamilyMemberDetailsViewModel(
     //  UPDATE by GUID
     fun updateCustomerFamilyMemberByGuid(
         guid: String,
-        firstName: String,
-        middleName: String,
-        lastName: String,
-        relationId: Int,
-        age: Int,
-        gender: String,
-        educationId: Int,
-        occupationId: Int
+        firstName: String?,
+        middleName: String?,
+        lastName: String?,
+        relationId: Int?,
+        age: Int?,
+        gender: String?,
+        educationId: Int?,
+        occupationId: Int?
     ) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.updateCustomerFamilyMemberByGuid(
@@ -63,5 +64,9 @@ class CustomerFamilyMemberDetailsViewModel(
                 occupationId
             )
         }
+    }
+
+    suspend fun getCustomerDetailGuid(guId: String): List<CustomerFamilyMemberDetailsEntity> {
+        return repository.getCustomerByGuid(guId)
     }
 }

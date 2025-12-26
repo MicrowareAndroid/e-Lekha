@@ -22,5 +22,6 @@ data class CustomerFamilyMemberDetailsEntity(
     @ColumnInfo(name = "IsOld") val IsOld: Int?,
     @ColumnInfo(name = "MonthlyIncome") val MonthlyIncome: Int?,
     @ColumnInfo(name = "IsUpload") val IsUpload: Int?,
+    @ColumnInfo(name = "Remarks") val Remarks: String?
 
 )

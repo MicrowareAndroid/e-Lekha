@@ -234,9 +234,9 @@ fun PersonalDetailsScreen(
     val maritalList by mstComboViewModel.maritalStatus.collectAsState()
     val qualificationList by mstComboViewModel.mstQualificationValue.collectAsState()
     val religionList by mstComboViewModel.religionValue.collectAsState()
-    val relationList by mstComboViewModel.relationValue.collectAsState()
+    val relationList by mstComboViewModel.relationStatus.collectAsState()
     val locationList by mstComboViewModel.locationValue.collectAsState()
-    val purposeList by mstComboViewModel.genderValue.collectAsState()
+    val purposeList by mstComboViewModel.purposeValue.collectAsState()
 
 
     val stateViewModel = koinViewModel<MSTStateViewModel>()
@@ -253,11 +253,11 @@ fun PersonalDetailsScreen(
         mstComboViewModel.loadLookUpValues(lookupTypeFk = 2)
         mstComboViewModel.loadLookUpValues(lookupTypeFk = 4)
         mstComboViewModel.loadLookUpValues(lookupTypeFk = 1)
-        mstComboViewModel.loadLookUpValues(lookupTypeFk = 6)
         mstComboViewModel.loadLookUpValues(lookupTypeFk = 7)
         districtViewModel.loadDistrictByStateID()
         branchViewModel.loadAllUserBranches()
-
+        val username = "developer" // Or get from logged-in user
+        mstVillageModel.loadVillagesByUsername(username)
         /*var branchId=appPreferences.getInt(AppSP.branchId)
         mstVillageModel.loadVillagesByBranchID(branchId )*/
         stateViewModel.loadAllStates()
@@ -404,7 +404,7 @@ fun PersonalDetailsScreen(
                     FormDatePickerCompacts(
                         label = stringResource(Res.string.date_of_birth),
                         value = viewModel.dateOfBirth,
-                        onValueChange = {  },
+                        onValueChange = { },
                         onClick = {
                             pickMinMaxDate(
                                 context = context,
@@ -548,47 +548,58 @@ fun PersonalDetailsScreen(
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                // ---------------- Form Start ----------------
+
                 FormFieldCompact(
                     label = stringResource(Res.string.husband_name),
                     value = viewModel.husbandName,
                     placeholder = stringResource(Res.string.type_here),
                     onValueChange = { husbandname ->
                         viewModel.husbandName = husbandname
-                    },
-                    maxLength = 20,
-                    modifier = Modifier.focusRequester(viewModel.focusRequesterHusbandName)
-                        .bringIntoViewRequester(viewModel.bringIntoViewRequesterHusbandName)
 
+                        if (isChecked) {
+                            viewModel.gurantorName = husbandname
+                        }
+                    },
+                    inputType = KeyboardType.Text,
+                    modifier = Modifier
+                        .focusRequester(viewModel.focusRequesterHusbandName)
+                        .bringIntoViewRequester(viewModel.bringIntoViewRequesterHusbandName)
                 )
 
                 Spacer(modifier = Modifier.height(3.dp))
+
 
                 DynamicCheckBox(
                     label = stringResource(Res.string.same_as_husband),
                     isChecked = isChecked,
                     onCheckedChange = { checked ->
                         isChecked = checked
+                        if (checked) {
 
+                            viewModel.gurantorName = viewModel.husbandName
+                        }
                     }
                 )
 
                 Spacer(modifier = Modifier.height(2.dp))
 
-                // ---------------- Form Start ----------------
+
                 FormFieldCompact(
                     label = stringResource(Res.string.guarantor_name),
                     value = viewModel.gurantorName,
                     placeholder = stringResource(Res.string.type_here),
                     onValueChange = { gurantorname ->
-                        viewModel.gurantorName = gurantorname
+                        if (!isChecked) {
+                            viewModel.gurantorName = gurantorname
+                        }
                     },
-                    modifier = Modifier.focusRequester(viewModel.focusRequesterGurantorName)
+                    inputType = KeyboardType.Text,
+                    isEnable = !isChecked,
+                    modifier = Modifier
+                        .focusRequester(viewModel.focusRequesterGurantorName)
                         .bringIntoViewRequester(viewModel.bringIntoViewRequesterGurantorName),
-                    maxLength = 20,
 
-
-                    )
+                )
                 Spacer(modifier = Modifier.height(8.dp))
 
                 Row(
@@ -608,7 +619,7 @@ fun PersonalDetailsScreen(
                     )
                     FormDatePickerCompacts(
                         label = stringResource(Res.string.date_of_birth),
-                        value = viewModel.dateOfBirth,
+                        value = viewModel.gurantordateOfBirth,
                         onValueChange = {  },
                         onClick = {
                             pickMinMaxDate(
@@ -616,7 +627,7 @@ fun PersonalDetailsScreen(
                                 onDatePicked = { date ->
                                     // Optional validation: make sure user picked >=18 years
                                     if (isAge18Plus(date)) {
-                                        viewModel.dateOfBirth = date
+                                        viewModel.gurantordateOfBirth = date
                                     } else {
 
                                     }
@@ -695,7 +706,7 @@ fun PersonalDetailsScreen(
                     onValueChange = { yourfulladdress ->
                         viewModel.fulladdresss = yourfulladdress
                     },
-                    maxLength = 20,
+                    inputType = KeyboardType.Text,
                     modifier = Modifier.focusRequester(viewModel.focusRequesterFullAddress)
                         .bringIntoViewRequester(viewModel.bringIntoViewRequesterFullAddress),
 
@@ -758,6 +769,7 @@ fun PersonalDetailsScreen(
                         onValueChange = { tehsill ->
                             viewModel.tehsilName = tehsill
                         },
+                        inputType = KeyboardType.Text,
                         placeholder = stringResource(Res.string.type_here),
                         modifier = Modifier.weight(1f)
                             .focusRequester(viewModel.focusRequesterTehsilName)
@@ -814,7 +826,7 @@ fun PersonalDetailsScreen(
                     onValueChange = { maternaladdress ->
                         viewModel.maternalAddress = maternaladdress
                     },
-                    maxLength = 20,
+                    inputType = KeyboardType.Text,
                     isEnable = true,
                     modifier = Modifier.focusRequester(viewModel.focusRequesterMaternalAddress)
                         .bringIntoViewRequester(viewModel.bringIntoViewRequesterMaternalAddress)
@@ -829,13 +841,13 @@ fun PersonalDetailsScreen(
 
                     FormFieldCompact(
                         label = stringResource(Res.string.village_name),
-                        value = "",
-                        onValueChange = {},
+                        value = viewModel.villageNames,
+                        onValueChange = {viewModel.villageNames=it},
                         placeholder = stringResource(Res.string.type_here),
-                        modifier = Modifier.weight(1f),
-                            /*.focusRequester(viewModel.focusRequesterMaternalMobileNo)
-                            .bringIntoViewRequester(viewModel.bringIntoViewRequesterMaternalMobileNo),
-                     */
+                        modifier = Modifier.weight(1f)
+                            .focusRequester(viewModel.focusRequesterMaternalVillage)
+                            .bringIntoViewRequester(viewModel.bringIntoViewRequesterMaternalVillage),
+
                         inputType = KeyboardType.Text,
 
 
@@ -867,6 +879,7 @@ fun PersonalDetailsScreen(
                         onValueChange = { fathername ->
                             viewModel.fatherName = fathername
                         },
+                        inputType = KeyboardType.Text,
                         placeholder = stringResource(Res.string.type_here),
                         modifier = Modifier.weight(1f)
                             .focusRequester(viewModel.focusRequesterFatherName)
@@ -986,7 +999,7 @@ fun PersonalDetailsScreen(
                         value = viewModel.dailyExpense,
                         onValueChange = { viewModel.dailyExpense=it },
                         placeholder = stringResource(Res.string.type_here),
-                        maxLength = 10,
+
                         modifier = Modifier.weight(1f)
                             .focusRequester(viewModel.focusRequesterDailyExpense)
                             .bringIntoViewRequester(viewModel.bringIntoViewRequesterDailyExpense),
@@ -998,7 +1011,7 @@ fun PersonalDetailsScreen(
                         value = viewModel.educationExpense,
                         onValueChange = { viewModel.educationExpense=it },
                         placeholder = stringResource(Res.string.type_here),
-                        maxLength = 10,
+
                         modifier = Modifier.weight(1f)
                             .focusRequester(viewModel.focusRequesterEducationExpense)
                             .bringIntoViewRequester(viewModel.bringIntoViewRequesterEducationExpense),
@@ -1029,7 +1042,7 @@ fun PersonalDetailsScreen(
                         value = viewModel.medicalExpense,
                         onValueChange = { viewModel.medicalExpense = it},
                         placeholder = stringResource(Res.string.type_here),
-                        maxLength = 10,
+
                         modifier = Modifier.weight(1f)
                             .focusRequester(viewModel.focusRequesterMedicalExpense)
                             .bringIntoViewRequester(viewModel.bringIntoViewRequesterMedicalExpense),
@@ -1041,7 +1054,7 @@ fun PersonalDetailsScreen(
                         value = viewModel.othersExpense,
                         onValueChange = { viewModel.othersExpense = it},
                         placeholder = stringResource(Res.string.type_here),
-                        maxLength = 10,
+
                         modifier = Modifier.weight(1f)
                             .focusRequester(viewModel.focusRequesterOthersExpense)
                             .bringIntoViewRequester(viewModel.bringIntoViewRequesterOthersExpense),
@@ -1060,7 +1073,7 @@ fun PersonalDetailsScreen(
                         value = viewModel.totalMonthlyExpense,
                         onValueChange = { viewModel.totalMonthlyExpense = it},
                         placeholder = stringResource(Res.string.type_here),
-                        maxLength = 10,
+
                         modifier = Modifier.weight(1f)
                             .focusRequester(viewModel.focusRequesterTotalMonthlyExpense)
                             .bringIntoViewRequester(viewModel.bringIntoViewRequesterTotalMonthlyExpense),
@@ -1072,7 +1085,7 @@ fun PersonalDetailsScreen(
                         value = viewModel.annualExpense,
                         onValueChange = { viewModel.annualExpense = it },
                         placeholder = stringResource(Res.string.type_here),
-                        maxLength = 10,
+
                         modifier = Modifier.weight(1f)
                             .focusRequester(viewModel.focusRequesterAnnualExpense)
                             .bringIntoViewRequester(viewModel.bringIntoViewRequesterAnnualExpense),
@@ -1096,7 +1109,7 @@ fun PersonalDetailsScreen(
                         value = viewModel.mfiBankExpense,
                         onValueChange = { viewModel.mfiBankExpense = it },
                         placeholder = stringResource(Res.string.type_here),
-                        maxLength = 10,
+                        inputType = KeyboardType.Text,
                         modifier = Modifier.weight(1f)
                             .focusRequester(viewModel.focusRequesterMfiBankExpense)
                             .bringIntoViewRequester(viewModel.bringIntoViewRequesterMfiBankExpense),
@@ -1108,7 +1121,7 @@ fun PersonalDetailsScreen(
                         value = viewModel.loanAmountExpense,
                         onValueChange = {viewModel.loanAmountExpense = it},
                         placeholder = stringResource(Res.string.type_here),
-                        maxLength = 10,
+                        inputType = KeyboardType.Number,
                         modifier = Modifier.weight(1f)
                             .focusRequester(viewModel.focusRequesterLoanAmountExpense)
                             .bringIntoViewRequester(viewModel.bringIntoViewRequesterLoanAmountExpense),
@@ -1127,7 +1140,7 @@ fun PersonalDetailsScreen(
                         value = viewModel.outStandingExpense,
                         onValueChange = { viewModel.outStandingExpense = it },
                         placeholder = stringResource(Res.string.type_here),
-                        maxLength = 10,
+
                         modifier = Modifier.weight(1f)
                             .focusRequester(viewModel.focusRequesterOutStandingExpense)
                             .bringIntoViewRequester(viewModel.bringIntoViewRequesterOutStandingExpense),
@@ -1139,7 +1152,7 @@ fun PersonalDetailsScreen(
                         value = viewModel.emiExpense,
                         onValueChange = { viewModel.emiExpense = it },
                         placeholder = stringResource(Res.string.type_here),
-                        maxLength = 10,
+                        inputType = KeyboardType.Number,
                         modifier = Modifier.weight(1f)
                             .focusRequester(viewModel.focusRequesterEmiExpense)
                             .bringIntoViewRequester(viewModel.bringIntoViewRequesterEmiExpense),
@@ -1158,7 +1171,7 @@ fun PersonalDetailsScreen(
                         value = viewModel.fullNameExpense,
                         onValueChange = { viewModel.fullNameExpense = it},
                         placeholder = stringResource(Res.string.type_here),
-                        maxLength = 10,
+                        inputType = KeyboardType.Text,
                         modifier = Modifier.weight(1f)
                             .focusRequester(viewModel.focusRequesterFullNameExpense)
                             .bringIntoViewRequester(viewModel.bringIntoViewRequesterFullNameExpense),
@@ -1170,7 +1183,7 @@ fun PersonalDetailsScreen(
                         value =viewModel.remarksExpense,
                         onValueChange = { viewModel.remarksExpense = it},
                         placeholder = stringResource(Res.string.type_here),
-                        maxLength = 10,
+
                         modifier = Modifier.weight(1f)
                             .focusRequester(viewModel.focusRequesterRemarksExpense)
                             .bringIntoViewRequester(viewModel.bringIntoViewRequesterRemarksExpense),

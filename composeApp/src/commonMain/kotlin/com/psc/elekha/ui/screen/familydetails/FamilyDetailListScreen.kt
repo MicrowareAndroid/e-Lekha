@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.psc.elekha.model.FamilyDetailModel
 import com.psc.elekha.ui.screen.personaldetails.CustomAlertFamilyDetails
+/*import com.psc.elekha.ui.screen.personaldetails.CustomAlertFamilyDetails*/
 import com.psc.elekha.ui.theme.black
 import com.psc.elekha.ui.theme.btn_color
 import com.psc.elekha.utils.ReusableTopBar
@@ -126,7 +127,7 @@ fun FamilyDetailListScreen(
                     )
                 }
 
-                if (showDialog) {
+               if (showDialog) {
                     CustomAlertFamilyDetails(
                         onSubmit = {
                             showDialog = false
