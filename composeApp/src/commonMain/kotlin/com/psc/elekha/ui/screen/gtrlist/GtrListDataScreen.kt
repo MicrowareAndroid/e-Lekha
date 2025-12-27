@@ -93,16 +93,15 @@ fun GtrListDataScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .verticalScroll(rememberScrollState())
-                    .padding(horizontal = 15.dp, vertical = 5.dp)
+                    .padding(horizontal = 0.dp, vertical = 5.dp)
             )
             {
 
                 ReusableCard(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(5.dp),
+                        .fillMaxWidth(),
                     backgroundColor = homedatareportsColor,
-                    cornerRadius = 12
+                    cornerRadius = 0
                 )
                 {
 

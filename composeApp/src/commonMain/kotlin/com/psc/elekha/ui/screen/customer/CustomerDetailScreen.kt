@@ -112,21 +112,21 @@ fun CustomerDetailScreen(
 
         ) {
 
+
             Column(
                 modifier = Modifier
                     .fillMaxSize()
                     .verticalScroll(rememberScrollState())
-                    .padding(horizontal = 15.dp, vertical = 80.dp),
+                    .padding(horizontal = 0.dp, vertical = 5.dp),
 
 
             )
             {
                 ReusableCard(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(5.dp),
+                        .fillMaxWidth(),
                     backgroundColor = homedatareportsColor,
-                    cornerRadius = 12
+                    cornerRadius = 0
                 )
                 {
 
@@ -604,21 +604,21 @@ fun CustomerDetailScreen(
                     }
                 }
             }
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 5.dp)
-                    .align(Alignment.BottomCenter)
-
-            ) {
-                CommonSingleButtonsBottomString(
-                    onOkClick = {},
-                    text = stringResource(Res.string.gtr_save),
-                    textSize = 16,
-
-
-                    )
-            }
+//            Box(
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .padding(horizontal = 16.dp, vertical = 5.dp)
+//                    .align(Alignment.BottomCenter)
+//
+//            ) {
+//                CommonSingleButtonsBottomString(
+//                    onOkClick = {},
+//                    text = stringResource(Res.string.gtr_save),
+//                    textSize = 16,
+//
+//
+//                    )
+//            }
 
         }
     }

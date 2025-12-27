@@ -232,14 +232,35 @@ interface CustomerDao {
     @Query(" SELECT * FROM Customer WHERE GUID =:guId")
     suspend fun getCustomerByGuid(guId: String): List<CustomerEntity>
 
-    @Query("UPDATE Customer set CKYC_BankAccountNumber=:accountNo,CKYC_Bank=:bankId,CustomerBankIFSCCode=:ifscCode,UpdatedBy=:UpdatedBy,UpdatedOn=:UpdatedOn,isEdited = 1 WHERE GUID = :customerGuid")
+    @Query(
+        """
+    UPDATE Customer SET
+
+        -- Bank Details
+        CKYC_Bank = :CKYC_Bank,
+        CKYC_BankAccountNumber = :CKYC_BankAccountNumber,
+        CKYC_Bank_Image = :CKYC_Bank_Image,
+        CustomerBankIFSCCode = :CustomerBankIFSCCode,
+        CKYC_Bank_Branch = :CKYC_Bank_Branch,
+
+        -- audit
+        IsEdited = 1,
+        UpdatedBy = :UpdatedBy,
+        UpdatedOn = :UpdatedOn
+
+    WHERE GUID = :GUID
+    """
+    )
     suspend fun updateBankDetail(
-        customerGuid: String,
-        accountNo: String,
-        bankId: Int,
-        ifscCode: String,
+        CKYC_Bank: Int?,
+        CKYC_BankAccountNumber: String?,
+        CKYC_Bank_Image: String?,
+        CustomerBankIFSCCode: String?,
+        CKYC_Bank_Branch: String?,
         UpdatedBy: Int?,
-        UpdatedOn: String?)
+        UpdatedOn: String?,
+        GUID: String
+    )
 
     @Query(" UPDATE Customer SET FirstName = :firstName,MiddleName = :middleName,LastName= :lastName, MaritalStatusID = :maritalStatusId, EducationID = :educationId, ReligionID = :religionId, ContactNo = :contactNo, HusbandFName = :husbandFName, HusbandMName=:hubandMName, HusbandLName=:husbandLName, GurantorFName=:gurantorFName, GurantorMName=:gurantorMName,GurantorLName=:gurantorLName,Age=:age, PhoneNo = :phoneNo, DOB = :dob,UpdatedOn = :updatedOn, UpdatedBy = :updatedBy WHERE GUID = :guid")
     suspend fun updateCustomerBasicDetails(

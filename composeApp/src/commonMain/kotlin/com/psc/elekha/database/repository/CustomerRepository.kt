@@ -160,17 +160,27 @@ class CustomerRepository(private val customerDao: CustomerDao) {
     }
 
     suspend fun updateBankDetail(
-        customerGuid: String,
-        accountNo: String,
-        bankId: Int,
-        ifscCode: String,
-        UpdatedBy: Int?,
-        UpdatedOn: String?
+        bankId: Int?,
+        accountNo: String?,
+        bankImage: String?,
+        ifscCode: String?,
+        branchName: String?,
+        updatedBy: Int?,
+        updatedOn: String?,
+        guid: String
     ) {
         customerDao.updateBankDetail(
-            customerGuid,accountNo,bankId,ifscCode,UpdatedBy,UpdatedOn
+            CKYC_Bank = bankId,
+            CKYC_BankAccountNumber = accountNo,
+            CKYC_Bank_Image = bankImage,
+            CustomerBankIFSCCode = ifscCode,
+            CKYC_Bank_Branch = branchName,
+            UpdatedBy = updatedBy,
+            UpdatedOn = updatedOn,
+            GUID = guid
         )
     }
+
 
     suspend fun updateCustomerBasicDetails(
         guid: String?,

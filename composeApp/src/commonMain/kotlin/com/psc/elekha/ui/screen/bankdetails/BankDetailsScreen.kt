@@ -1,6 +1,8 @@
 package com.psc.elekha.ui.screen.bankdetails
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.relocation.bringIntoViewRequester
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -23,19 +26,26 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import coil3.Uri
 import com.psc.elekha.ui.theme.blue
 import com.psc.elekha.ui.theme.textview_color
+import com.psc.elekha.utils.CameraPicker
 import com.psc.elekha.utils.CommonSaveButton
 import com.psc.elekha.utils.CustomAlertDialog
 import com.psc.elekha.utils.FormFieldCompact
 import com.psc.elekha.utils.FormSpinner
 import com.psc.elekha.utils.ReusableTextView
 import com.psc.elekha.utils.ReusableTextViewes
+import com.psc.elekha.utils.RouteName
 import com.psc.elekha.utils.StaticComboBoxData
+import com.psc.elekha.utils.loadImageFromPath
 import com.psc.elekha.utils.toValueList
 import e_lekha.composeapp.generated.resources.Res
 import e_lekha.composeapp.generated.resources.bank_account_number
@@ -47,6 +57,7 @@ import e_lekha.composeapp.generated.resources.customer_name_in_bank_dairy
 import e_lekha.composeapp.generated.resources.ifsc_code
 import e_lekha.composeapp.generated.resources.next
 import e_lekha.composeapp.generated.resources.passbook_image
+import e_lekha.composeapp.generated.resources.select_customer_submit
 import e_lekha.composeapp.generated.resources.type_here
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -55,18 +66,12 @@ import org.koin.compose.viewmodel.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BankDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = {}) {
-    var passbookImage by remember { mutableStateOf<Uri?>(null) }
-    var nameOnAccount by remember { mutableStateOf("") }
-    var AccountNo by remember { mutableStateOf("") }
-    var bankName by remember { mutableStateOf("") }
-    var branchName by remember { mutableStateOf("") }
-    var ifscCode by remember { mutableStateOf("") }
+fun BankDetailsScreen(navController: NavController) {
     val viewModel = koinViewModel<BankDetailViewModel>()
-
+    var openCamera by remember { mutableStateOf(false) }
+    var passbookImageBitmap by remember { mutableStateOf<ImageBitmap?>(null) }
 
     LaunchedEffect(Unit) {
-        viewModel.loadSaveData()
 
     }
 
@@ -94,19 +99,25 @@ fun BankDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = {}) 
 
                 FormFieldCompact(
                     label = stringResource(Res.string.customer_name_in_bank_dairy),
-                    value = nameOnAccount,
+                    value = viewModel.accountName,
+                    modifier = Modifier
+                        .bringIntoViewRequester(viewModel.bringIntoViewRequesterAccountName)
+                        .focusRequester(viewModel.focusRequesterAccountName),
                     placeholder = stringResource(Res.string.type_here),
-                    onValueChange = { nameOnAccount = it},
-                    maxLength = 30
+                    onValueChange = { viewModel.accountName = it},
+                    maxLength = 20
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
 
                 FormFieldCompact(
                     label = stringResource(Res.string.bank_account_number),
-                    value = AccountNo,
+                    value = viewModel.accountNumber,
                     placeholder = stringResource(Res.string.type_here),
-                    onValueChange = { AccountNo = it },
+                    onValueChange = { viewModel.accountNumber = it },
+                    modifier = Modifier
+                        .bringIntoViewRequester(viewModel.bringIntoViewRequesterAccountNumber)
+                        .focusRequester(viewModel.focusRequesterAccountNumber),
                     maxLength = 18,
                     inputType = KeyboardType.Number
                 )
@@ -116,8 +127,11 @@ fun BankDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = {}) 
                 FormSpinner(
                     label = stringResource(Res.string.bank_name),
                     options = StaticComboBoxData.bankname.toValueList(),
-                    selectedOption = bankName,
-                    onOptionSelected = { bankName = it}
+                    selectedOption = viewModel.selectedBankname,
+                    modifier = Modifier
+                        .bringIntoViewRequester(viewModel.bringIntoViewRequesterBankName)
+                        .focusRequester(viewModel.focusRequesterBankName),
+                    onOptionSelected = { viewModel.selectedBankname = it}
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -125,17 +139,25 @@ fun BankDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = {}) 
                 FormSpinner(
                     label = stringResource(Res.string.branch_name),
                     options = StaticComboBoxData.branchname.toValueList(),
-                    selectedOption = branchName,
-                    onOptionSelected = {branchName = it }
+                    selectedOption = viewModel.selectedBranchname,
+                    modifier = Modifier
+                        .bringIntoViewRequester(viewModel.bringIntoViewRequesterBranchName)
+                        .focusRequester(viewModel.focusRequesterBranchName),
+                    onOptionSelected = {viewModel.selectedBranchname = it }
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
 
                 FormFieldCompact(
                     label = stringResource(Res.string.ifsc_code),
-                    value = ifscCode,
+                    value = viewModel.ifscCode,
+
                     placeholder = stringResource(Res.string.type_here),
-                    onValueChange = { ifscCode = it},
+                    onValueChange = { viewModel.ifscCode = it},
+                    modifier = Modifier
+                        .bringIntoViewRequester(viewModel.bringIntoViewRequesterIfscCode)
+                        .focusRequester(viewModel.focusRequesterIfscCode),
+                    maxLength = 11
                 )
 
                 Spacer(modifier = Modifier.height(10.dp))
@@ -151,17 +173,27 @@ fun BankDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = {}) 
                         Box(
                             modifier = Modifier
                                 .size(120.dp)
-                                .background(Color(0xFFE8E8E8)), // Light Grey Box
+                                .background(Color(0xFFE8E8E8)),
                             contentAlignment = Alignment.Center
                         ) {
-                            // Preview can go here
-                        }
+                            passbookImageBitmap?.let { img ->
+                                Image(
+                                    bitmap = img,
+                                    contentDescription = null,
+                                    modifier = Modifier.fillMaxSize(),
+                                    contentScale = ContentScale.Crop
+
+                                )
+                            }
+                            }
                         Spacer(modifier = Modifier.height(6.dp))
                         Icon(
                             painter = painterResource(Res.drawable.camera),
                             contentDescription = "",
                             tint = blue,
-                            modifier = Modifier.size(28.dp)
+                            modifier = Modifier
+                                .size(28.dp)
+                                .clickable { openCamera = true }
                         )
                         Spacer(modifier = Modifier.height(4.dp))
                         ReusableTextView(
@@ -177,7 +209,7 @@ fun BankDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = {}) 
 
             CommonSaveButton(
                 onSaveClick = { viewModel.saveData()},
-                saveText = stringResource(Res.string.next)
+                saveText = stringResource(Res.string.select_customer_submit)
             )
         }
         if (viewModel.showSaveAlert) {
@@ -185,15 +217,29 @@ fun BankDetailsScreen(onNextTab: () -> Unit = {}, onCancelTab: () -> Unit = {}) 
                 showDialog = viewModel.showSaveAlert,
                 message = viewModel.saveMessage,
                 onConfirm = {
+                    viewModel.showSaveAlert = false
                     if (viewModel.saveFlag == 1) {
-                        viewModel.showSaveAlert = false
-                        onNextTab()
+
+                        navController.popBackStack()
+                        navController.navigate(RouteName.registration_list) // RegistrationListScreen
                     } else {
                         viewModel.requestFocus()
                     }
                 }
             )
         }
+    }
+    if (openCamera) {
+        CameraPicker(
+            openCamera = openCamera,
+            onImagePicked = { path ->
+                path?.let {
+                    passbookImageBitmap = loadImageFromPath(it)
+                    viewModel.setPassbookImage(it)
+                }
+                openCamera = false
+            }
+        )
     }
 
 }
