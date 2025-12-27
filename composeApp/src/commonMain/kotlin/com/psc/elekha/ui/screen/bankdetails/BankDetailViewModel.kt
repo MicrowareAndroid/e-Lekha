@@ -55,63 +55,126 @@ class BankDetailViewModel(
 {
  var accountName by   mutableStateOf("")
  var accountNumber by mutableStateOf("")
- var selectedBankname by mutableStateOf(0)
- var selectedBranchname by mutableStateOf(0)
- var ifscCode by mutableStateOf("")
- var passbookImage by mutableStateOf("")
 
+ var ifscCode by mutableStateOf("")
+
+ var selectedBankname by mutableStateOf("")
+ var selectedBranchname by mutableStateOf("")
+ private var _passbookImage by mutableStateOf("")
+ val passbookImage: String
+  get() = _passbookImage
  val focusRequesterAccountName = FocusRequester()
  val focusRequesterAccountNumber = FocusRequester()
  val focusRequesterBankName = FocusRequester()
  val focusRequesterBranchName = FocusRequester()
-
+ val focusRequesterIfscCode = FocusRequester()
 
  val bringIntoViewRequesterAccountName = BringIntoViewRequester()
  val bringIntoViewRequesterAccountNumber = BringIntoViewRequester()
  val bringIntoViewRequesterBankName = BringIntoViewRequester()
  val bringIntoViewRequesterBranchName = BringIntoViewRequester()
+ val bringIntoViewRequesterIfscCode = BringIntoViewRequester()
 
 
 
 
+ private fun validateBankDetails(): Boolean {
+  showSaveAlert = false
+  saveMessage = "Success update"
+
+  if (accountName.isBlank()) {
+   saveMessage = "Please enter Account Holder Name"
+   requestFocus(bringIntoViewRequesterAccountName, focusRequesterAccountName)
+   return false
+  }
+
+  if (accountNumber.isBlank()) {
+   saveMessage = "Please enter Bank Account Number"
+   requestFocus(bringIntoViewRequesterAccountNumber, focusRequesterAccountNumber)
+   return false
+  }
+
+  if (accountNumber.length < 9) {
+   saveMessage = "Account Number must be at least 9 digits"
+   requestFocus(bringIntoViewRequesterAccountNumber, focusRequesterAccountNumber)
+   return false
+  }
+
+  if (selectedBankname.isBlank()) {
+   saveMessage = "Please select Bank Name"
+   requestFocus(bringIntoViewRequesterBankName, focusRequesterBankName)
+   return false
+  }
+
+  if (selectedBranchname.isBlank()) {
+   saveMessage = "Please select Branch Name"
+   requestFocus(bringIntoViewRequesterBranchName, focusRequesterBranchName)
+   return false
+  }
+
+  if (ifscCode.isBlank()) {
+   saveMessage = "Please enter IFSC Code"
+   requestFocus(bringIntoViewRequesterIfscCode, focusRequesterIfscCode)
+   return false
+  }
+
+//  if (ifscCode.length != 11) {
+//   saveMessage = "IFSC Code must be 11 characters"
+//   requestFocus(bringIntoViewRequesterIfscCode, focusRequesterIfscCode)
+//   return false
+//  }
+
+  if (passbookImage.isNullOrBlank()) {
+   saveMessage = "Please upload Passbook Image"
+   return false
+  }
+
+  return true
+ }
 
  fun saveData() {
+  if (!validateBankDetails()) {
+   saveFlag = 0
+   showSaveAlert = true
+   return
+  }
+
   viewModelScope.launch {
    saveBankDetail()
-
+   saveFlag = 1
+   showSaveAlert = true
   }
  }
 
  private suspend fun saveBankDetail() {
   val guid = appPreferences.getString(AppSP.customerGuid)
+
   customerViewModel.updateBankDetail(
-   returnStringValue(guid),
-   returnStringValue(accountNumber),
-   selectedBankname,
-   returnStringValue(ifscCode),
-   appPreferences.getInt(AppSP.userId),
-   currentDatetime()
-
+   guid = returnStringValue(guid),
+   bankId = selectedBankname.toIntOrNull(),
+   accountNo = returnStringValue(accountNumber),
+   bankImage = passbookImage,
+   ifscCode = returnStringValue(ifscCode),
+   branchName = returnStringValue(selectedBranchname),
+   updatedBy = appPreferences.getInt(AppSP.userId),
+   updatedOn = currentDatetime()
   )
+
   saveMessage = getString(Res.string.data_saved_successfully)
-
  }
-
- fun loadSaveData(){
+ fun setPassbookImage(path: String) {
+  _passbookImage = path
+ }
+ private fun requestFocus(
+  bringIntoView: BringIntoViewRequester,
+  focusRequester: FocusRequester
+ ) {
   viewModelScope.launch {
-  val saveGuid=returnStringValue(appPreferences.getString(AppSP.customerGuid))
-   val listData=customerViewModel.getCustomerDetailGuid(saveGuid)
-   if(listData.isNotEmpty()) {
-    var data=listData[0]
-    accountNumber = returnStringValue(data.CKYC_BankAccountNumber)
-    selectedBankname = returnIntegerValue(data.CKYC_Bank.toString())
-    ifscCode = returnStringValue(data.CustomerBankIFSCCode)
-
-
-
-
-   }
+   bringIntoView.bringIntoView()
+   focusRequester.requestFocus()
+  }
  }
+
  }
 
  /*private suspend fun checkValidation(): ValidationModelContorl {
@@ -356,4 +419,3 @@ class BankDetailViewModel(
 
 
 
-}

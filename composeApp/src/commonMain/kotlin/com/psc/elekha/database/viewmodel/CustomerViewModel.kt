@@ -131,6 +131,7 @@ class CustomerViewModel(private val customerRepository: CustomerRepository) : Vi
         CKYC_Aadhar_Name: String?,
         CKYC_UID: String?,
         CKYC_UID_Image: String?,
+        CKYC_UID_Image2: String?,
         CKYC_ElectricityBill: String?,
         CKYC_ElectricityBill_Image: String?,
         CKYC_ElectricityBill_Name: String?,
@@ -207,18 +208,26 @@ class CustomerViewModel(private val customerRepository: CustomerRepository) : Vi
         return customerRepository.getCustomerByGuid(guId)
     }
 
-
     fun updateBankDetail(
-        customerGuid: String,
-        accountNo: String,
-        bankId: Int,
-        ifscCode: String,
-        UpdatedBy: Int?,
-        UpdatedOn: String?
+        guid: String,
+        bankId: Int?,
+        accountNo: String?,
+        bankImage: String?,
+        ifscCode: String?,
+        branchName: String?,
+        updatedBy: Int?,
+        updatedOn: String?
     ) {
         viewModelScope.launch {
             customerRepository.updateBankDetail(
-                customerGuid, accountNo, bankId, ifscCode, UpdatedBy, UpdatedOn
+                bankId = bankId,
+                accountNo = accountNo,
+                bankImage = bankImage,
+                ifscCode = ifscCode,
+                branchName = branchName,
+                updatedBy = updatedBy,
+                updatedOn = updatedOn,
+                guid = guid
             )
         }
     }

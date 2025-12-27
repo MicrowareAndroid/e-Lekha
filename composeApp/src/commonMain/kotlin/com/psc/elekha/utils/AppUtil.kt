@@ -43,6 +43,7 @@ import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Divider
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -2122,73 +2123,113 @@ fun GroupCardUI(
     item: GroupCardData,
     onCardClick: (GroupCardData) -> Unit
 ) {
-
     Card(
-        shape = RoundedCornerShape(12.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-        colors = CardDefaults.cardColors(containerColor = loginBg),
         modifier = Modifier
             .fillMaxWidth()
-            .padding(8.dp)
-            .defaultMinSize(minHeight = 80.dp)
-            .clickable { onCardClick(item) }
+            .padding(horizontal = 10.dp, vertical = 6.dp)
+            .clickable { onCardClick(item) },
+        shape = RoundedCornerShape(14.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 5.dp),
+        colors = CardDefaults.cardColors(containerColor = loginBg)
     ) {
-
-        Row(
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(12.dp),
-            horizontalArrangement = Arrangement.SpaceBetween
+                .padding(12.dp)
         ) {
 
-            // -------- LEFT COLUMN --------
-            Column(modifier = Modifier.weight(1f)) {
-
-                LabelValueText(
-                    label = stringResource(Res.string.select_group).plus(":"),
+            // 🔹 HEADER (Group + Customers)
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                HeaderText(
+                    label = stringResource(Res.string.select_group),
                     value = item.groupName
                 )
-                LabelValueText(
-                    label = stringResource(Res.string.select_customer).plus(":"),
+
+                HeaderText(
+                    label = stringResource(Res.string.select_customer),
                     value = item.customers.toString()
                 )
-                LabelValueText(
-                    label = stringResource(Res.string.select_village).plus(":"),
-                    value = item.village
-                )
-                LabelValueText(
-                    label = stringResource(Res.string.select_loan).plus(":"),
-                    value = item.officer
-                )
-                LabelValueText(
-                    label = stringResource(Res.string.select_formation).plus(":"),
-                    value = item.formation
-                )
             }
 
-            // -------- RIGHT COLUMN --------
-            Column(modifier = Modifier.weight(1f)) {
+            Spacer(modifier = Modifier.height(6.dp))
+            Divider()
 
-                LabelValueText(
-                    label = stringResource(Res.string.select_disbursement).plus(":"),
-                    value = item.disbursement
-                )
-                LabelValueText(
-                    label = stringResource(Res.string.select_center).plus(":"),
-                    value = item.center
-                )
-                LabelValueText(
-                    label = stringResource(Res.string.select_meeting).plus(":"),
-                    value = item.meetingDay
-                )
-                LabelValueText(
-                    label = stringResource(Res.string.gtr_next_meeting).plus(":"),
-                    value = item.nextMeeting
-                )
+            Spacer(modifier = Modifier.height(6.dp))
+
+            // 🔹 BODY
+            Row(modifier = Modifier.fillMaxWidth()) {
+
+                Column(
+                    modifier = Modifier.weight(1f),
+                    verticalArrangement = Arrangement.spacedBy(4.dp)
+                ) {
+                    LabelValueText(
+                        label = stringResource(Res.string.select_village),
+                        value = item.village
+                    )
+                    LabelValueText(
+                        label = stringResource(Res.string.select_loan),
+                        value = item.officer
+                    )
+                    LabelValueText(
+                        label = stringResource(Res.string.select_formation),
+                        value = item.formation
+                    )
+                }
+
+                Spacer(modifier = Modifier.width(8.dp))
+
+                Column(
+                    modifier = Modifier.weight(1f),
+                    verticalArrangement = Arrangement.spacedBy(4.dp)
+                ) {
+                    LabelValueText(
+                        label = stringResource(Res.string.select_disbursement),
+                        value = item.disbursement
+                    )
+                    LabelValueText(
+                        label = stringResource(Res.string.select_center),
+                        value = item.center
+                    )
+                    LabelValueText(
+                        label = stringResource(Res.string.select_meeting),
+                        value = item.meetingDay
+                    )
+                }
             }
+
+            Spacer(modifier = Modifier.height(6.dp))
+
+            // 🔹 FOOTER
+            LabelValueText(
+                label = stringResource(Res.string.gtr_next_meeting),
+                value = item.nextMeeting,
+                highlight = true
+            )
         }
     }
 }
+
+@Composable
+fun HeaderText(
+    label: String,
+    value: String
+) {
+    Column {
+        ReusableTextView(
+            text = "$label :",
+            textColor = PrimaryDark
+        )
+        ReusableTextView(
+            text = value,
+            textColor = black
+        )
+    }
+}
+
 
 @Composable
 fun <T : Any> FillDynamicSpinner(
@@ -2304,26 +2345,24 @@ fun <T : Any> FillDynamicSpinner(
     }
 }
 
-
 @Composable
-fun LabelValueText(label: String, value: String) {
-    Row(
-        modifier = Modifier.fillMaxWidth()
-            .height(IntrinsicSize.Min),
-        verticalAlignment = Alignment.Top
-    ) {
-        ReusableTextViewGrayCard(
-            text = label,
-            fontSize = 13,
-
-            )
-        Spacer(modifier = Modifier.width(4.dp))
-        ReusableTextViewBlackCard(
+fun LabelValueText(
+    label: String,
+    value: String,
+    highlight: Boolean = false
+) {
+    Row {
+        ReusableTextView(
+            text = "$label : ",
+            textColor = PrimaryDark
+        )
+        ReusableTextView(
             text = value,
-            fontSize = 12,
+            textColor = if (highlight) toolbar_color else black
         )
     }
 }
+
 
 @Composable
 fun CustomerItemCard(
