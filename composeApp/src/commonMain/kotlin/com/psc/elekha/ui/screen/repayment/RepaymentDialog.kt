@@ -29,7 +29,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.psc.elekha.ui.screen.repayment.model.RepaymentItem
+import com.psc.elekha.ui.theme.black
 import com.psc.elekha.ui.theme.blue
 import com.psc.elekha.ui.theme.lightGrey
 import com.psc.elekha.ui.theme.white
@@ -74,8 +77,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun RepaymentDialog(
-    item: RepaymentItem,
-    onBack: () -> Unit
+    navController: NavHostController
 ) {
     var selectedPaymentMode by remember { mutableStateOf("Select") }
     val paymentOptions = listOf("Cash", "Online", "UPI")
@@ -83,6 +85,21 @@ fun RepaymentDialog(
     var repaymentAmounts by remember { mutableStateOf("") }
     var repaymentAmount by remember { mutableStateOf("") }
     val scrollState = rememberScrollState()
+    val sampleItem = RepaymentItem(
+        "BHK03.123",
+        "MEENA W/O Kailash chand",
+        "1,00,000",
+        "5300",
+        "10,600",
+        "4",
+        true,
+        "17",
+        "12/05/2020",
+        "6500",
+        "5500",
+        "4700",
+        "7834456567"
+    )
     Scaffold(
         modifier = Modifier.fillMaxSize(),
 
@@ -90,7 +107,7 @@ fun RepaymentDialog(
             ReusableTopBar(
                 title = stringResource(Res.string.personal_payment_detail),
                 navigationIcon = painterResource(Res.drawable.ic_back),
-                onNavigationClick = { onBack() }
+                onNavigationClick = {  navController.popBackStack()}
             )
         },
     ) { innerPadding ->
@@ -109,19 +126,21 @@ fun RepaymentDialog(
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(Dimens.tendp)
+                        .weight(1f)
+                        .padding(16.dp)
                 ) {
                     ReusableTextViewes(stringResource(Res.string.customer_details))
                     Spacer(modifier = Modifier.height(Dimens.tendp))
                     Row(verticalAlignment = Alignment.Top) {
-                        ReusableTextViewGrayCard(
+                        ReusableTextView(
                             stringResource(Res.string.personal_customer),
-                            fontSize = 13,
-                            modifier = Modifier.wrapContentWidth()
+                            fontSize = 14,
+                            modifier = Modifier.wrapContentWidth(),
+                            textColor = black
                         )
                         Spacer(modifier = Modifier.width(Dimens.fivedp))
                         ReusableTextViewBlackCard(
-                            "${item.customerId}  ${item.customerName}",
+                            "${sampleItem.customerId}  ${sampleItem.customerName}",
                             fontSize = 13,
                             modifier = Modifier.wrapContentWidth()
                         )
@@ -131,14 +150,14 @@ fun RepaymentDialog(
                         modifier = Modifier.fillMaxWidth(),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        ReusableTextViewGrayCard(
+                        ReusableTextView(
                             stringResource(Res.string.mobile_number),
-                            fontSize = 13,
+                            fontSize = 14,
                             modifier = Modifier.wrapContentWidth()
                         )
                         Spacer(modifier = Modifier.width(Dimens.fivedp))
                         ReusableTextViewBlackCard(
-                            item.mobileNumber,
+                            sampleItem.mobileNumber,
                             fontSize = 13, modifier = Modifier.wrapContentWidth()
                         )
                         Spacer(modifier = Modifier.width(Dimens.fivedp))
@@ -162,14 +181,14 @@ fun RepaymentDialog(
                             modifier = Modifier.weight(1f),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            ReusableTextViewGrayCard(
+                            ReusableTextView(
                                 stringResource(Res.string.loan),
-                                fontSize = 13,
+                                fontSize = 14,
                                 modifier = Modifier.wrapContentWidth()
                             )
                             Spacer(modifier = Modifier.width(Dimens.fivedp))
                             ReusableTextViewBlackCard(
-                                item.loanAmount,
+                                sampleItem.loanAmount,
                                 fontSize = 13,
                                 modifier = Modifier.wrapContentWidth()
                             )
@@ -178,14 +197,14 @@ fun RepaymentDialog(
                             modifier = Modifier.weight(1f),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            ReusableTextViewGrayCard(
+                            ReusableTextView(
                                 stringResource(Res.string.personal_emi),
-                                fontSize = 13,
+                                fontSize = 14,
                                 modifier = Modifier.wrapContentWidth()
                             )
                             Spacer(modifier = Modifier.width(Dimens.fivedp))
                             ReusableTextViewBlackCard(
-                                item.emiAmount,
+                                sampleItem.emiAmount,
                                 fontSize = 13,
                                 modifier = Modifier.wrapContentWidth()
                             )
@@ -200,13 +219,13 @@ fun RepaymentDialog(
                             modifier = Modifier.weight(1f),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            ReusableTextViewGrayCard(
+                            ReusableTextView(
                                 stringResource(Res.string.emi_no),
-                                fontSize = 13, modifier = Modifier.wrapContentWidth()
+                                fontSize = 14, modifier = Modifier.wrapContentWidth()
                             )
                             Spacer(modifier = Modifier.width(Dimens.fivedp))
                             ReusableTextViewBlackCard(
-                                item.emiNumber,
+                                sampleItem.emiNumber,
                                 fontSize = 13, modifier = Modifier.wrapContentWidth()
                             )
                         }
@@ -214,14 +233,14 @@ fun RepaymentDialog(
                             modifier = Modifier.weight(1f),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            ReusableTextViewGrayCard(
+                            ReusableTextView(
                                 stringResource(Res.string.disburse_date),
-                                fontSize = 13,
+                                fontSize = 14,
                                 modifier = Modifier.wrapContentWidth()
                             )
                             Spacer(modifier = Modifier.width(Dimens.fivedp))
                             ReusableTextViewBlackCard(
-                                item.distributeDate,
+                                sampleItem.distributeDate,
                                 fontSize = 13,
                                 modifier = Modifier.wrapContentWidth()
                             )
@@ -232,13 +251,13 @@ fun RepaymentDialog(
                         modifier = Modifier.fillMaxWidth(),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        ReusableTextViewGrayCard(
+                        ReusableTextView(
                             stringResource(Res.string.pre_closure_amt),
-                            fontSize = 13, modifier = Modifier.wrapContentWidth()
+                            fontSize = 14, modifier = Modifier.wrapContentWidth()
                         )
                         Spacer(modifier = Modifier.width(Dimens.fivedp))
                         ReusableTextViewBlackCard(
-                            item.preClosureAmount,
+                            sampleItem.preClosureAmount,
                             fontSize = 13, modifier = Modifier.wrapContentWidth()
                         )
                     }
@@ -254,13 +273,13 @@ fun RepaymentDialog(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
 
-                            ReusableTextViewGrayCard(
+                            ReusableTextView(
                                 stringResource(Res.string.personal_weeks_arrear),
-                                fontSize = 13, modifier = Modifier.wrapContentWidth()
+                                fontSize = 14, modifier = Modifier.wrapContentWidth()
                             )
                             Spacer(modifier = Modifier.width(Dimens.fivedp))
                             ReusableTextViewBlackCard(
-                                item.weeksInArrear,
+                                sampleItem.weeksInArrear,
                                 fontSize = 13, modifier = Modifier.wrapContentWidth()
                             )
                         }
@@ -269,14 +288,14 @@ fun RepaymentDialog(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
 
-                            ReusableTextViewGrayCard(
+                            ReusableTextView(
                                 stringResource(Res.string.personal_past),
-                                fontSize = 13,
+                                fontSize = 14,
                                 modifier = Modifier.wrapContentWidth()
                             )
                             Spacer(modifier = Modifier.width(Dimens.fivedp))
                             ReusableTextViewBlackCard(
-                                item.pastDue,
+                                sampleItem.pastDue,
                                 fontSize = 13,
                                 modifier = Modifier.wrapContentWidth()
                             )
@@ -291,14 +310,14 @@ fun RepaymentDialog(
                             modifier = Modifier.weight(1f),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            ReusableTextViewGrayCard(
+                            ReusableTextView(
                                 stringResource(Res.string.personal_current),
-                                fontSize = 13,
+                                fontSize = 14,
                                 modifier = Modifier.wrapContentWidth()
                             )
                             Spacer(modifier = Modifier.width(Dimens.fivedp))
                             ReusableTextViewBlackCard(
-                                item.currentDue,
+                                sampleItem.currentDue,
                                 fontSize = 13,
                                 modifier = Modifier.wrapContentWidth()
                             )
@@ -307,13 +326,13 @@ fun RepaymentDialog(
                             modifier = Modifier.weight(1f),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            ReusableTextViewGrayCard(
+                            ReusableTextView(
                                 stringResource(Res.string.personal_total_due),
-                                fontSize = 13, modifier = Modifier.wrapContentWidth()
+                                fontSize = 14, modifier = Modifier.wrapContentWidth()
                             )
                             Spacer(modifier = Modifier.width(Dimens.fivedp))
                             ReusableTextViewBlackCard(
-                                item.totalDue,
+                                sampleItem.totalDue,
                                 fontSize = 13, modifier = Modifier.wrapContentWidth()
                             )
                         }
@@ -326,9 +345,9 @@ fun RepaymentDialog(
                         modifier = Modifier.fillMaxWidth()
                     )
                     {
-                        ReusableTextViewGrayCard(
+                        ReusableTextView(
                             stringResource(Res.string.personal_payment_mode),
-                            fontSize = 13, modifier = Modifier.wrapContentWidth()
+                            fontSize = 14, modifier = Modifier.wrapContentWidth()
                         )
 
                         Spacer(modifier = Modifier.height(6.dp))
@@ -346,9 +365,9 @@ fun RepaymentDialog(
                         modifier = Modifier.fillMaxWidth()
                     )
                     {
-                        ReusableTextViewGrayCard(
+                        ReusableTextView(
                             stringResource(Res.string.personal_payment_utr),
-                            fontSize = 13
+                            fontSize = 14
                         )
 
                         Spacer(modifier = Modifier.height(6.dp))
@@ -369,9 +388,9 @@ fun RepaymentDialog(
                         modifier = Modifier.fillMaxWidth()
                     )
                     {
-                        ReusableTextViewGrayCard(
+                        ReusableTextView(
                             stringResource(Res.string.personal_current_payment),
-                            fontSize = 13
+                            fontSize = 14
                         )
 
                         Spacer(modifier = Modifier.height(6.dp))
@@ -420,17 +439,15 @@ fun RepaymentDialog(
                         }
                     }
                     Spacer(modifier = Modifier.height(8.dp))
+                }
+                Box(
+                    modifier = Modifier.fillMaxWidth().padding(Dimens.tendp)
+                ) {
+                    CommonActionButtons(
 
-                    Box(
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        CommonActionButtons(
+                        onSaveClick = {
 
-                            onSaveClick = {
-
-                            }, onCloseClick = { onBack() })
-                    }
-
+                        }, onCloseClick = {  navController.popBackStack()})
                 }
             }
         }
@@ -440,22 +457,7 @@ fun RepaymentDialog(
 @Preview(showBackground = true)
 @Composable
 fun RepaymentDialogPreview() {
-    val sampleItem = RepaymentItem(
-        "BHK03.123",
-        "MEENA W/O Kailash chand",
-        "1,00,000",
-        "5300",
-        "10,600",
-        "4",
-        true,
-        "17",
-        "12/05/2020",
-        "6500",
-        "5500",
-        "4700",
-        "7834456567"
-    )
+
     RepaymentDialog(
-        item =
-            sampleItem,onBack = { })
+        navController = rememberNavController())
 }

@@ -249,7 +249,7 @@ fun HomeScreen(
 
                             item {
                                 CommonSingleButtons(
-                                    onOkClick = { navController.navigate(RouteName.replayment_list) },
+                                    onOkClick = { navController.navigate(RouteName.loan_filter_screen) },
                                     backgroundColor = homerepaymentColor,
                                     text = stringResource(Res.string.home_repayment),
                                     textColor = black,
