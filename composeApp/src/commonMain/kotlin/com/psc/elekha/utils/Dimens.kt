@@ -5,4 +5,5 @@ import androidx.compose.ui.unit.dp
 object Dimens {
     val fivedp = 5.dp
     val tendp = 10.dp
+    val sixteendp = 16.dp
 }

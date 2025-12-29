@@ -118,9 +118,6 @@ fun RepaymentList(
         )
     )
 
-
-
-
     Scaffold(
         modifier = Modifier.fillMaxSize(),
 
@@ -269,10 +266,7 @@ fun RepaymentList(
                     CommonSingleButtonsBottomString(
                         onOkClick = {},
                         text = stringResource(Res.string.gtr_save),
-                        textSize = 16,
-
-
-                        )
+                        textSize = 16)
                 }
 
 
@@ -292,14 +286,8 @@ fun RepaymentList(
 
     }
     selectedDialogItem?.let { item ->
-        RepaymentDialog(
-            item = item,
-            onBack = {
-                selectedDialogItem = null
-            }
-        )
+        navController.navigate(RouteName.replayment_detail_list)
     }
-
 
 }
 
@@ -325,16 +313,17 @@ fun CollectionDetailsCard(
                 fontSize = 18,
                 fontWeight = FontWeight.SemiBold,
                 textColor = Color.Black,
-                fontFamily = FontFamily(Font(Res.font.roboto_medium))
+                fontFamily = FontFamily(Font(Res.font.roboto_medium)),
+                modifier = Modifier.fillMaxWidth().padding(vertical = 10.dp)
             )
 
-            IconButton(onClick = onFilterClick) {
+           /* IconButton(onClick = onFilterClick) {
                 Icon(
                     imageVector = Icons.Default.FilterList,
                     contentDescription = "",
                     tint = Color.Black
                 )
-            }
+            }*/
         }
 
         Spacer(Modifier.height(10.dp))

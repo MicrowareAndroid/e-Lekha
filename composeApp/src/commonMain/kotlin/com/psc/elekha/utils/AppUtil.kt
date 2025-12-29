@@ -216,7 +216,7 @@ fun ReusableTextViewes(
     text: String,
     modifier: Modifier = Modifier,
     textColor: Color = appleblue,
-    fontSize: Int = 16,
+    fontSize: Int = 15,
     fontWeight: FontWeight = FontWeight.Bold,
     fontFamily: FontFamily = FontFamily(Font(Res.font.inter_medium)),
     backgroundColor: Color = Color.Transparent,

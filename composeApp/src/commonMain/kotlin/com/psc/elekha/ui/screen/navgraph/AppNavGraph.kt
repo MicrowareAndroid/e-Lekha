@@ -17,6 +17,8 @@ import com.psc.elekha.utils.RouteName
 import com.psc.elekha.ui.screen.login.LoginScreenNew
 import com.psc.elekha.ui.screen.registrationlist.RegistrationListScreen
 import com.psc.elekha.ui.screen.registrationtab.RegistartionTabScreen
+import com.psc.elekha.ui.screen.repayment.LocationFilterScreen
+import com.psc.elekha.ui.screen.repayment.RepaymentDialog
 import com.psc.elekha.ui.screen.splash.SplashScreenNew
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -108,6 +110,12 @@ fun AppNavGraph(
 
         composable(RouteName.replayment_list) {
             RepaymentList(navController)
+        }
+        composable(RouteName.loan_filter_screen) {
+            LocationFilterScreen(navController)
+        }
+        composable(RouteName.replayment_detail_list) {
+            RepaymentDialog(navController)
         }
 
     }
