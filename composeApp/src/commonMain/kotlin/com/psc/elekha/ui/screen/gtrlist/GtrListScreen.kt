@@ -53,8 +53,8 @@ fun GtrListScreen(
             "D3140",
             8,
             "DUDU",
-            "Afshan",
-            "",
+            "Rehman khan alwars",
+            "12-19-2003",
             "04/12/25",
             "111(17)",
             "Monday",
@@ -65,7 +65,7 @@ fun GtrListScreen(
             10,
             "PPPU",
             "Ravi",
-            "",
+            "04/12/25",
             "13/05/25",
             "122(18)",
             "Wednesday",
@@ -76,7 +76,7 @@ fun GtrListScreen(
             7,
             "JJJU",
             "Ravi",
-            "",
+            "04/12/25",
             "07/08/16",
             "116(15)",
             "Thursday",
@@ -87,7 +87,7 @@ fun GtrListScreen(
             9,
             "JJJP",
             "Kailash",
-            "",
+            "04/12/25",
             "04/12/24",
             "119(14)",
             "Friday",
@@ -117,7 +117,7 @@ fun GtrListScreen(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(horizontal = 15.dp, vertical = 5.dp)
+                    .padding(horizontal = 0.dp, vertical = 0.dp)
             )
             {
 
@@ -130,10 +130,9 @@ fun GtrListScreen(
 
                     ReusableCard(
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(5.dp),
+                            .fillMaxWidth(),
                         backgroundColor = homedatareportsColor,
-                        cornerRadius = 12
+                        cornerRadius = 0
                     )
                     {
 

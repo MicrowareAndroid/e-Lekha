@@ -127,7 +127,9 @@ fun RegistartionTabScreen(navController: NavController, pref: AppPreferences) {
 
                         Tab(
                             selected = selectedTabIndex == index,
-                            onClick = { selectedTabIndex = index },
+                            onClick = {
+//                                selectedTabIndex = index
+                                      },
                             selectedContentColor = Color.Black,
                             unselectedContentColor = Color.Black
                         ) {
@@ -178,8 +180,9 @@ fun RegistartionTabScreen(navController: NavController, pref: AppPreferences) {
                             onCancelTab = { selectedTabIndex-- })
 
                         2 -> BankDetailsScreen(
-                            onNextTab = { selectedTabIndex++ },
-                            onCancelTab = { selectedTabIndex-- })
+                            navController = navController,
+
+                            )
 //
 //                        3 -> FamilyDetailListScreen(
 //                            onNextTab = { selectedTabIndex++ },
