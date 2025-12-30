@@ -47,6 +47,7 @@ import com.psc.elekha.ui.screen.bankdetails.BankDetailViewModel
 import com.psc.elekha.ui.screen.kycdetails.KycDetailViewModel
 import com.psc.elekha.ui.screen.login.LoginViewModel
 import com.psc.elekha.ui.screen.personaldetails.PersonalDetailViewModel
+import com.psc.elekha.ui.screen.repayment.RepaymentViewModel
 import org.koin.core.module.dsl.viewModel
 import org.koin.core.module.dsl.viewModelOf
 
@@ -100,7 +101,7 @@ val viewmodelModule = module {
     viewModelOf(::TrainingGroupStatusViewModel)
     viewModelOf(::MSTLoanTypeViewModel)
     viewModelOf(::FamilyMemberDetailViewModel)
-
+    viewModel { RepaymentViewModel(apiRepository = get()) }
     viewModel {
         LoginViewModel(
 
@@ -131,8 +132,6 @@ val viewmodelModule = module {
             appPreferences = get()
         )
     }
-
-
 
 
 }

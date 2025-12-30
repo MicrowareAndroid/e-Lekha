@@ -295,5 +295,6 @@
     <string name="pre_closure_amt">Pre closure amount </string>
     <string name="total_due">Total Due</string>
     <string name="payment_details">Payment Details</string>
+    <string name="download_loan">Download Loan</string>
 
 </resources>

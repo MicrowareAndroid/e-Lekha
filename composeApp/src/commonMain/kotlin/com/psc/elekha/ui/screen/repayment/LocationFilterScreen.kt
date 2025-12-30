@@ -1,38 +1,45 @@
 package com.psc.elekha.ui.screen.repayment
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.relocation.bringIntoViewRequester
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.psc.elekha.ui.theme.btn_color
-import com.psc.elekha.ui.theme.dark_gray
-import com.psc.elekha.ui.theme.homedatareportsColor
-import com.psc.elekha.ui.theme.light_pink
-import com.psc.elekha.ui.theme.toolbar_color
+import com.psc.elekha.apicall.APiState
+import com.psc.elekha.database.viewmodel.MSTCenterViewModel
+import com.psc.elekha.database.viewmodel.MSTVillageViewModel
+import com.psc.elekha.ui.theme.*
 import com.psc.elekha.utils.CommonDivider
+import com.psc.elekha.utils.CustomAlertDialog
 import com.psc.elekha.utils.Dimens
-import com.psc.elekha.utils.FilterFieldCompact
-import com.psc.elekha.utils.FilterSpinner
-import com.psc.elekha.utils.FormFieldCompacts
+import com.psc.elekha.utils.FillDynamicSpinnerespt
+import com.psc.elekha.utils.FormFieldCompact
+import com.psc.elekha.utils.ProgressDialog
 import com.psc.elekha.utils.ReusableCard
-import com.psc.elekha.utils.ReusableDynamicSpinner
 import com.psc.elekha.utils.ReusableTextView
 import com.psc.elekha.utils.ReusableTopBar
 import com.psc.elekha.utils.RouteName
@@ -41,20 +48,56 @@ import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import kotlin.text.ifEmpty
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun LocationFilterScreen(
     navController: NavHostController
 ) {
+    val viewModel = koinViewModel<RepaymentViewModel>()
+    val mstVillageModel = koinViewModel<MSTVillageViewModel>()
+    val mstCenterViewModel = koinViewModel<MSTCenterViewModel>()
+    val villageList by mstVillageModel.villageList.collectAsState()
+    val centreList by mstCenterViewModel.centerList.collectAsState()
+    val downloadState = viewModel.downloadState.collectAsState().value
+    var showProgress by remember { mutableStateOf(false) }
+    var dialogMessage by remember { mutableStateOf("") }
+    var showDialog by remember { mutableStateOf(false) }
 
-    var selectedVillage by remember { mutableStateOf("") }
-    var selectedCenter by remember { mutableStateOf("") }
-    val villages = listOf("Village 1", "Village 2", "Village 3", "Village 4")
-    val centers = listOf("Center A", "Center B", "Center C", "Center D")
-    val select = stringResource(Res.string.spinner_select)
-    var customerIds by remember { mutableStateOf("") }
+    LaunchedEffect(Unit,downloadState) {
+        val username = "developer" // Or get from logged-in user
+        mstVillageModel.loadVillagesByUsername(username)
+        mstCenterViewModel.loadAllCenters()
+        when (downloadState) {
+            is APiState.loading -> {
+                showProgress = true
+                dialogMessage = "Please wait..."
+            }
 
+            is APiState.success -> {
+                showProgress = false
+
+            }
+
+            is APiState.error -> {
+                showProgress = false
+                showDialog = true
+                dialogMessage = downloadState.message
+            }
+
+            is APiState.finish -> {
+                showProgress = false
+            }
+
+            else -> {}
+        }
+    }
+
+    val filteredCentreList by remember(centreList, viewModel.villageId) {
+        derivedStateOf {
+            centreList.filter { it.VillageID == viewModel.villageId }
+        }
+    }
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
@@ -71,7 +114,6 @@ fun LocationFilterScreen(
                 .fillMaxSize()
                 .padding(innerPadding)
         ) {
-
 
             Box(
                 modifier = Modifier
@@ -177,52 +219,80 @@ fun LocationFilterScreen(
                             endPadding = 0.dp
                         )
                     }
+                    Button(
+                        onClick = {
+                                viewModel.getLoanRepayment("developer","123456789")
+                        },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = Dimens.sixteendp)
+                            .width(200.dp)
+                            .height(50.dp),
+                        shape = RoundedCornerShape(3.dp),
+                        elevation = ButtonDefaults.buttonElevation(
+                            defaultElevation = 4.dp,
+                            pressedElevation = 6.dp,
+                            focusedElevation = 4.dp
+                        ),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = btnYellow,
+                            contentColor = Color.White
+                        )
+                    ) {
+                        ReusableTextView(
+                            text = stringResource(Res.string.download_loan),
+                            textColor = Color.White,
+                            fontSize = 20
+                        )
+                    }
                     Column(
                         modifier = Modifier
                             .weight(1f)
-                            .padding(Dimens.sixteendp),
-                        verticalArrangement = Arrangement.spacedBy(Dimens.sixteendp)
+                            .padding(Dimens.sixteendp)
+                            .verticalScroll(rememberScrollState())
                     ) {
-
-                        ReusableDynamicSpinner(
-                            selectedValue = selectedVillage,
-                            options = villages,
-                            onValueSelected = { selectedVillage = it },
-                            modifier = Modifier.fillMaxWidth()
+                        FillDynamicSpinnerespt(
+                            label = stringResource(Res.string.village),
+                            options = villageList,
+                            selectedOption = viewModel.villageId,
+                            onOptionSelected = { viewModel.villageId = it },
+                            focusRequester = viewModel.focusRequesterVlgId,
+                            bringIntoViewRequester = viewModel.bringIntoViewRequesterVlgId,
+                            getOptionId = { it.VillageID },
+                            getOptionLabel = { it.Village.toString() }
                         )
-                        CommonDivider(
-                            color = light_pink,
-                            thickness = 1.dp,
-                            topPadding = 5.dp,
-                            bottomPadding = 5.dp,
-                            startPadding = 0.dp,
-                            endPadding = 0.dp
+                        Spacer(modifier = Modifier.height(Dimens.tendp))
+                        FillDynamicSpinnerespt(
+                            label = stringResource(Res.string.select_center),
+                            options = filteredCentreList,
+                            selectedOption = viewModel.centerId,
+                            onOptionSelected = { viewModel.centerId = it },
+                            focusRequester = viewModel.focusRequesterCenterId,
+                            bringIntoViewRequester = viewModel.bringIntoViewRequesterCenterId,
+                            getOptionId = { it.CenterID },
+                            getOptionLabel = { it.Center.toString() }
                         )
-
-                        ReusableDynamicSpinner(
-                            selectedValue = selectedCenter,
-                            options = centers,
-                            onValueSelected = { selectedCenter = it },
-                            modifier = Modifier.fillMaxWidth()
-                        )
+                        Spacer(modifier = Modifier.height(Dimens.tendp))
                         ReusableTextView(
                             text = stringResource(Res.string.select_customer_center_or),
                             fontSize = 16,
                             fontWeight = FontWeight.Bold,
                             textColor = Color.Black,
                             modifier = Modifier.fillMaxWidth(),
-                            textAlignment = androidx.compose.ui.text.style.TextAlign.Center
+                            textAlignment = TextAlign.Center
                         )
-
-                        FormFieldCompacts(
-                            value = customerIds,
-                            onValueChange = { customerIds = it },
+                        Spacer(modifier = Modifier.height(2.dp))
+                        FormFieldCompact(
+                            label = stringResource(Res.string.select_customer_id),
+                            value = viewModel.customerID,
                             placeholder = stringResource(Res.string.type_here),
-                            maxLength = 10,
-                            modifier = Modifier.fillMaxWidth()
+                            onValueChange = { custID ->
+                                viewModel.customerID = custID
+                            },
+                            inputType = KeyboardType.Text,
+                            modifier = Modifier.focusRequester(viewModel.focusRequesterCustID)
+                                .bringIntoViewRequester(viewModel.bringIntoViewRequesterCustID),
                         )
-
-                        Spacer(Modifier.height(8.dp))
                     }
                     Row(
                         modifier = Modifier.fillMaxWidth().padding(Dimens.sixteendp),
@@ -266,7 +336,16 @@ fun LocationFilterScreen(
             }
         }
     }
+    if (showDialog) {
+        CustomAlertDialog(
+            showDialog,
+            message = dialogMessage,
+            onConfirm = { showDialog = false })
+    }
 
+    if (showProgress) {
+        ProgressDialog(showProgress, dialogMessage)
+    }
 }
 
 @Preview
