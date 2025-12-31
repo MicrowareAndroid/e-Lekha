@@ -110,14 +110,15 @@ fun CustomerDetailScreen(
                 .padding(innerPadding)
 
 
-        ) {
+        )
+        {
 
 
             Column(
                 modifier = Modifier
-                    .fillMaxSize()
+                    .fillMaxSize().padding(bottom = 45.dp)
                     .verticalScroll(rememberScrollState())
-                    .padding(horizontal = 0.dp, vertical = 5.dp),
+//                    .padding(horizontal = 0.dp, vertical = 5.dp),
 
 
             )
@@ -189,364 +190,17 @@ fun CustomerDetailScreen(
                     }
                 }
 
-
-                Spacer(modifier = Modifier.height(10.dp))
-
-
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 10.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-
-                    ReusableTextView(
-                        text = stringResource(Res.string.customer_name),
-                        fontSize = 16,
-                        textColor = black
-                    )
-                }
-                Spacer(modifier = Modifier.height(15.dp))
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 10.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.Top
-                ) {
-
-                    // -------- LEFT IMAGE + CAMERA --------
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .size(100.dp)
-                                .background(Color(0xFFE8E8E8), RoundedCornerShape(6.dp))
-                        )
-
-                        Spacer(modifier = Modifier.height(6.dp))
-
-                        Icon(
-                            painter = painterResource(Res.drawable.camera),
-                            contentDescription = "",
-                            tint = blue,
-                            modifier = Modifier
-                                .size(32.dp)
-                                .clickable {
-                                    // left image camera click
-                                }
-                        )
-                    }
-
-                    // -------- RIGHT IMAGE + CAMERA --------
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .size(100.dp)
-                                .background(Color(0xFFE8E8E8), RoundedCornerShape(6.dp))
-                        )
-
-                        Spacer(modifier = Modifier.height(6.dp))
-
-                        Icon(
-                            painter = painterResource(Res.drawable.camera),
-                            contentDescription = "",
-                            tint = blue,
-                            modifier = Modifier
-                                .size(32.dp)
-                                .clickable {
-                                    // right image camera click
-                                }
-                        )
-                    }
-                }
-
-
-                Spacer(modifier = Modifier.height(15.dp))
-
-                Divider(color = LightSkyBlue, thickness = 1.dp)
-
-                Spacer(modifier = Modifier.height(15.dp))
                 Column(
                     modifier = Modifier
-                        .padding(bottom = 20.dp)
+                        .fillMaxWidth()
+                        .padding(horizontal = 10.dp)
                 )
                 {
 
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 10.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-
-                        // Fixed width text (avoid Row squeezing)
-                        ReusableTextViewBlackCard(
-                            text = stringResource(Res.string.user_last_loan).plus(":"),
-                            modifier = Modifier.width(120.dp) // <--- IMPORTANT
-                        )
-
-                        Spacer(modifier = Modifier.width(8.dp))
-                        FormFieldCompact(
-                            value = "₹ 15,000",
-                            onValueChange = {},
-                            isReadable = true,
-                            isEnable = true,
-                            placeholder = "",
-                            modifier = Modifier.weight(1f)
-                        )
-                    }
-
-                    Spacer(modifier = Modifier.height(10.dp))
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 10.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        ReusableTextViewBlackCard(
-                            text = stringResource(Res.string.user_psc).plus(":"),
-                            modifier = Modifier.width(120.dp),
-                        )
-                        Spacer(modifier = Modifier.width(8.dp))
-                        FormFieldCompact(
-                            value = "₹ 25,000",
-                            onValueChange = {},
-                            isReadable = true,
-                            isEnable = true,
-                            placeholder = "",
-                            modifier = Modifier.weight(1f)
-                        )
-                    }
-                    Spacer(modifier = Modifier.height(10.dp))
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 10.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        ReusableTextViewBlackCard(
-
-                            text = stringResource(Res.string.user_total).plus(":"),
-                            modifier = Modifier.width(120.dp),
-                        )
-                        Spacer(modifier = Modifier.width(7.dp))
-                        FormFieldCompact(
-                            value = "₹ 32,000",
-                            onValueChange = {},
-                            isReadable = true,
-                            isEnable = true,
-                            placeholder = "",
-                            modifier = Modifier.weight(1f)
-                        )
-                    }
-
-                    Spacer(modifier = Modifier.height(10.dp))
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 10.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        ReusableTextViewBlackCard(
-                            text = stringResource(Res.string.user_loan).plus(":"),
-                            modifier = Modifier.width(120.dp),
-                        )
-                        Spacer(modifier = Modifier.width(7.dp))
-                        FormFieldCompact(
-                            value = "Business Expansion",
-                            onValueChange = {},
-                            isReadable = true,
-                            isEnable = true,
-                            placeholder = "",
-                            modifier = Modifier.weight(1f)
-                        )
-                    }
-                    Spacer(modifier = Modifier.height(12.dp))
-
-                    Divider(color = LightSkyBlue, thickness = 1.dp)
-
-                    Spacer(modifier = Modifier.height(12.dp))
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 10.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        ReusableTextViewBlackCard(
-                            text = stringResource(Res.string.user_existing).plus(":"),
-                            modifier = Modifier.width(120.dp),
-
-                            )
-                        Spacer(modifier = Modifier.width(7.dp))
-                        FormFieldCompact(
-                            value = "₹ 45,000",
-                            onValueChange = {},
-                            isReadable = true,
-                            isEnable = true,
-                            placeholder = "",
-                            modifier = Modifier.weight(1f)
-                        )
-                    }
-                    Spacer(modifier = Modifier.height(12.dp))
-
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 10.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        ReusableTextViewBlackCard(
-                            text = stringResource(Res.string.user_ebill).plus(":"),
-                            modifier = Modifier.width(120.dp),
-
-                            )
-                        Spacer(modifier = Modifier.width(7.dp))
-                        FormFieldCompact(
-                            value = "EB12345",
-                            onValueChange = {},
-                            isReadable = true,
-                            isEnable = true,
-                            placeholder = "",
-                            modifier = Modifier.weight(1f)
-                        )
-                    }
-                    Spacer(modifier = Modifier.height(7.dp))
-                    FormFieldCompact(
-                        value = textfiledRemark,
-                        onValueChange = { textfiledRemark=it },
-                        placeholder = stringResource(Res.string.user_remark),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 10.dp),
-                        maxLength = 30
-                    )
-
-                    Spacer(modifier = Modifier.height(10.dp))
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 10.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        // LEFT → Text
-                        Text(
-                            text = stringResource(Res.string.user_electricity).plus(":"), // "Electricity Meter"
-                            fontSize = 14.sp,
-                            color = Color.Black,
-                            fontFamily = FontFamily(Font(Res.font.roboto_medium)),
-                            fontWeight = FontWeight.SemiBold,
-                            modifier = Modifier.weight(1f) // left side space
-                        )
-
-                        // RIGHT → Box + Camera Icon (Column)
-                        Column(
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            Box(
-                                modifier = Modifier
-                                    .size(100.dp)
-                                    .background(Color(0xFFE8E8E8))
-                            ) {
-                                customerImage?.let { img ->
-                                    Image(
-                                        bitmap = img,
-                                        contentDescription = "Electricity Meter Image",
-                                        modifier = Modifier.fillMaxSize(),
-                                        contentScale = ContentScale.Crop
-                                    )
-                                }
-                            }
-
-                            Spacer(modifier = Modifier.height(6.dp))
-
-                            Icon(
-                                painter = painterResource(Res.drawable.camera),
-                                contentDescription = null,
-                                tint = blue,
-                                modifier = Modifier
-                                    .size(32.dp)
-                                    .clickable { openCamera = true }
-                            )
-                        }
-                    }
-
-                    Spacer(modifier = Modifier.height(10.dp))
-
-                    Divider(color = LightSkyBlue, thickness = 1.dp)
 
                     Spacer(modifier = Modifier.height(10.dp))
 
 
-
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 10.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        // LEFT → Text
-                        Text(
-                            text = stringResource(Res.string.user_house).plus(":"), // "House Verification"
-                            fontSize = 14.sp,
-                            color = Color.Black,
-                            fontFamily = FontFamily(Font(Res.font.roboto_medium)),
-                            fontWeight = FontWeight.SemiBold,
-                            modifier = Modifier.weight(1f) // take available space on left
-                        )
-
-                        // RIGHT → Box + Camera Icon
-                        Column(
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            Box(
-                                modifier = Modifier
-                                    .size(100.dp)
-                                    .background(Color(0xFFE8E8E8))
-                            ) {
-                                customerImage?.let { img ->
-                                    Image(
-                                        bitmap = img,
-                                        contentDescription = "House Verification Image",
-                                        modifier = Modifier.fillMaxSize(),
-                                        contentScale = ContentScale.Crop
-                                    )
-                                }
-                            }
-
-                            Spacer(modifier = Modifier.height(6.dp))
-
-                            Icon(
-                                painter = painterResource(Res.drawable.camera),
-                                contentDescription = null,
-                                tint = blue,
-                                modifier = Modifier
-                                    .size(32.dp)
-                                    .clickable { openCamera = true }
-                            )
-                        }
-                    }
-
-                    FormFieldCompact(
-                        value = textfiledRemarks,
-                        onValueChange = { textfiledRemarks=it },
-                        placeholder = stringResource(Res.string.user_remarks),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 10.dp),
-                        maxLength = 30
-                    )
-                    Spacer(Modifier.height(10.dp))
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -555,70 +209,427 @@ fun CustomerDetailScreen(
                         verticalAlignment = Alignment.CenterVertically
                     )
                     {
-                        ReusableTextViewBlackCard(
-                            text = stringResource(Res.string.user_loan_any).plus(":"),
-                            modifier = Modifier.width(120.dp),
 
-                            )
-                        Spacer(modifier = Modifier.width(7.dp))
-                        ReusableDynamicSpinner(
-                            selectedValue = selectedBranch,
-                            options = branchList,
-                            onValueSelected = { selectedBranch = it },
-                            modifier = Modifier.weight(1f)
+                        ReusableTextView(
+                            text = stringResource(Res.string.customer_name),
+                            fontSize = 16,
+                            textColor = black
                         )
-
                     }
-                    Spacer(modifier = Modifier.height(12.dp))
-                    FormFieldCompact(
-                        value = textfiledRemarks,
-                        onValueChange = { textfiledRemarks=it },
-                        placeholder = stringResource(Res.string.user_remarks),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 10.dp),
-                        maxLength = 30
-                    )
-
-                    Spacer(modifier = Modifier.height(12.dp))
+                    Spacer(modifier = Modifier.height(15.dp))
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = 10.dp),
                         horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
+                        verticalAlignment = Alignment.Top
+                    )
+                    {
 
-                        ReusableTextViews(
-                            text = stringResource(Res.string.user_note).plus(":"),
-                            fontSize = 15,
-                            textColor = Color.Gray,
-                            isMandatory = 1
+                        // -------- LEFT IMAGE + CAMERA --------
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Box(
+                                modifier = Modifier
+                                    .size(100.dp)
+                                    .background(Color(0xFFE8E8E8), RoundedCornerShape(6.dp))
+                            )
+
+                            Spacer(modifier = Modifier.height(6.dp))
+
+                            Icon(
+                                painter = painterResource(Res.drawable.camera),
+                                contentDescription = "",
+                                tint = blue,
+                                modifier = Modifier
+                                    .size(32.dp)
+                                    .clickable {
+                                        // left image camera click
+                                    }
+                            )
+                        }
+
+                        // -------- RIGHT IMAGE + CAMERA --------
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Box(
+                                modifier = Modifier
+                                    .size(100.dp)
+                                    .background(Color(0xFFE8E8E8), RoundedCornerShape(6.dp))
+                            )
+
+                            Spacer(modifier = Modifier.height(6.dp))
+
+                            Icon(
+                                painter = painterResource(Res.drawable.camera),
+                                contentDescription = "",
+                                tint = blue,
+                                modifier = Modifier
+                                    .size(32.dp)
+                                    .clickable {
+                                        // right image camera click
+                                    }
+                            )
+                        }
+                    }
+
+
+                    Spacer(modifier = Modifier.height(15.dp))
+
+                    Divider(color = LightSkyBlue, thickness = 1.dp)
+
+                    Spacer(modifier = Modifier.height(15.dp))
+                    Column(
+                        modifier = Modifier
+                            .padding(bottom = 20.dp)
+                    )
+                    {
+
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 10.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+
+                            // Fixed width text (avoid Row squeezing)
+                            ReusableTextViewBlackCard(
+                                text = stringResource(Res.string.user_last_loan).plus(":"),
+                                modifier = Modifier.width(120.dp) // <--- IMPORTANT
+                            )
+
+                            Spacer(modifier = Modifier.width(8.dp))
+                            FormFieldCompact(
+                                value = "₹ 15,000",
+                                onValueChange = {},
+                                isReadable = true,
+                                isEnable = true,
+                                placeholder = "",
+                                modifier = Modifier.weight(1f)
+                            )
+                        }
+
+                        Spacer(modifier = Modifier.height(10.dp))
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 10.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            ReusableTextViewBlackCard(
+                                text = stringResource(Res.string.user_psc).plus(":"),
+                                modifier = Modifier.width(120.dp),
+                            )
+                            Spacer(modifier = Modifier.width(8.dp))
+                            FormFieldCompact(
+                                value = "₹ 25,000",
+                                onValueChange = {},
+                                isReadable = true,
+                                isEnable = true,
+                                placeholder = "",
+                                modifier = Modifier.weight(1f)
+                            )
+                        }
+                        Spacer(modifier = Modifier.height(10.dp))
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 10.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            ReusableTextViewBlackCard(
+
+                                text = stringResource(Res.string.user_total).plus(":"),
+                                modifier = Modifier.width(120.dp),
+                            )
+                            Spacer(modifier = Modifier.width(7.dp))
+                            FormFieldCompact(
+                                value = "₹ 32,000",
+                                onValueChange = {},
+                                isReadable = true,
+                                isEnable = true,
+                                placeholder = "",
+                                modifier = Modifier.weight(1f)
+                            )
+                        }
+
+                        Spacer(modifier = Modifier.height(10.dp))
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 10.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            ReusableTextViewBlackCard(
+                                text = stringResource(Res.string.user_loan).plus(":"),
+                                modifier = Modifier.width(120.dp),
+                            )
+                            Spacer(modifier = Modifier.width(7.dp))
+                            FormFieldCompact(
+                                value = "Business Expansion",
+                                onValueChange = {},
+                                isReadable = true,
+                                isEnable = true,
+                                placeholder = "",
+                                modifier = Modifier.weight(1f)
+                            )
+                        }
+                        Spacer(modifier = Modifier.height(12.dp))
+
+                        Divider(color = LightSkyBlue, thickness = 1.dp)
+
+                        Spacer(modifier = Modifier.height(12.dp))
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 10.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            ReusableTextViewBlackCard(
+                                text = stringResource(Res.string.user_existing).plus(":"),
+                                modifier = Modifier.width(120.dp),
+
+                                )
+                            Spacer(modifier = Modifier.width(7.dp))
+                            FormFieldCompact(
+                                value = "₹ 45,000",
+                                onValueChange = {},
+                                isReadable = true,
+                                isEnable = true,
+                                placeholder = "",
+                                modifier = Modifier.weight(1f)
+                            )
+                        }
+                        Spacer(modifier = Modifier.height(12.dp))
+
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 10.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            ReusableTextViewBlackCard(
+                                text = stringResource(Res.string.user_ebill).plus(":"),
+                                modifier = Modifier.width(120.dp),
+
+                                )
+                            Spacer(modifier = Modifier.width(7.dp))
+                            FormFieldCompact(
+                                value = "EB12345",
+                                onValueChange = {},
+                                isReadable = true,
+                                isEnable = true,
+                                placeholder = "",
+                                modifier = Modifier.weight(1f)
+                            )
+                        }
+                        Spacer(modifier = Modifier.height(7.dp))
+                        FormFieldCompact(
+                            value = textfiledRemark,
+                            onValueChange = { textfiledRemark = it },
+                            placeholder = stringResource(Res.string.user_remark),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 10.dp),
+                            maxLength = 30
                         )
 
+                        Spacer(modifier = Modifier.height(10.dp))
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 10.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            // LEFT → Text
+                            Text(
+                                text = stringResource(Res.string.user_electricity).plus(":"), // "Electricity Meter"
+                                fontSize = 14.sp,
+                                color = Color.Black,
+                                fontFamily = FontFamily(Font(Res.font.roboto_medium)),
+                                fontWeight = FontWeight.SemiBold,
+                                modifier = Modifier.weight(1f) // left side space
+                            )
 
-                        ReusableTextViewBlackCard(
-                            text = stringResource(Res.string.user_reduce),
-                            fontSize = 13,
+                            // RIGHT → Box + Camera Icon (Column)
+                            Column(
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                Box(
+                                    modifier = Modifier
+                                        .size(100.dp)
+                                        .background(Color(0xFFE8E8E8))
+                                ) {
+                                    customerImage?.let { img ->
+                                        Image(
+                                            bitmap = img,
+                                            contentDescription = "Electricity Meter Image",
+                                            modifier = Modifier.fillMaxSize(),
+                                            contentScale = ContentScale.Crop
+                                        )
+                                    }
+                                }
+
+                                Spacer(modifier = Modifier.height(6.dp))
+
+                                Icon(
+                                    painter = painterResource(Res.drawable.camera),
+                                    contentDescription = null,
+                                    tint = blue,
+                                    modifier = Modifier
+                                        .size(32.dp)
+                                        .clickable { openCamera = true }
+                                )
+                            }
+                        }
+
+                        Spacer(modifier = Modifier.height(10.dp))
+
+                        Divider(color = LightSkyBlue, thickness = 1.dp)
+
+                        Spacer(modifier = Modifier.height(10.dp))
+
+
+
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 10.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            // LEFT → Text
+                            Text(
+                                text = stringResource(Res.string.user_house).plus(":"), // "House Verification"
+                                fontSize = 14.sp,
+                                color = Color.Black,
+                                fontFamily = FontFamily(Font(Res.font.roboto_medium)),
+                                fontWeight = FontWeight.SemiBold,
+                                modifier = Modifier.weight(1f) // take available space on left
+                            )
+
+                            // RIGHT → Box + Camera Icon
+                            Column(
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                Box(
+                                    modifier = Modifier
+                                        .size(100.dp)
+                                        .background(Color(0xFFE8E8E8))
+                                ) {
+                                    customerImage?.let { img ->
+                                        Image(
+                                            bitmap = img,
+                                            contentDescription = "House Verification Image",
+                                            modifier = Modifier.fillMaxSize(),
+                                            contentScale = ContentScale.Crop
+                                        )
+                                    }
+                                }
+
+                                Spacer(modifier = Modifier.height(6.dp))
+
+                                Icon(
+                                    painter = painterResource(Res.drawable.camera),
+                                    contentDescription = null,
+                                    tint = blue,
+                                    modifier = Modifier
+                                        .size(32.dp)
+                                        .clickable { openCamera = true }
+                                )
+                            }
+                        }
+
+                        FormFieldCompact(
+                            value = textfiledRemarks,
+                            onValueChange = { textfiledRemarks = it },
+                            placeholder = stringResource(Res.string.user_remarks),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 10.dp),
+                            maxLength = 30
                         )
+                        Spacer(Modifier.height(10.dp))
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 10.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        )
+                        {
+                            ReusableTextViewBlackCard(
+                                text = stringResource(Res.string.user_loan_any).plus(":"),
+                                modifier = Modifier.width(120.dp),
+
+                                )
+                            Spacer(modifier = Modifier.width(7.dp))
+                            ReusableDynamicSpinner(
+                                selectedValue = selectedBranch,
+                                options = branchList,
+                                onValueSelected = { selectedBranch = it },
+                                modifier = Modifier.weight(1f)
+                            )
+
+                        }
+                        Spacer(modifier = Modifier.height(12.dp))
+                        FormFieldCompact(
+                            value = textfiledRemarks,
+                            onValueChange = { textfiledRemarks = it },
+                            placeholder = stringResource(Res.string.user_remarks),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 10.dp),
+                            maxLength = 30
+                        )
+
+                        Spacer(modifier = Modifier.height(12.dp))
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 10.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+
+                            ReusableTextViews(
+                                text = stringResource(Res.string.user_note).plus(":"),
+                                fontSize = 15,
+                                textColor = Color.Gray,
+                                isMandatory = 1
+                            )
+
+
+                            ReusableTextViewBlackCard(
+                                text = stringResource(Res.string.user_reduce),
+                                fontSize = 13,
+                            )
+                        }
                     }
                 }
             }
-//            Box(
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    .padding(horizontal = 16.dp, vertical = 5.dp)
-//                    .align(Alignment.BottomCenter)
-//
-//            ) {
-//                CommonSingleButtonsBottomString(
-//                    onOkClick = {},
-//                    text = stringResource(Res.string.gtr_save),
-//                    textSize = 16,
-//
-//
-//                    )
-//            }
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 5.dp)
+                    .align(Alignment.BottomCenter)
+
+            ) {
+                CommonSingleButtonsBottomString(
+                    onOkClick = {},
+                    text = stringResource(Res.string.gtr_save),
+                    textSize = 16,
+
+
+                    )
+            }
 
         }
     }
