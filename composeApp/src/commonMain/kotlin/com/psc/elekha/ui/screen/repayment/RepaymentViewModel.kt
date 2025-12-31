@@ -8,19 +8,28 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.lifecycle.viewModelScope
 import com.psc.elekha.apicall.APiState
 import com.psc.elekha.apicall.ApiRepository
+import com.psc.elekha.database.viewmodel.LoanRepaymentViewModel
 import com.psc.elekha.model.MasterRequest
-import com.psc.elekha.response.MasterResponse
+import com.psc.elekha.model.ValidationModelContorl
+import com.psc.elekha.response.LoanRepaymentResponse
 import com.psc.elekha.ui.screen.base.BaseValidationViewModel
-import e_lekha.composeapp.generated.resources.Res
-import e_lekha.composeapp.generated.resources.something_wentwrong
+import com.psc.elekha.utils.returnIntegerValue
+import com.psc.elekha.utils.returnStringValue
+import e_lekha.composeapp.generated.resources.*
 import io.ktor.client.call.body
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.getString
 
-class RepaymentViewModel(private val apiRepository: ApiRepository):BaseValidationViewModel()  {
+class RepaymentViewModel(
+    private val apiRepository: ApiRepository,
+    val loanRepaymentViewModel: LoanRepaymentViewModel
+) : BaseValidationViewModel() {
 
+    private var _paymentImage by mutableStateOf("")
+    val paymentImage: String
+        get() = _paymentImage
     var villageId by mutableStateOf(0)
     var modeID by mutableStateOf(0)
     var centerId by mutableStateOf(0)
@@ -41,26 +50,76 @@ class RepaymentViewModel(private val apiRepository: ApiRepository):BaseValidatio
 
             try {
                 val request = MasterRequest(username, password)
-                val response = apiRepository.getMaster(request)
+                val response = apiRepository.getLoanRepayment(request)
 
                 val code = response.status.value
-                if (code == 200){
+                if (code == 200) {
 
-                    val body = response.body<MasterResponse>()
-                    body.let{
+                    val body = response.body<LoanRepaymentResponse>()
+                    body.let {
 
                     }
-                    _downloadState.value=APiState.success("Loan download successfully")
+                    _downloadState.value = APiState.success("Loan download successfully")
 
 
-                }else if(code == 401){
+                } else if (code == 401) {
                     _downloadState.value = APiState.error(getString(Res.string.something_wentwrong))
-                }else{
+                } else {
                     _downloadState.value = APiState.error(getString(Res.string.something_wentwrong))
                 }
             } catch (e: Exception) {
                 _downloadState.value = APiState.error(e.message ?: "Unknown error")
             }
+        }
+    }
+
+    fun setPaymentImage(path: String) {
+        _paymentImage = path
+    }
+
+    fun saveData() {
+        viewModelScope.launch {
+            val validation = checkValidation()
+            if (validation.isValid) {
+                loanRepaymentViewModel.updateLoanRepaymentData(0.0, "", 0.0, 0.0, "", modeID, "")
+                saveMessage = getString(Res.string.data_updated_successfully)
+                showSaveAlert = true
+                saveFlag = 1
+            } else {
+                showValidationError(validation)
+            }
+        }
+    }
+
+    private suspend fun checkValidation(): ValidationModelContorl {
+
+        return when {
+            returnIntegerValue(modeID.toString()) == 0 -> {
+                val pleasepaymentmode = getString(Res.string.select_pay_mode)
+                ValidationModelContorl(
+                    isValid = false,
+                    errorMessage = pleasepaymentmode
+                )
+            }
+
+            returnStringValue(utrNo).isBlank() -> {
+                val utrLabel = getString(Res.string.enter_utr)
+                ValidationModelContorl(
+                    isValid = false,
+                    errorMessage = utrLabel
+                )
+            }
+
+            returnStringValue(totalAmt).isBlank() -> {
+                val paymentLabel = getString(Res.string.enter_total_payment)
+                ValidationModelContorl(
+                    isValid = false,
+                    errorMessage = paymentLabel
+                )
+            }
+
+            else -> ValidationModelContorl(isValid = true)
+
         }
     }
 }

@@ -80,8 +80,7 @@ class LoanRepaymentViewModel(
         LoanLong: Double,
         LoanPlace: String,
         PaymentType: Int,
-        GUID: String,
-        onComplete: (() -> Unit)? = null
+        GUID: String
     ) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.updateLoanRepaymentData(
@@ -93,7 +92,6 @@ class LoanRepaymentViewModel(
                 PaymentType,
                 GUID
             )
-            onComplete?.invoke()
         }
     }
 

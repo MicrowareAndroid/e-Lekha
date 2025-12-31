@@ -296,5 +296,8 @@
     <string name="total_due">Total Due</string>
     <string name="payment_details">Payment Details</string>
     <string name="download_loan">Download Loan</string>
+    <string name="select_pay_mode">Please Select Payment Mode</string>
+    <string name="enter_utr">Please Enter UTR Number</string>
+    <string name="enter_total_payment">Please Enter Total Payment</string>
 
 </resources>

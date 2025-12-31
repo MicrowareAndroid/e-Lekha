@@ -1,6 +1,7 @@
 package com.psc.elekha.ui.screen.repayment
 
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -33,6 +34,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -44,7 +47,9 @@ import com.psc.elekha.ui.theme.black
 import com.psc.elekha.ui.theme.blue
 import com.psc.elekha.ui.theme.lightGrey
 import com.psc.elekha.ui.theme.white
+import com.psc.elekha.utils.CameraPicker
 import com.psc.elekha.utils.CommonActionButtons
+import com.psc.elekha.utils.CustomAlertDialog
 import com.psc.elekha.utils.Dimens
 import com.psc.elekha.utils.FillDynamicSpinnerespt
 import com.psc.elekha.utils.FormFieldCompact
@@ -55,6 +60,7 @@ import com.psc.elekha.utils.ReusableTextViewBlackCard
 import com.psc.elekha.utils.ReusableTextViewGrayCard
 import com.psc.elekha.utils.ReusableTextViewes
 import com.psc.elekha.utils.ReusableTopBar
+import com.psc.elekha.utils.loadImageFromPath
 import e_lekha.composeapp.generated.resources.Res
 import e_lekha.composeapp.generated.resources.call
 import e_lekha.composeapp.generated.resources.camera
@@ -92,12 +98,6 @@ import org.koin.compose.viewmodel.koinViewModel
 fun RepaymentDialog(
     navController: NavHostController
 ) {
-    var selectedPaymentMode by remember { mutableStateOf("Select") }
-    val paymentOptions = listOf("Cash", "Online", "UPI")
-
-    var repaymentAmounts by remember { mutableStateOf("") }
-    var repaymentAmount by remember { mutableStateOf("") }
-    val scrollState = rememberScrollState()
     val sampleItem = RepaymentItem(
         "BHK03.123",
         "MEENA W/O Kailash chand",
@@ -113,6 +113,8 @@ fun RepaymentDialog(
         "4700",
         "7834456567"
     )
+    var openCamera by remember { mutableStateOf(false) }
+    var paymentImgBitmap by remember { mutableStateOf<ImageBitmap?>(null) }
     val viewModel = koinViewModel<RepaymentViewModel>()
     val mstComboViewModel = koinViewModel<MSTComboBox_NViewModel>()
     val modeList by mstComboViewModel.cashStatusValue.collectAsState()
@@ -426,10 +428,18 @@ fun RepaymentDialog(
                             Box(
                                 modifier = Modifier
                                     .size(55.dp)
-                                    .background(Color(0xFFE8E8E8)), // Light Grey Box
+                                    .background(Color(0xFFE8E8E8)),
                                 contentAlignment = Alignment.Center
                             ) {
-                                // Preview can go here
+                                paymentImgBitmap?.let { img ->
+                                    Image(
+                                        bitmap = img,
+                                        contentDescription = null,
+                                        modifier = Modifier.fillMaxSize(),
+                                        contentScale = ContentScale.Crop
+
+                                    )
+                                }
                             }
                             Spacer(modifier = Modifier.height(6.dp))
                             Icon(
@@ -437,6 +447,7 @@ fun RepaymentDialog(
                                 tint = blue,
                                 contentDescription = stringResource(Res.string.front_image),
                                 modifier = Modifier.size(28.dp)
+                                    .clickable { openCamera = true }
                             )
                             Spacer(modifier = Modifier.height(4.dp))
                             ReusableTextView(text = stringResource(Res.string.personal_payment_image))
@@ -450,11 +461,37 @@ fun RepaymentDialog(
                     CommonActionButtons(
 
                         onSaveClick = {
-
+                            viewModel.saveData()
                         }, onCloseClick = { navController.popBackStack() })
+                    if (viewModel.showSaveAlert) {
+                        CustomAlertDialog(
+                            showDialog = viewModel.showSaveAlert,
+                            message = viewModel.saveMessage,
+                            onConfirm = {
+                                if (viewModel.saveFlag == 1) {
+                                    viewModel.showSaveAlert = false
+                                    navController.popBackStack()
+                                } else {
+                                    viewModel.requestFocus()
+                                }
+                            }
+                        )
+                    }
                 }
             }
         }
+    }
+    if (openCamera) {
+        CameraPicker(
+            openCamera = openCamera,
+            onImagePicked = { path ->
+                path?.let {
+                    paymentImgBitmap = loadImageFromPath(it)
+                    viewModel.setPaymentImage(it)
+                }
+                openCamera = false
+            }
+        )
     }
 }
 

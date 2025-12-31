@@ -3,7 +3,9 @@ package com.psc.elekha.database.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.serialization.Serializable
 
+@Serializable
 @Entity(tableName = "LoanClouser")
 data class LoanClosureEntity(
     @PrimaryKey @ColumnInfo(name = "GUID") val GUID: String,

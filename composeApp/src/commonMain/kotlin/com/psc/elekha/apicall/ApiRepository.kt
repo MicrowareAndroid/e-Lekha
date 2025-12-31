@@ -6,5 +6,6 @@ import io.ktor.client.statement.HttpResponse
 
 class ApiRepository(private val apiService: ApiService) {
     suspend fun getMaster(masterRequest: MasterRequest): HttpResponse = apiService.getMaster(masterRequest)
+    suspend fun getLoanRepayment(masterRequest: MasterRequest): HttpResponse = apiService.getLoanRepayment(masterRequest)
 
 }

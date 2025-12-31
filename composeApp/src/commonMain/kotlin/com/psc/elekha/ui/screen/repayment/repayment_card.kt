@@ -93,11 +93,6 @@ fun RepaymentItemCard(
                             fontSize = 13,
                             modifier = Modifier.weight(1f)
                         )
-                        Checkbox(
-                            checked = isSelected,
-                            onCheckedChange = { onSelected() },
-                            modifier = Modifier.size(22.dp),
-                        )
                     }
                     Spacer(modifier = Modifier.height(10.dp))
                     Row(
@@ -127,35 +122,14 @@ fun RepaymentItemCard(
                             modifier = Modifier.weight(1f)
                         )
                     }
-                  /*  Spacer(modifier = Modifier.height(10.dp))
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        ReusableTextViewGrayCard(
-                            stringResource(Res.string.personal_total_due).plus(":"),
-                            fontSize = 13,
-                            modifier = Modifier.wrapContentWidth()
-                        )
-                        Spacer(modifier = Modifier.width(4.dp))
-                        ReusableTextViewBlackCard(
-                            item.totalDue,
-                            fontSize = 13,
-                            modifier = Modifier.weight(1f)
-                        )
-                        ReusableTextViewGrayCard(
-                            stringResource(Res.string.personal_payment_mode).plus(":"),
-                            fontSize = 13,
-                            modifier = Modifier.wrapContentWidth()
-                        )
-                        Spacer(modifier = Modifier.width(4.dp))
-                        ReusableTextViewBlackCard(
-                            "Cash",
-                            fontSize = 13,
-                            modifier = Modifier.weight(1f)
-                        )
-                    }*/
+
                 }
+                Spacer(modifier = Modifier.width(10.dp))
+                Checkbox(
+                    checked = isSelected,
+                    onCheckedChange = { onSelected() },
+                    modifier = Modifier.size(22.dp),
+                )
             }
         }
     }
