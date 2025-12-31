@@ -15,22 +15,30 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.relocation.bringIntoViewRequester
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.psc.elekha.database.viewmodel.MSTComboBox_NViewModel
+import com.psc.elekha.database.viewmodel.MSTVillageViewModel
 import com.psc.elekha.ui.screen.repayment.model.RepaymentItem
 import com.psc.elekha.ui.theme.black
 import com.psc.elekha.ui.theme.blue
@@ -38,6 +46,8 @@ import com.psc.elekha.ui.theme.lightGrey
 import com.psc.elekha.ui.theme.white
 import com.psc.elekha.utils.CommonActionButtons
 import com.psc.elekha.utils.Dimens
+import com.psc.elekha.utils.FillDynamicSpinnerespt
+import com.psc.elekha.utils.FormFieldCompact
 import com.psc.elekha.utils.FormFieldCompacts
 import com.psc.elekha.utils.ReusableDynamicSpinner
 import com.psc.elekha.utils.ReusableTextView
@@ -69,11 +79,14 @@ import e_lekha.composeapp.generated.resources.personal_payment_utr
 import e_lekha.composeapp.generated.resources.personal_total_due
 import e_lekha.composeapp.generated.resources.personal_weeks_arrear
 import e_lekha.composeapp.generated.resources.pre_closure_amt
+import e_lekha.composeapp.generated.resources.select_customer_id
 import e_lekha.composeapp.generated.resources.total_due
 import e_lekha.composeapp.generated.resources.type_here
+import e_lekha.composeapp.generated.resources.village
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun RepaymentDialog(
@@ -100,6 +113,14 @@ fun RepaymentDialog(
         "4700",
         "7834456567"
     )
+    val viewModel = koinViewModel<RepaymentViewModel>()
+    val mstComboViewModel = koinViewModel<MSTComboBox_NViewModel>()
+    val modeList by mstComboViewModel.cashStatusValue.collectAsState()
+
+    LaunchedEffect(Unit) {
+        mstComboViewModel.loadLookUpValues(lookupTypeFk = 20)
+    }
+
     Scaffold(
         modifier = Modifier.fillMaxSize(),
 
@@ -107,7 +128,7 @@ fun RepaymentDialog(
             ReusableTopBar(
                 title = stringResource(Res.string.personal_payment_detail),
                 navigationIcon = painterResource(Res.drawable.ic_back),
-                onNavigationClick = {  navController.popBackStack()}
+                onNavigationClick = { navController.popBackStack() }
             )
         },
     ) { innerPadding ->
@@ -128,6 +149,7 @@ fun RepaymentDialog(
                         .fillMaxWidth()
                         .weight(1f)
                         .padding(16.dp)
+                        .verticalScroll(rememberScrollState())
                 ) {
                     ReusableTextViewes(stringResource(Res.string.customer_details))
                     Spacer(modifier = Modifier.height(Dimens.tendp))
@@ -165,7 +187,7 @@ fun RepaymentDialog(
                             painter = painterResource(Res.drawable.call),
                             tint = blue,
                             contentDescription = stringResource(Res.string.front_image),
-                            modifier = Modifier.size(15.dp).clickable{
+                            modifier = Modifier.size(15.dp).clickable {
 
                             }
                         )
@@ -345,18 +367,13 @@ fun RepaymentDialog(
                         modifier = Modifier.fillMaxWidth()
                     )
                     {
-                        ReusableTextView(
-                            stringResource(Res.string.personal_payment_mode),
-                            fontSize = 14, modifier = Modifier.wrapContentWidth()
-                        )
-
-                        Spacer(modifier = Modifier.height(6.dp))
-
-                        ReusableDynamicSpinner(
-                            selectedValue = selectedPaymentMode,
-                            options = paymentOptions,
-                            onValueSelected = { selectedPaymentMode = it },
-                            modifier = Modifier.fillMaxWidth()
+                        FillDynamicSpinnerespt(
+                            label = stringResource(Res.string.personal_payment_mode),
+                            options = modeList,
+                            selectedOption = viewModel.modeID,
+                            onOptionSelected = { viewModel.modeID = it },
+                            getOptionId = { it.ID },
+                            getOptionLabel = { it.Value.toString() }
                         )
                     }
                     Spacer(modifier = Modifier.height(6.dp))
@@ -365,21 +382,15 @@ fun RepaymentDialog(
                         modifier = Modifier.fillMaxWidth()
                     )
                     {
-                        ReusableTextView(
-                            stringResource(Res.string.personal_payment_utr),
-                            fontSize = 14
-                        )
-
-                        Spacer(modifier = Modifier.height(6.dp))
-
-                        FormFieldCompacts(
-                            value = repaymentAmounts,
-                            onValueChange = { repaymentAmounts = it },
+                        FormFieldCompact(
+                            label = stringResource(Res.string.personal_payment_utr),
+                            value = viewModel.utrNo,
                             placeholder = stringResource(Res.string.type_here),
-                            maxLength = 10,
-                            modifier = Modifier.fillMaxWidth()
+                            onValueChange = { utrNo ->
+                                viewModel.utrNo = utrNo
+                            },
+                            inputType = KeyboardType.Text
                         )
-
                     }
 
                     Spacer(modifier = Modifier.height(6.dp))
@@ -388,22 +399,15 @@ fun RepaymentDialog(
                         modifier = Modifier.fillMaxWidth()
                     )
                     {
-                        ReusableTextView(
-                            stringResource(Res.string.personal_current_payment),
-                            fontSize = 14
-                        )
-
-                        Spacer(modifier = Modifier.height(6.dp))
-
-                        FormFieldCompacts(
-                            value = repaymentAmount,
-                            onValueChange = { repaymentAmount = it },
+                        FormFieldCompact(
+                            label = stringResource(Res.string.personal_current_payment),
+                            value = viewModel.totalAmt,
                             placeholder = stringResource(Res.string.type_here),
-                            maxLength = 10,
-                            modifier = Modifier.fillMaxWidth()
-
+                            onValueChange = { totalAmt ->
+                                viewModel.totalAmt = totalAmt
+                            },
+                            inputType = KeyboardType.Number
                         )
-
                     }
 
                     Spacer(modifier = Modifier.height(6.dp))
@@ -447,7 +451,7 @@ fun RepaymentDialog(
 
                         onSaveClick = {
 
-                        }, onCloseClick = {  navController.popBackStack()})
+                        }, onCloseClick = { navController.popBackStack() })
                 }
             }
         }
@@ -459,5 +463,6 @@ fun RepaymentDialog(
 fun RepaymentDialogPreview() {
 
     RepaymentDialog(
-        navController = rememberNavController())
+        navController = rememberNavController()
+    )
 }
