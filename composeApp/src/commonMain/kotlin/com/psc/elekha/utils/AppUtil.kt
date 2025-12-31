@@ -348,7 +348,8 @@ fun ReusableTopBar(
     onActionClick: (() -> Unit)? = null,
     modifier: Modifier = Modifier,
     fontFamily: FontFamily = FontFamily(Font(Res.font.inter_medium)),
-) {
+)
+{
     CenterAlignedTopAppBar(
         title = {
             Text(
@@ -2143,12 +2144,12 @@ fun GroupCardUI(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                HeaderText(
+                LabelValueText(
                     label = stringResource(Res.string.select_group),
                     value = item.groupName
                 )
 
-                HeaderText(
+                LabelValueText(
                     label = stringResource(Res.string.select_customer),
                     value = item.customers.toString()
                 )
@@ -2159,51 +2160,56 @@ fun GroupCardUI(
 
             Spacer(modifier = Modifier.height(6.dp))
 
-            // 🔹 BODY
-            Row(modifier = Modifier.fillMaxWidth()) {
+            // BODY
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(6.dp)
+            ) {
 
-                Column(
-                    modifier = Modifier.weight(1f),
-                    verticalArrangement = Arrangement.spacedBy(4.dp)
+                // First 3 items (one under another)
+                LabelValueText(
+                    label = stringResource(Res.string.select_village),
+                    value = item.village
+                )
+
+                LabelValueText(
+                    label = stringResource(Res.string.select_loan),
+                    value = item.officer
+                )
+
+                LabelValueText(
+                    label = stringResource(Res.string.select_formation),
+                    value = item.formation
+                )
+
+                // Disbursement + Center (same line)
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    LabelValueText(
-                        label = stringResource(Res.string.select_village),
-                        value = item.village
-                    )
-                    LabelValueText(
-                        label = stringResource(Res.string.select_loan),
-                        value = item.officer
-                    )
-                    LabelValueText(
-                        label = stringResource(Res.string.select_formation),
-                        value = item.formation
-                    )
-                }
 
-                Spacer(modifier = Modifier.width(8.dp))
-
-                Column(
-                    modifier = Modifier.weight(1f),
-                    verticalArrangement = Arrangement.spacedBy(4.dp)
-                ) {
                     LabelValueText(
                         label = stringResource(Res.string.select_disbursement),
                         value = item.disbursement
                     )
+
                     LabelValueText(
                         label = stringResource(Res.string.select_center),
                         value = item.center
                     )
-                    LabelValueText(
-                        label = stringResource(Res.string.select_meeting),
-                        value = item.meetingDay
-                    )
                 }
+
+                // Meeting (below)
+                LabelValueText(
+                    label = stringResource(Res.string.select_meeting),
+                    value = item.meetingDay
+                )
             }
+
 
             Spacer(modifier = Modifier.height(6.dp))
 
-            // 🔹 FOOTER
+            // FOOTER
             LabelValueText(
                 label = stringResource(Res.string.gtr_next_meeting),
                 value = item.nextMeeting,
@@ -2375,71 +2381,78 @@ fun CustomerItemCard(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 8.dp, vertical = 8.dp)
-            .clickable {
-                onCardClick(customer)
-
-            },
+            .clickable { onCardClick(customer) },
         backgroundColor = loginBg,
         cornerRadius = 12
     ) {
 
         Row(
             modifier = Modifier
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
+                .fillMaxWidth()
+                .padding(8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
 
-            // ✔ Checkbox
-            Checkbox(
-                checked = checked,
-                onCheckedChange = { onCheckedChange(it) },
-                colors = CheckboxDefaults.colors(
-                    checkedColor = PrimaryDark,
-                    uncheckedColor = Color.Gray,
-                    checkmarkColor = Color.White
-                )
-            )
-
-
+            /* LEFT : Images stacked */
             Column(
-                modifier = Modifier.weight(1f)
+                verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                LabelValueText(
-                    stringResource(Res.string.select_customer_id).plus(":"),
-                    customer.id.toString()
+                Box(
+                    modifier = Modifier
+                        .size(55.dp)
+                        .background(Color.Gray, RoundedCornerShape(6.dp))
                 )
-                LabelValueText(
-                    stringResource(Res.string.select_customer_name).plus(":"),
-                    customer.name
-                )
-                LabelValueText(
-                    stringResource(Res.string.select_customer_mobile).plus(":"),
-                    customer.mobile
-                )
-                LabelValueText(
-                    stringResource(Res.string.select_customer_loan).plus(":"),
-                    "Rs ${customer.amount}"
+                Box(
+                    modifier = Modifier
+                        .size(55.dp)
+                        .background(Color.Gray, RoundedCornerShape(6.dp))
                 )
             }
 
-            Spacer(modifier = Modifier.width(10.dp))
+            Spacer(modifier = Modifier.width(12.dp))
 
-            // ✔ 2 Gray Boxes
-            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                Box(
-                    modifier = Modifier
-                        .size(55.dp)
-                        .background(Color.Gray, RoundedCornerShape(6.dp))
+            /* CENTER : Details */
+            Column(
+                modifier = Modifier.weight(1f)
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Box(modifier = Modifier.weight(1f)) {
+                        LabelValueText(
+                            stringResource(Res.string.select_customer_id),
+                            customer.id.toString()
+                        )
+                    }
+
+                    Checkbox(
+                        checked = checked,
+                        onCheckedChange = { onCheckedChange(it) },
+                        colors = CheckboxDefaults.colors(
+                            checkedColor = PrimaryDark,
+                            uncheckedColor = Color.Gray,
+                            checkmarkColor = Color.White
+                        )
+                    )
+                }
+
+                LabelValueText(
+                    stringResource(Res.string.select_customer_name),
+                    customer.name
                 )
-                Box(
-                    modifier = Modifier
-                        .size(55.dp)
-                        .background(Color.Gray, RoundedCornerShape(6.dp))
+                LabelValueText(
+                    stringResource(Res.string.select_customer_mobile),
+                    customer.mobile
+                )
+                LabelValueText(
+                    stringResource(Res.string.select_customer_loan),
+                    "Rs ${customer.amount}"
                 )
             }
         }
     }
+
+
 }
 
 

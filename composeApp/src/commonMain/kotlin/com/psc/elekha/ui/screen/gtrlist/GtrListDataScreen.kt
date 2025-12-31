@@ -13,9 +13,11 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.LightGray
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.psc.elekha.ui.theme.LightSkyBlue
@@ -44,12 +46,12 @@ fun GtrListDataScreen(
     var capturedImage by remember { mutableStateOf<ImageBitmap?>(null) }
 
     val customerList = listOf(
-        CustomerData(101,"Shanti Devi w/o Manohar Singh", "987654321", "50,000"),
-        CustomerData(112,"Rina Kumari w/o Gopal Sharma", "9988776655", "75,000"),
-        CustomerData(114,"Kamla Devi w/o Suresh Prasad", "8899776655", "62,000"),
-        CustomerData(115,"Ravi w/o Sidhona Singh", "9999554444", "90,000"),
-        CustomerData(119,"Soni Kumari w/o Amit Sharma", "9844554455", "45,000"),
-        CustomerData(201,"Pritivi Singh w/o Krishna Prasad", "9554334433", "66,000")
+        CustomerData(101, "Shanti Devi w/o Manohar Singh", "987654321", "50,000"),
+        CustomerData(112, "Rina Kumari w/o Gopal Sharma", "9988776655", "75,000"),
+        CustomerData(114, "Kamla Devi w/o Suresh Prasad", "8899776655", "62,000"),
+        CustomerData(115, "Ravi w/o Sidhona Singh", "9999554444", "90,000"),
+        CustomerData(119, "Soni Kumari w/o Amit Sharma", "9844554455", "45,000"),
+        CustomerData(201, "Pritivi Singh w/o Krishna Prasad", "9554334433", "66,000")
     )
 
     Scaffold(
@@ -85,15 +87,13 @@ fun GtrListDataScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
-        ) {
-
-
-
+        )
+        {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
                     .verticalScroll(rememberScrollState())
-                    .padding(horizontal = 0.dp, vertical = 5.dp)
+//                    .padding(horizontal = 0.dp, vertical = 5.dp)
             )
             {
 
@@ -108,8 +108,9 @@ fun GtrListDataScreen(
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(5.dp)
-                    ) {
+//                            .padding(5.dp)
+                    )
+                    {
 
                         // ---------- ROW 1 : USER NAME (LEFT FULL WIDTH) ----------
                         Row(
@@ -168,12 +169,13 @@ fun GtrListDataScreen(
                 Spacer(modifier = Modifier.height(3.dp))
 
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth()
+                        .padding(start = 10.dp, end = 10.dp, top = 16.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.Top
                 ) {
 
-                    Column(modifier = Modifier.weight(1f) .padding(start = 5.dp)) {
+                    Column(modifier = Modifier.weight(1f).padding(start = 5.dp)) {
 
                         ReusableTextView(
                             text = stringResource(Res.string.gtr_customer).plus(" :"),
@@ -215,7 +217,8 @@ fun GtrListDataScreen(
                     Column(
                         modifier = Modifier.width(120.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
+                    )
+                    {
 
                         Box(
                             modifier = Modifier
@@ -243,10 +246,15 @@ fun GtrListDataScreen(
                                 .clickable { openCamera = true }
                         )
                     }
-                }
 
+
+                }
                 Spacer(Modifier.height(10.dp))
-                Divider(color = LightSkyBlue, thickness = 1.dp)
+                Divider(
+                    color = LightSkyBlue,
+                    thickness = 1.dp,
+                    modifier = Modifier.padding(horizontal = 10.dp)
+                )
 
                 Spacer(Modifier.height(5.dp))
 
@@ -269,6 +277,7 @@ fun GtrListDataScreen(
                 }
             }
             Box(
+
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp, vertical = 5.dp)
@@ -279,9 +288,7 @@ fun GtrListDataScreen(
                     onOkClick = {},
                     text = stringResource(Res.string.gtr_save),
                     textSize = 16,
-
-
-                    )
+                )
             }
 
         }

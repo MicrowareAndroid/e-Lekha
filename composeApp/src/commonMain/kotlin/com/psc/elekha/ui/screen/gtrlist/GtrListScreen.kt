@@ -224,7 +224,12 @@ fun GtrListScreen(
                                 },
                                 selectedOption = branchList.indexOf(selectedBranch) + 1,
                                 onOptionSelected = { id ->
-                                    selectedBranch = branchList[id - 1]
+//                                    selectedBranch = branchList[id - 1]
+                                    selectedBranch = if (id == 0) {
+                                        ""
+                                    } else {
+                                        branchList.getOrNull(id - 1) ?: ""
+                                    }
                                 },
                                 getOptionId = { it.id },
                                 getOptionLabel = { it.name },
