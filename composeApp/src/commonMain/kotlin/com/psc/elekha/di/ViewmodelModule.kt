@@ -101,7 +101,7 @@ val viewmodelModule = module {
     viewModelOf(::TrainingGroupStatusViewModel)
     viewModelOf(::MSTLoanTypeViewModel)
     viewModelOf(::FamilyMemberDetailViewModel)
-    viewModel { RepaymentViewModel(apiRepository = get()) }
+    viewModel { RepaymentViewModel(apiRepository = get(), loanRepaymentViewModel = get()) }
     viewModel {
         LoginViewModel(
 
