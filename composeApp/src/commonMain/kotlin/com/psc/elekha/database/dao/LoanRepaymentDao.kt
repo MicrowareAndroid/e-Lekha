@@ -12,20 +12,23 @@ interface LoanRepaymentDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAllLoanRepayment(loanRepaymentEntity: List<LoanRepaymentEntity>)
 
-    @Query("Select * from LoanRepayment")
-    suspend fun getAllLoanRepayment(): List<LoanRepaymentEntity>
+    @Query("Select * from LoanRepayment where CenterID=:centerID")
+    suspend fun getAllLoanCenterWise(centerID: Int): List<LoanRepaymentEntity>
+
+    @Query("Select * from LoanRepayment where CustomerID=:custID")
+    suspend fun getAllLoanCustomerWise(custID: String?): List<LoanRepaymentEntity>
 
     @Query("Select * from LoanRepayment where GUID=:GUID")
-    suspend fun getLoanRepaymentByGUID(GUID: String): LoanRepaymentEntity
+    suspend fun getLoanRepaymentByGUID(GUID: String?): LoanRepaymentEntity
 
     @Query("Select * from LoanRepayment Where IsEdited = 1")
-    suspend  fun getLoanRepaymentUploadData(): List<LoanRepaymentEntity>
+    suspend fun getLoanRepaymentUploadData(): List<LoanRepaymentEntity>
 
     @Query("Select Count(*) from LoanRepayment Where IsEdited = 1")
     suspend fun getLoanRepaymentUploadDataCount(): Int
 
     @Query("Update LoanRepayment set IsEdited=1,Total=:Total,PaidDate=:PaidDate,LoanLat=:LoanLat,LoanLong=:LoanLong,LoanPlace=:LoanPlace,PaymentType=:PaymentType where GUID=:GUID")
-    suspend  fun updateLoanRepaymentData(
+    suspend fun updateLoanRepaymentData(
         Total: Double,
         PaidDate: String,
         LoanLat: Double,

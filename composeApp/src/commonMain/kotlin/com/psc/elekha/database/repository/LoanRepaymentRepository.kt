@@ -18,12 +18,21 @@ class LoanRepaymentRepository(
     }
 
     // Get all loan repayments
-    suspend fun getAllLoanRepayment(): List<LoanRepaymentEntity> {
-        return dao.getAllLoanRepayment()
+    suspend fun getAllLoanRepayment(
+        flag: Int,
+        centerID: Int,
+        custID: String?
+    ): List<LoanRepaymentEntity> {
+        if (flag == 1) {
+            return dao.getAllLoanCenterWise(centerID)
+        } else {
+            return dao.getAllLoanCustomerWise(custID)
+        }
+
     }
 
     // Get loan data_reports by GUID
-    suspend fun getLoanRepaymentByGUID(GUID: String): LoanRepaymentEntity {
+    suspend fun getLoanRepaymentByGUID(GUID: String?): LoanRepaymentEntity {
         return dao.getLoanRepaymentByGUID(GUID)
     }
 
@@ -47,7 +56,15 @@ class LoanRepaymentRepository(
         PaymentType: Int,
         GUID: String
     ) {
-        dao.updateLoanRepaymentData(Total, PaidDate, LoanLat, LoanLong, LoanPlace, PaymentType, GUID)
+        dao.updateLoanRepaymentData(
+            Total,
+            PaidDate,
+            LoanLat,
+            LoanLong,
+            LoanPlace,
+            PaymentType,
+            GUID
+        )
     }
 
     // Mark uploaded

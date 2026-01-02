@@ -33,6 +33,8 @@ import com.psc.elekha.apicall.APiState
 import com.psc.elekha.database.viewmodel.MSTCenterViewModel
 import com.psc.elekha.database.viewmodel.MSTVillageViewModel
 import com.psc.elekha.ui.theme.*
+import com.psc.elekha.utils.AppPreferences
+import com.psc.elekha.utils.AppSP
 import com.psc.elekha.utils.CommonDivider
 import com.psc.elekha.utils.CustomAlertDialog
 import com.psc.elekha.utils.Dimens
@@ -45,9 +47,11 @@ import com.psc.elekha.utils.ReusableTopBar
 import com.psc.elekha.utils.RouteName
 import e_lekha.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.Font
+import org.jetbrains.compose.resources.getString
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
@@ -63,20 +67,22 @@ fun LocationFilterScreen(
     var showProgress by remember { mutableStateOf(false) }
     var dialogMessage by remember { mutableStateOf("") }
     var showDialog by remember { mutableStateOf(false) }
+    val appPreferences: AppPreferences = koinInject()
 
-    LaunchedEffect(Unit,downloadState) {
+    LaunchedEffect(Unit, downloadState) {
         val username = "developer" // Or get from logged-in user
         mstVillageModel.loadVillagesByUsername(username)
         mstCenterViewModel.loadAllCenters()
         when (downloadState) {
             is APiState.loading -> {
                 showProgress = true
-                dialogMessage = "Please wait..."
+                dialogMessage = getString(Res.string.select_customer_please)
             }
 
             is APiState.success -> {
                 showProgress = false
-
+                showDialog = true
+                dialogMessage = downloadState.message
             }
 
             is APiState.error -> {
@@ -104,7 +110,12 @@ fun LocationFilterScreen(
             ReusableTopBar(
                 title = stringResource(Res.string.select_customer_filter_details),
                 navigationIcon = painterResource(Res.drawable.ic_back),
-                onNavigationClick = { navController.popBackStack() }
+                onNavigationClick = {
+                    navController.navigate(RouteName.home) {
+                        popUpTo(RouteName.loan_filter_screen) { inclusive = true }
+                        launchSingleTop = true
+                    }
+                }
             )
         },
 
@@ -128,7 +139,7 @@ fun LocationFilterScreen(
                     ReusableCard(
                         modifier = Modifier
                             .fillMaxWidth(),
-                        backgroundColor = homedatareportsColor,
+                        backgroundColor = text_fiiled_color,
                         cornerRadius = 0
                     )
                     {
@@ -149,20 +160,28 @@ fun LocationFilterScreen(
                                         text = stringResource(Res.string.select_customer_center).plus(
                                             ":"
                                         ),
-                                        textColor = toolbar_color
+                                        textColor = appleblue, fontWeight = FontWeight.Bold
                                     )
                                     Spacer(Modifier.width(6.dp))
-                                    ReusableTextView(text = "Gurgaon", textColor = Color.Black)
+                                    ReusableTextView(
+                                        text = "Gurgaon",
+                                        textColor = black,
+                                        fontWeight = FontWeight.Bold
+                                    )
                                 }
                                 Row(verticalAlignment = Alignment.CenterVertically) {
                                     ReusableTextView(
                                         text = stringResource(Res.string.select_customer_next).plus(
                                             ":"
                                         ),
-                                        textColor = toolbar_color
+                                        textColor = appleblue, fontWeight = FontWeight.Bold
                                     )
                                     Spacer(Modifier.width(6.dp))
-                                    ReusableTextView(text = "10/4/2025", textColor = Color.Black)
+                                    ReusableTextView(
+                                        text = "10/4/2025",
+                                        textColor = black,
+                                        fontWeight = FontWeight.Bold
+                                    )
                                 }
                             }
 
@@ -175,53 +194,48 @@ fun LocationFilterScreen(
                                 Row(verticalAlignment = Alignment.CenterVertically) {
                                     ReusableTextView(
                                         text = stringResource(Res.string.home_user),
-                                        textColor = toolbar_color
+                                        textColor = appleblue, fontWeight = FontWeight.Bold
                                     )
                                     Spacer(Modifier.width(6.dp))
-                                    ReusableTextView(text = "Vikash", textColor = Color.Black)
+                                    ReusableTextView(
+                                        text = "Vikash",
+                                        textColor = black,
+                                        fontWeight = FontWeight.Bold
+                                    )
                                 }
 
                                 Row(verticalAlignment = Alignment.CenterVertically) {
                                     ReusableTextView(
                                         text = stringResource(Res.string.home_time).plus(":"),
-                                        textColor = toolbar_color
+                                        textColor = appleblue, fontWeight = FontWeight.Bold
                                     )
                                     Spacer(Modifier.width(6.dp))
-                                    ReusableTextView(text = "10:45 AM", textColor = Color.Black)
+                                    ReusableTextView(
+                                        text = "10:45 AM",
+                                        textColor = black,
+                                        fontWeight = FontWeight.Bold
+                                    )
                                 }
 
                                 Row(verticalAlignment = Alignment.CenterVertically) {
                                     ReusableTextView(
                                         text = stringResource(Res.string.home_date).plus(":"),
-                                        textColor = toolbar_color
+                                        textColor = appleblue, fontWeight = FontWeight.Bold
                                     )
                                     Spacer(Modifier.width(6.dp))
-                                    ReusableTextView(text = "04/12/2025", textColor = Color.Black)
+                                    ReusableTextView(
+                                        text = "04/12/2025",
+                                        textColor = black,
+                                        fontWeight = FontWeight.Bold
+                                    )
                                 }
                             }
                         }
                     }
                     Spacer(modifier = Modifier.height(Dimens.tendp))
-                    Column(modifier = Modifier.padding(Dimens.sixteendp)) {
-                        ReusableTextView(
-                            text = stringResource(Res.string.select_customer_filter_details).plus(":"),
-                            fontSize = 18,
-                            fontWeight = FontWeight.SemiBold,
-                            textColor = Color.Black,
-                            fontFamily = FontFamily(Font(Res.font.roboto_medium)),
-                            modifier = Modifier.fillMaxWidth()
-                        )
-                        Spacer(modifier = Modifier.height(5.dp))
-                        CommonDivider(
-                            color = dark_gray,
-                            thickness = 1.dp,
-                            startPadding = 0.dp,
-                            endPadding = 0.dp
-                        )
-                    }
                     Button(
                         onClick = {
-                                viewModel.getLoanRepayment("developer","123456789")
+                            viewModel.getLoanRepayment("PSCMNP5", "test124")
                         },
                         modifier = Modifier
                             .fillMaxWidth()
@@ -241,10 +255,28 @@ fun LocationFilterScreen(
                     ) {
                         ReusableTextView(
                             text = stringResource(Res.string.download_loan),
-                            textColor = Color.White,
+                            textColor = black,
                             fontSize = 20
                         )
                     }
+                    Column(modifier = Modifier.padding(Dimens.sixteendp)) {
+                        ReusableTextView(
+                            text = stringResource(Res.string.select_customer_filter_details).plus(":"),
+                            fontSize = 18,
+                            fontWeight = FontWeight.SemiBold,
+                            textColor = Color.Black,
+                            fontFamily = FontFamily(Font(Res.font.roboto_medium)),
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                        Spacer(modifier = Modifier.height(5.dp))
+                        CommonDivider(
+                            color = dark_gray,
+                            thickness = 1.dp,
+                            startPadding = 0.dp,
+                            endPadding = 0.dp
+                        )
+                    }
+
                     Column(
                         modifier = Modifier
                             .weight(1f)
@@ -300,7 +332,10 @@ fun LocationFilterScreen(
                     ) {
                         Button(
                             onClick = {
-                                navController.popBackStack()
+                                navController.navigate(RouteName.home) {
+                                    popUpTo(RouteName.loan_filter_screen) { inclusive = true }
+                                    launchSingleTop = true
+                                }
                             },
                             shape = RoundedCornerShape(0.dp),
                             modifier = Modifier.weight(1f).height(45.dp),
@@ -317,7 +352,7 @@ fun LocationFilterScreen(
 
                         Button(
                             onClick = {
-                                navController.navigate(RouteName.replayment_list)
+                                viewModel.filterLoan()
                             },
                             modifier = Modifier.weight(1f).height(45.dp),
                             shape = RoundedCornerShape(0.dp),
@@ -331,6 +366,26 @@ fun LocationFilterScreen(
                                 focusedElevation = 4.dp
                             )
                         ) { Text(stringResource(Res.string.select_customer_filter)) }
+                        if (viewModel.showSaveAlert) {
+                            if (viewModel.saveFlag == 1) {
+                                viewModel.showSaveAlert = false
+                                appPreferences.putInt(AppSP.filterVlgID, viewModel.villageId)
+                                appPreferences.putInt(AppSP.filterCenterID, viewModel.centerId)
+                                appPreferences.putString(AppSP.filterCustID, viewModel.customerID.trim())
+                                navController.navigate(RouteName.replayment_list) {
+                                    popUpTo(RouteName.loan_filter_screen) { inclusive = true }
+                                    launchSingleTop = true
+                                }
+                            } else {
+                                CustomAlertDialog(
+                                    showDialog = viewModel.showSaveAlert,
+                                    message = viewModel.saveMessage,
+                                    onConfirm = {
+                                        viewModel.requestFocus()
+                                    }
+                                )
+                            }
+                        }
                     }
                 }
             }

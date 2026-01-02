@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.psc.elekha.database.entity.LoanRepaymentEntity
 import com.psc.elekha.database.repository.LoanRepaymentRepository
+import com.psc.elekha.utils.AppPreferences
+import com.psc.elekha.utils.AppSP
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -11,7 +13,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class LoanRepaymentViewModel(
-    private val repository: LoanRepaymentRepository
+    private val repository: LoanRepaymentRepository, val appPreferences: AppPreferences
 ) : ViewModel() {
 
     private val _allLoanRepayments = MutableStateFlow<List<LoanRepaymentEntity>>(emptyList())
@@ -26,7 +28,14 @@ class LoanRepaymentViewModel(
 
     fun loadAllLoanRepayment() {
         viewModelScope.launch(Dispatchers.IO) {
-            _allLoanRepayments.value = repository.getAllLoanRepayment() ?: emptyList()
+            val centerID = appPreferences.getInt(AppSP.filterCenterID)
+            val custID = appPreferences.getString(AppSP.filterCustID)
+            var flag = 0
+            if (centerID > 0) {
+                flag = 1
+            }
+            _allLoanRepayments.value =
+                repository.getAllLoanRepayment(flag, centerID, custID) ?: emptyList()
         }
     }
 
@@ -53,25 +62,13 @@ class LoanRepaymentViewModel(
 
 
     fun insertAllLoanRepayment(
-        loanRepayments: List<LoanRepaymentEntity>,
-        onComplete: (() -> Unit)? = null
+        loanRepayments: List<LoanRepaymentEntity>
     ) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.insertAllLoanRepayment(loanRepayments)
-            onComplete?.invoke()
         }
     }
 
-
-    fun getLoanRepaymentByGUID(
-        GUID: String,
-        onResult: (LoanRepaymentEntity?) -> Unit
-    ) {
-        viewModelScope.launch(Dispatchers.IO) {
-            val data = repository.getLoanRepaymentByGUID(GUID)
-            onResult(data)
-        }
-    }
 
     fun updateLoanRepaymentData(
         Total: Double,
