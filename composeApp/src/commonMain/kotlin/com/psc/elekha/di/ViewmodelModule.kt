@@ -37,6 +37,7 @@ import com.psc.elekha.database.viewmodel.MSTVillageViewModel
 import com.psc.elekha.database.viewmodel.RegistrationStatusViewModel
 import com.psc.elekha.database.viewmodel.TabletMenuRoleViewModel
 import com.psc.elekha.database.viewmodel.TabletMenuViewModel
+import com.psc.elekha.database.viewmodel.TrainingGroupMemberViewModel
 import com.psc.elekha.database.viewmodel.TrainingGroupStatusViewModel
 import com.psc.elekha.database.viewmodel.TrainingGroupViewModel
 import com.psc.elekha.database.viewmodel.UserBranchViewModel
@@ -102,7 +103,8 @@ val viewmodelModule = module {
     viewModelOf(::MSTLoanTypeViewModel)
     viewModelOf(::FamilyMemberDetailViewModel)
     viewModelOf(::RepaymentViewModel)
-
+    viewModelOf(::TrainingGroupMemberViewModel)
+    viewModel { RepaymentViewModel(apiRepository = get(), loanRepaymentViewModel = get()) }
     viewModel {
         LoginViewModel(
 

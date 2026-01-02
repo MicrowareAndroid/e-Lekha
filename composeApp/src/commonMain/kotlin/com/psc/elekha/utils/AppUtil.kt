@@ -2380,7 +2380,7 @@ fun CustomerItemCard(
     ReusableCards(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 8.dp, vertical = 8.dp)
+//            .padding(horizontal = 8.dp, vertical = 8.dp)
             .clickable { onCardClick(customer) },
         backgroundColor = loginBg,
         cornerRadius = 12
@@ -2440,10 +2440,12 @@ fun CustomerItemCard(
                     stringResource(Res.string.select_customer_name),
                     customer.name
                 )
+                Spacer(modifier = Modifier.width(10.dp))
                 LabelValueText(
                     stringResource(Res.string.select_customer_mobile),
                     customer.mobile
                 )
+                Spacer(modifier = Modifier.width(10.dp))
                 LabelValueText(
                     stringResource(Res.string.select_customer_loan),
                     "Rs ${customer.amount}"

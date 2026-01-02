@@ -38,6 +38,7 @@ import com.psc.elekha.database.repository.MSTVillageRepository
 import com.psc.elekha.database.repository.RegistrationStatusRepository
 import com.psc.elekha.database.repository.TabletMenuRepository
 import com.psc.elekha.database.repository.TabletMenuRoleRepository
+import com.psc.elekha.database.repository.TrainingGroupMemberRepository
 import com.psc.elekha.database.repository.TrainingGroupRepository
 import com.psc.elekha.database.repository.TrainingGroupStatusRepository
 import com.psc.elekha.database.repository.UserBranchRepository
@@ -91,6 +92,7 @@ val repositoryModule = module {
     single { TrainingGroupRepository(get()) }
     single { UserContactDetailRepository(get()) }
     single { TrainingGroupStatusRepository(get()) }
+    single { TrainingGroupMemberRepository(get()) }
 
 
 
