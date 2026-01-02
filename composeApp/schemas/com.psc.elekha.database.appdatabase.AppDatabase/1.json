@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "a8e15e8fe487d92e200929172bf30e66",
+    "identityHash": "1d4c57382a9bbf9e5e4f950eea5bcede",
     "entities": [
       {
         "tableName": "CustomerStatus",
@@ -4048,7 +4048,7 @@
       },
       {
         "tableName": "LoanofficerDashBoardData",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`LoanofficerID` TEXT NOT NULL, `Disbursed_ThisMonth` INTEGER, `Disbursed_PastMonth` INTEGER, `NewCustomer_ThisMonth` INTEGER, `NewCustomer_PastMonth` INTEGER, `OldCustomer_ThisMonth` INTEGER, `OldCustomer_PastMonth` INTEGER, `CustomerInArrear_ThisMonth` INTEGER, `CustomerInArrear_PastMonth` INTEGER, `CustomerInPAR_PastMonth` INTEGER, `CustomerInCGT` INTEGER, `RegisteredCustomer` INTEGER, `OtherCustomer` INTEGER, `LOCaseLoad` INTEGER, `LOOutstanding` INTEGER, `LORegCustomer` INTEGER, `LOGTR` INTEGER, `LODisbursement` INTEGER, `Meetings` INTEGER, `ActiveCustomer` INTEGER, `Due` INTEGER, `PastDue` INTEGER, `AmountCollected` INTEGER, `Customer` INTEGER, PRIMARY KEY(`LoanofficerID`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`LoanofficerID` TEXT NOT NULL, `Disbursed_ThisMonth` INTEGER, `Disbursed_PastMonth` INTEGER, `NewCustomer_ThisMonth` INTEGER, `NewCustomer_PastMonth` INTEGER, `OldCustomer_ThisMonth` INTEGER, `OldCustomer_PastMonth` INTEGER, `CustomerInArrear_ThisMonth` INTEGER, `CustomerInArrear_PastMonth` INTEGER, `CustomerInPAR_PastMonth` INTEGER, `CustomerInCGT` INTEGER, `RegisteredCustomer` INTEGER, `OtherCustomer` INTEGER, `LOCaseLoad` INTEGER, `LOOutstanding` REAL, `LORegCustomer` INTEGER, `LOGTR` INTEGER, `LODisbursement` INTEGER, `Meetings` INTEGER, `ActiveCustomer` INTEGER, `Due` REAL, `PastDue` REAL, `AmountCollected` INTEGER, `Customer` INTEGER, PRIMARY KEY(`LoanofficerID`))",
         "fields": [
           {
             "fieldPath": "LoanofficerID",
@@ -4124,7 +4124,7 @@
           {
             "fieldPath": "LOOutstanding",
             "columnName": "LOOutstanding",
-            "affinity": "INTEGER"
+            "affinity": "REAL"
           },
           {
             "fieldPath": "LORegCustomer",
@@ -4154,12 +4154,12 @@
           {
             "fieldPath": "Due",
             "columnName": "Due",
-            "affinity": "INTEGER"
+            "affinity": "REAL"
           },
           {
             "fieldPath": "PastDue",
             "columnName": "PastDue",
-            "affinity": "INTEGER"
+            "affinity": "REAL"
           },
           {
             "fieldPath": "AmountCollected",
@@ -4507,7 +4507,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a8e15e8fe487d92e200929172bf30e66')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '1d4c57382a9bbf9e5e4f950eea5bcede')"
     ]
   }
 }

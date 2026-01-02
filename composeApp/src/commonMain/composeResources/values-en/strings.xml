@@ -299,5 +299,8 @@
     <string name="select_pay_mode">Please Select Payment Mode</string>
     <string name="enter_utr">Please Enter UTR Number</string>
     <string name="enter_total_payment">Please Enter Total Payment</string>
+    <string name="loan_download_success">Loan downloaded successfully</string>
+    <string name="select_vlg_custid">Please Select Village or Enter Customer ID</string>
+    <string name="select_centre">Please Select Center</string>
 
 </resources>

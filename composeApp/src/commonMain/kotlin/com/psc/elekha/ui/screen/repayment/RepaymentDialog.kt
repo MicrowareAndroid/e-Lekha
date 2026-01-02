@@ -16,7 +16,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
-import androidx.compose.foundation.relocation.bringIntoViewRequester
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
@@ -32,7 +31,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
@@ -40,87 +38,50 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.psc.elekha.database.viewmodel.LoanRepaymentViewModel
 import com.psc.elekha.database.viewmodel.MSTComboBox_NViewModel
-import com.psc.elekha.database.viewmodel.MSTVillageViewModel
-import com.psc.elekha.ui.screen.repayment.model.RepaymentItem
 import com.psc.elekha.ui.theme.black
 import com.psc.elekha.ui.theme.blue
 import com.psc.elekha.ui.theme.lightGrey
 import com.psc.elekha.ui.theme.white
+import com.psc.elekha.utils.AppPreferences
+import com.psc.elekha.utils.AppSP
 import com.psc.elekha.utils.CameraPicker
 import com.psc.elekha.utils.CommonActionButtons
 import com.psc.elekha.utils.CustomAlertDialog
 import com.psc.elekha.utils.Dimens
 import com.psc.elekha.utils.FillDynamicSpinnerespt
 import com.psc.elekha.utils.FormFieldCompact
-import com.psc.elekha.utils.FormFieldCompacts
-import com.psc.elekha.utils.ReusableDynamicSpinner
 import com.psc.elekha.utils.ReusableTextView
 import com.psc.elekha.utils.ReusableTextViewBlackCard
-import com.psc.elekha.utils.ReusableTextViewGrayCard
 import com.psc.elekha.utils.ReusableTextViewes
 import com.psc.elekha.utils.ReusableTopBar
+import com.psc.elekha.utils.RouteName
 import com.psc.elekha.utils.loadImageFromPath
-import e_lekha.composeapp.generated.resources.Res
-import e_lekha.composeapp.generated.resources.call
-import e_lekha.composeapp.generated.resources.camera
-import e_lekha.composeapp.generated.resources.customer_details
-import e_lekha.composeapp.generated.resources.disburse_date
-import e_lekha.composeapp.generated.resources.emi_no
-import e_lekha.composeapp.generated.resources.front_image
-import e_lekha.composeapp.generated.resources.ic_back
-import e_lekha.composeapp.generated.resources.loan
-import e_lekha.composeapp.generated.resources.loan_details
-import e_lekha.composeapp.generated.resources.mobile_number
-import e_lekha.composeapp.generated.resources.payment_details
-import e_lekha.composeapp.generated.resources.personal_current
-import e_lekha.composeapp.generated.resources.personal_current_payment
-import e_lekha.composeapp.generated.resources.personal_customer
-import e_lekha.composeapp.generated.resources.personal_emi
-import e_lekha.composeapp.generated.resources.personal_past
-import e_lekha.composeapp.generated.resources.personal_payment_detail
-import e_lekha.composeapp.generated.resources.personal_payment_image
-import e_lekha.composeapp.generated.resources.personal_payment_mode
-import e_lekha.composeapp.generated.resources.personal_payment_utr
-import e_lekha.composeapp.generated.resources.personal_total_due
-import e_lekha.composeapp.generated.resources.personal_weeks_arrear
-import e_lekha.composeapp.generated.resources.pre_closure_amt
-import e_lekha.composeapp.generated.resources.select_customer_id
-import e_lekha.composeapp.generated.resources.total_due
-import e_lekha.composeapp.generated.resources.type_here
-import e_lekha.composeapp.generated.resources.village
+import e_lekha.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun RepaymentDialog(
     navController: NavHostController
 ) {
-    val sampleItem = RepaymentItem(
-        "BHK03.123",
-        "MEENA W/O Kailash chand",
-        "1,00,000",
-        "5300",
-        "10,600",
-        "4",
-        true,
-        "17",
-        "12/05/2020",
-        "6500",
-        "5500",
-        "4700",
-        "7834456567"
-    )
+
     var openCamera by remember { mutableStateOf(false) }
     var paymentImgBitmap by remember { mutableStateOf<ImageBitmap?>(null) }
     val viewModel = koinViewModel<RepaymentViewModel>()
+    val loanViewModel = koinViewModel<LoanRepaymentViewModel>()
     val mstComboViewModel = koinViewModel<MSTComboBox_NViewModel>()
     val modeList by mstComboViewModel.cashStatusValue.collectAsState()
+    val repaymentData by viewModel.loanRepayment.collectAsState()
+    val appPreferences: AppPreferences = koinInject()
 
     LaunchedEffect(Unit) {
         mstComboViewModel.loadLookUpValues(lookupTypeFk = 20)
+        viewModel.getLoanRepaymentByGUID()
     }
 
     Scaffold(
@@ -130,7 +91,12 @@ fun RepaymentDialog(
             ReusableTopBar(
                 title = stringResource(Res.string.personal_payment_detail),
                 navigationIcon = painterResource(Res.drawable.ic_back),
-                onNavigationClick = { navController.popBackStack() }
+                onNavigationClick = {
+                    navController.navigate(RouteName.replayment_list) {
+                        popUpTo(RouteName.replayment_detail_list) { inclusive = true }
+                        launchSingleTop = true
+                    }
+                }
             )
         },
     ) { innerPadding ->
@@ -164,7 +130,7 @@ fun RepaymentDialog(
                         )
                         Spacer(modifier = Modifier.width(Dimens.fivedp))
                         ReusableTextViewBlackCard(
-                            "${sampleItem.customerId}  ${sampleItem.customerName}",
+                            "${repaymentData.CustomerID ?: ""}  ${repaymentData.CustomerName ?: ""}",
                             fontSize = 13,
                             modifier = Modifier.wrapContentWidth()
                         )
@@ -181,7 +147,7 @@ fun RepaymentDialog(
                         )
                         Spacer(modifier = Modifier.width(Dimens.fivedp))
                         ReusableTextViewBlackCard(
-                            sampleItem.mobileNumber,
+                            repaymentData.MobileNo ?: "",
                             fontSize = 13, modifier = Modifier.wrapContentWidth()
                         )
                         Spacer(modifier = Modifier.width(Dimens.fivedp))
@@ -212,7 +178,7 @@ fun RepaymentDialog(
                             )
                             Spacer(modifier = Modifier.width(Dimens.fivedp))
                             ReusableTextViewBlackCard(
-                                sampleItem.loanAmount,
+                                repaymentData.Total.toString(),
                                 fontSize = 13,
                                 modifier = Modifier.wrapContentWidth()
                             )
@@ -228,7 +194,7 @@ fun RepaymentDialog(
                             )
                             Spacer(modifier = Modifier.width(Dimens.fivedp))
                             ReusableTextViewBlackCard(
-                                sampleItem.emiAmount,
+                                repaymentData.EMI.toString(),
                                 fontSize = 13,
                                 modifier = Modifier.wrapContentWidth()
                             )
@@ -249,7 +215,7 @@ fun RepaymentDialog(
                             )
                             Spacer(modifier = Modifier.width(Dimens.fivedp))
                             ReusableTextViewBlackCard(
-                                sampleItem.emiNumber,
+                                "",
                                 fontSize = 13, modifier = Modifier.wrapContentWidth()
                             )
                         }
@@ -264,7 +230,7 @@ fun RepaymentDialog(
                             )
                             Spacer(modifier = Modifier.width(Dimens.fivedp))
                             ReusableTextViewBlackCard(
-                                sampleItem.distributeDate,
+                                repaymentData.DisbursementDate ?: "",
                                 fontSize = 13,
                                 modifier = Modifier.wrapContentWidth()
                             )
@@ -281,7 +247,7 @@ fun RepaymentDialog(
                         )
                         Spacer(modifier = Modifier.width(Dimens.fivedp))
                         ReusableTextViewBlackCard(
-                            sampleItem.preClosureAmount,
+                            "",
                             fontSize = 13, modifier = Modifier.wrapContentWidth()
                         )
                     }
@@ -303,7 +269,7 @@ fun RepaymentDialog(
                             )
                             Spacer(modifier = Modifier.width(Dimens.fivedp))
                             ReusableTextViewBlackCard(
-                                sampleItem.weeksInArrear,
+                                repaymentData.WeekInArrear.toString(),
                                 fontSize = 13, modifier = Modifier.wrapContentWidth()
                             )
                         }
@@ -319,7 +285,7 @@ fun RepaymentDialog(
                             )
                             Spacer(modifier = Modifier.width(Dimens.fivedp))
                             ReusableTextViewBlackCard(
-                                sampleItem.pastDue,
+                                repaymentData.PastDue.toString(),
                                 fontSize = 13,
                                 modifier = Modifier.wrapContentWidth()
                             )
@@ -341,7 +307,7 @@ fun RepaymentDialog(
                             )
                             Spacer(modifier = Modifier.width(Dimens.fivedp))
                             ReusableTextViewBlackCard(
-                                sampleItem.currentDue,
+                                repaymentData.CurrentDue.toString(),
                                 fontSize = 13,
                                 modifier = Modifier.wrapContentWidth()
                             )
@@ -356,7 +322,7 @@ fun RepaymentDialog(
                             )
                             Spacer(modifier = Modifier.width(Dimens.fivedp))
                             ReusableTextViewBlackCard(
-                                sampleItem.totalDue,
+                                repaymentData.Due.toString(),
                                 fontSize = 13, modifier = Modifier.wrapContentWidth()
                             )
                         }
@@ -459,10 +425,14 @@ fun RepaymentDialog(
                     modifier = Modifier.fillMaxWidth().padding(Dimens.tendp)
                 ) {
                     CommonActionButtons(
-
                         onSaveClick = {
-                            viewModel.saveData()
-                        }, onCloseClick = { navController.popBackStack() })
+                            viewModel.saveData(appPreferences.getString(AppSP.LoanRepaymentGUID)!!)
+                        }, onCloseClick = {
+                            navController.navigate(RouteName.replayment_list) {
+                                popUpTo(RouteName.replayment_detail_list) { inclusive = true }
+                                launchSingleTop = true
+                            }
+                        })
                     if (viewModel.showSaveAlert) {
                         CustomAlertDialog(
                             showDialog = viewModel.showSaveAlert,
@@ -470,7 +440,12 @@ fun RepaymentDialog(
                             onConfirm = {
                                 if (viewModel.saveFlag == 1) {
                                     viewModel.showSaveAlert = false
-                                    navController.popBackStack()
+                                    navController.navigate(RouteName.replayment_list) {
+                                        popUpTo(RouteName.replayment_detail_list) {
+                                            inclusive = true
+                                        }
+                                        launchSingleTop = true
+                                    }
                                 } else {
                                     viewModel.requestFocus()
                                 }

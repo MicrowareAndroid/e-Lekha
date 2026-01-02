@@ -14,5 +14,9 @@ object AppSP {
 
     var familyGuid="familyGuid"
     var mfiGuid="mfiGuid"
+    var filterVlgID="filterVlgID"
+    var filterCenterID="filterCenterID"
+    var filterCustID="filterCustID"
+    var LoanRepaymentGUID="LoanRepaymentGUID"
 
 }
