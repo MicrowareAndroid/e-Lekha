@@ -39,6 +39,6 @@ data class LoanRepaymentEntity(
     @ColumnInfo(name = "IsEmiReceived") val IsEmiReceived: Int? = 0,
     @ColumnInfo(name = "LoanPlace") val LoanPlace: String? = "",
     @ColumnInfo(name = "LoanLat") val LoanLat: Double? = 0.0,
-    @ColumnInfo(name = "LoanLong") val LoanLong: Double? = 0.0
-
+    @ColumnInfo(name = "LoanLong") val LoanLong: Double? = 0.0,
+    @ColumnInfo(name = "UTRNumber") val UTRNumber: String? = ""
 )

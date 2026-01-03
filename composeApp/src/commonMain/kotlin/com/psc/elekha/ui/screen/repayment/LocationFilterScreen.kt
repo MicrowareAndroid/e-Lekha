@@ -32,6 +32,7 @@ import androidx.navigation.compose.rememberNavController
 import com.psc.elekha.apicall.APiState
 import com.psc.elekha.database.viewmodel.MSTCenterViewModel
 import com.psc.elekha.database.viewmodel.MSTVillageViewModel
+import com.psc.elekha.expectfile.AppBackHandler
 import com.psc.elekha.ui.theme.*
 import com.psc.elekha.utils.AppPreferences
 import com.psc.elekha.utils.AppSP
@@ -58,6 +59,13 @@ import org.koin.compose.viewmodel.koinViewModel
 fun LocationFilterScreen(
     navController: NavHostController
 ) {
+    AppBackHandler{
+        navController.navigate(RouteName.home) {
+            popUpTo(RouteName.loan_filter_screen) { inclusive = true }
+            launchSingleTop = true
+        }
+    }
+
     val viewModel = koinViewModel<RepaymentViewModel>()
     val mstVillageModel = koinViewModel<MSTVillageViewModel>()
     val mstCenterViewModel = koinViewModel<MSTCenterViewModel>()
@@ -319,7 +327,7 @@ fun LocationFilterScreen(
                             value = viewModel.customerID,
                             placeholder = stringResource(Res.string.type_here),
                             onValueChange = { custID ->
-                                viewModel.customerID = custID
+                                viewModel.customerID = custID.uppercase()
                             },
                             inputType = KeyboardType.Text,
                             modifier = Modifier.focusRequester(viewModel.focusRequesterCustID)

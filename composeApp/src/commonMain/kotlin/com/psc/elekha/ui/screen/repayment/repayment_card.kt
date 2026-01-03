@@ -102,7 +102,7 @@ fun RepaymentItemCard(
                         )
                         Spacer(modifier = Modifier.width(4.dp))
                         ReusableTextViewBlackCard(
-                            item.Total.toString(),
+                            (item.Total?.toInt()?.toString() ?: "0"),
                             fontSize = 13,
                             modifier = Modifier.weight(1f)
                         )
@@ -113,7 +113,7 @@ fun RepaymentItemCard(
                         )
                         Spacer(modifier = Modifier.width(4.dp))
                         ReusableTextViewBlackCard(
-                            item.EMI.toString(),
+                            (item.EMI?.toInt()?.toString() ?: "0"),
                             fontSize = 13,
                             modifier = Modifier.weight(1f)
                         )
