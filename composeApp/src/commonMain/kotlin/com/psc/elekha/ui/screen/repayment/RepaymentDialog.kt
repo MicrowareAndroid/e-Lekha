@@ -40,6 +40,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.psc.elekha.database.viewmodel.LoanRepaymentViewModel
 import com.psc.elekha.database.viewmodel.MSTComboBox_NViewModel
+import com.psc.elekha.expectfile.AppBackHandler
 import com.psc.elekha.ui.theme.black
 import com.psc.elekha.ui.theme.blue
 import com.psc.elekha.ui.theme.lightGrey
@@ -69,7 +70,12 @@ import org.koin.compose.viewmodel.koinViewModel
 fun RepaymentDialog(
     navController: NavHostController
 ) {
-
+    AppBackHandler {
+        navController.navigate(RouteName.replayment_list) {
+            popUpTo(RouteName.replayment_detail_list) { inclusive = true }
+            launchSingleTop = true
+        }
+    }
     var openCamera by remember { mutableStateOf(false) }
     var paymentImgBitmap by remember { mutableStateOf<ImageBitmap?>(null) }
     val viewModel = koinViewModel<RepaymentViewModel>()
@@ -168,7 +174,7 @@ fun RepaymentDialog(
                             .fillMaxWidth()
                     ) {
                         Row(
-                            modifier = Modifier.weight(1f),
+                            modifier = Modifier.weight(0.8f),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             ReusableTextView(
@@ -178,7 +184,7 @@ fun RepaymentDialog(
                             )
                             Spacer(modifier = Modifier.width(Dimens.fivedp))
                             ReusableTextViewBlackCard(
-                                repaymentData.Total.toString(),
+                                (repaymentData.Total?.toInt()?.toString() ?: "0"),
                                 fontSize = 13,
                                 modifier = Modifier.wrapContentWidth()
                             )
@@ -194,7 +200,7 @@ fun RepaymentDialog(
                             )
                             Spacer(modifier = Modifier.width(Dimens.fivedp))
                             ReusableTextViewBlackCard(
-                                repaymentData.EMI.toString(),
+                                (repaymentData.EMI?.toInt()?.toString() ?: "0"),
                                 fontSize = 13,
                                 modifier = Modifier.wrapContentWidth()
                             )
@@ -206,7 +212,7 @@ fun RepaymentDialog(
                             .fillMaxWidth()
                     ) {
                         Row(
-                            modifier = Modifier.weight(1f),
+                            modifier = Modifier.weight(0.8f),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             ReusableTextView(
@@ -259,7 +265,7 @@ fun RepaymentDialog(
                             .fillMaxWidth()
                     ) {
                         Row(
-                            modifier = Modifier.weight(1f),
+                            modifier = Modifier.weight(0.8f),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
 
@@ -269,7 +275,7 @@ fun RepaymentDialog(
                             )
                             Spacer(modifier = Modifier.width(Dimens.fivedp))
                             ReusableTextViewBlackCard(
-                                repaymentData.WeekInArrear.toString(),
+                                (repaymentData.WeekInArrear?.toInt()?.toString() ?: "0"),
                                 fontSize = 13, modifier = Modifier.wrapContentWidth()
                             )
                         }
@@ -285,7 +291,7 @@ fun RepaymentDialog(
                             )
                             Spacer(modifier = Modifier.width(Dimens.fivedp))
                             ReusableTextViewBlackCard(
-                                repaymentData.PastDue.toString(),
+                                (repaymentData.PastDue?.toInt()?.toString() ?: "0"),
                                 fontSize = 13,
                                 modifier = Modifier.wrapContentWidth()
                             )
@@ -297,7 +303,7 @@ fun RepaymentDialog(
                             .fillMaxWidth()
                     ) {
                         Row(
-                            modifier = Modifier.weight(1f),
+                            modifier = Modifier.weight(0.8f),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             ReusableTextView(
@@ -307,7 +313,7 @@ fun RepaymentDialog(
                             )
                             Spacer(modifier = Modifier.width(Dimens.fivedp))
                             ReusableTextViewBlackCard(
-                                repaymentData.CurrentDue.toString(),
+                                (repaymentData.CurrentDue?.toInt()?.toString() ?: "0"),
                                 fontSize = 13,
                                 modifier = Modifier.wrapContentWidth()
                             )
@@ -322,7 +328,7 @@ fun RepaymentDialog(
                             )
                             Spacer(modifier = Modifier.width(Dimens.fivedp))
                             ReusableTextViewBlackCard(
-                                repaymentData.Due.toString(),
+                                (repaymentData.Due?.toInt()?.toString() ?: "0"),
                                 fontSize = 13, modifier = Modifier.wrapContentWidth()
                             )
                         }
@@ -357,7 +363,7 @@ fun RepaymentDialog(
                             onValueChange = { utrNo ->
                                 viewModel.utrNo = utrNo
                             },
-                            inputType = KeyboardType.Text
+                            inputType = KeyboardType.Number, maxLength = 10
                         )
                     }
 
@@ -369,12 +375,13 @@ fun RepaymentDialog(
                     {
                         FormFieldCompact(
                             label = stringResource(Res.string.personal_current_payment),
-                            value = viewModel.totalAmt,
+                            value = viewModel.totalAmt.toDoubleOrNull()?.takeIf { it != 0.0 }
+                                ?.toInt()?.toString() ?: "",
                             placeholder = stringResource(Res.string.type_here),
                             onValueChange = { totalAmt ->
                                 viewModel.totalAmt = totalAmt
                             },
-                            inputType = KeyboardType.Number
+                            inputType = KeyboardType.Number, maxLength = 10
                         )
                     }
 

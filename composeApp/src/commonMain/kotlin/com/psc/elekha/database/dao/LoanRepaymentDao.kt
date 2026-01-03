@@ -27,14 +27,14 @@ interface LoanRepaymentDao {
     @Query("Select Count(*) from LoanRepayment Where IsEdited = 1")
     suspend fun getLoanRepaymentUploadDataCount(): Int
 
-    @Query("Update LoanRepayment set IsEdited=1,Total=:Total,PaidDate=:PaidDate,LoanLat=:LoanLat,LoanLong=:LoanLong,LoanPlace=:LoanPlace,PaymentType=:PaymentType where GUID=:GUID")
+    @Query("Update LoanRepayment set IsEdited=1,UTRNumber=:utrNo,Total=:Total,PaidDate=:PaidDate,LoanLat=:LoanLat,LoanLong=:LoanLong,LoanPlace=:LoanPlace,PaymentType=:PaymentType where GUID=:GUID")
     suspend fun updateLoanRepaymentData(
         Total: Double,
         PaidDate: String,
         LoanLat: Double,
         LoanLong: Double,
         LoanPlace: String,
-        PaymentType: Int,
+        PaymentType: Int,utrNo: String,
         GUID: String
     )
 

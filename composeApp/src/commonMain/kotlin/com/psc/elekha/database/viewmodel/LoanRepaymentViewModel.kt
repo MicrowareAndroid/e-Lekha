@@ -77,6 +77,7 @@ class LoanRepaymentViewModel(
         LoanLong: Double,
         LoanPlace: String,
         PaymentType: Int,
+        utrNo: String,
         GUID: String
     ) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -86,7 +87,7 @@ class LoanRepaymentViewModel(
                 LoanLat,
                 LoanLong,
                 LoanPlace,
-                PaymentType,
+                PaymentType,utrNo,
                 GUID
             )
         }

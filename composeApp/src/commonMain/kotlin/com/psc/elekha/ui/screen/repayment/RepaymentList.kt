@@ -27,6 +27,7 @@ import org.jetbrains.compose.resources.stringResource
 import androidx.navigation.compose.rememberNavController
 import com.psc.elekha.database.entity.LoanRepaymentEntity
 import com.psc.elekha.database.viewmodel.LoanRepaymentViewModel
+import com.psc.elekha.expectfile.AppBackHandler
 import com.psc.elekha.ui.theme.*
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.koinInject
@@ -37,6 +38,14 @@ import org.koin.compose.viewmodel.koinViewModel
 fun RepaymentList(
     navController: NavHostController,
 ) {
+
+    AppBackHandler{
+        navController.navigate(RouteName.loan_filter_screen) {
+            popUpTo(RouteName.replayment_list) { inclusive = true }
+            launchSingleTop = true
+        }
+    }
+
     val viewModel = koinViewModel<LoanRepaymentViewModel>()
     var select by remember { mutableStateOf("Repayment List") }
     var selectedItems by remember { mutableStateOf(setOf<Int>()) }

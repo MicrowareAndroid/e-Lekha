@@ -94,6 +94,8 @@ class RepaymentViewModel(
             val data=repository.getLoanRepaymentByGUID(guid)
             _loanRepayment.value= data
             modeID=data.PaymentType!!
+            totalAmt=data.Total!!.toString()
+            utrNo=data.UTRNumber!!
         }
     }
     fun setPaymentImage(path: String) {
@@ -104,7 +106,7 @@ class RepaymentViewModel(
         viewModelScope.launch {
             val validation = checkValidation()
             if (validation.isValid) {
-                loanRepaymentViewModel.updateLoanRepaymentData(0.0, "", 0.0, 0.0, "", modeID, guid)
+                loanRepaymentViewModel.updateLoanRepaymentData(totalAmt.toDouble(), "", 0.0, 0.0, "", modeID,utrNo, guid)
                 saveMessage = getString(Res.string.data_updated_successfully)
                 showSaveAlert = true
                 saveFlag = 1
@@ -125,7 +127,7 @@ class RepaymentViewModel(
                 )
             }
 
-            returnStringValue(utrNo).isBlank() -> {
+            returnStringValue(utrNo).isBlank() || returnIntegerValue(utrNo) == 0 -> {
                 val utrLabel = getString(Res.string.enter_utr)
                 ValidationModelContorl(
                     isValid = false,
@@ -133,7 +135,7 @@ class RepaymentViewModel(
                 )
             }
 
-            returnStringValue(totalAmt).isBlank() -> {
+            returnStringValue(totalAmt).isBlank() || returnIntegerValue(totalAmt) == 0  -> {
                 val paymentLabel = getString(Res.string.enter_total_payment)
                 ValidationModelContorl(
                     isValid = false,

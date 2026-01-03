@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "1d4c57382a9bbf9e5e4f950eea5bcede",
+    "identityHash": "e7696a13b9d3dcd0760c643666c6084e",
     "entities": [
       {
         "tableName": "CustomerStatus",
@@ -2555,7 +2555,7 @@
       },
       {
         "tableName": "LoanRepayment",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`GUID` TEXT NOT NULL, `CenterID` INTEGER, `CustomerID` TEXT, `CustomerName` TEXT, `SpouseName` TEXT, `DisbursementAmount` REAL, `DisbursementDate` TEXT, `GroupName` TEXT, `LW` INTEGER, `LoanOutstandingAsOnDate` REAL, `WeekInArrear` REAL, `PastDue` REAL, `CurrentDue` REAL, `Due` REAL, `Advance` REAL, `Total` REAL, `WorkingDate` TEXT, `EMIDueDate` TEXT, `EMI` REAL, `MaxPayment` REAL, `MandateApproved` INTEGER, `LoanCollectionFrequency` INTEGER, `PaymentType` INTEGER, `NACHStatus` INTEGER, `MobileNo` TEXT, `IsUploaded` INTEGER, `IsEdited` INTEGER, `PaidDate` TEXT, `IsEmiReceived` INTEGER, `LoanPlace` TEXT, `LoanLat` REAL, `LoanLong` REAL, PRIMARY KEY(`GUID`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`GUID` TEXT NOT NULL, `CenterID` INTEGER, `CustomerID` TEXT, `CustomerName` TEXT, `SpouseName` TEXT, `DisbursementAmount` REAL, `DisbursementDate` TEXT, `GroupName` TEXT, `LW` INTEGER, `LoanOutstandingAsOnDate` REAL, `WeekInArrear` REAL, `PastDue` REAL, `CurrentDue` REAL, `Due` REAL, `Advance` REAL, `Total` REAL, `WorkingDate` TEXT, `EMIDueDate` TEXT, `EMI` REAL, `MaxPayment` REAL, `MandateApproved` INTEGER, `LoanCollectionFrequency` INTEGER, `PaymentType` INTEGER, `NACHStatus` INTEGER, `MobileNo` TEXT, `IsUploaded` INTEGER, `IsEdited` INTEGER, `PaidDate` TEXT, `IsEmiReceived` INTEGER, `LoanPlace` TEXT, `LoanLat` REAL, `LoanLong` REAL, `UTRNumber` TEXT, PRIMARY KEY(`GUID`))",
         "fields": [
           {
             "fieldPath": "GUID",
@@ -2717,6 +2717,11 @@
             "fieldPath": "LoanLong",
             "columnName": "LoanLong",
             "affinity": "REAL"
+          },
+          {
+            "fieldPath": "UTRNumber",
+            "columnName": "UTRNumber",
+            "affinity": "TEXT"
           }
         ],
         "primaryKey": {
@@ -4503,11 +4508,54 @@
             "UserId"
           ]
         }
+      },
+      {
+        "tableName": "TrainingGroupMember",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`TGroupMemberID` INTEGER NOT NULL, `TGroupID` INTEGER, `GUID` TEXT, `AttendanceDay1` TEXT, `AttendanceDay2` TEXT, `IsDeleted` INTEGER, PRIMARY KEY(`TGroupMemberID`))",
+        "fields": [
+          {
+            "fieldPath": "TGroupMemberID",
+            "columnName": "TGroupMemberID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "TGroupID",
+            "columnName": "TGroupID",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "GUID",
+            "columnName": "GUID",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "AttendanceDay1",
+            "columnName": "AttendanceDay1",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "AttendanceDay2",
+            "columnName": "AttendanceDay2",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "IsDeleted",
+            "columnName": "IsDeleted",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "TGroupMemberID"
+          ]
+        }
       }
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '1d4c57382a9bbf9e5e4f950eea5bcede')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e7696a13b9d3dcd0760c643666c6084e')"
     ]
   }
 }

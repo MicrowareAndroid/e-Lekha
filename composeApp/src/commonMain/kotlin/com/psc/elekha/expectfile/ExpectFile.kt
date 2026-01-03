@@ -7,7 +7,8 @@ import com.psc.elekha.utils.AppPermission
 
 expect fun getDatabaseBuilder(): RoomDatabase.Builder<AppDatabase>
 
-
+@Composable
+expect fun AppBackHandler(onBack: () -> Unit)
 expect class PermissionManager {
     suspend fun checkPermission(permission: AppPermission): PermissionStatus
     suspend fun requestPermission(permission: AppPermission): PermissionStatus

@@ -53,7 +53,7 @@ class LoanRepaymentRepository(
         LoanLat: Double,
         LoanLong: Double,
         LoanPlace: String,
-        PaymentType: Int,
+        PaymentType: Int,utrNo: String,
         GUID: String
     ) {
         dao.updateLoanRepaymentData(
@@ -62,7 +62,7 @@ class LoanRepaymentRepository(
             LoanLat,
             LoanLong,
             LoanPlace,
-            PaymentType,
+            PaymentType,utrNo,
             GUID
         )
     }
