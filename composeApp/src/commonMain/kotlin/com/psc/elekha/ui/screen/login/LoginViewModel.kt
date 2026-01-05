@@ -5,11 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.psc.elekha.apicall.APiState
 import com.psc.elekha.apicall.ApiRepository
-import com.psc.elekha.database.dao.TrainingGroupStatusDao
-import com.psc.elekha.database.entity.MSTComboBox_NEntity
-import com.psc.elekha.database.entity.UsersEntity
 import com.psc.elekha.database.viewmodel.CustomerStatusViewModel
-import com.psc.elekha.database.viewmodel.CustomerViewModel
 import com.psc.elekha.database.viewmodel.KYCDocCategoryViewModel
 import com.psc.elekha.database.viewmodel.KYCDocConfigurationViewModel
 import com.psc.elekha.database.viewmodel.KYCDocumentViewModel
@@ -36,18 +32,11 @@ import com.psc.elekha.model.MasterRequest
 import com.psc.elekha.response.MasterResponse
 import com.psc.elekha.utils.AppPreferences
 import com.psc.elekha.utils.AppSP
-import com.psc.elekha.utils.MasterXmlParser
-import e_lekha.composeapp.generated.resources.Res
-import e_lekha.composeapp.generated.resources.data_saved_successfully
-import e_lekha.composeapp.generated.resources.something_wentwrong
+import e_lekha.composeapp.generated.resources.*
 import io.ktor.client.call.body
-import io.ktor.client.statement.bodyAsText
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import kotlinx.serialization.builtins.ListSerializer
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.jsonObject
 import org.jetbrains.compose.resources.getString
 
 
@@ -59,47 +48,113 @@ class LoginViewModel(
     private val tabletMenuViewModel: TabletMenuViewModel,
     private val tabletMenuRoleViewModel: TabletMenuRoleViewModel,
     private val mstStateViewModel: MSTStateViewModel,
-   private val mstDistrictViewModel: MSTDistrictViewModel,
-   private val mstBranchViewModel: MSTBranchViewModel,
-   private val mstVillageViewModel: MSTVillageViewModel,
-   private val mstAssetsValuationViewModel: MSTAssetsValuationViewModel,
-   private val mstBankViewModel: MSTBankViewModel,
-   private val mstCenterViewModel: MSTCenterViewModel,
-   private val mstPovertyStatusViewModel: MSTPovertyStatusViewModel,
-   private val customerStatusViewModel: CustomerStatusViewModel,
-   private val mstLoanTypeViewModel: MSTLoanTypeViewModel,
-   private val trainingGroupStatusViewModel: TrainingGroupStatusViewModel,
-   private val mstMonthlyIncomeMarksViewModel: MSTMonthlyIncomeMarksViewModel,
-   private val userBranchViewModel: UserBranchViewModel,
-   private val mstLoanOfficerViewModel: MSTLoanOfficerViewModel,
-   private val kycDocCategoryViewModel: KYCDocCategoryViewModel,
-   private val kycDocConfigurationViewModel: KYCDocConfigurationViewModel,
-   private val kycDocumentViewModel: KYCDocumentViewModel,
-   private val kycStatusViewModel: KYCStatusViewModel,
-   private val kycStatusConditionViewModel: KYCStatusConditionViewModel,
-   private val appPreferences: AppPreferences,
+    private val mstDistrictViewModel: MSTDistrictViewModel,
+    private val mstBranchViewModel: MSTBranchViewModel,
+    private val mstVillageViewModel: MSTVillageViewModel,
+    private val mstAssetsValuationViewModel: MSTAssetsValuationViewModel,
+    private val mstBankViewModel: MSTBankViewModel,
+    private val mstCenterViewModel: MSTCenterViewModel,
+    private val mstPovertyStatusViewModel: MSTPovertyStatusViewModel,
+    private val customerStatusViewModel: CustomerStatusViewModel,
+    private val mstLoanTypeViewModel: MSTLoanTypeViewModel,
+    private val trainingGroupStatusViewModel: TrainingGroupStatusViewModel,
+    private val mstMonthlyIncomeMarksViewModel: MSTMonthlyIncomeMarksViewModel,
+    private val userBranchViewModel: UserBranchViewModel,
+    private val mstLoanOfficerViewModel: MSTLoanOfficerViewModel,
+    private val kycDocCategoryViewModel: KYCDocCategoryViewModel,
+    private val kycDocConfigurationViewModel: KYCDocConfigurationViewModel,
+    private val kycDocumentViewModel: KYCDocumentViewModel,
+    private val kycStatusViewModel: KYCStatusViewModel,
+    private val kycStatusConditionViewModel: KYCStatusConditionViewModel,
+    private val appPreferences: AppPreferences,
 ) : ViewModel() {
 
     private val _loginState = MutableStateFlow<APiState>(APiState.idle)
+    private val _verifyState = MutableStateFlow<APiState>(APiState.idle)
     val loginState: StateFlow<APiState> = _loginState
+    val verifyState: StateFlow<APiState> = _verifyState
 
+    fun getAuthentication(username: String, password: String) {
+        viewModelScope.launch {
+            _loginState.value = APiState.loading
+            try {
+                val request = MasterRequest(username, password)
+                val response = apiRepository.getAuthentication(request)
+
+                val code = response.status.value
+                if (code == 200) {
+                    val body = response.body<String>()
+                    if (body.length > 5) {
+                        getMaster(username, password)
+                    } else {
+                        _loginState.value = APiState.error(getString(Res.string.invalid_username_pwd))
+                    }
+
+                } else if (code == 401) {
+                    _loginState.value = APiState.error(getString(Res.string.something_wentwrong))
+                } else {
+                    _loginState.value = APiState.error(getString(Res.string.something_wentwrong))
+                }
+            } catch (e: Exception) {
+                _loginState.value = APiState.error(e.message ?: "Unknown error")
+            }
+        }
+    }
+
+    fun getOTP(mobileNo: String) {
+        viewModelScope.launch {
+            try {
+                val response = apiRepository.getOTP(mobileNo)
+                val code = response.status.value
+                if (code == 200) {
+                    val body = response.body<String>()
+                } else if (code == 401) {
+                    _loginState.value = APiState.error(getString(Res.string.something_wentwrong))
+                } else {
+                    _loginState.value = APiState.error(getString(Res.string.something_wentwrong))
+                }
+            } catch (e: Exception) {
+                _loginState.value = APiState.error(e.message ?: "Unknown error")
+            }
+        }
+    }
+
+    fun verifyOTP(mobileNo: String, enteredOTP: String) {
+        viewModelScope.launch {
+            _verifyState.value = APiState.loading
+            try {
+                val response = apiRepository.verifyOTP(mobileNo, enteredOTP)
+                val code = response.status.value
+                if (code == 200) {
+                    val body = response.body<String>()
+                    if (body.equals("true", false)) {
+                        _verifyState.value = APiState.success(getString(Res.string.verified_success))
+                    } else {
+                        _verifyState.value = APiState.error(getString(Res.string.invalid_otp))
+                    }
+                } else if (code == 401) {
+                    _verifyState.value = APiState.error(getString(Res.string.something_wentwrong))
+                } else {
+                    _verifyState.value = APiState.error(getString(Res.string.something_wentwrong))
+                }
+            } catch (e: Exception) {
+                _verifyState.value = APiState.error(e.message ?: "Unknown error")
+            }
+        }
+    }
 
     fun getMaster(username: String, password: String) {
         viewModelScope.launch {
-            _loginState.value = APiState.loading
-
             try {
                 val request = MasterRequest(username, password)
                 val response = apiRepository.getMaster(request)
 
                 val code = response.status.value
-                if (code == 200){
-
+                if (code == 200) {
                     val body = response.body<MasterResponse>()
                     appPreferences.putString(AppSP.username, username)
                     appPreferences.putString(AppSP.password, password)
-
-                    body.let{
+                    body.let {
                         usersViewModel.insertAllUsers(it.user)
                         tabletMenuViewModel.insertAllTabletMenu(it.tabletMenu)
                         tabletMenuRoleViewModel.insertAllTabletMenuRole(it.tabletMenuRole)
@@ -123,16 +178,12 @@ class LoginViewModel(
                         kycStatusViewModel.insertAllStatus(it.kycStatus)
                         kycStatusConditionViewModel.insertAllConditions(it.kycStatusCondition)
                         mstComboBoxNViewModel.insertAllComboBox(it.mstComboBoxN)
-
-
-
                     }
-                    _loginState.value=APiState.success("Login successfully")
+                    _loginState.value = APiState.success("Login successfully")
 
-
-                }else if(code == 401){
+                } else if (code == 401) {
                     _loginState.value = APiState.error(getString(Res.string.something_wentwrong))
-                }else{
+                } else {
                     _loginState.value = APiState.error(getString(Res.string.something_wentwrong))
                 }
             } catch (e: Exception) {
@@ -140,8 +191,5 @@ class LoginViewModel(
             }
         }
     }
-
-
-
 
 }

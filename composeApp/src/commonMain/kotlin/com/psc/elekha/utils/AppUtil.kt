@@ -1822,6 +1822,7 @@ fun SimpleOtp(
                 modifier = Modifier
                     .width(55.dp)
                     .height(60.dp)
+                    .padding(horizontal = 2.dp)
                     .focusRequester(focusRequesters[index]),
                 textStyle = LocalTextStyle.current.copy(
                     textAlign = TextAlign.Center,

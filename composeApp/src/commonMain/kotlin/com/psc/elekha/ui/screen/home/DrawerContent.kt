@@ -74,6 +74,7 @@ import e_lekha.composeapp.generated.resources.type_here
 import e_lekha.composeapp.generated.resources.upi_idd
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun DrawerContent() {
@@ -349,4 +350,10 @@ fun DrawerContent() {
 
         }
     }
+}
+
+@Preview
+@Composable
+fun DrawerContentPreview(){
+    DrawerContent()
 }
