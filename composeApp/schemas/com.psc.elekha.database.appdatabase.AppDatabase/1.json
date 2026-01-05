@@ -2,6 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
+
     "identityHash": "e7696a13b9d3dcd0760c643666c6084e",
     "entities": [
       {
@@ -4555,6 +4556,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+
       "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e7696a13b9d3dcd0760c643666c6084e')"
     ]
   }

@@ -3,6 +3,7 @@ package com.psc.elekha.apicall
 
 import com.psc.elekha.model.MasterRequest
 import com.psc.elekha.utils.Config.AUTHENTICATION
+import com.psc.elekha.utils.Config.GTR
 import com.psc.elekha.utils.Config.LOAN_REPAYMENT
 import com.psc.elekha.utils.Config.MASTER
 import com.psc.elekha.utils.Config.SENDOTPCODE
@@ -56,6 +57,16 @@ class ApiService(private val client: HttpClient) {
 
     suspend fun getLoanRepayment(masterRequest: MasterRequest): HttpResponse {
         return client.get(LOAN_REPAYMENT) {
+            url {
+                parameters.append("pUsername", masterRequest.pUsername)
+                parameters.append("pPassword", masterRequest.pPassword)
+            }
+            contentType(ContentType.Application.Json)
+        }
+    }
+
+    suspend fun getGTRData(masterRequest: MasterRequest): HttpResponse {
+        return client.get(GTR) {
             url {
                 parameters.append("pUsername", masterRequest.pUsername)
                 parameters.append("pPassword", masterRequest.pPassword)
