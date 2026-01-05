@@ -47,4 +47,15 @@ interface CustomerFamilyMemberDetailsDao {
     @Query(" SELECT * FROM CustomerFamilyMemberDetails WHERE GUID =:guId")
     suspend fun getCustomerByGuid(guId: String): List<CustomerFamilyMemberDetailsEntity>
 
+
+     @Query("SELECT * FROM CustomerFamilyMemberDetails WHERE MemberGuid =:guId")
+    suspend fun getCustomerDetailByGuid(guId: String): List<CustomerFamilyMemberDetailsEntity>
+
+    @Delete
+    suspend fun deleteFamilyMember(
+        item: CustomerFamilyMemberDetailsEntity
+    )
+
+
+
 }

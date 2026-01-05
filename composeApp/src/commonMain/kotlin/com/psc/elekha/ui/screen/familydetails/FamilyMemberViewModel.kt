@@ -1,3 +1,5 @@
+package com.psc.elekha.ui.screen.familydetails
+
 import androidx.compose.foundation.relocation.BringIntoViewRequester
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -18,13 +20,17 @@ import com.psc.elekha.utils.returnStringValue
 import e_lekha.composeapp.generated.resources.Res
 import e_lekha.composeapp.generated.resources.data_saved_successfully
 import e_lekha.composeapp.generated.resources.data_updated_successfully
+
 import e_lekha.composeapp.generated.resources.personal_customer_name
 import e_lekha.composeapp.generated.resources.personal_district
 import e_lekha.composeapp.generated.resources.personal_education
+
 import e_lekha.composeapp.generated.resources.personal_marital
+
 import e_lekha.composeapp.generated.resources.personal_purpose
 import e_lekha.composeapp.generated.resources.personal_relation
 import e_lekha.composeapp.generated.resources.personal_religion
+import e_lekha.composeapp.generated.resources.personal_remarks
 import e_lekha.composeapp.generated.resources.personal_state
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -32,7 +38,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.getString
 
-class FamilyMemberDetailViewModel(
+class FamilyMemberViewModel(
     private val appPreferences: AppPreferences,
     private val familyMemberViewModel: CustomerFamilyMemberDetailsViewModel
 ) : BaseValidationViewModel() {
@@ -69,13 +75,15 @@ class FamilyMemberDetailViewModel(
 
 
     suspend fun saveFamilyMember() {
-        val memberGuid = appPreferences.getString(AppSP.familyGuid)
+        val memberGuid = appPreferences.getString(AppSP.familymemberGuid)
+        val customerGuid = appPreferences.getString(AppSP.customerGuid)
         val memberFamilyName = parseNameDynamic(returnStringValue(memberName))
 
         if (memberGuid.isNullOrEmpty()) {
             val newGuid = generateRandomId()
 
             val entity = CustomerFamilyMemberDetailsEntity(
+                returnStringValue(customerGuid),
                 newGuid,
                 0,
                 memberFamilyName.firstName,
@@ -96,13 +104,12 @@ class FamilyMemberDetailViewModel(
             )
 
             familyMemberViewModel.insertCustomerFamilyMember(entity)
-            appPreferences.putString(AppSP.customerGuid, newGuid)
+            appPreferences.putString(AppSP.familymemberGuid, newGuid)
 
             saveMessage = getString(Res.string.data_saved_successfully)
-            saveFlag = 1
+            //saveFlag = 1
             showSaveAlert = true
         } else {
-
             familyMemberViewModel.updateCustomerFamilyMemberByGuid(
                 memberGuid,
                 memberFamilyName.firstName,
@@ -122,14 +129,10 @@ class FamilyMemberDetailViewModel(
 
     fun loadData() {
         viewModelScope.launch {
-
-
-            val savedGuid = returnStringValue(appPreferences.getString(AppSP.familyGuid))
+            val savedGuid = returnStringValue(appPreferences.getString(AppSP.familymemberGuid))
             if (savedGuid.isNotEmpty()) {
-
-                val listData = familyMemberViewModel.getCustomerDetailGuid(savedGuid)
+                val listData = familyMemberViewModel.getCustomerDetailByGuid(savedGuid)
                 if (listData.isNotEmpty()) {
-
                     val data = listData[0]
                     memberName=returnStringValue(data.MFirstName)
                     gender=returnIntegerValue(data.Gender)
@@ -148,9 +151,12 @@ class FamilyMemberDetailViewModel(
     fun saveData() {
         viewModelScope.launch {
             saveFamilyMember()
-           /* val validation = checkValidation()
-            if (validation.isValid) {
+            showSaveAlert = true
+            saveFlag = 1
 
+           /*val validation = checkValidation()
+            if (validation.isValid) {
+                saveFamilyMember()
                 showSaveAlert = true
                 saveFlag = 1
             } else {
@@ -159,14 +165,12 @@ class FamilyMemberDetailViewModel(
         }
     }
 
-    private suspend fun checkValidation(): ValidationModelContorl {
-        val pleasemaritalstatus = getString(Res.string.personal_marital)
+  /*  private suspend fun checkValidation(): ValidationModelContorl {
+        val pleaseRemarks = getString(Res.string.personal_remarks)
         val pleaseEducation = getString(Res.string.personal_education)
-        val pleaseReligion = getString(Res.string.personal_religion)
-        val pleasePurpose = getString(Res.string.personal_purpose)
-        val pleaseRelation = getString(Res.string.personal_relation)
-        val pleaseState = getString(Res.string.personal_state)
-        val pleaseDistrict = getString(Res.string.personal_district)
+        val pleaseGender = getString(Res.string.personal_gender)
+        val pleaseOccupation = getString(Res.string.personal_occupation)
+        val pleaseIncome = getString(Res.string.personal_income)
 
         return when {
 
@@ -184,14 +188,14 @@ class FamilyMemberDetailViewModel(
             returnIntegerValue(gender.toString()) == 0 -> {
                 ValidationModelContorl(
                     isValid = false,
-                    errorMessage = pleasemaritalstatus,
+                    errorMessage = pleaseGender,
                     focusRequester = focusRequesterGender,
                     bringIntoViewRequester = bringIntoViewRequesterGender
                 )
             }
 
             returnStringValue(age).isBlank() -> {
-                val nameLabel = getString(Res.string.personal_customer_name)
+                val nameLabel = getString(Res.string.personal_age)
                 ValidationModelContorl(
                     isValid = false,
                     errorMessage = nameLabel,
@@ -208,10 +212,37 @@ class FamilyMemberDetailViewModel(
                     bringIntoViewRequester = bringIntoViewRequesterEducationId
                 )
             }
+            returnIntegerValue(occupationId.toString()) == 0 -> {
+                ValidationModelContorl(
+                    isValid = false,
+                    errorMessage = pleaseOccupation,
+                    focusRequester = focusRequesterOccupationId,
+                    bringIntoViewRequester = bringIntoViewRequesterOccupationId
+                )
+            }
+
+            returnStringValue(monthlyIncome).isBlank() -> {
+                ValidationModelContorl(
+                    isValid = false,
+                    errorMessage = pleaseIncome,
+                    focusRequester = focusRequesterMonthlyIncome,
+                    bringIntoViewRequester = bringIntoViewRequesterMonthlyIncome
+                )
+            }
+
+            returnStringValue(remarks).isBlank() -> {
+                ValidationModelContorl(
+                    isValid = false,
+                    errorMessage = pleaseRemarks,
+                    focusRequester = focusRequesterRemarks,
+                    bringIntoViewRequester = bringIntoViewRequesterRemarks
+                )
+            }
+
 
             else -> ValidationModelContorl(isValid = true)
         }
-    }
+    }*/
 
 }
 

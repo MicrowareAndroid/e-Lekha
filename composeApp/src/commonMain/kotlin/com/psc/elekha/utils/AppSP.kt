@@ -12,7 +12,7 @@ object AppSP {
     var userId = "userId"
     var branchId = "branchId"
 
-    var familyGuid="familyGuid"
+    var familymemberGuid="familymemberGuid"
     var mfiGuid="mfiGuid"
     var filterVlgID="filterVlgID"
     var filterCenterID="filterCenterID"

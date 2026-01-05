@@ -83,7 +83,7 @@ class PersonalDetailViewModel(
     var relationId by mutableStateOf(0)
     var gurantordateOfBirth by mutableStateOf("")
     var gurantormobileNumber by mutableStateOf("")
-    var otpNumbers by mutableStateOf("")
+    var guranterOtp by mutableStateOf("")
     var fulladdresss by mutableStateOf("")
     var stateId by mutableStateOf(0)
     var districtId by mutableStateOf(0)
@@ -227,7 +227,7 @@ class PersonalDetailViewModel(
                 returnStringValue(gurName.middleName),
                 returnStringValue(gurName.lastName),
                 "",
-                convertDateFormatYYYYMMDD(returnStringValue(dateOfBirth)),
+                convertDateFormatDDMMYYYY(returnStringValue(dateOfBirth)),
                 0,
                 calculateAgeFromDobKMP(dateOfBirth),
                 0,
@@ -425,11 +425,11 @@ class PersonalDetailViewModel(
                 "",
                 "",
                 "",
-                convertDateFormatYYYYMMDD(returnStringValue(appPreferences.getString(AppSP.gurantorDateOfBirth))),
+                convertDateFormatDDMMYYYY(returnStringValue(gurantordateOfBirth)),
                 "",
                 "",
                 1,
-                "",
+                otpNumber,
                 0,
                 0,
                 "",
@@ -458,7 +458,6 @@ class PersonalDetailViewModel(
                 returnIntegerValue(othersExpense),
                 returnIntegerValue(totalMonthlyExpense),
                 returnIntegerValue(annualExpense)
-
             )
             customerViewModel.insertCustomer(entity)
             appPreferences.putString(AppSP.customerGuid, customerGuid)
@@ -483,11 +482,11 @@ class PersonalDetailViewModel(
                 calculateAgeFromDobKMP(dateOfBirth),
                 returnIntegerValue(outStandingExpense),
                 fulladdresss,
-                gurantordateOfBirth,
+                convertDateFormatDDMMYYYY(returnStringValue(gurantordateOfBirth)),
                 stateId,
                 districtId,
                 villageId,
-                religionId,
+                relationId,
                 gurantormobileNumber,
                 tehsilName,
                 landMark,
@@ -496,11 +495,12 @@ class PersonalDetailViewModel(
                 maternalMobileNo,
                 fatherName,
                 returnIntegerValue(dailyExpense),
+                returnIntegerValue(educationExpense),
                 returnIntegerValue(medicalExpense),
                 returnIntegerValue(othersExpense),
                 returnIntegerValue(totalMonthlyExpense),
                 returnIntegerValue(annualExpense),
-                dateOfBirth,
+                convertDateFormatDDMMYYYY(returnStringValue(dateOfBirth)),
                 appPreferences.getString(AppSP.userId),
                 currentDatetime()
             )
@@ -541,7 +541,6 @@ class PersonalDetailViewModel(
             appPreferences.putString(AppSP.mfiGuid, newMfiGuid)
 
         } else {
-
             customerExistingLoanDetailViewModel.updateLoan(
                 savedMfiGuid,
                 returnIntegerValue(loanAmountExpense),
@@ -576,7 +575,7 @@ class PersonalDetailViewModel(
                     mobileNumber = returnStringValue(data.ContactNo)
                     husbandName = returnStringValue(data.HusbandFName)
                     gurantorName = returnStringValue(data.GurantorFName)
-                    dateOfBirth = convertDateFormatDDMMYYYY(returnStringValue(data.DOB))
+                    dateOfBirth = returnStringValue(data.DOB)
                     relationId = returnIntegerValue(data.GuarantorID?.toString())
                     remarksExpense = returnStringValue(data.Remarks)
                     gurantordateOfBirth = returnStringValue(data.GuarantorDOB)
@@ -624,15 +623,18 @@ class PersonalDetailViewModel(
 
     fun saveData() {
         viewModelScope.launch {
+            savePersonalDetail()
+            showSaveAlert = true
+            saveFlag = 1
 
-            val validation = checkValidation()
+           /* val validation = checkValidation()
             if (validation.isValid) {
                 savePersonalDetail()
                 showSaveAlert = true
                 saveFlag = 1
             } else {
                 showValidationError(validation)
-            }
+            }*/
         }
     }
 

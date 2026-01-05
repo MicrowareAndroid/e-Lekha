@@ -113,12 +113,12 @@ class KycDetailViewModel(
     val focusNameOnPan = FocusRequester()
 
     fun onNextClick(onSuccess: () -> Unit) {
-        if (!validateKyc()) {
+       /* if (!validateKyc()) {
             saveFlag = 0
             showSaveAlert = true
             return
         }
-
+*/
         viewModelScope.launch {
             updateKycUpdate()
             saveFlag = 1

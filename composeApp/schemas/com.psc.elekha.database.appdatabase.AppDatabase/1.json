@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "e7696a13b9d3dcd0760c643666c6084e",
+    "identityHash": "18d1c77d88ad79a68f81c84d9e35285c",
     "entities": [
       {
         "tableName": "CustomerStatus",
@@ -2309,13 +2309,18 @@
       },
       {
         "tableName": "CustomerFamilyMemberDetails",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`GUID` TEXT NOT NULL, `MemberID` INTEGER, `MFirstName` TEXT, `MMiddleName` TEXT, `MLastName` TEXT, `RelationID` INTEGER, `Age` INTEGER, `IsSchooling` INTEGER, `EducationID` INTEGER, `IsEarning` INTEGER, `OccupationID` INTEGER, `MonthlyIncomeID` INTEGER, `Gender` TEXT, `IsOld` INTEGER, `MonthlyIncome` INTEGER, `IsUpload` INTEGER, `Remarks` TEXT, PRIMARY KEY(`GUID`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`GUID` TEXT NOT NULL, `MemberGuid` TEXT, `MemberID` INTEGER, `MFirstName` TEXT, `MMiddleName` TEXT, `MLastName` TEXT, `RelationID` INTEGER, `Age` INTEGER, `IsSchooling` INTEGER, `EducationID` INTEGER, `IsEarning` INTEGER, `OccupationID` INTEGER, `MonthlyIncomeID` INTEGER, `Gender` TEXT, `IsOld` INTEGER, `MonthlyIncome` INTEGER, `IsUpload` INTEGER, `Remarks` TEXT, PRIMARY KEY(`GUID`))",
         "fields": [
           {
             "fieldPath": "GUID",
             "columnName": "GUID",
             "affinity": "TEXT",
             "notNull": true
+          },
+          {
+            "fieldPath": "MemberGuid",
+            "columnName": "MemberGuid",
+            "affinity": "TEXT"
           },
           {
             "fieldPath": "MemberID",
@@ -4551,11 +4556,64 @@
             "TGroupMemberID"
           ]
         }
+      },
+      {
+        "tableName": "CustomerMovableAssets",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`MAGUID` TEXT NOT NULL, `GUID` TEXT, `VehicleID` INTEGER, `VehicleNo` TEXT, `VehicleImageName` TEXT, `IsUpload` INTEGER, `IsEdited` INTEGER, `IsDeleted` INTEGER, PRIMARY KEY(`MAGUID`))",
+        "fields": [
+          {
+            "fieldPath": "MAGUID",
+            "columnName": "MAGUID",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "GUID",
+            "columnName": "GUID",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "VehicleID",
+            "columnName": "VehicleID",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "VehicleNo",
+            "columnName": "VehicleNo",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "VehicleImageName",
+            "columnName": "VehicleImageName",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "IsUpload",
+            "columnName": "IsUpload",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "IsEdited",
+            "columnName": "IsEdited",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "IsDeleted",
+            "columnName": "IsDeleted",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "MAGUID"
+          ]
+        }
       }
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e7696a13b9d3dcd0760c643666c6084e')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '18d1c77d88ad79a68f81c84d9e35285c')"
     ]
   }
 }
