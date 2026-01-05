@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "a8e15e8fe487d92e200929172bf30e66",
+    "identityHash": "51f3647375cbea7e70783e436a61486a",
     "entities": [
       {
         "tableName": "CustomerStatus",
@@ -4503,11 +4503,54 @@
             "UserId"
           ]
         }
+      },
+      {
+        "tableName": "TrainingGroupMember",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`TGroupMemberID` INTEGER NOT NULL, `TGroupID` INTEGER, `GUID` TEXT, `AttendanceDay1` TEXT, `AttendanceDay2` TEXT, `IsDeleted` INTEGER, PRIMARY KEY(`TGroupMemberID`))",
+        "fields": [
+          {
+            "fieldPath": "TGroupMemberID",
+            "columnName": "TGroupMemberID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "TGroupID",
+            "columnName": "TGroupID",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "GUID",
+            "columnName": "GUID",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "AttendanceDay1",
+            "columnName": "AttendanceDay1",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "AttendanceDay2",
+            "columnName": "AttendanceDay2",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "IsDeleted",
+            "columnName": "IsDeleted",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "TGroupMemberID"
+          ]
+        }
       }
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a8e15e8fe487d92e200929172bf30e66')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '51f3647375cbea7e70783e436a61486a')"
     ]
   }
 }

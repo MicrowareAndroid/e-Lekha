@@ -45,6 +45,7 @@ import com.psc.elekha.database.viewmodel.UserContactDetailViewModel
 import com.psc.elekha.database.viewmodel.UserResponseViewModel
 import com.psc.elekha.database.viewmodel.UsersViewModel
 import com.psc.elekha.ui.screen.bankdetails.BankDetailViewModel
+import com.psc.elekha.ui.screen.gtrlist.GtrViewModel
 import com.psc.elekha.ui.screen.kycdetails.KycDetailViewModel
 import com.psc.elekha.ui.screen.login.LoginViewModel
 import com.psc.elekha.ui.screen.personaldetails.PersonalDetailViewModel
@@ -134,6 +135,12 @@ val viewmodelModule = module {
             appPreferences = get()
         )
     }
-
+    viewModel {
+        GtrViewModel(
+            apiRepository = get(),
+            trainingGroupViewModel = get(),
+            trainingGroupMemberViewModel = get()
+        )
+    }
 
 }
