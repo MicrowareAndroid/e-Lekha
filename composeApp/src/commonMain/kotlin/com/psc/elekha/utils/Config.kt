@@ -5,4 +5,5 @@ object Config {
     const val MASTER = "api/Tablet/GetExportMasterData"
 
     const val LOAN_REPAYMENT = "api/Tablet/GetExportLoanCollectionData"
+    const val GTR = "api/Tablet/GetExportGTRData"
 }

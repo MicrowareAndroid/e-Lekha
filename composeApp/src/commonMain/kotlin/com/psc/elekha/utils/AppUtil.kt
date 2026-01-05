@@ -2379,7 +2379,7 @@ fun CustomerItemCard(
     ReusableCards(
         modifier = Modifier
             .fillMaxWidth()
-//            .padding(horizontal = 8.dp, vertical = 8.dp)
+            .padding(horizontal = 10.dp, vertical = 6.dp)
             .clickable { onCardClick(customer) },
         backgroundColor = loginBg,
         cornerRadius = 12
@@ -2638,7 +2638,8 @@ fun ReusableDynamicSpinner(
     modifier: Modifier = Modifier,
     backgroundColor: Color = text_fiiled_color,
     borderColor: Color = boderColor,
-) {
+)
+{
 
     var expanded by remember { mutableStateOf(false) }
     var spinnerWidth by remember { mutableStateOf(0) }
@@ -2945,7 +2946,8 @@ fun <T : Any> FillDynamicSpinnerespt(
     bringIntoViewRequester: BringIntoViewRequester? = null,
     placeholder: String = stringResource(Res.string.spinner_select),
     isMandatory: Int = 1
-) {
+)
+{
     var expanded by remember { mutableStateOf(false) }
     var hasFocus by remember { mutableStateOf(false) }
     var spinnerWidth by remember { mutableStateOf(0.dp) }
