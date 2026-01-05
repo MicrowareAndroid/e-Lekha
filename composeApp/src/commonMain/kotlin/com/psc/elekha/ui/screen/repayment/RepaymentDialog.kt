@@ -359,7 +359,6 @@ fun RepaymentDialog(
                         FormFieldCompact(
                             label = stringResource(Res.string.personal_payment_utr),
                             value = viewModel.utrNo,
-                            placeholder = stringResource(Res.string.type_here),
                             onValueChange = { utrNo ->
                                 viewModel.utrNo = utrNo
                             },
@@ -374,10 +373,9 @@ fun RepaymentDialog(
                     )
                     {
                         FormFieldCompact(
-                            label = stringResource(Res.string.personal_current_payment),
+                            label = stringResource(Res.string.total_repayment),
                             value = viewModel.totalAmt.toDoubleOrNull()?.takeIf { it != 0.0 }
                                 ?.toInt()?.toString() ?: "",
-                            placeholder = stringResource(Res.string.type_here),
                             onValueChange = { totalAmt ->
                                 viewModel.totalAmt = totalAmt
                             },
