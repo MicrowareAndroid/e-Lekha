@@ -274,7 +274,12 @@ fun LoginScreenNew(navController: NavController) {
                                                 viewModel.getAuthentication(username, password)
                                             }
                                         } else {
-                                            viewModel.verifyOTP("9821490996", otp)
+                                            if (otp.length < 4) {
+                                                showDialog = true
+                                                dialogMessage = "Please Enter Valid OTP"
+                                            } else {
+                                                viewModel.verifyOTP("9821490996", otp)
+                                            }
                                         }
                                     },
                                     modifier = Modifier
