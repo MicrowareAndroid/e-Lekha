@@ -8,8 +8,10 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.psc.elekha.database.entity.LoanRepaymentEntity
+import com.psc.elekha.ui.theme.appleblue
 import com.psc.elekha.ui.theme.loginBg
 import com.psc.elekha.utils.ReusableTextViewBlackCard
 import com.psc.elekha.utils.ReusableTextViewGrayCard
@@ -62,12 +64,12 @@ fun RepaymentItemCard(
                             .size(55.dp)
                             .background(Color.LightGray)
                     ) {
-                      /*  Image(
-                            painter = painterResource(Res.drawable.user_default),
-                            contentDescription = null,
-                            modifier = Modifier.fillMaxSize(),
-                            contentScale = ContentScale.Crop
-                        )*/
+                        /*  Image(
+                              painter = painterResource(Res.drawable.user_default),
+                              contentDescription = null,
+                              modifier = Modifier.fillMaxSize(),
+                              contentScale = ContentScale.Crop
+                          )*/
                     }
                 }
                 Spacer(modifier = Modifier.width(10.dp))
@@ -81,7 +83,9 @@ fun RepaymentItemCard(
                         ReusableTextViewGrayCard(
                             stringResource(Res.string.personal_customer).plus(":"),
                             fontSize = 13,
-                            modifier = Modifier.wrapContentWidth()
+                            modifier = Modifier.wrapContentWidth(),
+                            fontWeight = FontWeight.Bold,
+                            textColor = appleblue
                         )
                         Spacer(modifier = Modifier.width(4.dp))
                         ReusableTextViewBlackCard(
@@ -98,7 +102,9 @@ fun RepaymentItemCard(
                         ReusableTextViewGrayCard(
                             stringResource(Res.string.personal_loan).plus(":"),
                             fontSize = 13,
-                            modifier = Modifier.wrapContentWidth()
+                            modifier = Modifier.wrapContentWidth(),
+                            fontWeight = FontWeight.Bold,
+                            textColor = appleblue
                         )
                         Spacer(modifier = Modifier.width(4.dp))
                         ReusableTextViewBlackCard(
@@ -109,7 +115,8 @@ fun RepaymentItemCard(
                         ReusableTextViewGrayCard(
                             stringResource(Res.string.personal_emi).plus(":"),
                             fontSize = 13,
-                            modifier = Modifier.wrapContentWidth()
+                            modifier = Modifier.wrapContentWidth(),
+                            fontWeight = FontWeight.Bold, textColor = appleblue
                         )
                         Spacer(modifier = Modifier.width(4.dp))
                         ReusableTextViewBlackCard(
