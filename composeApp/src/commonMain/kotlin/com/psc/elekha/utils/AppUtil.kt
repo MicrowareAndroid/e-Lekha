@@ -90,6 +90,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import com.psc.elekha.model.SliderItem
 import com.psc.elekha.response.MasterResponse
 import com.psc.elekha.ui.screen.gtrlist.CustomerData
@@ -211,6 +212,7 @@ fun ReusableTextView(
         textAlign = textAlignment
     )
 }
+
 @Composable
 fun ReusableTextViewes(
     text: String,
@@ -348,8 +350,7 @@ fun ReusableTopBar(
     onActionClick: (() -> Unit)? = null,
     modifier: Modifier = Modifier,
     fontFamily: FontFamily = FontFamily(Font(Res.font.inter_medium)),
-)
-{
+) {
     CenterAlignedTopAppBar(
         title = {
             Text(
@@ -1177,11 +1178,9 @@ fun ProgressDialog(
     message: String = stringResource(Res.string.select_customer_please)
 ) {
     if (showDialog) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color.Black.copy(alpha = 0.5f)),
-            contentAlignment = Alignment.Center
+        Dialog(
+            onDismissRequest = { /* do nothing to prevent dismiss */ },
+            properties = DialogProperties(dismissOnBackPress = false, dismissOnClickOutside = false)
         ) {
             Column(
                 modifier = Modifier
@@ -2767,7 +2766,7 @@ fun CustomAlertDialogRegistrationExisting(
                     .wrapContentWidth()
                     .widthIn(400.dp)
                     .background(white, shape = RoundedCornerShape(16.dp)),
-                    //.border(1.dp, Color.LightGray, shape = RoundedCornerShape(16.dp)),
+                //.border(1.dp, Color.LightGray, shape = RoundedCornerShape(16.dp)),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
 
@@ -3090,6 +3089,7 @@ fun parseNameDynamic(fullName: String): NameParts {
 
     return NameParts(firstName, middleName, lastName)
 }
+
 fun calculateAgeFromDobKMP(dob: String): Int {
     if (dob.isBlank()) return 0
 

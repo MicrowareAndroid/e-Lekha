@@ -307,5 +307,8 @@
     <string name="click_guarantor_image">Please Click Guarantor Image</string>
     <string name="click_e_meter_image">Please Click Electricity Meter Image</string>
     <string name="click_house_verification_image">Please Click House Verification Image</string>
+    <string name="loan_download_success">Loan downloaded successfully</string>
+    <string name="select_vlg_custid">Please Select Village or Enter Customer ID</string>
+    <string name="select_centre">Please Select Center</string>
 
 </resources>

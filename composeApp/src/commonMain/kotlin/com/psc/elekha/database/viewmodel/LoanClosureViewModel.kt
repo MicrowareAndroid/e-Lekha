@@ -55,10 +55,9 @@ class LoanClosureViewModel(
     // -------------------------------
     // Insert multiple loan closures
     // -------------------------------
-    fun insertAllLoanClosure(loanClosures: List<LoanClosureEntity>, onComplete: (() -> Unit)? = null) {
+    fun insertAllLoanClosure(loanClosures: List<LoanClosureEntity>) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.insertAllLoanClosure(loanClosures)
-            onComplete?.invoke()
         }
     }
 

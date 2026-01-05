@@ -23,14 +23,14 @@ data class LoanofficerDashBoardDataEntity(
     @ColumnInfo(name = "RegisteredCustomer") val RegisteredCustomer: Int?,
     @ColumnInfo(name = "OtherCustomer") val OtherCustomer: Int?,
     @ColumnInfo(name = "LOCaseLoad") val LOCaseLoad: Int?,
-    @ColumnInfo(name = "LOOutstanding") val LOOutstanding: Int?,
+    @ColumnInfo(name = "LOOutstanding") val LOOutstanding: Double?,
     @ColumnInfo(name = "LORegCustomer") val LORegCustomer: Int?,
     @ColumnInfo(name = "LOGTR") val LOGTR: Int?,
     @ColumnInfo(name = "LODisbursement") val LODisbursement: Int?,
     @ColumnInfo(name = "Meetings") val Meetings: Int?,
     @ColumnInfo(name = "ActiveCustomer") val ActiveCustomer: Int?,
-    @ColumnInfo(name = "Due") val Due: Int?,
-    @ColumnInfo(name = "PastDue") val PastDue: Int?,
+    @ColumnInfo(name = "Due") val Due: Double?,
+    @ColumnInfo(name = "PastDue") val PastDue: Double?,
     @ColumnInfo(name = "AmountCollected") val AmountCollected: Int?,
     @ColumnInfo(name = "Customer") val Customer: Int?
 

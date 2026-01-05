@@ -1,6 +1,7 @@
 package com.psc.elekha.expectfile
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Application
 
@@ -21,6 +22,7 @@ import android.os.Build
 import android.provider.Settings
 import android.widget.Toast
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.BackHandler
 import androidx.activity.result.ActivityResultLauncher
 import androidx.core.app.ActivityCompat
 import androidx.core.content.FileProvider
@@ -41,7 +43,14 @@ import java.util.Locale
 import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
 
+@SuppressLint("ContextCastToActivity")
+@Composable
+actual fun AppBackHandler(onBack: () -> Unit) {
+    BackHandler {
+        onBack()
 
+    }
+}
 actual fun getDatabaseBuilder(): RoomDatabase.Builder<AppDatabase> {
     val appContext = KoinPlatform.getKoin().get<Application>()
     val dbFile = appContext.getDatabasePath(dbFileName)
