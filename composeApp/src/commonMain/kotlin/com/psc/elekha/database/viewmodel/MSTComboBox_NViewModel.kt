@@ -90,22 +90,22 @@ class MSTComboBox_NViewModel(
     private val _gtrStatusValue = MutableStateFlow<List<MSTComboBox_NEntity>>(emptyList())
     val gtrStatusValue: StateFlow<List<MSTComboBox_NEntity>> = _gtrStatusValue
 
-    private val _fornightlyValue  = MutableStateFlow<List<MSTComboBox_NEntity>>(emptyList())
+    private val _fornightlyValue = MutableStateFlow<List<MSTComboBox_NEntity>>(emptyList())
     val fornightlyValue: StateFlow<List<MSTComboBox_NEntity>> = _fornightlyValue
 
-    private val _registrationValue  = MutableStateFlow<List<MSTComboBox_NEntity>>(emptyList())
+    private val _registrationValue = MutableStateFlow<List<MSTComboBox_NEntity>>(emptyList())
     val registrationValue: StateFlow<List<MSTComboBox_NEntity>> = _registrationValue
 
-    private val _yesValue  = MutableStateFlow<List<MSTComboBox_NEntity>>(emptyList())
+    private val _yesValue = MutableStateFlow<List<MSTComboBox_NEntity>>(emptyList())
     val yesValue: StateFlow<List<MSTComboBox_NEntity>> = _yesValue
 
-    private val _processStatusValue  = MutableStateFlow<List<MSTComboBox_NEntity>>(emptyList())
+    private val _processStatusValue = MutableStateFlow<List<MSTComboBox_NEntity>>(emptyList())
     val processStatusValue: StateFlow<List<MSTComboBox_NEntity>> = _processStatusValue
 
-    private val _loanStatusValue  = MutableStateFlow<List<MSTComboBox_NEntity>>(emptyList())
+    private val _loanStatusValue = MutableStateFlow<List<MSTComboBox_NEntity>>(emptyList())
     val loanStatusValue: StateFlow<List<MSTComboBox_NEntity>> = _loanStatusValue
 
-    private val _loanActiveStatusValue  = MutableStateFlow<List<MSTComboBox_NEntity>>(emptyList())
+    private val _loanActiveStatusValue = MutableStateFlow<List<MSTComboBox_NEntity>>(emptyList())
     val loanActiveStatusValue: StateFlow<List<MSTComboBox_NEntity>> = _loanActiveStatusValue
 
 
@@ -124,40 +124,44 @@ class MSTComboBox_NViewModel(
     private val _purposeValue = MutableStateFlow<List<MSTComboBox_NEntity>>(emptyList())
     val purposeValue: StateFlow<List<MSTComboBox_NEntity>> = _purposeValue
 
+    private val _loanRecommendation = MutableStateFlow<List<MSTComboBox_NEntity>>(emptyList())
+    val loanRecommendation: StateFlow<List<MSTComboBox_NEntity>> = _loanRecommendation
 
-    fun loadLookUpValues(lookupTypeFk:Int) {
+
+    fun loadLookUpValues(lookupTypeFk: Int) {
         viewModelScope.launch {
-            val result = repository.getAllComboBox(lookupTypeFk,)
-            when(lookupTypeFk){
-                1 ->_relationStatus.value=result
-                2-> _religionValue.value = result
-                3->_casteValue.value=result
-                4-> _mstQualificationValue.value = result
-                6->_relationValue.value=result
-                5-> _occupationValue.value = result
-                7-> _purposeValue.value = result
-                8->_salaryRangeValue.value=result
-                10-> _rangeValue.value = result
-                11-> _organizationValue.value = result
-                12-> _daysValue.value = result
-                13-> _serviceValue.value= result
-                14-> _mortalityValue.value= result
-                15-> _monthValue.value=result
-                16-> _yearValue.value = result
-                17-> _paymentValue.value =result
-                18-> _approveStatusValue.value=result
-                19-> _nachStatusValue.value=result
-                20-> _cashStatusValue.value=result
-                21-> _gtrStatusValue.value=result
-                22-> _fornightlyValue.value=result
-                25-> _registrationValue.value=result
-                26-> _yesValue.value=result
-                27-> _maritalStatus.value = result
-                28-> _processStatusValue.value= result
-                29-> _loanStatusValue.value= result
-                30-> _loanActiveStatusValue.value=result
-                31->_genderValue.value=result
-                32-> _assetVehicle.value=result
+            val result = repository.getAllComboBox(lookupTypeFk)
+            when (lookupTypeFk) {
+                1 -> _relationStatus.value = result
+                2 -> _religionValue.value = result
+                3 -> _casteValue.value = result
+                4 -> _mstQualificationValue.value = result
+                6 -> _relationValue.value = result
+                5 -> _occupationValue.value = result
+                7 -> _purposeValue.value = result
+                8 -> _salaryRangeValue.value = result
+                10 -> _rangeValue.value = result
+                11 -> _organizationValue.value = result
+                12 -> _daysValue.value = result
+                13 -> _serviceValue.value = result
+                14 -> _mortalityValue.value = result
+                15 -> _monthValue.value = result
+                16 -> _yearValue.value = result
+                17 -> _paymentValue.value = result
+                18 -> _approveStatusValue.value = result
+                19 -> _nachStatusValue.value = result
+                20 -> _cashStatusValue.value = result
+                21 -> _gtrStatusValue.value = result
+                22 -> _fornightlyValue.value = result
+                25 -> _registrationValue.value = result
+                26 -> _yesValue.value = result
+                27 -> _maritalStatus.value = result
+                28 -> _processStatusValue.value = result
+                29 -> _loanStatusValue.value = result
+                30 -> _loanActiveStatusValue.value = result
+                31 -> _genderValue.value = result
+                32 -> _assetVehicle.value = result
+                33 -> _loanRecommendation.value = result
 
             }
         }

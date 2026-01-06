@@ -139,12 +139,6 @@ val viewmodelModule = module {
             appPreferences = get()
         )
     }
-    viewModel {
-        GtrViewModel(
-            apiRepository = get(),
-            trainingGroupViewModel = get(),
-            trainingGroupMemberViewModel = get()
-        )
-    }
+    viewModelOf(::GtrViewModel)
 
 }
