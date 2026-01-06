@@ -7,16 +7,16 @@ import com.psc.elekha.database.entity.UsersEntity
 interface UsersDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend  fun insertUsers(usersEntity: UsersEntity)
+    suspend fun insertUsers(usersEntity: UsersEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend  fun insertAllUsers(usersEntity: List<UsersEntity>)
+    suspend fun insertAllUsers(usersEntity: List<UsersEntity>)
 
-    @Query("Select * from Users")
-    suspend fun getAllUsers(): List<UsersEntity>
+    @Query("Select * from Users where UserName=:userName and Password=:pwd")
+    suspend fun getAllUsers(userName: String, pwd: String): List<UsersEntity>
 
     @Query("Select Count(*) from Users")
-    suspend  fun getAllUsersCount(): Int?
+    suspend fun getAllUsersCount(): Int?
 
     @Query("Select * from Users where UserName=:UserName and Password=:Password and IsUserDisabled=0")
     suspend fun getUserDetails(UserName: String, Password: String): List<UsersEntity>

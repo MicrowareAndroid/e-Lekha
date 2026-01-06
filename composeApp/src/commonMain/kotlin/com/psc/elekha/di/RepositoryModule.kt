@@ -19,6 +19,7 @@ import com.psc.elekha.database.repository.KYCDocumentRepository
 import com.psc.elekha.database.repository.KYCStatusConditionRepository
 import com.psc.elekha.database.repository.KYCStatusRepository
 import com.psc.elekha.database.repository.LoanClosureRepository
+import com.psc.elekha.database.repository.LoanOfficerDashboardRepository
 import com.psc.elekha.database.repository.LoanRepaymentRepository
 import com.psc.elekha.database.repository.LoanScheduleRepository
 import com.psc.elekha.database.repository.MSTAssetsValuationRepository
@@ -95,9 +96,5 @@ val repositoryModule = module {
     single { TrainingGroupStatusRepository(get()) }
     single { TrainingGroupMemberRepository(get()) }
     single { CustomerMovableAssestRepository(get()) }
-
-
-
-
-
+    single { LoanOfficerDashboardRepository(get()) }
 }

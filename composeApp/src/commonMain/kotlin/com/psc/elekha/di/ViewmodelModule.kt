@@ -19,6 +19,7 @@ import com.psc.elekha.database.viewmodel.KYCDocumentViewModel
 import com.psc.elekha.database.viewmodel.KYCStatusConditionViewModel
 import com.psc.elekha.database.viewmodel.KYCStatusViewModel
 import com.psc.elekha.database.viewmodel.LoanClosureViewModel
+import com.psc.elekha.database.viewmodel.LoanOfficerDashboardViewModel
 import com.psc.elekha.database.viewmodel.LoanRepaymentViewModel
 import com.psc.elekha.database.viewmodel.LoanScheduleViewModel
 import com.psc.elekha.database.viewmodel.MSTAssetsValuationViewModel
@@ -48,6 +49,7 @@ import com.psc.elekha.database.viewmodel.UsersViewModel
 import com.psc.elekha.ui.screen.bankdetails.BankDetailViewModel
 import com.psc.elekha.ui.screen.familydetails.FamilyMemberViewModel
 import com.psc.elekha.ui.screen.gtrlist.GtrViewModel
+import com.psc.elekha.ui.screen.home.HomeScreenViewModel
 import com.psc.elekha.ui.screen.kycdetails.KycDetailViewModel
 import com.psc.elekha.ui.screen.login.LoginViewModel
 import com.psc.elekha.ui.screen.personaldetails.PersonalDetailViewModel
@@ -109,6 +111,8 @@ val viewmodelModule = module {
     viewModelOf(::TrainingGroupMemberViewModel)
     viewModelOf(::RepaymentViewModel)
     viewModelOf(::CustomerMovableAssetsViewModel)
+    viewModelOf(::HomeScreenViewModel)
+    viewModelOf(::LoanOfficerDashboardViewModel)
     viewModelOf(::MSTLoanProductViewModel)
     viewModel {
         LoginViewModel(

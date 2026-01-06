@@ -4,12 +4,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.psc.elekha.database.entity.UsersEntity
 import com.psc.elekha.database.repository.UsersRepository
+import com.psc.elekha.utils.AppPreferences
+import com.psc.elekha.utils.AppSP
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class UsersViewModel(
-    private val repository: UsersRepository
+    private val repository: UsersRepository, val appPreferences: AppPreferences
 ) : ViewModel() {
 
     private val _userList = MutableStateFlow<List<UsersEntity>>(emptyList())
@@ -22,10 +24,10 @@ class UsersViewModel(
     val userDetails: StateFlow<List<UsersEntity>> = _userDetails
 
     // Load all users
-    fun loadAllUsers() {
+    fun getUserDetails(userName: String, pwd: String) {
         viewModelScope.launch {
-            val result = repository.getAllUsers()
-            _userList.value = result ?: emptyList()
+            val result = repository.getAllUsers(userName, pwd)
+            _userList.value = result
         }
     }
 
@@ -49,7 +51,6 @@ class UsersViewModel(
     fun insertUser(item: UsersEntity) {
         viewModelScope.launch {
             repository.insertUser(item)
-            loadAllUsers() // Refresh list
             loadUsersCount() // Refresh count
         }
     }
@@ -58,8 +59,6 @@ class UsersViewModel(
     fun insertAllUsers(list: List<UsersEntity>) {
         viewModelScope.launch {
             repository.insertAllUsers(list)
-            loadAllUsers() // Refresh list
-            loadUsersCount() // Refresh count
         }
     }
 

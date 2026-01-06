@@ -78,8 +78,8 @@ fun LocationFilterScreen(
     val appPreferences: AppPreferences = koinInject()
 
     LaunchedEffect(Unit, downloadState) {
-        val username = "developer" // Or get from logged-in user
-        mstVillageModel.loadVillagesByUsername(username)
+        val username = appPreferences.getString(AppSP.username)
+        mstVillageModel.loadVillagesByUsername(username ?: "")
         mstCenterViewModel.loadAllCenters()
         when (downloadState) {
             is APiState.loading -> {

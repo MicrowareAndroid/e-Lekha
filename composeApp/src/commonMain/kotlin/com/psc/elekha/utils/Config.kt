@@ -6,6 +6,7 @@ object Config {
     const val SENDOTPCODE = "api/Tablet/SendOTPCode"
     const val VALIDATEOTP = "api/Tablet/SendValidationOTPCode"
     const val MASTER = "api/Tablet/GetExportMasterData"
+    const val DASHBOARDDATA = "api/Tablet/GetDashboardCountsByUser"
 
     const val LOAN_REPAYMENT = "api/Tablet/GetExportLoanCollectionData"
     const val GTR = "api/Tablet/GetExportGTRData"

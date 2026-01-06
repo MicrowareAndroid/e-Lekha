@@ -22,20 +22,11 @@ import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun SplashScreenNew(navController: NavController) {
-    val viewModel = koinViewModel<UsersViewModel>()
-    val userList by viewModel.userList.collectAsState()
 
     LaunchedEffect(Unit) {
-        viewModel.loadAllUsers()
         delay(2000)
-        if (userList.isNotEmpty()) {
-            navController.navigate(RouteName.home) {
-                popUpTo(RouteName.splash) { inclusive = true }
-            }
-        } else {
-            navController.navigate(RouteName.login) {
-                popUpTo(RouteName.splash) { inclusive = true }
-            }
+        navController.navigate(RouteName.login) {
+            popUpTo(RouteName.splash) { inclusive = true }
         }
     }
 

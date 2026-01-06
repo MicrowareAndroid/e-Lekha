@@ -9,6 +9,7 @@ class ApiRepository(private val apiService: ApiService) {
     suspend fun getOTP(mobileNo: String): HttpResponse = apiService.getOTP(mobileNo)
     suspend fun verifyOTP(mobileNo: String,enteredOTP: String): HttpResponse = apiService.verifyOTP(mobileNo,enteredOTP)
     suspend fun getMaster(masterRequest: MasterRequest): HttpResponse = apiService.getMaster(masterRequest)
+    suspend fun getDashboardData(userId: String): HttpResponse = apiService.getDashboardData(userId)
     suspend fun getLoanRepayment(masterRequest: MasterRequest): HttpResponse = apiService.getLoanRepayment(masterRequest)
 
     suspend fun getGTRData(masterRequest: MasterRequest): HttpResponse = apiService.getGTRData(masterRequest)
