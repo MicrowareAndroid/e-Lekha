@@ -7,11 +7,16 @@ import com.psc.elekha.database.entity.CustomerFamilyMemberDetailsEntity
 import com.psc.elekha.database.repository.CustomerFamilyMemberDetailsRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class CustomerFamilyMemberDetailsViewModel(
     private val repository: CustomerFamilyMemberDetailsRepository
 ) : ViewModel() {
+
+    private val _familyMemebers = MutableStateFlow<List<CustomerFamilyMemberDetailsEntity>>(emptyList())
+    val familyMemebers: StateFlow<List<CustomerFamilyMemberDetailsEntity>> = _familyMemebers
 
     // INSERT single
     fun insertCustomerFamilyMember(member: CustomerFamilyMemberDetailsEntity) {
@@ -66,7 +71,28 @@ class CustomerFamilyMemberDetailsViewModel(
         }
     }
 
-    suspend fun getCustomerDetailGuid(guId: String): List<CustomerFamilyMemberDetailsEntity> {
-        return repository.getCustomerByGuid(guId)
+
+
+    fun getCustomerDetailGuid(guId: String) {
+        viewModelScope.launch {
+            val result = repository.getCustomerByGuid(guId)
+            _familyMemebers.value = result
+        }
     }
+
+    suspend fun getCustomerDetailByGuid(guId: String): List<CustomerFamilyMemberDetailsEntity> {
+        return repository.getCustomerDetailByGuid(guId)
+    }
+
+    fun deleteFamilyMember(item: CustomerFamilyMemberDetailsEntity) {
+        viewModelScope.launch {
+            repository.deleteFamilyMember(item)
+
+
+            _familyMemebers.value = _familyMemebers.value.filter {
+                it.MemberID != item.MemberID
+            }
+        }
+    }
+
 }

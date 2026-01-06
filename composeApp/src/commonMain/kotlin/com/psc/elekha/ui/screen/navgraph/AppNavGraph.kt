@@ -6,7 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.psc.elekha.ui.screen.customer.CustomerDetailScreen
-import com.psc.elekha.ui.screen.familydetails.FamilyDetailListScreen
+
 import com.psc.elekha.ui.screen.repayment.RepaymentList
 
 import com.psc.elekha.ui.screen.gtrlist.GtrListDataScreen
@@ -15,11 +15,13 @@ import com.psc.elekha.ui.screen.home.MainDrawerScreen
 import com.psc.elekha.utils.AppPreferences
 import com.psc.elekha.utils.RouteName
 import com.psc.elekha.ui.screen.login.LoginScreenNew
+import com.psc.elekha.ui.screen.login.LoginViewModel
 import com.psc.elekha.ui.screen.registrationlist.RegistrationListScreen
 import com.psc.elekha.ui.screen.registrationtab.RegistartionTabScreen
 import com.psc.elekha.ui.screen.repayment.LocationFilterScreen
 import com.psc.elekha.ui.screen.repayment.RepaymentDialog
 import com.psc.elekha.ui.screen.splash.SplashScreenNew
+import org.koin.compose.viewmodel.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -31,6 +33,7 @@ fun AppNavGraph(
         navController = navController,
         startDestination = RouteName.splash
     ) {
+
 
         // SPLASH
         composable(RouteName.splash) {

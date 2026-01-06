@@ -267,6 +267,7 @@ UPDATE Customer SET
     FirstName = :firstName,
     MiddleName = :middleName,
     LastName = :lastName,
+     DOB = :dob,
     MaritalStatusID = :maritalStatusId,
     EducationID = :educationId,
     ReligionID = :religionId,
@@ -294,11 +295,12 @@ UPDATE Customer SET
     
     LoanMFIOutstandingCreditEnquiry=:outStanding,
     DailyExpense = :dailyExpenses,
+    educationExpense = :educationExpense,
     MedicalExpense = :medicalExpense,
     OtherExpense = :others,
     TotalMonthlyExpenditure = :totalMonthlyExpendture,
     TotalAnnualExpenditure = :totalAnnual,
-    DOB = :dob,
+   
     UpdatedOn = :updatedOn,
     UpdatedBy = :updatedBy,
     IsEdited = 1
@@ -323,7 +325,6 @@ WHERE GUID = :guid
         age: Int?,
         outStanding:Int?,
         address: String?,
-
         gurantorDOB: String?,
         stateID: Int?,
         districtId: Int?,
@@ -337,6 +338,7 @@ WHERE GUID = :guid
         maternalMobile: String?,
         maternalFather: String?,
         dailyExpenses: Int?,
+        educationExpense: Int?,
         medicalExpense: Int?,
         others: Int?,
         totalMonthlyExpendture: Int?,

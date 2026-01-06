@@ -133,11 +133,11 @@ class BankDetailViewModel(
  }
 
  fun saveData() {
-  if (!validateBankDetails()) {
+ /* if (!validateBankDetails()) {
    saveFlag = 0
    showSaveAlert = true
    return
-  }
+  }*/
 
   viewModelScope.launch {
    saveBankDetail()

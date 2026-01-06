@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "CustomerFamilyMemberDetails")
 data class CustomerFamilyMemberDetailsEntity(
     @PrimaryKey @ColumnInfo(name = "GUID") val GUID: String,
+    @ColumnInfo(name = "MemberGuid") val MemberGuid: String?,
     @ColumnInfo(name = "MemberID") val MemberID: Int?,
     @ColumnInfo(name = "MFirstName") val MFirstName: String?,
     @ColumnInfo(name = "MMiddleName") val MMiddleName: String?,

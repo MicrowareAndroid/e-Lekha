@@ -7,6 +7,7 @@ import com.psc.elekha.database.repository.CustomerDefaultRepository
 import com.psc.elekha.database.repository.CustomerExistingLoanDetailRepository
 import com.psc.elekha.database.repository.CustomerFamilyMemberDetailsRepository
 import com.psc.elekha.database.repository.CustomerLoanDisbursementRepository
+import com.psc.elekha.database.repository.CustomerMovableAssestRepository
 import com.psc.elekha.database.repository.CustomerStatusRepository
 import com.psc.elekha.database.repository.CustomerTransactionDataRepository
 import com.psc.elekha.database.repository.CustomerTransactionsDetailsRepository
@@ -93,6 +94,7 @@ val repositoryModule = module {
     single { UserContactDetailRepository(get()) }
     single { TrainingGroupStatusRepository(get()) }
     single { TrainingGroupMemberRepository(get()) }
+    single { CustomerMovableAssestRepository(get()) }
 
 
 

@@ -1,10 +1,11 @@
 package com.psc.elekha.ui.screen.personaldetails
 
-import FamilyMemberDetailViewModel
+
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.relocation.bringIntoViewRequester
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -12,20 +13,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.psc.elekha.database.viewmodel.MSTComboBox_NViewModel
+import com.psc.elekha.ui.screen.familydetails.FamilyMemberViewModel
+
 import com.psc.elekha.ui.theme.lightGrey
 import com.psc.elekha.ui.theme.toolbar_color
 import com.psc.elekha.ui.theme.white
 import com.psc.elekha.utils.CommonSingleButtonsBottomString
-import com.psc.elekha.utils.FillDynamicSpinnerespt
+import com.psc.elekha.utils.CustomAlertDialog
+import com.psc.elekha.utils.FillDynamicSpinnerespts
 import com.psc.elekha.utils.FormFieldCompact
-import com.psc.elekha.utils.FormSpinner
 import com.psc.elekha.utils.ReusableTextView
-import com.psc.elekha.utils.StaticComboBoxData
-import com.psc.elekha.utils.toValueList
 import e_lekha.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
@@ -33,98 +33,87 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 fun CustomAlertFamilyDetails(
     title: String = stringResource(Res.string.app_name),
-    submitText: String = stringResource(Res.string.ok),
-    cancelText: String = stringResource(Res.string.cancel),
-
     onSubmit: () -> Unit = {},
     onCancel: () -> Unit = {},
 ) {
-    val viewModel = koinViewModel<FamilyMemberDetailViewModel>()
-    // Reset function
-    var mstComboViewModel=koinViewModel<MSTComboBox_NViewModel>()
+
+    val viewModel = koinViewModel<FamilyMemberViewModel>()
+    val mstComboViewModel = koinViewModel<MSTComboBox_NViewModel>()
+
     val genderList by mstComboViewModel.genderValue.collectAsState()
     val occupationList by mstComboViewModel.occupationValue.collectAsState()
     val relationList by mstComboViewModel.relationValue.collectAsState()
     val educationList by mstComboViewModel.mstQualificationValue.collectAsState()
 
     LaunchedEffect(Unit) {
-
-        mstComboViewModel.loadLookUpValues(lookupTypeFk = 31)
-        mstComboViewModel.loadLookUpValues(lookupTypeFk = 4)
-        mstComboViewModel.loadLookUpValues(lookupTypeFk = 6)
-        mstComboViewModel.loadLookUpValues(lookupTypeFk = 5)
-
+        mstComboViewModel.loadLookUpValues(31)
+        mstComboViewModel.loadLookUpValues(4)
+        mstComboViewModel.loadLookUpValues(6)
+        mstComboViewModel.loadLookUpValues(5)
+        viewModel.loadData()
     }
+
     Dialog(onDismissRequest = {}) {
+
         Box(
             modifier = Modifier
-                .widthIn(min = 350.dp, max = 500.dp)
+                .fillMaxWidth(0.95f)
+                .wrapContentHeight()
                 .background(lightGrey, RoundedCornerShape(16.dp))
-                .border(1.dp, lightGrey, RoundedCornerShape(16.dp))
         ) {
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                // HEADER
+
+            Column(modifier = Modifier.fillMaxWidth()) {
+
+                //  Toolbar
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
+                        .height(55.dp)
                         .background(
                             toolbar_color,
-                            shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp)
-                        )
-                        .height(50.dp),
+                            RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp)
+                        ),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center
                 ) {
                     ReusableTextView(
                         text = title,
-                        fontSize = 20,
+                        fontSize = 18,
                         fontWeight = FontWeight.Bold,
-                        textColor = white,
-                        textAlignment = TextAlign.Center,
-                        modifier = Modifier.fillMaxWidth()
+                        textColor = white
                     )
                 }
 
-                // CONTENT AREA
+                //Scrollable Content
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
+                        .padding(14.dp)
+                        .verticalScroll(rememberScrollState()),
+                    verticalArrangement = Arrangement.spacedBy(10.dp)
                 ) {
-                    Spacer(Modifier.height(8.dp))
 
-                    // NAME FIELD
                     FormFieldCompact(
                         label = stringResource(Res.string.name),
                         value = viewModel.memberName,
-                        placeholder = stringResource(Res.string.type_here),
-                        onValueChange = { viewModel.memberName = it }
+                        onValueChange = { viewModel.memberName = it },
+                        modifier = Modifier.focusRequester(viewModel.focusRequesterAge)
+                            .bringIntoViewRequester(viewModel.bringIntoViewRequesterAge)
+
                     )
 
-                    Spacer(Modifier.height(12.dp))
-
-                    FillDynamicSpinnerespt(
+                    FillDynamicSpinnerespts(
                         label = stringResource(Res.string.gender),
                         options = genderList,
                         selectedOption = viewModel.gender,
-                        onOptionSelected = {viewModel.gender = it },
-                       /* focusRequester = viewModel.focusRequesterStateId,
-                        bringIntoViewRequester = viewModel.bringIntoViewRequesterStateId*/
+                        onOptionSelected = { viewModel.gender = it },
                         getOptionId = { it.ID },
                         getOptionLabel = { it.Value.toString() },
-                        modifier = Modifier.fillMaxWidth()
+                        focusRequester = viewModel.focusRequesterGender,
+                        bringIntoViewRequester = viewModel.bringIntoViewRequesterGender
+
                     )
 
-                    // GENDER SPINNER
-
-
-                    Spacer(Modifier.height(12.dp))
-
-                    // AGE & RELATION ROW
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.spacedBy(10.dp)
@@ -133,108 +122,120 @@ fun CustomAlertFamilyDetails(
                             label = stringResource(Res.string.age),
                             value = viewModel.age,
                             onValueChange = { viewModel.age = it },
-                            placeholder = stringResource(Res.string.type_here),
-                            maxLength = 2,
                             inputType = KeyboardType.Number,
-                            modifier = Modifier.weight(1f)
+                            modifier = Modifier.weight(1f).focusRequester(viewModel.focusRequesterAge)
+                                .bringIntoViewRequester(viewModel.bringIntoViewRequesterAge)
                         )
 
-                        FillDynamicSpinnerespt(
+                        FillDynamicSpinnerespts(
                             label = stringResource(Res.string.relation),
                             options = relationList,
                             selectedOption = viewModel.relationId,
-                            onOptionSelected = {viewModel.relationId = it },
-                            /* focusRequester = viewModel.focusRequesterStateId,
-                             bringIntoViewRequester = viewModel.bringIntoViewRequesterStateId*/
+                            onOptionSelected = { viewModel.relationId = it },
                             getOptionId = { it.ID },
                             getOptionLabel = { it.Value.toString() },
-                            modifier = Modifier.weight(1f)
+                            modifier = Modifier.weight(1f),
+                            focusRequester = viewModel.focusRequesterRelationId,
+                            bringIntoViewRequester = viewModel.bringIntoViewRequesterRelationId
                         )
-
                     }
 
-                    Spacer(Modifier.height(12.dp))
-
-                    // EDUCATION & OCCUPATION ROW
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.spacedBy(10.dp)
                     ) {
-                        FillDynamicSpinnerespt(
+                        FillDynamicSpinnerespts(
                             label = stringResource(Res.string.education),
                             options = educationList,
                             selectedOption = viewModel.educationId,
-                            onOptionSelected = {viewModel.educationId = it },
-                            /* focusRequester = viewModel.focusRequesterStateId,
-                             bringIntoViewRequester = viewModel.bringIntoViewRequesterStateId*/
+                            onOptionSelected = { viewModel.educationId = it },
                             getOptionId = { it.ID },
                             getOptionLabel = { it.Value.toString() },
-                            modifier = Modifier.weight(1f)
+                            modifier = Modifier.weight(1f),
+                            focusRequester = viewModel.focusRequesterEducationId,
+                            bringIntoViewRequester = viewModel.bringIntoViewRequesterEducationId
                         )
 
-                        FillDynamicSpinnerespt(
+                        FillDynamicSpinnerespts(
                             label = stringResource(Res.string.occupation),
-                            options = educationList,
+                            options = occupationList,
                             selectedOption = viewModel.occupationId,
-                            onOptionSelected = {viewModel.occupationId = it },
-                            /* focusRequester = viewModel.focusRequesterStateId,
-                             bringIntoViewRequester = viewModel.bringIntoViewRequesterStateId*/
+                            onOptionSelected = { viewModel.occupationId = it },
                             getOptionId = { it.ID },
                             getOptionLabel = { it.Value.toString() },
-                            modifier = Modifier.weight(1f)
+                            modifier = Modifier.weight(1f),
+                            focusRequester = viewModel.focusRequesterOccupationId,
+                            bringIntoViewRequester = viewModel.bringIntoViewRequesterOccupationId
+
                         )
-
-
                     }
 
-                   // Spacer(Modifier.height(24.dp)) //  Row ke bahar
-                    Spacer(Modifier.height(10.dp))
-                    FormFieldCompact(
-                        label = stringResource(Res.string.monthly_income),
-                        value =viewModel.monthlyIncome,
-                        placeholder = stringResource(Res.string.type_here),
-                        onValueChange = { viewModel.monthlyIncome = it }
-                    )
-
-                    Spacer(Modifier.height(10.dp))
-
-                    FormFieldCompact(
-                        label = stringResource(Res.string.remarks),
-                        value =viewModel.remarks,
-                        onValueChange = { viewModel.remarks},
-                        placeholder = stringResource(Res.string.type_here),
-
-                        modifier = Modifier.fillMaxWidth(),
-
-                        )
-                    Spacer(Modifier.height(24.dp))
-                    // BUTTONS
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.spacedBy(10.dp)
                     ) {
-                        CommonSingleButtonsBottomString(
-                            onOkClick = {
-                                onSubmit()
-                            },
-                            stringResource(Res.string.cancel),
-                            modifier = Modifier.weight(1f),
-                            textSize = 12
-                        )
-                        CommonSingleButtonsBottomString(
-                            onOkClick = {
-                                viewModel.saveData()
-                            },
-                            stringResource(Res.string.save),
-                            modifier = Modifier.weight(1f),
-                            textSize = 12
-                        )
-                    }
+                        FormFieldCompact(
+                            label = stringResource(Res.string.monthly_income),
+                            value = viewModel.monthlyIncome,
+                            onValueChange = { viewModel.monthlyIncome = it },
+                            inputType = KeyboardType.Number,
+                            modifier = Modifier.weight(1f).focusRequester(viewModel.focusRequesterMonthlyIncome)
+                                .bringIntoViewRequester(viewModel.bringIntoViewRequesterMonthlyIncome)
 
+                        )
+
+                        FormFieldCompact(
+                            label = stringResource(Res.string.remarks),
+                            value = viewModel.remarks,
+                            onValueChange = { viewModel.remarks = it },
+                            modifier = Modifier.weight(1f).focusRequester(viewModel.focusRequesterRemarks)
+                                .bringIntoViewRequester(viewModel.bringIntoViewRequesterRemarks)
+
+                        )
                     }
+                }
+
+                // Buttons
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(12.dp),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
+
+                    CommonSingleButtonsBottomString(
+                        onOkClick = onCancel,
+                        stringResource(Res.string.cancel),
+                        modifier = Modifier.weight(1f),
+                        textSize = 12
+                    )
+
+                    CommonSingleButtonsBottomString(
+                        onOkClick = {
+                            viewModel.saveData()
+
+                        },
+                        stringResource(Res.string.save),
+                        modifier = Modifier.weight(1f),
+                        textSize = 12
+                    )
+                    if (viewModel.showSaveAlert) {
+                        CustomAlertDialog(
+                            showDialog = viewModel.showSaveAlert,
+                            message = viewModel.saveMessage,
+                            onConfirm = {
+                                if (viewModel.saveFlag == 1) {
+                                    viewModel.showSaveAlert = false
+                                    onSubmit()
+
+                                } else {
+                                    viewModel.requestFocus()
+                                }
+                            }
+                        )
                     }
-                    Spacer(Modifier.height(10.dp))
                 }
             }
         }
-
+    }
+}
