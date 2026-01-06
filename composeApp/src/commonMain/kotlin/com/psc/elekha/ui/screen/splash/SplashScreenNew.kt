@@ -27,7 +27,7 @@ fun SplashScreenNew(navController: NavController) {
 
     LaunchedEffect(Unit) {
         viewModel.loadAllUsers()
-        delay(5000)
+        delay(2000)
         if (userList.isNotEmpty()) {
             navController.navigate(RouteName.home) {
                 popUpTo(RouteName.splash) { inclusive = true }

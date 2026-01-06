@@ -24,6 +24,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.psc.elekha.database.viewmodel.MSTComboBox_NViewModel
 import com.psc.elekha.ui.screen.gtrlist.BranchItem
 import com.psc.elekha.ui.screen.gtrlist.GtrViewModel
 import com.psc.elekha.ui.screen.repayment.RepaymentViewModel
@@ -68,18 +69,9 @@ fun CustomerDetailScreen(
     navController: NavHostController,
 ) {
     val viewModel = koinViewModel<GtrViewModel>()
+    var mstComboViewModel=koinViewModel<MSTComboBox_NViewModel>()
+    val loanRecommendationList by mstComboViewModel.loanRecommendation.collectAsState()
     var selectedScreen by remember { mutableStateOf("New Customer") }
-    var branchList = listOf("3000", "4000", "5000", "6000")
-    var selectedBranch by remember { mutableStateOf("") }
-    var textfiledLoan by remember { mutableStateOf("") }
-    var textfiledPSC by remember { mutableStateOf("") }
-    var textfiledMFI by remember { mutableStateOf("") }
-    var textfiledLoanPurpose by remember { mutableStateOf("") }
-    var textfiledExisting by remember { mutableStateOf("") }
-    var textfiledEbill by remember { mutableStateOf("") }
-    var textfiledRemark by remember { mutableStateOf("") }
-    var textfiledRemarks by remember { mutableStateOf("") }
-
 
     var openCameraCustomer by remember { mutableStateOf(false) }
     var openCameraGuarantor by remember { mutableStateOf(false) }
@@ -89,6 +81,13 @@ fun CustomerDetailScreen(
     var guarantorImgBitmap by remember { mutableStateOf<ImageBitmap?>(null) }
     var eMeterImgBitmap by remember { mutableStateOf<ImageBitmap?>(null) }
     var houseVerificationImgBitmap by remember { mutableStateOf<ImageBitmap?>(null) }
+
+    LaunchedEffect(Unit) {
+
+        mstComboViewModel.loadLookUpValues(lookupTypeFk = 10)
+        viewModel.loadSavedData()
+    }
+
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
@@ -127,8 +126,6 @@ fun CustomerDetailScreen(
 
         )
         {
-
-
             Column(
                 modifier = Modifier
                     .fillMaxSize().padding(bottom = 45.dp)
@@ -211,8 +208,6 @@ fun CustomerDetailScreen(
                         .padding(horizontal = Dimens.tendp)
                 )
                 {
-
-
                     Spacer(modifier = Modifier.height(Dimens.tendp))
 
 
@@ -629,13 +624,13 @@ fun CustomerDetailScreen(
 
                             FillDynamicSpinnerespt(
                                 label = "",
-                                options = branchList,
+                                options = loanRecommendationList,
                                 selectedOption = viewModel.loanRecommendationID,
                                 onOptionSelected = { viewModel.loanRecommendationID = it },
                                 focusRequester = viewModel.focusRequesterLoanRecommendationID,
                                 bringIntoViewRequester = viewModel.bringIntoViewRequesterLoanRecommendationID,
-                                getOptionId = { 0 },
-                                getOptionLabel = { "" },
+                                getOptionId = { it.ID },
+                                getOptionLabel = { it.Value.toString() },
                                 modifier = Modifier.weight(1f)
                             )
 
