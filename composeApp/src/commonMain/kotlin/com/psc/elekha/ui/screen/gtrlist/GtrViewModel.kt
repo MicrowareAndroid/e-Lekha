@@ -8,6 +8,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.lifecycle.viewModelScope
 import com.psc.elekha.apicall.APiState
 import com.psc.elekha.apicall.ApiRepository
+import com.psc.elekha.database.viewmodel.CustomerViewModel
 import com.psc.elekha.database.viewmodel.LoanRepaymentViewModel
 import com.psc.elekha.database.viewmodel.TrainingGroupMemberViewModel
 import com.psc.elekha.database.viewmodel.TrainingGroupViewModel
@@ -16,6 +17,10 @@ import com.psc.elekha.model.ValidationModelContorl
 import com.psc.elekha.response.GtrResponse
 import com.psc.elekha.response.LoanRepaymentResponse
 import com.psc.elekha.ui.screen.base.BaseValidationViewModel
+import com.psc.elekha.utils.AppPreferences
+import com.psc.elekha.utils.AppSP
+import com.psc.elekha.utils.convertDateFormatDDMMYYYY
+import com.psc.elekha.utils.returnIntToString
 import com.psc.elekha.utils.returnIntegerValue
 import com.psc.elekha.utils.returnStringValue
 import e_lekha.composeapp.generated.resources.*
@@ -26,10 +31,11 @@ import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.getString
 
 class GtrViewModel(
+    val appPreferences: AppPreferences,
     private val apiRepository: ApiRepository,
     private val trainingGroupViewModel: TrainingGroupViewModel,
     private val trainingGroupMemberViewModel: TrainingGroupMemberViewModel,
-//    val loanRepaymentViewModel: LoanRepaymentViewModel
+    private val customerViewModel: CustomerViewModel
 ) : BaseValidationViewModel() {
 
     private var _customerImage by mutableStateOf("")
@@ -107,6 +113,28 @@ class GtrViewModel(
 
     fun setHouseVerificationImage(path: String) {
         _houseVerificationImage = path
+    }
+
+    fun loadSavedData() {
+        viewModelScope.launch {
+            val savedGuid = returnStringValue(appPreferences.getString(AppSP.customerGuid))
+            if (savedGuid.isNotEmpty()) {
+
+                val listData = customerViewModel.getCustomerDetailGuid(savedGuid)
+                if (listData.isNotEmpty()) {
+
+                    val data = listData[0]
+
+                    eBillRemark = returnStringValue(data.FirstName)
+
+                    loanRecommendationID = returnIntegerValue(data.MaritalStatusID?.toString())
+                    houseVerificationRemark = returnStringValue(data.ContactNo)
+                    loanRecommendationRemark = returnStringValue(data.HusbandFName)
+
+                }
+            }
+        }
+
     }
 
     fun saveData() {

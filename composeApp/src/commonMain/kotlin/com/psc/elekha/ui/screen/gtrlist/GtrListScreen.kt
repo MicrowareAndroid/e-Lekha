@@ -13,12 +13,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.psc.elekha.apicall.APiState
 import com.psc.elekha.ui.theme.LightSkyBlue
+import com.psc.elekha.ui.theme.appleblue
+import com.psc.elekha.ui.theme.black
 import com.psc.elekha.ui.theme.btnYellow
 import com.psc.elekha.ui.theme.homedatareportsColor
+import com.psc.elekha.ui.theme.text_fiiled_color
 import com.psc.elekha.ui.theme.toolbar_color
 import com.psc.elekha.utils.*
 import e_lekha.composeapp.generated.resources.Res
@@ -155,73 +159,78 @@ fun GtrListScreen(
                     ReusableCard(
                         modifier = Modifier
                             .fillMaxWidth(),
-                        backgroundColor = homedatareportsColor,
+                        backgroundColor = text_fiiled_color,
                         cornerRadius = 0
                     )
                     {
 
-                        Column(
+                        Row(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(Dimens.fivedp)
+                                .padding(5.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.Top
                         ) {
 
-
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.Start
-                            ) {
-                                ReusableTextView(
-                                    text = stringResource(Res.string.home_user).plus(":"),
-                                    textColor = toolbar_color
-                                )
-                                Spacer(Modifier.width(Dimens.fivedp))
-                                ReusableTextView(text = "Vikash", textColor = Color.Black)
-                            }
-
-                            Spacer(Modifier.height(Dimens.fivedp))
-
-
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                verticalAlignment = Alignment.CenterVertically
-                            )
+                            // LEFT
+                            Column(verticalArrangement = Arrangement.Center)
                             {
-                                Row(
-                                    modifier = Modifier.weight(1f),
-                                    verticalAlignment = Alignment.CenterVertically
-                                )
-                                {
+                                Row(verticalAlignment = Alignment.CenterVertically) {
+                                    ReusableTextView(
+                                        text = stringResource(Res.string.home_user).plus(
+                                            ":"
+                                        ),
+                                        textColor = appleblue, fontWeight = FontWeight.Bold
+                                    )
+                                    Spacer(Modifier.width(6.dp))
+                                    ReusableTextView(
+                                        text = "Vikash",
+                                        textColor = black,
+                                        fontWeight = FontWeight.Bold
+                                    )
+                                }
+                                Row(verticalAlignment = Alignment.CenterVertically) {
                                     ReusableTextView(
                                         text = stringResource(Res.string.home_time).plus(":"),
-                                        textColor = toolbar_color
+                                        textColor = appleblue, fontWeight = FontWeight.Bold
                                     )
-                                    Spacer(Modifier.width(Dimens.fivedp))
-                                    ReusableTextView(text = "10:45 AM", textColor = Color.Black)
-                                }
-
-
-                                Row(
-                                    verticalAlignment = Alignment.CenterVertically
-                                ) {
+                                    Spacer(Modifier.width(6.dp))
                                     ReusableTextView(
-                                        text = stringResource(Res.string.home_date).plus(":"),
-                                        textColor = toolbar_color
+                                        text = "10:45 AM",
+                                        textColor = black,
+                                        fontWeight = FontWeight.Bold
                                     )
-                                    Spacer(Modifier.width(Dimens.fivedp))
-                                    ReusableTextView(text = "04/12/2025", textColor = Color.Black)
                                 }
+
                             }
 
+                            // RIGHT
+                            Column(
+                                horizontalAlignment = Alignment.Start,
+                                verticalArrangement = Arrangement.spacedBy(4.dp)
+                            ) {
+
+                                Row(verticalAlignment = Alignment.CenterVertically) {
+                                    ReusableTextView(
+                                        text = stringResource(Res.string.home_date).plus(":"),
+                                        textColor = appleblue, fontWeight = FontWeight.Bold
+                                    )
+                                    Spacer(Modifier.width(6.dp))
+                                    ReusableTextView(
+                                        text = "04/12/2025",
+                                        textColor = black,
+                                        fontWeight = FontWeight.Bold
+                                    )
+                                }
+                            }
                         }
                     }
-
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(vertical = 8.dp, horizontal = Dimens.tendp)
-                    ) {
+                    )
+                    {
 
                         Row(
                             modifier = Modifier.fillMaxWidth(),
@@ -254,7 +263,6 @@ fun GtrListScreen(
                                 modifier = Modifier.width(160.dp)
                             )
                         }
-
                         Spacer(Modifier.height(Dimens.tendp))
 
                         Divider(color = LightSkyBlue, thickness = 1.dp)
@@ -263,7 +271,7 @@ fun GtrListScreen(
 
                         Button(
                             onClick = {
-                                viewModel.getGTRData("developer","123456789")
+                                viewModel.getGTRData("PSCMNP5", "test124")
                             },
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -273,7 +281,7 @@ fun GtrListScreen(
                             shape = RoundedCornerShape(3.dp),
                             elevation = ButtonDefaults.buttonElevation(
                                 defaultElevation = 4.dp,
-                                pressedElevation = Dimens.fivedp,
+                                pressedElevation = 6.dp,
                                 focusedElevation = 4.dp
                             ),
                             colors = ButtonDefaults.buttonColors(
@@ -283,7 +291,7 @@ fun GtrListScreen(
                         ) {
                             ReusableTextView(
                                 text = stringResource(Res.string.download_loan),
-                                textColor = Color.White,
+                                textColor = black,
                                 fontSize = 20
                             )
                         }

@@ -2360,7 +2360,8 @@ fun LabelValueText(
     Row {
         ReusableTextView(
             text = "$label : ",
-            textColor = PrimaryDark
+            textColor = PrimaryDark,
+            fontWeight = FontWeight.SemiBold
         )
         ReusableTextView(
             text = value,

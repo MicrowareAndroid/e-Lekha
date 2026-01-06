@@ -113,6 +113,7 @@ val viewmodelModule = module {
     viewModelOf(::CustomerMovableAssetsViewModel)
     viewModelOf(::HomeScreenViewModel)
     viewModelOf(::LoanOfficerDashboardViewModel)
+    viewModelOf(::MSTLoanProductViewModel)
     viewModel {
         LoginViewModel(
 
@@ -140,15 +141,10 @@ val viewmodelModule = module {
             kycDocumentViewModel = get(),
             kycStatusViewModel = get(),
             kycStatusConditionViewModel = get(),
+            mstLoanProductViewModel = get(),
             appPreferences = get()
         )
     }
-    viewModel {
-        GtrViewModel(
-            apiRepository = get(),
-            trainingGroupViewModel = get(),
-            trainingGroupMemberViewModel = get()
-        )
-    }
+    viewModelOf(::GtrViewModel)
 
 }
