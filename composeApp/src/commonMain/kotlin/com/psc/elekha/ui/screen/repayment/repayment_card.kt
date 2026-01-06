@@ -11,10 +11,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.psc.elekha.database.entity.LoanRepaymentEntity
-<<<<<<< Updated upstream
-=======
 import com.psc.elekha.ui.theme.appleblue
->>>>>>> Stashed changes
 import com.psc.elekha.ui.theme.loginBg
 import com.psc.elekha.utils.ReusableTextViewBlackCard
 import com.psc.elekha.utils.ReusableTextViewGrayCard
@@ -67,21 +64,12 @@ fun RepaymentItemCard(
                             .size(55.dp)
                             .background(Color.LightGray)
                     ) {
-<<<<<<< Updated upstream
-                      /*  Image(
-                            painter = painterResource(Res.drawable.user_default),
-                            contentDescription = null,
-                            modifier = Modifier.fillMaxSize(),
-                            contentScale = ContentScale.Crop
-                        )*/
-=======
                         /*  Image(
                               painter = painterResource(Res.drawable.user_default),
                               contentDescription = null,
                               modifier = Modifier.fillMaxSize(),
                               contentScale = ContentScale.Crop
                           )*/
->>>>>>> Stashed changes
                     }
                 }
                 Spacer(modifier = Modifier.width(10.dp))

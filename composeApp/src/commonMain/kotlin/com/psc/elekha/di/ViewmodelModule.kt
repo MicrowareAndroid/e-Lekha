@@ -104,18 +104,11 @@ val viewmodelModule = module {
     viewModelOf(::UserContactDetailViewModel)
     viewModelOf(::TrainingGroupStatusViewModel)
     viewModelOf(::MSTLoanTypeViewModel)
-<<<<<<< Updated upstream
-    viewModelOf(::FamilyMemberDetailViewModel)
-    viewModelOf(::RepaymentViewModel)
-    viewModelOf(::TrainingGroupMemberViewModel)
-    viewModelOf(::RepaymentViewModel)
-=======
     viewModelOf(::FamilyMemberViewModel)
     viewModelOf(::RepaymentViewModel)
     viewModelOf(::TrainingGroupMemberViewModel)
     viewModelOf(::RepaymentViewModel)
     viewModelOf(::CustomerMovableAssetsViewModel)
->>>>>>> Stashed changes
     viewModel {
         LoginViewModel(
 

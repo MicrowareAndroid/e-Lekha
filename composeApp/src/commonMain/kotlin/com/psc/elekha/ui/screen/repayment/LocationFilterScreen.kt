@@ -59,11 +59,7 @@ import org.koin.compose.viewmodel.koinViewModel
 fun LocationFilterScreen(
     navController: NavHostController
 ) {
-<<<<<<< Updated upstream
-    AppBackHandler{
-=======
     AppBackHandler {
->>>>>>> Stashed changes
         navController.navigate(RouteName.home) {
             popUpTo(RouteName.loan_filter_screen) { inclusive = true }
             launchSingleTop = true
@@ -176,33 +172,19 @@ fun LocationFilterScreen(
                                     )
                                     Spacer(Modifier.width(6.dp))
                                     ReusableTextView(
-<<<<<<< Updated upstream
-                                        text = "Gurgaon",
-=======
                                         text = "Vikash",
->>>>>>> Stashed changes
                                         textColor = black,
                                         fontWeight = FontWeight.Bold
                                     )
                                 }
                                 Row(verticalAlignment = Alignment.CenterVertically) {
                                     ReusableTextView(
-<<<<<<< Updated upstream
-                                        text = stringResource(Res.string.select_customer_next).plus(
-                                            ":"
-                                        ),
-=======
                                         text = stringResource(Res.string.home_time).plus(":"),
->>>>>>> Stashed changes
                                         textColor = appleblue, fontWeight = FontWeight.Bold
                                     )
                                     Spacer(Modifier.width(6.dp))
                                     ReusableTextView(
-<<<<<<< Updated upstream
-                                        text = "10/4/2025",
-=======
                                         text = "10:45 AM",
->>>>>>> Stashed changes
                                         textColor = black,
                                         fontWeight = FontWeight.Bold
                                     )
@@ -218,35 +200,6 @@ fun LocationFilterScreen(
 
                                 Row(verticalAlignment = Alignment.CenterVertically) {
                                     ReusableTextView(
-<<<<<<< Updated upstream
-                                        text = stringResource(Res.string.home_user),
-                                        textColor = appleblue, fontWeight = FontWeight.Bold
-                                    )
-                                    Spacer(Modifier.width(6.dp))
-                                    ReusableTextView(
-                                        text = "Vikash",
-                                        textColor = black,
-                                        fontWeight = FontWeight.Bold
-                                    )
-                                }
-
-                                Row(verticalAlignment = Alignment.CenterVertically) {
-                                    ReusableTextView(
-                                        text = stringResource(Res.string.home_time).plus(":"),
-                                        textColor = appleblue, fontWeight = FontWeight.Bold
-                                    )
-                                    Spacer(Modifier.width(6.dp))
-                                    ReusableTextView(
-                                        text = "10:45 AM",
-                                        textColor = black,
-                                        fontWeight = FontWeight.Bold
-                                    )
-                                }
-
-                                Row(verticalAlignment = Alignment.CenterVertically) {
-                                    ReusableTextView(
-=======
->>>>>>> Stashed changes
                                         text = stringResource(Res.string.home_date).plus(":"),
                                         textColor = appleblue, fontWeight = FontWeight.Bold
                                     )
@@ -398,14 +351,10 @@ fun LocationFilterScreen(
                                 viewModel.showSaveAlert = false
                                 appPreferences.putInt(AppSP.filterVlgID, viewModel.villageId)
                                 appPreferences.putInt(AppSP.filterCenterID, viewModel.centerId)
-<<<<<<< Updated upstream
-                                appPreferences.putString(AppSP.filterCustID, viewModel.customerID.trim())
-=======
                                 appPreferences.putString(
                                     AppSP.filterCustID,
                                     viewModel.customerID.trim()
                                 )
->>>>>>> Stashed changes
                                 navController.navigate(RouteName.replayment_list) {
                                     popUpTo(RouteName.loan_filter_screen) { inclusive = true }
                                     launchSingleTop = true
