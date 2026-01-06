@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.psc.elekha.apicall.APiState
+import com.psc.elekha.database.viewmodel.UsersViewModel
 import com.psc.elekha.getAppVersion
 import com.psc.elekha.ui.theme.*
 import com.psc.elekha.utils.CustomAlertDialog
@@ -38,7 +39,8 @@ import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun LoginScreenNew(navController: NavController) {
-    var viewModel = koinViewModel<LoginViewModel>()
+    val viewModel = koinViewModel<LoginViewModel>()
+    val userViewModel = koinViewModel<UsersViewModel>()
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var otp by remember { mutableStateOf("") }
@@ -49,6 +51,7 @@ fun LoginScreenNew(navController: NavController) {
     val loginState = viewModel.loginState.collectAsState().value
     val verifyState = viewModel.verifyState.collectAsState().value
     var showDialog by remember { mutableStateOf(false) }
+    val userList by userViewModel.userList.collectAsState()
 
     LaunchedEffect(loginState) {
         when (loginState) {
@@ -271,7 +274,13 @@ fun LoginScreenNew(navController: NavController) {
                                                 showDialog = true
                                                 dialogMessage = "Please Enter Username & Password"
                                             } else {
-                                                viewModel.getAuthentication(username, password)
+                                                userViewModel.getUserDetails(username,password)
+                                                if (userList.isNotEmpty()) {
+                                                    showOtpField = true
+                                                    viewModel.getOTP("9821490996")
+                                                } else {
+                                                    viewModel.getAuthentication(username, password)
+                                                }
                                             }
                                         } else {
                                             if (otp.length < 4) {

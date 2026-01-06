@@ -87,7 +87,8 @@ class LoginViewModel(
                     if (body.length > 5) {
                         getMaster(username, password)
                     } else {
-                        _loginState.value = APiState.error(getString(Res.string.invalid_username_pwd))
+                        _loginState.value =
+                            APiState.error(getString(Res.string.invalid_username_pwd))
                     }
 
                 } else if (code == 401) {
@@ -128,7 +129,8 @@ class LoginViewModel(
                 if (code == 200) {
                     val body = response.body<String>()
                     if (body.equals("true", false)) {
-                        _verifyState.value = APiState.success(getString(Res.string.verified_success))
+                        _verifyState.value =
+                            APiState.success(getString(Res.string.verified_success))
                     } else {
                         _verifyState.value = APiState.error(getString(Res.string.invalid_otp))
                     }
@@ -156,6 +158,7 @@ class LoginViewModel(
                     appPreferences.putString(AppSP.password, password)
                     body.let {
                         usersViewModel.insertAllUsers(it.user)
+                        appPreferences.putString(AppSP.userId, it.user.firstOrNull()?.UserId ?: "")
                         tabletMenuViewModel.insertAllTabletMenu(it.tabletMenu)
                         tabletMenuRoleViewModel.insertAllTabletMenuRole(it.tabletMenuRole)
                         mstStateViewModel.insertAllState(it.state)

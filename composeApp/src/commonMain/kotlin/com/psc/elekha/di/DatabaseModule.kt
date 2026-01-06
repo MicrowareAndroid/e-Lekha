@@ -54,6 +54,7 @@ val databaseModule = module {
     single { get<AppDatabase>().trainingGroupStatusDao() }
     single { get<AppDatabase>().trainingGroupMemberDao() }
     single { get<AppDatabase>().customerMovableAssetDao() }
+    single { get<AppDatabase>().loanofficerDashBoardDataDao() }
 
 
 }

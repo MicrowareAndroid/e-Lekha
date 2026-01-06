@@ -19,10 +19,13 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -35,6 +38,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -44,6 +48,7 @@ import com.psc.elekha.database.viewmodel.MSTComboBox_NViewModel
 import com.psc.elekha.expectfile.AppBackHandler
 import com.psc.elekha.ui.theme.black
 import com.psc.elekha.ui.theme.blue
+import com.psc.elekha.ui.theme.btn_color
 import com.psc.elekha.ui.theme.lightGrey
 import com.psc.elekha.ui.theme.loginBg
 import com.psc.elekha.ui.theme.white
@@ -62,6 +67,7 @@ import com.psc.elekha.utils.ReusableTopBar
 import com.psc.elekha.utils.RouteName
 import com.psc.elekha.utils.loadImageFromPath
 import e_lekha.composeapp.generated.resources.*
+import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -169,14 +175,25 @@ fun RepaymentDialog(
                                     fontSize = 13, modifier = Modifier.wrapContentWidth()
                                 )
                                 Spacer(modifier = Modifier.width(Dimens.fivedp))
-                                Icon(
-                                    painter = painterResource(Res.drawable.call),
-                                    tint = blue,
-                                    contentDescription = stringResource(Res.string.front_image),
-                                    modifier = Modifier.size(15.dp).clickable {
+                                Button(
+                                    onClick = {},
+                                    modifier = Modifier
+                                        .wrapContentWidth()
+                                        .height(40.dp),
 
-                                    }
-                                )
+                                    colors = ButtonDefaults.buttonColors(
+                                        containerColor = btn_color,
+                                        contentColor = Color.Black
+                                    ),
+                                    shape = RoundedCornerShape(1.dp)
+                                ) {
+                                    Icon(
+                                        painter = painterResource(Res.drawable.call),
+                                        tint = blue,
+                                        contentDescription = stringResource(Res.string.front_image),
+                                        modifier = Modifier.size(15.dp)
+                                    )
+                                }
                             }
                         }
                     }

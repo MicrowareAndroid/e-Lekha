@@ -18,8 +18,8 @@ class UsersRepository(
     }
 
     // Get all users
-    suspend fun getAllUsers(): List<UsersEntity>? {
-        return usersDao.getAllUsers()
+    suspend fun getAllUsers(userName: String,pwd: String): List<UsersEntity> {
+        return usersDao.getAllUsers(userName,pwd)
     }
 
     // Get total users count

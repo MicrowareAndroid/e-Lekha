@@ -1,96 +1,95 @@
 package com.psc.elekha.ui.screen.home
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.psc.elekha.apicall.APiState
+import com.psc.elekha.database.viewmodel.LoanOfficerDashboardViewModel
+import com.psc.elekha.database.viewmodel.UsersViewModel
 import com.psc.elekha.model.DashboardItem
 import com.psc.elekha.model.SliderItem
-import com.psc.elekha.ui.screen.login.LoginScreenNew
-import com.psc.elekha.ui.theme.LightMint
-import com.psc.elekha.ui.theme.LightTeal
-import com.psc.elekha.ui.theme.LightYellow
 import com.psc.elekha.ui.theme.PrimaryDark
 import com.psc.elekha.ui.theme.black
 import com.psc.elekha.ui.theme.homeRegistrationColor
-import com.psc.elekha.ui.theme.homeViewLineColor
 import com.psc.elekha.ui.theme.homedatareportsColor
 import com.psc.elekha.ui.theme.homegtrColor
 import com.psc.elekha.ui.theme.homemenuGreyColor
 import com.psc.elekha.ui.theme.homerepaymentColor
-import com.psc.elekha.ui.theme.lightGrey
-import com.psc.elekha.ui.theme.lightgreens
-import com.psc.elekha.ui.theme.loginBg
 import com.psc.elekha.ui.theme.loginbgGradientBottom
 import com.psc.elekha.ui.theme.loginbgGradientTop
-import com.psc.elekha.ui.theme.repaymentColor
+import com.psc.elekha.utils.AppPreferences
+import com.psc.elekha.utils.AppSP
 import com.psc.elekha.utils.CommonSingleButtons
 import com.psc.elekha.utils.DashboardCardItem
+import com.psc.elekha.utils.ProgressDialog
 import com.psc.elekha.utils.ReusableTextView
 import com.psc.elekha.utils.RouteName
 import com.psc.elekha.utils.TripleIconSlider
-import e_lekha.composeapp.generated.resources.Res
-import e_lekha.composeapp.generated.resources.activecustomer
-import e_lekha.composeapp.generated.resources.arrear
-import e_lekha.composeapp.generated.resources.case_load
-import e_lekha.composeapp.generated.resources.credit_enquiry
-import e_lekha.composeapp.generated.resources.data_reports
-import e_lekha.composeapp.generated.resources.default
-import e_lekha.composeapp.generated.resources.group
-import e_lekha.composeapp.generated.resources.gtr
-import e_lekha.composeapp.generated.resources.gtr_done
-import e_lekha.composeapp.generated.resources.home_active_customer
-import e_lekha.composeapp.generated.resources.home_arrear
-import e_lekha.composeapp.generated.resources.home_case
-import e_lekha.composeapp.generated.resources.home_closed
-import e_lekha.composeapp.generated.resources.home_data
-import e_lekha.composeapp.generated.resources.home_date
-import e_lekha.composeapp.generated.resources.home_default
-import e_lekha.composeapp.generated.resources.home_gtr
-import e_lekha.composeapp.generated.resources.home_gtr_home
-import e_lekha.composeapp.generated.resources.home_registration
-import e_lekha.composeapp.generated.resources.home_repayment
-import e_lekha.composeapp.generated.resources.home_time
-import e_lekha.composeapp.generated.resources.home_user
-import e_lekha.composeapp.generated.resources.ic_loan
-import e_lekha.composeapp.generated.resources.ic_menu
-import e_lekha.composeapp.generated.resources.ic_repayment
-import e_lekha.composeapp.generated.resources.ic_savings
-import e_lekha.composeapp.generated.resources.ic_setting
-import e_lekha.composeapp.generated.resources.loan_closed
-import e_lekha.composeapp.generated.resources.logo
-import e_lekha.composeapp.generated.resources.registration
-import e_lekha.composeapp.generated.resources.registration_top
-import e_lekha.composeapp.generated.resources.repayment
-import e_lekha.composeapp.generated.resources.right_arrow
-import e_lekha.composeapp.generated.resources.view_more
+import com.psc.elekha.utils.returnIntToString
+import e_lekha.composeapp.generated.resources.*
 
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.koin.compose.koinInject
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun HomeScreen(
     navController: NavHostController,
     onMenuClick: () -> Unit
 ) {
+    val viewModel = koinViewModel<HomeScreenViewModel>()
+    val userViewModel = koinViewModel<UsersViewModel>()
+    val loanOfcviewModel = koinViewModel<LoanOfficerDashboardViewModel>()
+    val dataState = viewModel.dataState.collectAsState().value
+    val dashboardData = loanOfcviewModel.loDataList.collectAsState().value
+    var showProgress by remember { mutableStateOf(false) }
+    val appPreferences: AppPreferences = koinInject()
+
+    LaunchedEffect(Unit) {
+        viewModel.getDashboardData(appPreferences.getString(AppSP.userId) ?: "")
+    }
+    LaunchedEffect(dataState) {
+        when (dataState) {
+            is APiState.loading -> {
+                showProgress = true
+            }
+
+            is APiState.success -> {
+                showProgress = false
+            }
+
+            is APiState.error -> {
+                showProgress = false
+            }
+
+            else -> {
+                showProgress = false
+            }
+        }
+    }
+
     val sliderItems = listOf(
         SliderItem(
             painterResource(Res.drawable.ic_loan),
@@ -112,35 +111,64 @@ fun HomeScreen(
         )
     )
 
-
-
     val dashboardItems = listOf(
-        DashboardItem("837", stringResource(Res.string.home_active_customer), painterResource(Res.drawable.activecustomer)),
-        DashboardItem("80", stringResource(Res.string.home_default), painterResource(Res.drawable.default)),
-        DashboardItem("50", stringResource(Res.string.home_registration), painterResource(Res.drawable.registration_top)),
-        DashboardItem("27", stringResource(Res.string.home_active_customer), painterResource(Res.drawable.credit_enquiry
-        )),
-        DashboardItem("837", stringResource(Res.string.home_arrear), painterResource(Res.drawable.arrear)),
-        DashboardItem("80", stringResource(Res.string.home_closed), painterResource(Res.drawable.loan_closed)),
-        DashboardItem("50", stringResource(Res.string.home_gtr), painterResource(Res.drawable.gtr_done)),
-        DashboardItem("27", stringResource(Res.string.home_case), painterResource(Res.drawable.case_load))
+        DashboardItem(
+            returnIntToString(dashboardData.firstOrNull()?.ActiveCustomer ?: 0),
+            stringResource(Res.string.home_active_customer),
+            painterResource(Res.drawable.activecustomer)
+        ),
+        DashboardItem(
+            "",
+            stringResource(Res.string.home_default),
+            painterResource(Res.drawable.default)
+        ),
+        DashboardItem(
+            returnIntToString(dashboardData.firstOrNull()?.RegisteredCustomer ?: 0),
+            stringResource(Res.string.home_registration),
+            painterResource(Res.drawable.registration_top)
+        ),
+        DashboardItem(
+            "", stringResource(Res.string.home_credit), painterResource(
+                Res.drawable.credit_enquiry
+            )
+        ),
+        DashboardItem(
+            returnIntToString(dashboardData.firstOrNull()?.CustomerInArrear_ThisMonth ?: 0),
+            stringResource(Res.string.home_arrear),
+            painterResource(Res.drawable.arrear)
+        ),
+        DashboardItem(
+            "",
+            stringResource(Res.string.home_closed),
+            painterResource(Res.drawable.loan_closed)
+        ),
+        DashboardItem(
+            returnIntToString(dashboardData.firstOrNull()?.LOGTR ?: 0),
+            stringResource(Res.string.home_gtr),
+            painterResource(Res.drawable.gtr_done)
+        ),
+        DashboardItem(
+            returnIntToString(dashboardData.firstOrNull()?.LOCaseLoad ?: 0),
+            stringResource(Res.string.home_case),
+            painterResource(Res.drawable.case_load)
+        )
     )
 
     Box(
         modifier = Modifier.fillMaxSize()
-            ) {
+    ) {
 
-       /* Image(
-            painter = painterResource(Res.drawable.group),
-            contentDescription = null,
-            contentScale = ContentScale.FillBounds,
-            modifier = Modifier.matchParentSize()
-        )*/
+        /* Image(
+             painter = painterResource(Res.drawable.group),
+             contentDescription = null,
+             contentScale = ContentScale.FillBounds,
+             modifier = Modifier.matchParentSize()
+         )*/
 
         Scaffold(
             modifier = Modifier
                 .fillMaxSize()
-        //containerColor = loginBg
+            //containerColor = loginBg
         ) { innerPadding ->
 
             Column(
@@ -180,19 +208,28 @@ fun HomeScreen(
                         verticalArrangement = Arrangement.spacedBy(4.dp)
                     ) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
-                            ReusableTextView(text = stringResource(Res.string.home_user), textColor = PrimaryDark)
+                            ReusableTextView(
+                                text = stringResource(Res.string.home_user),
+                                textColor = PrimaryDark
+                            )
                             Spacer(Modifier.width(6.dp))
                             ReusableTextView(text = "Vikash", textColor = Color.Black)
                         }
 
                         Row(verticalAlignment = Alignment.CenterVertically) {
-                            ReusableTextView(text = stringResource(Res.string.home_time).plus(":"), textColor = PrimaryDark)
+                            ReusableTextView(
+                                text = stringResource(Res.string.home_time).plus(":"),
+                                textColor = PrimaryDark
+                            )
                             Spacer(Modifier.width(6.dp))
                             ReusableTextView(text = "10:45 AM", textColor = Color.Black)
                         }
 
                         Row(verticalAlignment = Alignment.CenterVertically) {
-                            ReusableTextView(text = stringResource(Res.string.home_date).plus(":"), textColor = PrimaryDark)
+                            ReusableTextView(
+                                text = stringResource(Res.string.home_date).plus(":"),
+                                textColor = PrimaryDark
+                            )
                             Spacer(Modifier.width(6.dp))
                             ReusableTextView(text = "04/12/2025", textColor = Color.Black)
                         }
@@ -212,9 +249,9 @@ fun HomeScreen(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(horizontal = 25.dp)
-                            .height(220.dp),
+                                .height(220.dp),
 
-                        horizontalArrangement = Arrangement.spacedBy(12.dp),
+                            horizontalArrangement = Arrangement.spacedBy(12.dp),
                             verticalArrangement = Arrangement.spacedBy(12.dp),
                             userScrollEnabled = false
                         ) {
@@ -292,6 +329,9 @@ fun HomeScreen(
                     }
                 }
             }
+        }
+        if (showProgress) {
+            ProgressDialog(showProgress, "")
         }
     }
 }
