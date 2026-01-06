@@ -5,40 +5,29 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.dropShadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.psc.elekha.apicall.APiState
-import com.psc.elekha.database.entity.MSTComboBox_NEntity
-import com.psc.elekha.database.viewmodel.MSTComboBox_NViewModel
 import com.psc.elekha.getAppVersion
-import com.psc.elekha.ui.screen.kycdetails.KycDetailViewModel
-
 import com.psc.elekha.ui.theme.*
 import com.psc.elekha.utils.CustomAlertDialog
 import com.psc.elekha.utils.PasswordField
 import com.psc.elekha.utils.ProgressDialog
-import com.psc.elekha.utils.ReusableImageView
 import com.psc.elekha.utils.ReusableTextView
 import com.psc.elekha.utils.RouteName
 import com.psc.elekha.utils.SimpleOtp
 import com.psc.elekha.utils.UsernameField
-
 import e_lekha.composeapp.generated.resources.Res
 import e_lekha.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.painterResource
@@ -58,6 +47,7 @@ fun LoginScreenNew(navController: NavController) {
     var showProgress by remember { mutableStateOf(false) }
     var dialogMessage by remember { mutableStateOf("") }
     val loginState = viewModel.loginState.collectAsState().value
+    val verifyState = viewModel.verifyState.collectAsState().value
     var showDialog by remember { mutableStateOf(false) }
 
     LaunchedEffect(loginState) {
@@ -69,8 +59,8 @@ fun LoginScreenNew(navController: NavController) {
 
             is APiState.success -> {
                 showProgress = false
-                navController.navigate(RouteName.home)
-
+                showOtpField = true
+                viewModel.getOTP("9821490996")
             }
 
             is APiState.error -> {
@@ -79,18 +69,33 @@ fun LoginScreenNew(navController: NavController) {
                 dialogMessage = loginState.message
             }
 
-            is APiState.finish -> {
+            else -> {}
+        }
+    }
+    LaunchedEffect(verifyState) {
+        when (verifyState) {
+            is APiState.loading -> {
+                showProgress = true
+                dialogMessage = "Validating OTP..."
+            }
+
+            is APiState.success -> {
                 showProgress = false
-                navController.navigate(RouteName.home){
+                navController.navigate(RouteName.home) {
                     popUpTo(RouteName.login) { inclusive = true }
                     launchSingleTop = true
                 }
             }
 
+            is APiState.error -> {
+                showProgress = false
+                showDialog = true
+                dialogMessage = verifyState.message
+            }
+
             else -> {}
         }
     }
-
 
     Box(
         modifier = Modifier
@@ -159,9 +164,6 @@ fun LoginScreenNew(navController: NavController) {
                     .padding(horizontal = 16.dp),
             ) {
 
-                Spacer(modifier = Modifier.height(30.dp))
-
-
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
@@ -172,11 +174,11 @@ fun LoginScreenNew(navController: NavController) {
                         painter = painterResource(Res.drawable.logo),
                         contentDescription = "Logo",
                         modifier = Modifier
-                            .size(190.dp)
+                            .size(150.dp)
                     )
                 }
 
-                Spacer(modifier = Modifier.height(13.dp))
+                Spacer(modifier = Modifier.height(10.dp))
                 Box(
                     modifier = Modifier
                         .fillMaxWidth(),
@@ -185,11 +187,11 @@ fun LoginScreenNew(navController: NavController) {
                     ReusableTextView(
                         text = stringResource(Res.string.planned_social_concern),
                         textColor = loginTitle,
-                        fontSize = 34,
+                        fontSize = 25,
                         textAlignment = TextAlign.Center
                     )
                 }
-                Spacer(modifier = Modifier.height(7.dp))
+                Spacer(modifier = Modifier.height(10.dp))
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -265,10 +267,19 @@ fun LoginScreenNew(navController: NavController) {
                                 Button(
                                     onClick = {
                                         if (!showOtpField) {
-                                           // showOtpField = true
-                                            viewModel.getMaster(username,password)
+                                            if (username.isBlank() || password.isBlank()) {
+                                                showDialog = true
+                                                dialogMessage = "Please Enter Username & Password"
+                                            } else {
+                                                viewModel.getAuthentication(username, password)
+                                            }
                                         } else {
-                                            navController.navigate(RouteName.home)
+                                            if (otp.length < 4) {
+                                                showDialog = true
+                                                dialogMessage = "Please Enter Valid OTP"
+                                            } else {
+                                                viewModel.verifyOTP("9821490996", otp)
+                                            }
                                         }
                                     },
                                     modifier = Modifier

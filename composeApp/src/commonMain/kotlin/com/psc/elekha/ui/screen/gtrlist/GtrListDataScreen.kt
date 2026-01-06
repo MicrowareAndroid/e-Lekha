@@ -69,7 +69,7 @@ fun GtrListDataScreen(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp)
+                    .padding(Dimens.sixteendp)
                     .navigationBarsPadding()
             ) {
                 CommonSingleButtonsBottomString(
@@ -93,7 +93,7 @@ fun GtrListDataScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .verticalScroll(rememberScrollState())
-//                    .padding(horizontal = 0.dp, vertical = 5.dp)
+//                    .padding(horizontal = 0.dp, vertical = Dimens.fivedp)
             )
             {
 
@@ -108,7 +108,7 @@ fun GtrListDataScreen(
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
-//                            .padding(5.dp)
+                            .padding(Dimens.fivedp)
                     )
                     {
 
@@ -119,14 +119,14 @@ fun GtrListDataScreen(
                             horizontalArrangement = Arrangement.Start
                         ) {
                             ReusableTextView(
-                                text = stringResource(Res.string.home_user),
+                                text = stringResource(Res.string.home_user).plus(":"),
                                 textColor = toolbar_color
                             )
-                            Spacer(Modifier.width(6.dp))
+                            Spacer(Modifier.width(Dimens.fivedp))
                             ReusableTextView(text = "Vikash", textColor = Color.Black)
                         }
 
-                        Spacer(Modifier.height(6.dp))
+                        Spacer(Modifier.height(Dimens.fivedp))
 
                         // ---------- ROW 2 : TIME (LEFT) + DATE (RIGHT) ----------
                         Row(
@@ -145,7 +145,7 @@ fun GtrListDataScreen(
                                     text = stringResource(Res.string.home_time).plus(":"),
                                     textColor = toolbar_color
                                 )
-                                Spacer(Modifier.width(6.dp))
+                                Spacer(Modifier.width(Dimens.fivedp))
                                 ReusableTextView(text = "10:45 AM", textColor = Color.Black)
                             }
 
@@ -157,7 +157,7 @@ fun GtrListDataScreen(
                                     text = stringResource(Res.string.home_date).plus(":"),
                                     textColor = toolbar_color
                                 )
-                                Spacer(Modifier.width(6.dp))
+                                Spacer(Modifier.width(Dimens.fivedp))
                                 ReusableTextView(text = "04/12/2025", textColor = Color.Black)
                             }
                         }
@@ -170,40 +170,40 @@ fun GtrListDataScreen(
 
                 Row(
                     modifier = Modifier.fillMaxWidth()
-                        .padding(start = 10.dp, end = 10.dp, top = 16.dp),
+                        .padding(start = Dimens.tendp, end = Dimens.tendp, top = Dimens.sixteendp),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.Top
                 ) {
 
-                    Column(modifier = Modifier.weight(1f).padding(start = 5.dp)) {
+                    Column(modifier = Modifier.weight(1f).padding(start = Dimens.fivedp)) {
 
                         ReusableTextView(
                             text = stringResource(Res.string.gtr_customer).plus(" :"),
                             fontSize = 14,
                             textColor = black
                         )
-                        Spacer(Modifier.height(6.dp))
+                        Spacer(Modifier.height(Dimens.fivedp))
 
                         ReusableTextView(
                             text = stringResource(Res.string.gtr_center).plus(" :"),
                             fontSize = 12,
                             textColor = black
                         )
-                        Spacer(Modifier.height(6.dp))
+                        Spacer(Modifier.height(Dimens.fivedp))
 
                         ReusableTextView(
                             text = stringResource(Res.string.gtr_meeting).plus(" :"),
                             fontSize = 12,
                             textColor = black
                         )
-                        Spacer(Modifier.height(6.dp))
+                        Spacer(Modifier.height(Dimens.fivedp))
 
                         ReusableTextView(
                             text = stringResource(Res.string.gtr_next_meeting).plus(" :"),
                             fontSize = 12,
                             textColor = black
                         )
-                        Spacer(Modifier.height(6.dp))
+                        Spacer(Modifier.height(Dimens.fivedp))
 
                         ReusableTextView(
                             text = stringResource(Res.string.gtr_remaining_days),
@@ -212,7 +212,7 @@ fun GtrListDataScreen(
                         )
                     }
 
-                    Spacer(Modifier.width(12.dp))
+                    Spacer(Modifier.width(Dimens.tendp))
 
                     Column(
                         modifier = Modifier.width(120.dp),
@@ -249,14 +249,14 @@ fun GtrListDataScreen(
 
 
                 }
-                Spacer(Modifier.height(10.dp))
+                Spacer(Modifier.height(Dimens.tendp))
                 Divider(
                     color = LightSkyBlue,
                     thickness = 1.dp,
-                    modifier = Modifier.padding(horizontal = 10.dp)
+                    modifier = Modifier.padding(horizontal = Dimens.tendp)
                 )
 
-                Spacer(Modifier.height(5.dp))
+                Spacer(Modifier.height(Dimens.fivedp))
 
                 Column(
                     modifier = Modifier
@@ -280,7 +280,7 @@ fun GtrListDataScreen(
 
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 5.dp)
+                    .padding(horizontal = Dimens.sixteendp, vertical = Dimens.fivedp)
                     .align(Alignment.BottomCenter)
 
             ) {

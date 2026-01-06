@@ -2,7 +2,8 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "18d1c77d88ad79a68f81c84d9e35285c",
+
+    "identityHash": "e7696a13b9d3dcd0760c643666c6084e",
     "entities": [
       {
         "tableName": "CustomerStatus",
@@ -4613,7 +4614,8 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '18d1c77d88ad79a68f81c84d9e35285c')"
+
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e7696a13b9d3dcd0760c643666c6084e')"
     ]
   }
 }

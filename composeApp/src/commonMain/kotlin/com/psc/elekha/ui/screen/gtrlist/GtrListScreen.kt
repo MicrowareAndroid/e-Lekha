@@ -1,42 +1,38 @@
 package com.psc.elekha.ui.screen.gtrlist
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.psc.elekha.apicall.APiState
 import com.psc.elekha.ui.theme.LightSkyBlue
-import com.psc.elekha.ui.theme.LightTeal
-import com.psc.elekha.ui.theme.PrimaryDark
-import com.psc.elekha.ui.theme.black
-import com.psc.elekha.ui.theme.homeRegistrationColor
+import com.psc.elekha.ui.theme.btnYellow
 import com.psc.elekha.ui.theme.homedatareportsColor
 import com.psc.elekha.ui.theme.toolbar_color
-import com.psc.elekha.ui.theme.white
 import com.psc.elekha.utils.*
 import e_lekha.composeapp.generated.resources.Res
 import e_lekha.composeapp.generated.resources.back
-import e_lekha.composeapp.generated.resources.background
+import e_lekha.composeapp.generated.resources.download_loan
 import e_lekha.composeapp.generated.resources.gtr_select
 import e_lekha.composeapp.generated.resources.home_date
 import e_lekha.composeapp.generated.resources.home_time
 import e_lekha.composeapp.generated.resources.home_user
 import e_lekha.composeapp.generated.resources.inter_medium
-import e_lekha.composeapp.generated.resources.select_customer_center
-import e_lekha.composeapp.generated.resources.select_customer_next
 import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.viewmodel.koinViewModel
 
 
 @Composable
@@ -44,6 +40,11 @@ fun GtrListScreen(
     navController: NavHostController,
 ) {
 
+    val viewModel = koinViewModel<GtrViewModel>()
+    val downloadState = viewModel.downloadState.collectAsState().value
+    var showProgress by remember { mutableStateOf(false) }
+    var dialogMessage by remember { mutableStateOf("") }
+    var showDialog by remember { mutableStateOf(false) }
     val branchList = listOf("All", "Center", "Village")
     var selectedBranch by remember { mutableStateOf("All") }
     var selectedScreen by remember { mutableStateOf("GTR List") }
@@ -94,6 +95,32 @@ fun GtrListScreen(
             "06/08/13")
     )
 
+    LaunchedEffect(Unit,downloadState) {
+        when (downloadState) {
+            is APiState.loading -> {
+                showProgress = true
+                dialogMessage = "Please wait..."
+            }
+
+            is APiState.success -> {
+                showProgress = false
+
+            }
+
+            is APiState.error -> {
+                showProgress = false
+                showDialog = true
+                dialogMessage = downloadState.message
+            }
+
+            is APiState.finish -> {
+                showProgress = false
+            }
+
+            else -> {}
+        }
+    }
+
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
@@ -111,9 +138,6 @@ fun GtrListScreen(
                 .fillMaxSize()
                 .padding(innerPadding)
         ) {
-
-
-
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -139,7 +163,7 @@ fun GtrListScreen(
                         Column(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(5.dp)
+                                .padding(Dimens.fivedp)
                         ) {
 
 
@@ -149,14 +173,14 @@ fun GtrListScreen(
                                 horizontalArrangement = Arrangement.Start
                             ) {
                                 ReusableTextView(
-                                    text = stringResource(Res.string.home_user),
+                                    text = stringResource(Res.string.home_user).plus(":"),
                                     textColor = toolbar_color
                                 )
-                                Spacer(Modifier.width(6.dp))
+                                Spacer(Modifier.width(Dimens.fivedp))
                                 ReusableTextView(text = "Vikash", textColor = Color.Black)
                             }
 
-                            Spacer(Modifier.height(6.dp))
+                            Spacer(Modifier.height(Dimens.fivedp))
 
 
                             Row(
@@ -164,8 +188,6 @@ fun GtrListScreen(
                                 verticalAlignment = Alignment.CenterVertically
                             )
                             {
-
-
                                 Row(
                                     modifier = Modifier.weight(1f),
                                     verticalAlignment = Alignment.CenterVertically
@@ -175,7 +197,7 @@ fun GtrListScreen(
                                         text = stringResource(Res.string.home_time).plus(":"),
                                         textColor = toolbar_color
                                     )
-                                    Spacer(Modifier.width(6.dp))
+                                    Spacer(Modifier.width(Dimens.fivedp))
                                     ReusableTextView(text = "10:45 AM", textColor = Color.Black)
                                 }
 
@@ -187,7 +209,7 @@ fun GtrListScreen(
                                         text = stringResource(Res.string.home_date).plus(":"),
                                         textColor = toolbar_color
                                     )
-                                    Spacer(Modifier.width(6.dp))
+                                    Spacer(Modifier.width(Dimens.fivedp))
                                     ReusableTextView(text = "04/12/2025", textColor = Color.Black)
                                 }
                             }
@@ -195,22 +217,18 @@ fun GtrListScreen(
                         }
                     }
 
-
-
-
-
-
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(vertical = 8.dp, horizontal = 10.dp)
+                            .padding(vertical = 8.dp, horizontal = Dimens.tendp)
                     ) {
 
                         Row(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.SpaceBetween,
                             verticalAlignment = Alignment.CenterVertically
-                        ) {
+                        )
+                        {
 
                             ReusableTextView(
                                 text = stringResource(Res.string.gtr_select),
@@ -237,8 +255,40 @@ fun GtrListScreen(
                             )
                         }
 
-                        Spacer(Modifier.height(12.dp))
+                        Spacer(Modifier.height(Dimens.tendp))
+
                         Divider(color = LightSkyBlue, thickness = 1.dp)
+
+                        Spacer(Modifier.height(Dimens.tendp))
+
+                        Button(
+                            onClick = {
+                                viewModel.getGTRData("developer","123456789")
+                            },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = Dimens.sixteendp)
+                                .width(200.dp)
+                                .height(50.dp),
+                            shape = RoundedCornerShape(3.dp),
+                            elevation = ButtonDefaults.buttonElevation(
+                                defaultElevation = 4.dp,
+                                pressedElevation = Dimens.fivedp,
+                                focusedElevation = 4.dp
+                            ),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = btnYellow,
+                                contentColor = Color.White
+                            )
+                        ) {
+                            ReusableTextView(
+                                text = stringResource(Res.string.download_loan),
+                                textColor = Color.White,
+                                fontSize = 20
+                            )
+                        }
+
+                        Spacer(Modifier.height(Dimens.tendp))
                     }
 
                     Spacer(Modifier.height(2.dp))
@@ -246,7 +296,7 @@ fun GtrListScreen(
                         modifier = Modifier
                             .weight(1f)
                             .verticalScroll(rememberScrollState())
-                            .padding( bottom = 5.dp)
+                            .padding( bottom = Dimens.fivedp)
                     ) {
 
                         if (selectedBranch == "All") {
@@ -258,12 +308,23 @@ fun GtrListScreen(
                                     }
                                 )
                             }
-                            Spacer(Modifier.height(12.dp))
+                            Spacer(Modifier.height(Dimens.tendp))
                         }
                     }
                 }
             }
         }
+    }
+
+    if (showDialog) {
+        CustomAlertDialog(
+            showDialog,
+            message = dialogMessage,
+            onConfirm = { showDialog = false })
+    }
+
+    if (showProgress) {
+        ProgressDialog(showProgress, dialogMessage)
     }
 }
 

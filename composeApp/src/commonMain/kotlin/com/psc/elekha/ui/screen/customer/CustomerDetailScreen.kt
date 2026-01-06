@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.relocation.bringIntoViewRequester
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -14,6 +15,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
@@ -23,6 +25,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.psc.elekha.ui.screen.gtrlist.BranchItem
+import com.psc.elekha.ui.screen.gtrlist.GtrViewModel
+import com.psc.elekha.ui.screen.repayment.RepaymentViewModel
 import com.psc.elekha.ui.theme.LightSkyBlue
 import com.psc.elekha.ui.theme.LightTeal
 import com.psc.elekha.ui.theme.PrimaryDark
@@ -33,9 +37,13 @@ import com.psc.elekha.ui.theme.homedatareportsColor
 import com.psc.elekha.ui.theme.toolbar_color
 import com.psc.elekha.ui.theme.white
 import com.psc.elekha.utils.CameraPicker
+import com.psc.elekha.utils.CommonActionButtons
 import com.psc.elekha.utils.CommonDivider
 import com.psc.elekha.utils.CommonSingleButtonsBottomString
+import com.psc.elekha.utils.CustomAlertDialog
+import com.psc.elekha.utils.Dimens
 import com.psc.elekha.utils.FillDynamicSpinner
+import com.psc.elekha.utils.FillDynamicSpinnerespt
 
 import com.psc.elekha.utils.FormFieldCompact
 
@@ -46,17 +54,20 @@ import com.psc.elekha.utils.ReusableTextView
 import com.psc.elekha.utils.ReusableTextViewBlackCard
 import com.psc.elekha.utils.ReusableTextViews
 import com.psc.elekha.utils.ReusableTopBar
+import com.psc.elekha.utils.loadImageFromPath
 
 import e_lekha.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.viewmodel.koinViewModel
 import kotlin.collections.listOf
 
 @Composable
 fun CustomerDetailScreen(
     navController: NavHostController,
 ) {
+    val viewModel = koinViewModel<GtrViewModel>()
     var selectedScreen by remember { mutableStateOf("New Customer") }
     var branchList = listOf("3000", "4000", "5000", "6000")
     var selectedBranch by remember { mutableStateOf("") }
@@ -70,10 +81,14 @@ fun CustomerDetailScreen(
     var textfiledRemarks by remember { mutableStateOf("") }
 
 
-    var openCamera by remember { mutableStateOf(false) }
-    var activeCamera by remember { mutableStateOf("") }
-    var customerImage by remember { mutableStateOf<ImageBitmap?>(null) }
-    var centerImage by remember { mutableStateOf<ImageBitmap?>(null) }
+    var openCameraCustomer by remember { mutableStateOf(false) }
+    var openCameraGuarantor by remember { mutableStateOf(false) }
+    var openCameraEMeter by remember { mutableStateOf(false) }
+    var openCameraHouseVerification by remember { mutableStateOf(false) }
+    var customerImgBitmap by remember { mutableStateOf<ImageBitmap?>(null) }
+    var guarantorImgBitmap by remember { mutableStateOf<ImageBitmap?>(null) }
+    var eMeterImgBitmap by remember { mutableStateOf<ImageBitmap?>(null) }
+    var houseVerificationImgBitmap by remember { mutableStateOf<ImageBitmap?>(null) }
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
@@ -89,7 +104,7 @@ fun CustomerDetailScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(toolbar_color)
-                    .padding(horizontal = 16.dp, vertical = 10.dp)
+                    .padding(horizontal = Dimens.sixteendp, vertical = Dimens.tendp)
                     .navigationBarsPadding()
             ) {
                 CommonSingleButtonsBottomString(
@@ -118,7 +133,7 @@ fun CustomerDetailScreen(
                 modifier = Modifier
                     .fillMaxSize().padding(bottom = 45.dp)
                     .verticalScroll(rememberScrollState())
-//                    .padding(horizontal = 0.dp, vertical = 5.dp),
+//                    .padding(horizontal = 0.dp, vertical = Dimens.fivedp),
 
 
             )
@@ -134,7 +149,7 @@ fun CustomerDetailScreen(
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(5.dp)
+                            .padding(Dimens.fivedp)
                     ) {
 
                         // ---------- ROW 1 : USER NAME (LEFT FULL WIDTH) ----------
@@ -147,11 +162,11 @@ fun CustomerDetailScreen(
                                 text = stringResource(Res.string.home_user).plus(":"),
                                 textColor = toolbar_color
                             )
-                            Spacer(Modifier.width(6.dp))
+                            Spacer(Modifier.width(Dimens.fivedp))
                             ReusableTextView(text = "Vikash", textColor = Color.Black)
                         }
 
-                        Spacer(Modifier.height(6.dp))
+                        Spacer(Modifier.height(Dimens.fivedp))
 
                         // ---------- ROW 2 : TIME (LEFT) + DATE (RIGHT) ----------
                         Row(
@@ -170,7 +185,7 @@ fun CustomerDetailScreen(
                                     text = stringResource(Res.string.home_time).plus(":"),
                                     textColor = toolbar_color
                                 )
-                                Spacer(Modifier.width(6.dp))
+                                Spacer(Modifier.width(Dimens.fivedp))
                                 ReusableTextView(text = "10:45 AM", textColor = Color.Black)
                             }
 
@@ -182,7 +197,7 @@ fun CustomerDetailScreen(
                                     text = stringResource(Res.string.home_date).plus(":"),
                                     textColor = toolbar_color
                                 )
-                                Spacer(Modifier.width(6.dp))
+                                Spacer(Modifier.width(Dimens.fivedp))
                                 ReusableTextView(text = "04/12/2025", textColor = Color.Black)
                             }
                         }
@@ -193,18 +208,18 @@ fun CustomerDetailScreen(
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 10.dp)
+                        .padding(horizontal = Dimens.tendp)
                 )
                 {
 
 
-                    Spacer(modifier = Modifier.height(10.dp))
+                    Spacer(modifier = Modifier.height(Dimens.tendp))
 
 
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(horizontal = 10.dp),
+                            .padding(horizontal = Dimens.tendp),
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     )
@@ -220,7 +235,7 @@ fun CustomerDetailScreen(
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(horizontal = 10.dp),
+                            .padding(horizontal = Dimens.tendp),
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.Top
                     )
@@ -233,10 +248,23 @@ fun CustomerDetailScreen(
                             Box(
                                 modifier = Modifier
                                     .size(100.dp)
-                                    .background(Color(0xFFE8E8E8), RoundedCornerShape(6.dp))
-                            )
+                                    .background(
+                                        Color(0xFFE8E8E8),
+                                        RoundedCornerShape(Dimens.fivedp)
+                                    )
+                            ) {
+                                customerImgBitmap?.let { img ->
+                                    Image(
+                                        bitmap = img,
+                                        contentDescription = null,
+                                        modifier = Modifier.fillMaxSize(),
+                                        contentScale = ContentScale.Crop
 
-                            Spacer(modifier = Modifier.height(6.dp))
+                                    )
+                                }
+                            }
+
+                            Spacer(modifier = Modifier.height(Dimens.fivedp))
 
                             Icon(
                                 painter = painterResource(Res.drawable.camera),
@@ -245,7 +273,7 @@ fun CustomerDetailScreen(
                                 modifier = Modifier
                                     .size(32.dp)
                                     .clickable {
-                                        // left image camera click
+                                        openCameraCustomer = true
                                     }
                             )
                         }
@@ -257,10 +285,23 @@ fun CustomerDetailScreen(
                             Box(
                                 modifier = Modifier
                                     .size(100.dp)
-                                    .background(Color(0xFFE8E8E8), RoundedCornerShape(6.dp))
-                            )
+                                    .background(
+                                        Color(0xFFE8E8E8),
+                                        RoundedCornerShape(Dimens.fivedp)
+                                    )
+                            ) {
+                                guarantorImgBitmap?.let { img ->
+                                    Image(
+                                        bitmap = img,
+                                        contentDescription = null,
+                                        modifier = Modifier.fillMaxSize(),
+                                        contentScale = ContentScale.Crop
 
-                            Spacer(modifier = Modifier.height(6.dp))
+                                    )
+                                }
+                            }
+
+                            Spacer(modifier = Modifier.height(Dimens.fivedp))
 
                             Icon(
                                 painter = painterResource(Res.drawable.camera),
@@ -269,7 +310,7 @@ fun CustomerDetailScreen(
                                 modifier = Modifier
                                     .size(32.dp)
                                     .clickable {
-                                        // right image camera click
+                                        openCameraGuarantor = true
                                     }
                             )
                         }
@@ -290,7 +331,7 @@ fun CustomerDetailScreen(
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(horizontal = 10.dp),
+                                .padding(horizontal = Dimens.tendp),
                             horizontalArrangement = Arrangement.SpaceBetween,
                             verticalAlignment = Alignment.CenterVertically
                         ) {
@@ -312,11 +353,11 @@ fun CustomerDetailScreen(
                             )
                         }
 
-                        Spacer(modifier = Modifier.height(10.dp))
+                        Spacer(modifier = Modifier.height(Dimens.tendp))
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(horizontal = 10.dp),
+                                .padding(horizontal = Dimens.tendp),
                             horizontalArrangement = Arrangement.SpaceBetween,
                             verticalAlignment = Alignment.CenterVertically
                         ) {
@@ -334,11 +375,11 @@ fun CustomerDetailScreen(
                                 modifier = Modifier.weight(1f)
                             )
                         }
-                        Spacer(modifier = Modifier.height(10.dp))
+                        Spacer(modifier = Modifier.height(Dimens.tendp))
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(horizontal = 10.dp),
+                                .padding(horizontal = Dimens.tendp),
                             horizontalArrangement = Arrangement.SpaceBetween,
                             verticalAlignment = Alignment.CenterVertically
                         ) {
@@ -358,11 +399,11 @@ fun CustomerDetailScreen(
                             )
                         }
 
-                        Spacer(modifier = Modifier.height(10.dp))
+                        Spacer(modifier = Modifier.height(Dimens.tendp))
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(horizontal = 10.dp),
+                                .padding(horizontal = Dimens.tendp),
                             horizontalArrangement = Arrangement.SpaceBetween,
                             verticalAlignment = Alignment.CenterVertically
                         ) {
@@ -380,15 +421,15 @@ fun CustomerDetailScreen(
                                 modifier = Modifier.weight(1f)
                             )
                         }
-                        Spacer(modifier = Modifier.height(12.dp))
+                        Spacer(modifier = Modifier.height(Dimens.tendp))
 
                         Divider(color = LightSkyBlue, thickness = 1.dp)
 
-                        Spacer(modifier = Modifier.height(12.dp))
+                        Spacer(modifier = Modifier.height(Dimens.tendp))
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(horizontal = 10.dp),
+                                .padding(horizontal = Dimens.tendp),
                             horizontalArrangement = Arrangement.SpaceBetween,
                             verticalAlignment = Alignment.CenterVertically
                         ) {
@@ -407,12 +448,12 @@ fun CustomerDetailScreen(
                                 modifier = Modifier.weight(1f)
                             )
                         }
-                        Spacer(modifier = Modifier.height(12.dp))
+                        Spacer(modifier = Modifier.height(Dimens.tendp))
 
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(horizontal = 10.dp),
+                                .padding(horizontal = Dimens.tendp),
                             horizontalArrangement = Arrangement.SpaceBetween,
                             verticalAlignment = Alignment.CenterVertically
                         ) {
@@ -433,20 +474,24 @@ fun CustomerDetailScreen(
                         }
                         Spacer(modifier = Modifier.height(7.dp))
                         FormFieldCompact(
-                            value = textfiledRemark,
-                            onValueChange = { textfiledRemark = it },
+                            value = viewModel.eBillRemark,
+                            onValueChange = { eBillRemark ->
+                                viewModel.eBillRemark = eBillRemark
+                            },
                             placeholder = stringResource(Res.string.user_remark),
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(horizontal = 10.dp),
+                                .padding(horizontal = Dimens.tendp)
+                                .focusRequester(viewModel.focusRequesterEBillRemark)
+                                .bringIntoViewRequester(viewModel.bringIntoViewRequesterEBillRemark),
                             maxLength = 30
                         )
 
-                        Spacer(modifier = Modifier.height(10.dp))
+                        Spacer(modifier = Modifier.height(Dimens.tendp))
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(horizontal = 10.dp),
+                                .padding(horizontal = Dimens.tendp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             // LEFT → Text
@@ -468,7 +513,7 @@ fun CustomerDetailScreen(
                                         .size(100.dp)
                                         .background(Color(0xFFE8E8E8))
                                 ) {
-                                    customerImage?.let { img ->
+                                    eMeterImgBitmap?.let { img ->
                                         Image(
                                             bitmap = img,
                                             contentDescription = "Electricity Meter Image",
@@ -478,7 +523,7 @@ fun CustomerDetailScreen(
                                     }
                                 }
 
-                                Spacer(modifier = Modifier.height(6.dp))
+                                Spacer(modifier = Modifier.height(Dimens.fivedp))
 
                                 Icon(
                                     painter = painterResource(Res.drawable.camera),
@@ -486,23 +531,23 @@ fun CustomerDetailScreen(
                                     tint = blue,
                                     modifier = Modifier
                                         .size(32.dp)
-                                        .clickable { openCamera = true }
+                                        .clickable { openCameraEMeter = true }
                                 )
                             }
                         }
 
-                        Spacer(modifier = Modifier.height(10.dp))
+                        Spacer(modifier = Modifier.height(Dimens.tendp))
 
                         Divider(color = LightSkyBlue, thickness = 1.dp)
 
-                        Spacer(modifier = Modifier.height(10.dp))
+                        Spacer(modifier = Modifier.height(Dimens.tendp))
 
 
 
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(horizontal = 10.dp),
+                                .padding(horizontal = Dimens.tendp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             // LEFT → Text
@@ -524,7 +569,7 @@ fun CustomerDetailScreen(
                                         .size(100.dp)
                                         .background(Color(0xFFE8E8E8))
                                 ) {
-                                    customerImage?.let { img ->
+                                    houseVerificationImgBitmap?.let { img ->
                                         Image(
                                             bitmap = img,
                                             contentDescription = "House Verification Image",
@@ -534,7 +579,7 @@ fun CustomerDetailScreen(
                                     }
                                 }
 
-                                Spacer(modifier = Modifier.height(6.dp))
+                                Spacer(modifier = Modifier.height(Dimens.fivedp))
 
                                 Icon(
                                     painter = painterResource(Res.drawable.camera),
@@ -542,25 +587,29 @@ fun CustomerDetailScreen(
                                     tint = blue,
                                     modifier = Modifier
                                         .size(32.dp)
-                                        .clickable { openCamera = true }
+                                        .clickable { openCameraHouseVerification = true }
                                 )
                             }
                         }
 
                         FormFieldCompact(
-                            value = textfiledRemarks,
-                            onValueChange = { textfiledRemarks = it },
+                            value = viewModel.houseVerificationRemark,
+                            onValueChange = { houseVerificationRemark ->
+                                viewModel.houseVerificationRemark = houseVerificationRemark
+                            },
                             placeholder = stringResource(Res.string.user_remarks),
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(horizontal = 10.dp),
+                                .padding(horizontal = Dimens.tendp)
+                                .focusRequester(viewModel.focusRequesterHouseVerificationRemark)
+                                .bringIntoViewRequester(viewModel.bringIntoViewRequesterHouseVerificationRemark),
                             maxLength = 30
                         )
-                        Spacer(Modifier.height(10.dp))
+                        Spacer(Modifier.height(Dimens.tendp))
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(horizontal = 10.dp),
+                                .padding(horizontal = Dimens.tendp),
                             horizontalArrangement = Arrangement.SpaceBetween,
                             verticalAlignment = Alignment.CenterVertically
                         )
@@ -571,30 +620,46 @@ fun CustomerDetailScreen(
 
                                 )
                             Spacer(modifier = Modifier.width(7.dp))
-                            ReusableDynamicSpinner(
+                            /*ReusableDynamicSpinner(
                                 selectedValue = selectedBranch,
                                 options = branchList,
                                 onValueSelected = { selectedBranch = it },
                                 modifier = Modifier.weight(1f)
+                            )*/
+
+                            FillDynamicSpinnerespt(
+                                label = "",
+                                options = branchList,
+                                selectedOption = viewModel.loanRecommendationID,
+                                onOptionSelected = { viewModel.loanRecommendationID = it },
+                                focusRequester = viewModel.focusRequesterLoanRecommendationID,
+                                bringIntoViewRequester = viewModel.bringIntoViewRequesterLoanRecommendationID,
+                                getOptionId = { 0 },
+                                getOptionLabel = { "" },
+                                modifier = Modifier.weight(1f)
                             )
 
                         }
-                        Spacer(modifier = Modifier.height(12.dp))
+                        Spacer(modifier = Modifier.height(Dimens.tendp))
                         FormFieldCompact(
-                            value = textfiledRemarks,
-                            onValueChange = { textfiledRemarks = it },
+                            value = viewModel.loanRecommendationRemark,
+                            onValueChange = { loanRecommendationRemark ->
+                                viewModel.loanRecommendationRemark = loanRecommendationRemark
+                            },
                             placeholder = stringResource(Res.string.user_remarks),
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(horizontal = 10.dp),
+                                .padding(horizontal = Dimens.tendp)
+                                .focusRequester(viewModel.focusRequesterLoanRecommendationRemark)
+                                .bringIntoViewRequester(viewModel.bringIntoViewRequesterLoanRecommendationRemark),
                             maxLength = 30
                         )
 
-                        Spacer(modifier = Modifier.height(12.dp))
+                        Spacer(modifier = Modifier.height(Dimens.tendp))
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(horizontal = 10.dp),
+                                .padding(horizontal = Dimens.tendp),
                             horizontalArrangement = Arrangement.SpaceBetween,
                             verticalAlignment = Alignment.CenterVertically
                         ) {
@@ -618,19 +683,82 @@ fun CustomerDetailScreen(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 5.dp)
+                    .padding(horizontal = Dimens.sixteendp, vertical = Dimens.fivedp)
                     .align(Alignment.BottomCenter)
 
             ) {
                 CommonSingleButtonsBottomString(
-                    onOkClick = {},
+                    onOkClick = { viewModel.saveData() },
                     text = stringResource(Res.string.gtr_save),
                     textSize = 16,
-
-
+                )
+                if (viewModel.showSaveAlert) {
+                    CustomAlertDialog(
+                        showDialog = viewModel.showSaveAlert,
+                        message = viewModel.saveMessage,
+                        onConfirm = {
+                            if (viewModel.saveFlag == 1) {
+                                viewModel.showSaveAlert = false
+                                navController.popBackStack()
+                            } else {
+                                viewModel.requestFocus()
+                            }
+                        }
                     )
+                }
             }
+        }
 
+        if (openCameraCustomer) {
+            CameraPicker(
+                openCamera = openCameraCustomer,
+                onImagePicked = { path ->
+                    path?.let {
+                        customerImgBitmap = loadImageFromPath(it)
+                        viewModel.setCustomerImage(it)
+                    }
+                    openCameraCustomer = false
+                }
+            )
+        }
+
+        if (openCameraGuarantor) {
+            CameraPicker(
+                openCamera = openCameraGuarantor,
+                onImagePicked = { path ->
+                    path?.let {
+                        guarantorImgBitmap = loadImageFromPath(it)
+                        viewModel.setGuarantorImage(it)
+                    }
+                    openCameraGuarantor = false
+                }
+            )
+        }
+
+        if (openCameraEMeter) {
+            CameraPicker(
+                openCamera = openCameraEMeter,
+                onImagePicked = { path ->
+                    path?.let {
+                        eMeterImgBitmap = loadImageFromPath(it)
+                        viewModel.setEMeterImage(it)
+                    }
+                    openCameraEMeter = false
+                }
+            )
+        }
+
+        if (openCameraHouseVerification) {
+            CameraPicker(
+                openCamera = openCameraHouseVerification,
+                onImagePicked = { path ->
+                    path?.let {
+                        houseVerificationImgBitmap = loadImageFromPath(it)
+                        viewModel.setHouseVerificationImage(it)
+                    }
+                    openCameraHouseVerification = false
+                }
+            )
         }
     }
 }
