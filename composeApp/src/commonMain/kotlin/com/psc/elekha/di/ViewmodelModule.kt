@@ -109,6 +109,7 @@ val viewmodelModule = module {
     viewModelOf(::TrainingGroupMemberViewModel)
     viewModelOf(::RepaymentViewModel)
     viewModelOf(::CustomerMovableAssetsViewModel)
+    viewModelOf(::MSTLoanProductViewModel)
     viewModel {
         LoginViewModel(
 
@@ -136,6 +137,7 @@ val viewmodelModule = module {
             kycDocumentViewModel = get(),
             kycStatusViewModel = get(),
             kycStatusConditionViewModel = get(),
+            mstLoanProductViewModel = get(),
             appPreferences = get()
         )
     }

@@ -18,6 +18,7 @@ import com.psc.elekha.database.viewmodel.MSTCenterViewModel
 import com.psc.elekha.database.viewmodel.MSTComboBox_NViewModel
 import com.psc.elekha.database.viewmodel.MSTDistrictViewModel
 import com.psc.elekha.database.viewmodel.MSTLoanOfficerViewModel
+import com.psc.elekha.database.viewmodel.MSTLoanProductViewModel
 import com.psc.elekha.database.viewmodel.MSTLoanTypeViewModel
 import com.psc.elekha.database.viewmodel.MSTMonthlyIncomeMarksViewModel
 import com.psc.elekha.database.viewmodel.MSTPovertyStatusViewModel
@@ -57,6 +58,7 @@ class LoginViewModel(
     private val mstPovertyStatusViewModel: MSTPovertyStatusViewModel,
     private val customerStatusViewModel: CustomerStatusViewModel,
     private val mstLoanTypeViewModel: MSTLoanTypeViewModel,
+    private val mstLoanProductViewModel: MSTLoanProductViewModel,
     private val trainingGroupStatusViewModel: TrainingGroupStatusViewModel,
     private val mstMonthlyIncomeMarksViewModel: MSTMonthlyIncomeMarksViewModel,
     private val userBranchViewModel: UserBranchViewModel,
@@ -178,6 +180,7 @@ class LoginViewModel(
                         kycStatusViewModel.insertAllStatus(it.kycStatus)
                         kycStatusConditionViewModel.insertAllConditions(it.kycStatusCondition)
                         mstComboBoxNViewModel.insertAllComboBox(it.mstComboBoxN)
+                        mstLoanProductViewModel.insertAllLoanProduct(it.mstLoanProduct)
                     }
                     _loginState.value = APiState.success("Login successfully")
 

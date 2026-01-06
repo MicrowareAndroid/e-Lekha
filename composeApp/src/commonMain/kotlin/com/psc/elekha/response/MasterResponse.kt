@@ -14,6 +14,7 @@ import com.psc.elekha.database.entity.MSTCenterEntity
 import com.psc.elekha.database.entity.MSTComboBox_NEntity
 import com.psc.elekha.database.entity.MSTDistrictEntity
 import com.psc.elekha.database.entity.MSTLoanOfficerEntity
+import com.psc.elekha.database.entity.MSTLoanProductEntity
 import com.psc.elekha.database.entity.MSTLoanTypeEntity
 import com.psc.elekha.database.entity.MSTMonthlyIncomeMarksEntity
 import com.psc.elekha.database.entity.MSTPovertyStatusEntity
@@ -105,6 +106,9 @@ data class MasterResponse(
 
     @SerialName("KYCStatusCondition")
     val kycStatusCondition: List<KYCStatusConditionEntity> = emptyList(),
+
+    @SerialName("CustomerLoanProduct")
+    val mstLoanProduct: List<MSTLoanProductEntity> = emptyList(),
 
 
 

@@ -3,7 +3,9 @@ package com.psc.elekha.database.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.serialization.Serializable
 
+@Serializable
 @Entity(tableName = "MSTLoanProduct")
 data class MSTLoanProductEntity(
     @PrimaryKey @ColumnInfo(name = "LoanProductID") val LoanProductID: Int,
