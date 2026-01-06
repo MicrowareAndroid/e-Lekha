@@ -45,6 +45,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import coil3.compose.LocalPlatformContext
+import com.psc.elekha.database.viewmodel.CustomerFamilyMemberDetailsViewModel
 import com.psc.elekha.database.viewmodel.MSTComboBox_NViewModel
 import com.psc.elekha.database.viewmodel.MSTDistrictViewModel
 import com.psc.elekha.database.viewmodel.MSTStateViewModel
@@ -75,6 +76,7 @@ import com.psc.elekha.utils.getMaxDateInstant
 import com.psc.elekha.utils.getMinDateInstant
 import com.psc.elekha.utils.isAge18Plus
 import com.psc.elekha.utils.pickMinMaxDate
+import com.psc.elekha.utils.returnStringValue
 import e_lekha.composeapp.generated.resources.Res
 import e_lekha.composeapp.generated.resources.add
 import e_lekha.composeapp.generated.resources.add_more_family_member
@@ -128,6 +130,7 @@ import e_lekha.composeapp.generated.resources.your_monthly_expenditure
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
 
 
@@ -141,39 +144,8 @@ fun PersonalDetailsScreen(
 ) {
     val context = LocalPlatformContext.current
     var showDialog by remember { mutableStateOf(false) }
-//    val stateViewModel = koinViewModel<StateViewModel>()
-//    val stateList by stateViewModel.stateValue.collectAsState()
+
     var expanded by remember { mutableStateOf(false) }
-//    val lookUpValueViewModel = koinViewModel<LookUpValueViewmodel>()
-//    val viewModel = koinViewModel<CaseIdentifierViewModel>()
-
-//    val genderList by lookUpValueViewModel.genderLookups.collectAsState()
-//
-//    var showAlert = viewModel.showSaveAlert
-//    var message = viewModel.saveMessage
-    var familyDetailModel by rememberSaveable {
-        mutableStateOf(
-            listOf(
-                FamilyDetailModel(
-                    "Test",
-                    "Brother",
-                    "Graduate",
-                    "Teacher",
-                    "2000",
-                ),
-                FamilyDetailModel(
-                    "XYZ",
-                    "Sister",
-                    "PostGraduate",
-                    "Doctor",
-                    "5000",
-
-                ),
-            )
-        )
-
-
-    }
 
     var economicMovableAssetsModel by rememberSaveable {
         mutableStateOf(
@@ -194,40 +166,12 @@ fun PersonalDetailsScreen(
         )
     }
 
-    var economicMonthlyIncomeModel by rememberSaveable {
-        mutableStateOf(
-            listOf(
-                EconomicMonthlyIncomeModel(
-                    "Test",
-                    "Self",
-                    "Working",
-                    "20000"
-                ),
-                EconomicMonthlyIncomeModel(
-                    "ABC",
-                    "Brother",
-                    "Working",
-                    "10000"
-                )
-            )
-        )
-    }
-
-    var dob by remember { mutableStateOf("") }
-
-    var enter_otp by remember { mutableStateOf("") }
-
-
-    var guarantordob by remember { mutableStateOf("") }
-
-    var gurantor_enter_otp by remember { mutableStateOf("") }
-
     var isChecked by remember { mutableStateOf(false) }
 
     val viewModel = koinViewModel<PersonalDetailViewModel>()
     val coroutineScope = rememberCoroutineScope()
 
-    var distictValue by remember { mutableStateOf("") }
+
     var showFamilyDialog by remember { mutableStateOf(false) }
 
     var mstComboViewModel=koinViewModel<MSTComboBox_NViewModel>()
@@ -243,9 +187,12 @@ fun PersonalDetailsScreen(
     val branchViewModel = koinViewModel<UserBranchViewModel>()
     val mstVillageModel = koinViewModel<MSTVillageViewModel>()
     val districtViewModel = koinViewModel<MSTDistrictViewModel>()
+    val customerFamilyViewmodel = koinViewModel<CustomerFamilyMemberDetailsViewModel>()
     val stateList by stateViewModel.stateList.collectAsState()
     val districtList by districtViewModel.districtList.collectAsState()
     val villageList by mstVillageModel.villageList.collectAsState()
+    val appPreferences: AppPreferences = koinInject()
+    val familyMemberList by customerFamilyViewmodel.familyMemebers.collectAsState()
 
     LaunchedEffect(Unit) {
 
@@ -262,6 +209,8 @@ fun PersonalDetailsScreen(
         mstVillageModel.loadVillagesByBranchID(branchId )*/
         stateViewModel.loadAllStates()
         viewModel.loadSavedData()
+        customerFamilyViewmodel.getCustomerDetailGuid(returnStringValue(appPreferences.getString(
+            AppSP.customerGuid)))
     }
     val filteredDistrictList by remember(districtList, viewModel.stateId) {
         derivedStateOf {
@@ -295,85 +244,6 @@ fun PersonalDetailsScreen(
                     .padding(bottom = 16.dp)
             )
             {
-
-                Spacer(modifier = Modifier.height(6.dp))
-                /*ReusableTextView(
-                    text = stringResource(Res.string.customer_id)
-                )*/
-//                Row(
-//                    modifier = Modifier
-//                        .fillMaxWidth()
-//                        .padding(top = 10.dp),
-//                    horizontalArrangement = Arrangement.spacedBy(16.dp)
-//                ) {
-//
-//
-//                    Column(
-//                        modifier = Modifier.weight(1f),
-//                        horizontalAlignment = Alignment.CenterHorizontally
-//                    ) {
-//
-//                        Spacer(modifier = Modifier.height(6.dp))
-//
-//                        Image(
-//                            painter = painterResource(Res.drawable.ic_customer),
-//                            contentDescription = null,
-//                            modifier = Modifier
-//                                .size(120.dp)
-//                                .background(
-//                                    Color(0xFFE8E8E8),
-//                                    shape = RoundedCornerShape(8.dp)   // optional, looks better
-//                                )
-//                                .padding(4.dp),   // optional
-//                            contentScale = ContentScale.Crop
-//                        )
-//                        Spacer(modifier = Modifier.height(6.dp))
-//                        Icon(
-//                            painter = painterResource(Res.drawable.camera),
-//                            contentDescription = "Back Camera",
-//                            tint = blue,
-//                            modifier = Modifier.size(28.dp)
-//                        )
-//                        Spacer(modifier = Modifier.height(4.dp))
-//                        ReusableTextView(
-//                            text = stringResource(Res.string.customer_image)
-//                        )
-//
-//                    }
-//
-//                    Column(
-//                        modifier = Modifier.weight(1f),
-//                        horizontalAlignment = Alignment.CenterHorizontally
-//                    ) {
-//
-//                        Spacer(modifier = Modifier.height(6.dp))
-//
-//                        Image(
-//                            painter = painterResource(Res.drawable.ic_gurantor),
-//                            contentDescription = null,
-//                            modifier = Modifier
-//                                .size(160.dp, 120.dp)
-//                                .background(
-//                                    Color(0xFFE8E8E8),
-//                                    shape = RoundedCornerShape(8.dp)   // optional, looks better
-//                                )
-//                                .padding(4.dp),   // optional
-//                            contentScale = ContentScale.Crop
-//                        )
-//                        Spacer(modifier = Modifier.height(6.dp))
-//                        Icon(
-//                            painter = painterResource(Res.drawable.camera),
-//                            contentDescription = "Back Camera",
-//                            tint = blue,
-//                            modifier = Modifier.size(28.dp)
-//                        )
-//                        Spacer(modifier = Modifier.height(4.dp))
-//                        ReusableTextView(
-//                            text = stringResource(Res.string.your_photo_with_guarantor)
-//                        )
-//
-//                    }
-//                }
 
                 Spacer(modifier = Modifier.height(8.dp))
 
@@ -409,12 +279,13 @@ fun PersonalDetailsScreen(
                             pickMinMaxDate(
                                 context = context,
                                 onDatePicked = { date ->
-                                    // Optional validation: make sure user picked >=18 years
+                                    viewModel.dateOfBirth = date
+                                    /*// Optional validation: make sure user picked >=18 years
                                     if (isAge18Plus(date)) {
                                         viewModel.dateOfBirth = date
                                     } else {
 
-                                    }
+                                    }*/
                                 },
                                 minDate = getMinDateInstant(),
                                 maxDate = getMaxDateInstant()
@@ -499,7 +370,7 @@ fun PersonalDetailsScreen(
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(5.dp),
-                    verticalAlignment = Alignment.Bottom   // THIS aligns button with EditText
+                    verticalAlignment = Alignment.Bottom
                 ) {
                     FormFieldCompact(
                         label = stringResource(Res.string.mobile_number),
@@ -523,13 +394,13 @@ fun PersonalDetailsScreen(
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(10.dp),
-                    verticalAlignment = Alignment.Bottom   // THIS aligns button with EditText
+                    verticalAlignment = Alignment.Bottom
                 ) {
                     FormFieldCompact(
                         label = stringResource(Res.string.enter_otp),
-                        value = gurantor_enter_otp,
+                        value = viewModel.otpNumber,
                         onValueChange = { gurantorotp ->
-                            gurantor_enter_otp = gurantorotp
+                            viewModel.otpNumber = gurantorotp
                         },
                         placeholder = stringResource(Res.string.type_here),
                         modifier = Modifier.weight(2f),
@@ -625,12 +496,12 @@ fun PersonalDetailsScreen(
                             pickMinMaxDate(
                                 context = context,
                                 onDatePicked = { date ->
-                                    // Optional validation: make sure user picked >=18 years
-                                    if (isAge18Plus(date)) {
+                                    viewModel.gurantordateOfBirth = date
+                                    /*if (isAge18Plus(date)) {
                                         viewModel.gurantordateOfBirth = date
                                     } else {
 
-                                    }
+                                    }*/
                                 },
                                 minDate = getMinDateInstant(),
                                 maxDate = getMaxDateInstant()
@@ -673,13 +544,13 @@ fun PersonalDetailsScreen(
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(10.dp),
-                    verticalAlignment = Alignment.Bottom   // THIS aligns button with EditText
+                    verticalAlignment = Alignment.Bottom
                 ) {
                     FormFieldCompact(
                         label = stringResource(Res.string.enter_otp),
-                        value = gurantor_enter_otp,
+                        value = viewModel.guranterOtp,
                         onValueChange = { gurantorotp ->
-                            gurantor_enter_otp = gurantorotp
+                            viewModel.guranterOtp = gurantorotp
                         },
                         placeholder = stringResource(Res.string.type_here),
                         modifier = Modifier.weight(2f),
@@ -913,7 +784,9 @@ fun PersonalDetailsScreen(
                     )
 
                     FloatingActionButton(
-                        onClick = { showFamilyDialog = true },
+                        onClick = {
+                            appPreferences.putString(AppSP.familymemberGuid, "")
+                            showFamilyDialog = true },
                         containerColor = btn_color,
                         shape = CircleShape,
                         modifier = Modifier
@@ -937,11 +810,15 @@ fun PersonalDetailsScreen(
                     )
                 }
 
-                familyDetailModel.forEach { item ->
+
+                familyMemberList.forEach { item ->
                     FamilyDetailCard(
                         familyDetailModel = item,
+                        onDelete = {
+                            customerFamilyViewmodel.deleteFamilyMember(item)
 
-                        onDelete = {}
+
+                        }
                     )
                     Spacer(modifier = Modifier.height(10.dp))
                 }
@@ -998,6 +875,8 @@ fun PersonalDetailsScreen(
                         label = stringResource(Res.string.daily_expenses),
                         value = viewModel.dailyExpense,
                         onValueChange = { viewModel.dailyExpense=it },
+                        inputType = KeyboardType.Number,
+                        maxLength = 7,
                         placeholder = stringResource(Res.string.type_here),
 
                         modifier = Modifier.weight(1f)
@@ -1011,6 +890,8 @@ fun PersonalDetailsScreen(
                         value = viewModel.educationExpense,
                         onValueChange = { viewModel.educationExpense=it },
                         placeholder = stringResource(Res.string.type_here),
+                        inputType = KeyboardType.Number,
+                        maxLength = 7,
 
                         modifier = Modifier.weight(1f)
                             .focusRequester(viewModel.focusRequesterEducationExpense)
@@ -1018,17 +899,6 @@ fun PersonalDetailsScreen(
 
                         )
 
-                    /* FormFieldCompact(
-                         label = stringResource(Res.string.education),
-                         value = viewModel.educationExpense,
-                         onValueChange = {  viewModel.educationExpense = it},
-                         placeholder = stringResource(Res.string.type_here),
-                         maxLength = 10,
-                         modifier = Modifier.weight(1f)
-                             .focusRequester(viewModel.focusRequesterEducationExpense)
-                             .bringIntoViewRequester(viewModel.bringIntoViewRequesterEducationExpense),
-
-                     )*/
                 }
                 Spacer(modifier = Modifier.height(10.dp))
                 Row(
@@ -1042,6 +912,8 @@ fun PersonalDetailsScreen(
                         value = viewModel.medicalExpense,
                         onValueChange = { viewModel.medicalExpense = it},
                         placeholder = stringResource(Res.string.type_here),
+                        inputType = KeyboardType.Number,
+                        maxLength = 7,
 
                         modifier = Modifier.weight(1f)
                             .focusRequester(viewModel.focusRequesterMedicalExpense)
@@ -1054,6 +926,8 @@ fun PersonalDetailsScreen(
                         value = viewModel.othersExpense,
                         onValueChange = { viewModel.othersExpense = it},
                         placeholder = stringResource(Res.string.type_here),
+                        inputType = KeyboardType.Number,
+                        maxLength = 7,
 
                         modifier = Modifier.weight(1f)
                             .focusRequester(viewModel.focusRequesterOthersExpense)
@@ -1073,7 +947,8 @@ fun PersonalDetailsScreen(
                         value = viewModel.totalMonthlyExpense,
                         onValueChange = { viewModel.totalMonthlyExpense = it},
                         placeholder = stringResource(Res.string.type_here),
-
+                        inputType = KeyboardType.Number,
+                        maxLength = 7,
                         modifier = Modifier.weight(1f)
                             .focusRequester(viewModel.focusRequesterTotalMonthlyExpense)
                             .bringIntoViewRequester(viewModel.bringIntoViewRequesterTotalMonthlyExpense),
@@ -1085,7 +960,8 @@ fun PersonalDetailsScreen(
                         value = viewModel.annualExpense,
                         onValueChange = { viewModel.annualExpense = it },
                         placeholder = stringResource(Res.string.type_here),
-
+                        inputType = KeyboardType.Number,
+                        maxLength = 7,
                         modifier = Modifier.weight(1f)
                             .focusRequester(viewModel.focusRequesterAnnualExpense)
                             .bringIntoViewRequester(viewModel.bringIntoViewRequesterAnnualExpense),
@@ -1122,6 +998,7 @@ fun PersonalDetailsScreen(
                         onValueChange = {viewModel.loanAmountExpense = it},
                         placeholder = stringResource(Res.string.type_here),
                         inputType = KeyboardType.Number,
+                        maxLength = 9,
                         modifier = Modifier.weight(1f)
                             .focusRequester(viewModel.focusRequesterLoanAmountExpense)
                             .bringIntoViewRequester(viewModel.bringIntoViewRequesterLoanAmountExpense),
@@ -1294,133 +1171,6 @@ fun PersonalDetailsScreen(
 
 
 
-
-
-/*@Composable
-fun SelectUserPopupDialog(
-    onSave: (String) -> Unit = {},
-    onClose: () -> Unit = {}
-) {
-    val users = listOf(
-        "Suhani Singh" to "9235632587",
-        "Anita Kumari" to "9235632587",
-        "Babita Singh" to "9235632587"
-    )
-
-    var selectedUser by remember { mutableStateOf<String?>(null) }
-    var searchQuery by remember { mutableStateOf("") }
-
-    Dialog(onDismissRequest = onClose) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth(1f)
-                .background(Color.White, shape = RoundedCornerShape(20.dp))
-                .padding(20.dp)
-        ) {
-            Column {
-                // Title
-                Text(
-                    stringResource(Res.string.pop_up),
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = black,
-                    modifier = Modifier.align(Alignment.CenterHorizontally)
-                )
-
-                Spacer(modifier = Modifier.height(16.dp))
-                // Search Field
-                OutlinedTextField(
-                    value = searchQuery,
-                    onValueChange = { searchQuery = it },
-                    placeholder = { stringResource(Res.string.search_mobile_no) },
-                    leadingIcon = {
-                        Icon(
-                            painter = painterResource(Res.drawable.search),
-                            contentDescription = null
-                        )
-                    },
-                    shape = RoundedCornerShape(8.dp),
-                    modifier = Modifier.fillMaxWidth()
-                )
-
-                Spacer(modifier = Modifier.height(16.dp))
-
-                // List Title
-                ReusableTextView(
-                    text = stringResource(Res.string.list),
-                    textColor = black,
-                    fontWeight = FontWeight.W500
-                )
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                // Filtered List
-                val filteredUsers = users.filter {
-                    it.first.contains(searchQuery, ignoreCase = true) ||
-                            it.second.contains(searchQuery)
-                }
-
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(10.dp),
-                    modifier = Modifier.heightIn(max = 300.dp)
-                ) {
-                    filteredUsers.forEach { (name, mobile) ->
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .clip(RoundedCornerShape(10.dp))
-                                .background(Color(0xFFF9F9F9))
-                                .border(1.dp, Color(0xFFE0E0E0), RoundedCornerShape(10.dp))
-                                .clickable { selectedUser = name }
-                                .padding(12.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Column(Modifier.weight(1f)) {
-                                ReusableTextView(
-                                    text = name,
-                                    fontWeight = FontWeight.Bold,
-                                    textColor = desire_orange,
-
-                                )
-                                ReusableTextView(
-                                    text = mobile,
-                                    fontWeight = FontWeight.Normal,
-                                    textColor = black,
-
-                                )
-                            }
-
-                            RadioButton(
-                                selected = selectedUser == name,
-                                onClick = { selectedUser = name }
-                            )
-                        }
-                    }
-                }
-
-                Spacer(modifier = Modifier.height(24.dp))
-
-                // Buttons
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .imePadding()
-                        .navigationBarsPadding()
-                        .padding(bottom = 8.dp)
-                        .background(white)
-                ) {
-                    CommonActionButtons(
-                        onSaveClick = {
-                            onSave(selectedUser!!)
-
-                        },
-                        onCloseClick = onClose
-                    )
-                }
-            }
-        }
-    }
-}*/
 
 
 @Preview(showBackground = true)

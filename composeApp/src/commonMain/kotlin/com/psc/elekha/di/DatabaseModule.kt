@@ -53,23 +53,9 @@ val databaseModule = module {
     single { get<AppDatabase>().userContactDetailDao() }
     single { get<AppDatabase>().trainingGroupStatusDao() }
     single { get<AppDatabase>().trainingGroupMemberDao() }
+    single { get<AppDatabase>().customerMovableAssetDao() }
 
-//    single { get<AppDatabase>().lookUpDao() }
-//    single { get<AppDatabase>().lookUpvalueDao() }
-//    single { get<AppDatabase>().caseCategoryQuestionDao() }
-//    single { get<AppDatabase>().caseFlagDao() }
-//    single { get<AppDatabase>().caseReportingDao() }
-//    single { get<AppDatabase>().criminalCaseTrackDao() }
-//    single { get<AppDatabase>().crossCuttingFlagDao() }
-//    single { get<AppDatabase>().mstLanguageDao() }
-//    single { get<AppDatabase>().subCategoryDao() }
-//    single { get<AppDatabase>().trackSubCategoryDao() }
-//    single { get<AppDatabase>().categoryDao() }
-//    single { get<AppDatabase>().stateDao() }
-//    single { get<AppDatabase>().distictDao() }
-//    single { get<AppDatabase>().blockDao() }
-//    single { get<AppDatabase>().profileComplainantDao() }
-//    single { get<AppDatabase>().caseIdentifierDao() }
+
 }
 
 fun getRoomDatabase(

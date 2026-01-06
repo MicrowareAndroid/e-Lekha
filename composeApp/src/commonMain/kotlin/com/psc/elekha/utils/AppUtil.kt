@@ -90,6 +90,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import com.psc.elekha.model.SliderItem
 import com.psc.elekha.response.MasterResponse
 import com.psc.elekha.ui.screen.gtrlist.CustomerData
@@ -211,6 +212,7 @@ fun ReusableTextView(
         textAlign = textAlignment
     )
 }
+
 @Composable
 fun ReusableTextViewes(
     text: String,
@@ -348,8 +350,7 @@ fun ReusableTopBar(
     onActionClick: (() -> Unit)? = null,
     modifier: Modifier = Modifier,
     fontFamily: FontFamily = FontFamily(Font(Res.font.inter_medium)),
-)
-{
+) {
     CenterAlignedTopAppBar(
         title = {
             Text(
@@ -979,7 +980,7 @@ fun FormDatePickerCompacts(
                 textStyle = TextStyle(
                     fontSize = 15.sp, // SAME as FormDatePicker
                     color = Color.Black,
-                    fontFamily = FontFamily(Font(Res.font.roboto_medium))
+                    fontFamily = FontFamily(Font(Res.font.inter_regular))
                 ),
                 decorationBox = { innerTextField ->
 
@@ -1177,11 +1178,9 @@ fun ProgressDialog(
     message: String = stringResource(Res.string.select_customer_please)
 ) {
     if (showDialog) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color.Black.copy(alpha = 0.5f)),
-            contentAlignment = Alignment.Center
+        Dialog(
+            onDismissRequest = { /* do nothing to prevent dismiss */ },
+            properties = DialogProperties(dismissOnBackPress = false, dismissOnClickOutside = false)
         ) {
             Column(
                 modifier = Modifier
@@ -1823,6 +1822,7 @@ fun SimpleOtp(
                 modifier = Modifier
                     .width(55.dp)
                     .height(60.dp)
+                    .padding(horizontal = 2.dp)
                     .focusRequester(focusRequesters[index]),
                 textStyle = LocalTextStyle.current.copy(
                     textAlign = TextAlign.Center,
@@ -2768,7 +2768,7 @@ fun CustomAlertDialogRegistrationExisting(
                     .wrapContentWidth()
                     .widthIn(400.dp)
                     .background(white, shape = RoundedCornerShape(16.dp)),
-                    //.border(1.dp, Color.LightGray, shape = RoundedCornerShape(16.dp)),
+                //.border(1.dp, Color.LightGray, shape = RoundedCornerShape(16.dp)),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
 
@@ -3091,6 +3091,7 @@ fun parseNameDynamic(fullName: String): NameParts {
 
     return NameParts(firstName, middleName, lastName)
 }
+
 fun calculateAgeFromDobKMP(dob: String): Int {
     if (dob.isBlank()) return 0
 
@@ -3119,5 +3120,141 @@ fun calculateAgeFromDobKMP(dob: String): Int {
         age
     } catch (e: Exception) {
         0
+    }
+}
+
+@Composable
+fun <T : Any> FillDynamicSpinnerespts(
+    label: String,
+    options: List<T>?,
+    selectedOption: Int?,
+    onOptionSelected: (Int) -> Unit,
+    getOptionId: (T) -> Int,
+    getOptionLabel: (T) -> String,
+    modifier: Modifier = Modifier,
+    labelColor: Color = black,
+    backgroundColor: Color = text_fiiled_color,
+    textColor: Color = Color.Black,
+    fontFamily: FontFamily = FontFamily(Font(Res.font.inter_regular)),
+    borderColor: Color = boderColor,
+    focusRequester: FocusRequester? = null,
+    bringIntoViewRequester: BringIntoViewRequester? = null,
+    placeholder: String = stringResource(Res.string.spinner_select),
+    isMandatory: Int = 1
+) {
+
+    var expanded by remember { mutableStateOf(false) }
+    var hasFocus by remember { mutableStateOf(false) }
+    var spinnerWidth by remember { mutableStateOf(0.dp) }
+
+    val density = LocalDensity.current
+    val lightBlack = Color(0xFF666666)
+
+    val isPlaceholder = selectedOption == null || selectedOption == 0
+
+    val displayText = if (isPlaceholder) {
+        placeholder
+    } else {
+        options?.find { getOptionId(it) == selectedOption }
+            ?.let { getOptionLabel(it) } ?: placeholder
+    }
+
+    Column(
+        modifier = modifier
+            .fillMaxWidth()
+            .wrapContentHeight()
+    ) {
+
+        //  Label
+        ReusableTextView(
+            text = label,
+            fontSize = 14,
+            textColor = labelColor,
+            fontFamily = fontFamily
+        )
+
+        Spacer(modifier = Modifier.height(4.dp)) //  reduced gap
+
+        //  Spinner Box
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(40.dp)
+                .border(1.dp, borderColor, RoundedCornerShape(15.dp))
+                .background(backgroundColor, RoundedCornerShape(15.dp))
+                .focusTarget()
+                .focusable()
+                .then(
+                    if (focusRequester != null)
+                        Modifier.focusRequester(focusRequester)
+                    else Modifier
+                )
+                .onFocusChanged { hasFocus = it.isFocused }
+                .clickable { expanded = true }
+                .onGloballyPositioned {
+                    spinnerWidth = with(density) { it.size.width.toDp() }
+                },
+            contentAlignment = Alignment.CenterStart
+        ) {
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 12.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+
+                ReusableTextView(
+                    text = displayText,
+                    textColor = if (isPlaceholder) lightBlack else textColor,
+                    fontFamily = fontFamily
+                )
+
+                Spacer(modifier = Modifier.weight(1f))
+
+                Icon(
+                    imageVector = vectorResource(Res.drawable.ic_arrow_drop_down),
+                    contentDescription = "Dropdown",
+                    tint = if (isPlaceholder) lightBlack else textColor
+                )
+            }
+        }
+
+        DropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false },
+            modifier = Modifier.width(spinnerWidth)
+        ) {
+
+            DropdownMenuItem(
+                text = {
+                    ReusableTextView(
+                        text = placeholder,
+                        fontSize = 14,
+                        textColor = lightBlack
+                    )
+                },
+                onClick = {
+                    onOptionSelected(0)
+                    expanded = false
+                }
+            )
+
+            options?.forEach { item ->
+                DropdownMenuItem(
+                    text = {
+                        ReusableTextView(
+                            text = getOptionLabel(item),
+                            fontSize = 14,
+                            textColor = textColor
+                        )
+                    },
+                    onClick = {
+                        onOptionSelected(getOptionId(item))
+                        expanded = false
+                    }
+                )
+            }
+        }
     }
 }

@@ -3,38 +3,30 @@ package com.psc.elekha.ui.screen.repayment
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.CameraAlt
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.psc.elekha.ui.screen.repayment.model.RepaymentItem
-import com.psc.elekha.ui.theme.black
-import com.psc.elekha.ui.theme.blue
-import com.psc.elekha.ui.theme.editext_bg_color
+import com.psc.elekha.database.entity.LoanRepaymentEntity
+<<<<<<< Updated upstream
+=======
+import com.psc.elekha.ui.theme.appleblue
+>>>>>>> Stashed changes
 import com.psc.elekha.ui.theme.loginBg
-import com.psc.elekha.ui.theme.repaymentColor
-import com.psc.elekha.utils.FormFieldCompacts
-import com.psc.elekha.utils.ReusableDynamicSpinner
 import com.psc.elekha.utils.ReusableTextViewBlackCard
 import com.psc.elekha.utils.ReusableTextViewGrayCard
 import e_lekha.composeapp.generated.resources.Res
-import e_lekha.composeapp.generated.resources.gtr_save
 import e_lekha.composeapp.generated.resources.personal_customer
 import e_lekha.composeapp.generated.resources.personal_emi
 import e_lekha.composeapp.generated.resources.personal_loan
-import e_lekha.composeapp.generated.resources.personal_payment_mode
-import e_lekha.composeapp.generated.resources.personal_total_due
-import e_lekha.composeapp.generated.resources.personal_weeks_arrear
-import e_lekha.composeapp.generated.resources.type_here
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun RepaymentItemCard(
-    item: RepaymentItem,
+    item: LoanRepaymentEntity,
     isSelected: Boolean,
     onSelected: () -> Unit,
     onClicked: () -> Unit
@@ -74,22 +66,42 @@ fun RepaymentItemCard(
                         modifier = Modifier
                             .size(55.dp)
                             .background(Color.LightGray)
-                    )
+                    ) {
+<<<<<<< Updated upstream
+                      /*  Image(
+                            painter = painterResource(Res.drawable.user_default),
+                            contentDescription = null,
+                            modifier = Modifier.fillMaxSize(),
+                            contentScale = ContentScale.Crop
+                        )*/
+=======
+                        /*  Image(
+                              painter = painterResource(Res.drawable.user_default),
+                              contentDescription = null,
+                              modifier = Modifier.fillMaxSize(),
+                              contentScale = ContentScale.Crop
+                          )*/
+>>>>>>> Stashed changes
+                    }
                 }
                 Spacer(modifier = Modifier.width(10.dp))
                 Column(
                     modifier = Modifier.weight(1f)
                 ) {
-                    Row(verticalAlignment = Alignment.Top,
-                        modifier = Modifier.fillMaxWidth()) {
+                    Row(
+                        verticalAlignment = Alignment.Top,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
                         ReusableTextViewGrayCard(
                             stringResource(Res.string.personal_customer).plus(":"),
                             fontSize = 13,
-                            modifier = Modifier.wrapContentWidth()
+                            modifier = Modifier.wrapContentWidth(),
+                            fontWeight = FontWeight.Bold,
+                            textColor = appleblue
                         )
                         Spacer(modifier = Modifier.width(4.dp))
                         ReusableTextViewBlackCard(
-                            "${item.customerId}  ${item.customerName}",
+                            "${item.CustomerID}  ${item.CustomerName}",
                             fontSize = 13,
                             modifier = Modifier.weight(1f)
                         )
@@ -102,22 +114,25 @@ fun RepaymentItemCard(
                         ReusableTextViewGrayCard(
                             stringResource(Res.string.personal_loan).plus(":"),
                             fontSize = 13,
-                            modifier = Modifier.wrapContentWidth()
+                            modifier = Modifier.wrapContentWidth(),
+                            fontWeight = FontWeight.Bold,
+                            textColor = appleblue
                         )
                         Spacer(modifier = Modifier.width(4.dp))
                         ReusableTextViewBlackCard(
-                            item.loanAmount,
+                            (item.Total?.toInt()?.toString() ?: "0"),
                             fontSize = 13,
                             modifier = Modifier.weight(1f)
                         )
                         ReusableTextViewGrayCard(
                             stringResource(Res.string.personal_emi).plus(":"),
                             fontSize = 13,
-                            modifier = Modifier.wrapContentWidth()
+                            modifier = Modifier.wrapContentWidth(),
+                            fontWeight = FontWeight.Bold, textColor = appleblue
                         )
                         Spacer(modifier = Modifier.width(4.dp))
                         ReusableTextViewBlackCard(
-                            item.emiAmount,
+                            (item.EMI?.toInt()?.toString() ?: "0"),
                             fontSize = 13,
                             modifier = Modifier.weight(1f)
                         )

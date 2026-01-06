@@ -1,11 +1,12 @@
 package com.psc.elekha.di
 
 
-import FamilyMemberDetailViewModel
+
 import com.psc.elekha.database.viewmodel.CustomerDefaultViewModel
 import com.psc.elekha.database.viewmodel.CustomerExistingLoanDetailViewModel
 import com.psc.elekha.database.viewmodel.CustomerFamilyMemberDetailsViewModel
 import com.psc.elekha.database.viewmodel.CustomerLoanDisbursementViewModel
+import com.psc.elekha.database.viewmodel.CustomerMovableAssetsViewModel
 import com.psc.elekha.database.viewmodel.CustomerStatusViewModel
 import com.psc.elekha.database.viewmodel.CustomerTransactionDataViewModel
 import com.psc.elekha.database.viewmodel.CustomerTransactionsDetailsViewModel
@@ -45,6 +46,7 @@ import com.psc.elekha.database.viewmodel.UserContactDetailViewModel
 import com.psc.elekha.database.viewmodel.UserResponseViewModel
 import com.psc.elekha.database.viewmodel.UsersViewModel
 import com.psc.elekha.ui.screen.bankdetails.BankDetailViewModel
+import com.psc.elekha.ui.screen.familydetails.FamilyMemberViewModel
 import com.psc.elekha.ui.screen.gtrlist.GtrViewModel
 import com.psc.elekha.ui.screen.kycdetails.KycDetailViewModel
 import com.psc.elekha.ui.screen.login.LoginViewModel
@@ -102,9 +104,18 @@ val viewmodelModule = module {
     viewModelOf(::UserContactDetailViewModel)
     viewModelOf(::TrainingGroupStatusViewModel)
     viewModelOf(::MSTLoanTypeViewModel)
+<<<<<<< Updated upstream
     viewModelOf(::FamilyMemberDetailViewModel)
+    viewModelOf(::RepaymentViewModel)
     viewModelOf(::TrainingGroupMemberViewModel)
-    viewModel { RepaymentViewModel(apiRepository = get(), loanRepaymentViewModel = get()) }
+    viewModelOf(::RepaymentViewModel)
+=======
+    viewModelOf(::FamilyMemberViewModel)
+    viewModelOf(::RepaymentViewModel)
+    viewModelOf(::TrainingGroupMemberViewModel)
+    viewModelOf(::RepaymentViewModel)
+    viewModelOf(::CustomerMovableAssetsViewModel)
+>>>>>>> Stashed changes
     viewModel {
         LoginViewModel(
 

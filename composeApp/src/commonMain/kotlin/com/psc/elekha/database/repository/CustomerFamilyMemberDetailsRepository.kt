@@ -55,5 +55,17 @@ class CustomerFamilyMemberDetailsRepository(
         return dao.getCustomerByGuid(guId)
     }
 
+    suspend fun getCustomerDetailByGuid(guId: String): List<CustomerFamilyMemberDetailsEntity> {
+        return dao.getCustomerDetailByGuid(guId)
+    }
+
+    suspend fun deleteFamilyMember(
+        item: CustomerFamilyMemberDetailsEntity
+    ) {
+        dao.deleteFamilyMember(item)
+    }
+
+
+
 }
 
