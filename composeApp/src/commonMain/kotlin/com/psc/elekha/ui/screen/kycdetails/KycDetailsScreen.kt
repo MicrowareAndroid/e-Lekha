@@ -89,11 +89,12 @@ fun KycDetailsScreen(
     var openCamera by remember { mutableStateOf(false) }
     var currentCameraTarget by remember { mutableStateOf("") }
     var ebFrontImage by remember { mutableStateOf<ImageBitmap?>(null) }
+    var otherEbFrontImage by remember { mutableStateOf<ImageBitmap?>(null) }
 // VID usually doesn’t have back image, so you can skip if not needed
 
     var panBackImage by remember { mutableStateOf<ImageBitmap?>(null) } // optional
 
-    val tabs = listOf("Electricity bill", "Aadhaar Card", "Voter ID")
+    val tabs = listOf("Electricity bill", "Aadhaar Card", "Voter ID","Others")
     var viewModel = koinViewModel<KycDetailViewModel>()
     val coroutineScope = rememberCoroutineScope()
     var aadhaarFrontImage by remember { mutableStateOf<ImageBitmap?>(null) }
@@ -208,6 +209,7 @@ fun KycDetailsScreen(
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
+
                 ) {
                     tabs.forEachIndexed { index, label ->
                         Box(
@@ -257,6 +259,14 @@ fun KycDetailsScreen(
                         vidFrontImage = vidFrontImage, // if you don't have back, otherwise pass vidBackImage
                         onCameraClick = { side ->
                             currentCameraTarget = side
+                            openCamera = true
+                        }
+                    )
+                    3 -> OtherElectricityForm(
+                        viewModel = viewModel,
+                        otherFrontImage = otherEbFrontImage,
+                        onCameraClick = {
+                            currentCameraTarget = "OTHER_EB_FRONT"
                             openCamera = true
                         }
                     )
@@ -321,6 +331,10 @@ fun KycDetailsScreen(
                         "VID_FRONT" -> {
                             vidFrontImage = imgBitmap
                             viewModel.setVidFrontImage(it)
+                        }
+                        "OTHER_EB_FRONT" -> {
+                            otherEbFrontImage = imgBitmap
+                            viewModel.setOtherEbImage(path)
                         }
                     }
                 }
@@ -612,6 +626,82 @@ fun VidForm(viewModel: KycDetailViewModel,
 }
 
 @Composable
+fun OtherElectricityForm(
+    viewModel: KycDetailViewModel,
+    otherFrontImage: ImageBitmap?,
+    onCameraClick: () -> Unit
+) {
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+
+        FormFieldCompact(
+            label = stringResource(Res.string.name_electricity),
+            value = "",
+            onValueChange = { },
+            maxLength = 20,
+            placeholder = stringResource(Res.string.type_here)
+        )
+
+        Spacer(Modifier.height(12.dp))
+
+        FormFieldCompact(
+            label = stringResource(Res.string.electricity_account_no),
+            value = "",
+            onValueChange = { },
+            maxLength = 15,
+            placeholder = stringResource(Res.string.type_here)
+        )
+
+        Spacer(Modifier.height(12.dp))
+
+        FormFieldCompact(
+            label = stringResource(Res.string.k_number),
+            value = "",
+            onValueChange = {},
+            maxLength = 15,
+            inputType = KeyboardType.Number,
+            placeholder = stringResource(Res.string.type_here)
+        )
+
+        Spacer(modifier = Modifier.height(10.dp))
+
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Box(
+                modifier = Modifier
+                    .size(120.dp)
+                    .background(Color(0xFFE8E8E8)),
+                contentAlignment = Alignment.Center
+            ) {
+                otherFrontImage?.let {
+                    Image(
+                        bitmap = it,
+                        contentDescription = null,
+                        modifier = Modifier.fillMaxSize(),
+                        contentScale = ContentScale.Crop
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.height(6.dp))
+
+            Icon(
+                painter = painterResource(Res.drawable.camera),
+                tint = blue,
+                contentDescription = stringResource(Res.string.front_image),
+                modifier = Modifier
+                    .size(28.dp)
+                    .clickable { onCameraClick() }
+            )
+
+            Spacer(modifier = Modifier.height(4.dp))
+            ReusableTextView(text = stringResource(Res.string.front_image))
+        }
+    }
+}
+
+@Composable
 fun IdProofSection(viewModel: KycDetailViewModel) {
     var selectedProof by remember { mutableStateOf(0) }
     var idEbFrontImage by remember { mutableStateOf<ImageBitmap?>(null) }
@@ -621,7 +711,7 @@ fun IdProofSection(viewModel: KycDetailViewModel) {
     var idPanFrontImage by remember { mutableStateOf<ImageBitmap?>(null) }
     var openCamera by remember { mutableStateOf(false) }
     var currentCameraTarget by remember { mutableStateOf("") }
-    val idProofTabs = listOf("Electricity bill", "Aadhaar Card", "Voter ID", "Pan Card")
+    val idProofTabs = listOf("Aadhaar Card", "Voter ID", "Pan Card")
 
     Column(
         modifier = Modifier.fillMaxWidth(),
@@ -662,15 +752,7 @@ fun IdProofSection(viewModel: KycDetailViewModel) {
         Spacer(Modifier.height(15.dp))
 
         when (selectedProof) {
-            0 -> IdProofElectricityBillForm(
-                viewModel,
-                ebFrontImage = idEbFrontImage,
-                onCameraClick = {
-                    currentCameraTarget = "ID_EB_FRONT"
-                    openCamera = true
-                }
-            )
-            1 -> IdProofAadhaarCardForm(
+            0 -> IdProofAadhaarCardForm(
                 viewModel = viewModel,
                 idAadhaarFrontImage = idAadhaarFrontImage,
                 idAadhaarBackImage = idAadhaarBackImage,
@@ -683,12 +765,12 @@ fun IdProofSection(viewModel: KycDetailViewModel) {
                     openCamera = true
                 }
             )
-            2 -> IdProofVidForm(
+            1 -> IdProofVidForm(
                 viewModel,
                 idVidFrontImage = idVidFrontImage,
                 onCameraClick = { currentCameraTarget = "ID_VID_FRONT"; openCamera = true }
             )
-            3 -> PanCardForm(
+            2 -> PanCardForm(
                 viewModel,
                 idPanFrontImage = idPanFrontImage,
                 onCameraClick = { currentCameraTarget = "ID_PAN_FRONT"; openCamera = true }
@@ -702,7 +784,6 @@ fun IdProofSection(viewModel: KycDetailViewModel) {
                 path?.let {
                     val bitmap = loadImageFromPath(it)
                     when(currentCameraTarget) {
-                        "ID_EB_FRONT" -> { idEbFrontImage = bitmap; viewModel.setGEbImage(it) }
                         "ID_AADHAAR_FRONT" -> { idAadhaarFrontImage = bitmap; viewModel.setGAadhaarFront(it) }
                         "ID_AADHAAR_BACK" -> { idAadhaarBackImage = bitmap; viewModel.setAadhaarBackImage(it) }
                         "ID_VID_FRONT" -> { idVidFrontImage = bitmap; viewModel.setGVoterImage(it) }
@@ -712,99 +793,6 @@ fun IdProofSection(viewModel: KycDetailViewModel) {
                 openCamera = false
             }
         )
-    }
-}
-@Composable
-fun IdProofElectricityBillForm(
-    viewModel: KycDetailViewModel,
-    ebFrontImage: ImageBitmap?,
-    onCameraClick: () -> Unit
-) {
-    Column(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        FormFieldCompact(
-            label = stringResource(Res.string.name_electricity),
-            value = viewModel.gBillName,
-            onValueChange = {
-                viewModel.gBillName = it
-            },
-            maxLength = 20,
-            modifier = Modifier
-                .bringIntoViewRequester(viewModel.bringIntoViewGBillName)
-                .focusRequester(viewModel.focusGBillName),
-            placeholder = stringResource(Res.string.type_here)
-        )
-
-        Spacer(Modifier.height(12.dp))
-
-        FormFieldCompact(
-            label = stringResource(Res.string.electricity_account_no),
-            value = viewModel.gelecricityno,
-            onValueChange = {
-                viewModel.gelecricityno = it
-            },
-            modifier = Modifier
-                .bringIntoViewRequester(viewModel.bringIntoViewGAccountNumber)
-                .focusRequester(viewModel.focusGAccountNumber),
-            maxLength = 12,
-            placeholder = stringResource(Res.string.type_here),
-        )
-        Spacer(Modifier.height(12.dp))
-        FormFieldCompact(
-            maxLength = 15,
-            label = stringResource(Res.string.k_number),
-            value = viewModel.gKNumber,
-            onValueChange = {
-                viewModel.gKNumber = it
-            },
-            modifier = Modifier
-                .bringIntoViewRequester(viewModel.bringIntoViewGKNumber)
-                .focusRequester(viewModel.focusGKNumber),
-            placeholder = stringResource(Res.string.type_here),
-        )
-        Spacer(modifier = Modifier.height(10.dp))
-    }
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {
-        // Front Image Box
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 20.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Box(
-                modifier = Modifier
-                    .size(120.dp)
-                    .background(Color(0xFFE8E8E8)),
-                contentAlignment = Alignment.Center
-            ) {
-                ebFrontImage?.let {
-                    Image(
-                        bitmap = it,
-                        contentDescription = null,
-                        modifier = Modifier.fillMaxSize(),
-                        contentScale = ContentScale.Crop
-                    )
-                }
-            }
-            Spacer(modifier = Modifier.height(6.dp))
-            Icon(
-                painter = painterResource(Res.drawable.camera),
-                tint = blue,
-                contentDescription = stringResource(Res.string.front_image),
-                modifier = Modifier
-                    .size(28.dp)
-                    .clickable { onCameraClick() }
-            )
-            Spacer(modifier = Modifier.height(4.dp))
-            ReusableTextView(text = stringResource(Res.string.front_image))
-        }
     }
 }
 @Composable

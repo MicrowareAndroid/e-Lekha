@@ -51,6 +51,8 @@ class KycDetailViewModel(
     var gAadharBackPath by mutableStateOf("")
     var gAadharName by mutableStateOf("")
 
+    var otherEbImagePath by mutableStateOf("")
+
     // -------- GKYC Electricity --------
     var gBillName by mutableStateOf("")
     var gAccountNumber by mutableStateOf("")
@@ -330,6 +332,9 @@ class KycDetailViewModel(
 
     fun setGPanImage(path: String) {
         gPanImagePath = path
+    }
+    fun setOtherEbImage(path: String) {
+        otherEbImagePath = path
     }
     fun validateKyc(): Boolean {
         showSaveAlert = false
