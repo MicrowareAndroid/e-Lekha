@@ -9,11 +9,17 @@ import com.psc.elekha.database.repository.CustomerFamilyMemberDetailsRepository
 import com.psc.elekha.database.repository.CustomerMovableAssestRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class CustomerMovableAssetsViewModel(
     private val repository: CustomerMovableAssestRepository
 ) : ViewModel() {
+
+    private val _movalbleAssets = MutableStateFlow<List<CustomerMovableAssetsEntity>>(emptyList())
+    val movalbleAssets: StateFlow<List<CustomerMovableAssetsEntity>> = _movalbleAssets
+
 
     fun insert(entity: CustomerMovableAssetsEntity) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -37,6 +43,26 @@ class CustomerMovableAssetsViewModel(
     fun deleteAll() {
         viewModelScope.launch(Dispatchers.IO) {
             repository.deleteAll()
+        }
+    }
+
+    fun getAssetsByCustGuid(guId: String) {
+        viewModelScope.launch {
+            val result = repository.getAssetsByGuid(guId)
+            _movalbleAssets.value = result
+        }
+    }
+
+    suspend fun getAssetsDetailByGuid(guId: String): List<CustomerMovableAssetsEntity> {
+        return repository.getAssestsDetailByGuid(guId)
+    }
+
+    fun deleteMovableAssets(item: CustomerMovableAssetsEntity) {
+        viewModelScope.launch {
+            repository.deleteMovableAssets(item)
+            _movalbleAssets.value = _movalbleAssets.value.filter {
+                it.VehicleID != item.VehicleID
+            }
         }
     }
 

@@ -73,7 +73,7 @@ class CustomerFamilyMemberDetailsViewModel(
 
 
 
-    fun getCustomerDetailGuid(guId: String) {
+    fun getCustomerByGuid(guId: String) {
         viewModelScope.launch {
             val result = repository.getCustomerByGuid(guId)
             _familyMemebers.value = result
@@ -87,8 +87,6 @@ class CustomerFamilyMemberDetailsViewModel(
     fun deleteFamilyMember(item: CustomerFamilyMemberDetailsEntity) {
         viewModelScope.launch {
             repository.deleteFamilyMember(item)
-
-
             _familyMemebers.value = _familyMemebers.value.filter {
                 it.MemberID != item.MemberID
             }

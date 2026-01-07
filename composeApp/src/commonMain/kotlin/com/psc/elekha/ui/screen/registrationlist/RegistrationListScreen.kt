@@ -118,6 +118,8 @@ fun RegistrationListScreen(navController: NavController) {
                 CustomAlertDialogRegistrationExisting(
                     onRegistration = {
                         appPreferences.putString(AppSP.customerGuid, "")
+                        appPreferences.putString(AppSP.FamilyMemberGuid, "")
+                        appPreferences.putString(AppSP.MovableAssetsGuid, "")
                         navController.navigate(RouteName.registration_tabs)
                         showDialog = false
                     },

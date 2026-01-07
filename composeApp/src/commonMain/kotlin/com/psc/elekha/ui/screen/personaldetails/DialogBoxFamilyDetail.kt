@@ -84,7 +84,7 @@ fun CustomAlertFamilyDetails(
                     )
                 }
 
-                //Scrollable Content
+
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()

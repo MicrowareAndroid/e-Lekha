@@ -317,6 +317,10 @@ class CustomerViewModel(private val customerRepository: CustomerRepository) : Vi
             )
         }
     }
+
+    suspend fun isCustomerAlreadySaved(customerGuid: String): Boolean {
+        return customerRepository.isCustomerAlreadySaved(customerGuid)
+    }
 }
 
 

@@ -18,6 +18,7 @@ import com.psc.elekha.utils.calculateAgeFromDobKMP
 import com.psc.elekha.utils.convertDateFormatDDMMYYYY
 import com.psc.elekha.utils.convertDateFormatYYYYMMDD
 import com.psc.elekha.utils.currentDatetime
+import com.psc.elekha.utils.ensureCustomerGuid
 import com.psc.elekha.utils.generateRandomId
 
 import com.psc.elekha.utils.parseNameDynamic
@@ -116,6 +117,7 @@ class PersonalDetailViewModel(
     var remarksExpense by mutableStateOf("")
 
 
+
     var name by mutableStateOf("")
 
 
@@ -199,15 +201,22 @@ class PersonalDetailViewModel(
     val focusRequesterRemarksExpense = FocusRequester()
     val focusRequesterEmiExpense = FocusRequester()
 
+    init {
+        ensureCustomerGuid(appPreferences)
+    }
+
     suspend fun savePersonalDetail() {
 
-        var customerGuid = returnStringValue(appPreferences.getString(AppSP.customerGuid))
+        //var customerGuid = returnStringValue(appPreferences.getString(AppSP.customerGuid))
+        var customerGuid = ensureCustomerGuid(appPreferences)
         val name = parseNameDynamic(returnStringValue(customerName))
         val husName = parseNameDynamic(returnStringValue(husbandName))
         val gurName = parseNameDynamic(returnStringValue(gurantorName))
+        val isCustomerExists = customerViewModel.isCustomerAlreadySaved(customerGuid)
 
-        if (customerGuid.isEmpty()) {
-            customerGuid = generateRandomId()
+
+        if (!isCustomerExists) {
+            //customerGuid = generateRandomId()
             val entity = CustomerEntity(
                 customerGuid,
                 "",
@@ -575,10 +584,10 @@ class PersonalDetailViewModel(
                     mobileNumber = returnStringValue(data.ContactNo)
                     husbandName = returnStringValue(data.HusbandFName)
                     gurantorName = returnStringValue(data.GurantorFName)
-                    dateOfBirth = returnStringValue(data.DOB)
+                    dateOfBirth = convertDateFormatDDMMYYYY(returnStringValue(data.DOB))
                     relationId = returnIntegerValue(data.GuarantorID?.toString())
                     remarksExpense = returnStringValue(data.Remarks)
-                    gurantordateOfBirth = returnStringValue(data.GuarantorDOB)
+                    gurantordateOfBirth = convertDateFormatDDMMYYYY(returnStringValue(data.GuarantorDOB))
                     fulladdresss = returnStringValue(data.Address)
                     gurantormobileNumber = returnStringValue(data.GurarantorMobileNo)
                     stateId = returnIntegerValue(data.StateID?.toString())

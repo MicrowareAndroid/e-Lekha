@@ -267,6 +267,11 @@ class CustomerRepository(private val customerDao: CustomerDao) {
         )
     }
 
+    suspend fun isCustomerAlreadySaved(customerGuid: String): Boolean {
+        return customerDao.isCustomerExists(customerGuid) > 0
+    }
+
+
 
 
 }

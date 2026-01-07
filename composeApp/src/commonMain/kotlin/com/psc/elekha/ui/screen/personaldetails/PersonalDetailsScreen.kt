@@ -46,6 +46,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import coil3.compose.LocalPlatformContext
 import com.psc.elekha.database.viewmodel.CustomerFamilyMemberDetailsViewModel
+import com.psc.elekha.database.viewmodel.CustomerMovableAssetsViewModel
 import com.psc.elekha.database.viewmodel.MSTComboBox_NViewModel
 import com.psc.elekha.database.viewmodel.MSTDistrictViewModel
 import com.psc.elekha.database.viewmodel.MSTStateViewModel
@@ -144,32 +145,9 @@ fun PersonalDetailsScreen(
 ) {
     val context = LocalPlatformContext.current
     var showDialog by remember { mutableStateOf(false) }
-
-    var expanded by remember { mutableStateOf(false) }
-
-    var economicMovableAssetsModel by rememberSaveable {
-        mutableStateOf(
-            listOf(
-                EconomicMovableAssetsModel(
-                    "Car",
-                    "DL02A4444"
-                ),
-                EconomicMovableAssetsModel(
-                    "Bike",
-                    "DL02A4000"
-                ),
-                EconomicMovableAssetsModel(
-                    "Truck",
-                    "DL02A3000"
-                )
-            )
-        )
-    }
-
     var isChecked by remember { mutableStateOf(false) }
 
     val viewModel = koinViewModel<PersonalDetailViewModel>()
-    val coroutineScope = rememberCoroutineScope()
 
 
     var showFamilyDialog by remember { mutableStateOf(false) }
@@ -188,11 +166,22 @@ fun PersonalDetailsScreen(
     val mstVillageModel = koinViewModel<MSTVillageViewModel>()
     val districtViewModel = koinViewModel<MSTDistrictViewModel>()
     val customerFamilyViewmodel = koinViewModel<CustomerFamilyMemberDetailsViewModel>()
+    val movableAssetsViewmodel = koinViewModel<CustomerMovableAssetsViewModel>()
     val stateList by stateViewModel.stateList.collectAsState()
     val districtList by districtViewModel.districtList.collectAsState()
     val villageList by mstVillageModel.villageList.collectAsState()
     val appPreferences: AppPreferences = koinInject()
     val familyMemberList by customerFamilyViewmodel.familyMemebers.collectAsState()
+    val aseetsList by movableAssetsViewmodel.movalbleAssets.collectAsState()
+
+    val totalFamilyIncome by remember(familyMemberList) {
+        derivedStateOf {
+            familyMemberList.sumOf {
+                it.MonthlyIncome ?: 0
+            }
+        }
+    }
+
 
     LaunchedEffect(Unit) {
 
@@ -209,8 +198,8 @@ fun PersonalDetailsScreen(
         mstVillageModel.loadVillagesByBranchID(branchId )*/
         stateViewModel.loadAllStates()
         viewModel.loadSavedData()
-        customerFamilyViewmodel.getCustomerDetailGuid(returnStringValue(appPreferences.getString(
-            AppSP.customerGuid)))
+        customerFamilyViewmodel.getCustomerByGuid(returnStringValue(appPreferences.getString(AppSP.customerGuid)))
+        movableAssetsViewmodel.getAssetsByCustGuid(returnStringValue(appPreferences.getString(AppSP.customerGuid)))
     }
     val filteredDistrictList by remember(districtList, viewModel.stateId) {
         derivedStateOf {
@@ -231,7 +220,6 @@ fun PersonalDetailsScreen(
     {
 
         Column(modifier = Modifier.fillMaxSize()) {
-
 
             Spacer(modifier = Modifier.height(10.dp))
 
@@ -785,7 +773,7 @@ fun PersonalDetailsScreen(
 
                     FloatingActionButton(
                         onClick = {
-                            appPreferences.putString(AppSP.familymemberGuid, "")
+                            appPreferences.putString(AppSP.FamilyMemberGuid, "")
                             showFamilyDialog = true },
                         containerColor = btn_color,
                         shape = CircleShape,
@@ -805,7 +793,9 @@ fun PersonalDetailsScreen(
                 if (showFamilyDialog) {
                     CustomAlertFamilyDetails(
                         title = stringResource(Res.string.add_more_family_member),
-                        onSubmit = { showFamilyDialog = false },
+                        onSubmit = { customerFamilyViewmodel.getCustomerByGuid(
+                            returnStringValue(appPreferences.getString(AppSP.customerGuid)))
+                            showFamilyDialog = false},
                         onCancel = { showFamilyDialog = false }
                     )
                 }
@@ -856,7 +846,7 @@ fun PersonalDetailsScreen(
                         contentAlignment = Alignment.Center
                     ) {
                         ReusableTextView(
-                            text = "20000"
+                            text = returnStringValue(totalFamilyIncome.toString())
                         )
                     }
                 }
@@ -1017,7 +1007,8 @@ fun PersonalDetailsScreen(
                         value = viewModel.outStandingExpense,
                         onValueChange = { viewModel.outStandingExpense = it },
                         placeholder = stringResource(Res.string.type_here),
-
+                        inputType = KeyboardType.Number,
+                        maxLength = 9,
                         modifier = Modifier.weight(1f)
                             .focusRequester(viewModel.focusRequesterOutStandingExpense)
                             .bringIntoViewRequester(viewModel.bringIntoViewRequesterOutStandingExpense),
@@ -1030,6 +1021,7 @@ fun PersonalDetailsScreen(
                         onValueChange = { viewModel.emiExpense = it },
                         placeholder = stringResource(Res.string.type_here),
                         inputType = KeyboardType.Number,
+                        maxLength = 9,
                         modifier = Modifier.weight(1f)
                             .focusRequester(viewModel.focusRequesterEmiExpense)
                             .bringIntoViewRequester(viewModel.bringIntoViewRequesterEmiExpense),
@@ -1084,7 +1076,9 @@ fun PersonalDetailsScreen(
 
                     // Right FAB
                     FloatingActionButton(
-                        onClick = { showDialog = true },
+                        onClick = {
+                            appPreferences.putString(AppSP.MovableAssetsGuid, "")
+                            showDialog = true },
                         containerColor = btn_color,
                         shape = CircleShape,
                         modifier = Modifier
@@ -1103,20 +1097,11 @@ fun PersonalDetailsScreen(
                     }
                 }
 
-                if (showDialog) {
-                    CustomAlertMovableAssets(
-                        onSubmit = {
-                            showDialog = false
-                        },
-                        onCancel = {
-                            showDialog = false
-                        }
-                    )
-                }
+
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                LazyVerticalGrid(
+               /* LazyVerticalGrid(
                     columns = GridCells.Fixed(1),
                     modifier = Modifier
                         .fillMaxWidth()
@@ -1137,12 +1122,32 @@ fun PersonalDetailsScreen(
                         )
 
                     }
+                }*/
+
+                if (showDialog) {
+                    CustomAlertMovableAssets(
+                        title = stringResource(Res.string.movable_assets),
+                        onSubmit = { movableAssetsViewmodel.getAssetsByCustGuid(
+                            returnStringValue(appPreferences.getString(AppSP.customerGuid)))
+                            showDialog = false},
+                        onCancel = { showDialog = false }
+                    )
                 }
 
 
-            } // END Scroll Column
+                aseetsList.forEach { item ->
+                    EconomicMovableAssetsCard(
+                        economicMovableAssetsModel = item,
+                        onDelete = {
+                            movableAssetsViewmodel.deleteMovableAssets(item)
+                        }
+                    )
+                    Spacer(modifier = Modifier.height(10.dp))
+                }
 
-            // Bottom Buttons (Not scrollable)
+
+            }
+
             CommonSaveButton(
                 onSaveClick = {
                     viewModel.saveData()

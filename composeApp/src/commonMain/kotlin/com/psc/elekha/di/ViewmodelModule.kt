@@ -47,6 +47,7 @@ import com.psc.elekha.database.viewmodel.UserContactDetailViewModel
 import com.psc.elekha.database.viewmodel.UserResponseViewModel
 import com.psc.elekha.database.viewmodel.UsersViewModel
 import com.psc.elekha.ui.screen.bankdetails.BankDetailViewModel
+import com.psc.elekha.ui.screen.economicdetails.MovableAssetsViewModel
 import com.psc.elekha.ui.screen.familydetails.FamilyMemberViewModel
 import com.psc.elekha.ui.screen.gtrlist.GtrViewModel
 import com.psc.elekha.ui.screen.home.HomeScreenViewModel
@@ -114,6 +115,7 @@ val viewmodelModule = module {
     viewModelOf(::HomeScreenViewModel)
     viewModelOf(::LoanOfficerDashboardViewModel)
     viewModelOf(::MSTLoanProductViewModel)
+    viewModelOf(::MovableAssetsViewModel)
     viewModel {
         LoginViewModel(
 
