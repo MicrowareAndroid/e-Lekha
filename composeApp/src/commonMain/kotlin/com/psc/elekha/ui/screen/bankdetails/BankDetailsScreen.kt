@@ -203,10 +203,7 @@ fun BankDetailsScreen(navController: NavController) {
                         )
                     }
                 }
-
-
             }
-
             CommonSaveButton(
                 onSaveClick = { viewModel.saveData()},
                 saveText = stringResource(Res.string.select_customer_submit)
