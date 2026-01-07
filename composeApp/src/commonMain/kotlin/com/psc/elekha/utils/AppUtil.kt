@@ -3258,3 +3258,15 @@ fun <T : Any> FillDynamicSpinnerespts(
         }
     }
 }
+
+ fun ensureCustomerGuid(
+    appPreferences: AppPreferences
+): String {
+    var customerGuid = appPreferences.getString(AppSP.customerGuid)
+
+    if (customerGuid.isNullOrEmpty()) {
+        customerGuid = generateRandomId()
+        appPreferences.putString(AppSP.customerGuid, customerGuid)
+    }
+    return customerGuid
+}

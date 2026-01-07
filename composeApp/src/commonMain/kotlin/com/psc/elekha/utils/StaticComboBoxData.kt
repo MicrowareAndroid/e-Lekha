@@ -53,11 +53,7 @@ object StaticComboBoxData {
         MSTComboBox_NEntity(6, "Other", 3, "en", false),
     )
 
-    var vehicleasset=listOf(
-        MSTComboBox_NEntity(1, "Card", 3, "en", false),
-        MSTComboBox_NEntity(2, "Bank", 3, "en", false),
-        MSTComboBox_NEntity(1, "Truck", 3, "en", false),
-    )
+
     var bankname=listOf(
         MSTComboBox_NEntity(1, "SBI", 3, "en", false),
           MSTComboBox_NEntity(2, "HDFC", 3, "en", false),

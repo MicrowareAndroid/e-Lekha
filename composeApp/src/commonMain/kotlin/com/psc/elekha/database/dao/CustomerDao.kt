@@ -348,5 +348,9 @@ WHERE GUID = :guid
         updatedBy: String?
     )
 
+    @Query("SELECT COUNT(*) FROM Customer WHERE GUID = :customerGuid")
+    suspend fun isCustomerExists(customerGuid: String): Int
+
+
 
 }

@@ -1,4 +1,4 @@
-package com.psc.elekha.ui.screen.familydetails
+package com.psc.elekha.ui.screen.economicdetails
 
 import androidx.compose.foundation.relocation.BringIntoViewRequester
 import androidx.compose.runtime.getValue
@@ -7,7 +7,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.focus.FocusRequester
 import androidx.lifecycle.viewModelScope
 import com.psc.elekha.database.entity.CustomerFamilyMemberDetailsEntity
+import com.psc.elekha.database.entity.CustomerMovableAssetsEntity
 import com.psc.elekha.database.viewmodel.CustomerFamilyMemberDetailsViewModel
+import com.psc.elekha.database.viewmodel.CustomerMovableAssetsViewModel
 import com.psc.elekha.model.ValidationModelContorl
 import com.psc.elekha.ui.screen.base.BaseValidationViewModel
 import com.psc.elekha.utils.AppPreferences
@@ -25,120 +27,63 @@ import e_lekha.composeapp.generated.resources.data_updated_successfully
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.getString
 
-class FamilyMemberViewModel(
+class MovableAssetsViewModel(
     private val appPreferences: AppPreferences,
-    private val familyMemberViewModel: CustomerFamilyMemberDetailsViewModel
+    private val movableAssetsViewmodel: CustomerMovableAssetsViewModel
 ) : BaseValidationViewModel() {
 
-    var memberName by mutableStateOf("")
+    var vehicleNo by mutableStateOf("")
 
-    var relationId by mutableStateOf(0)
-    var age by mutableStateOf("")
-    var gender by mutableStateOf(0)
-    var educationId by mutableStateOf(0)
-    var occupationId by mutableStateOf(0)
-    var monthlyIncome by mutableStateOf("")
-    var remarks by mutableStateOf("")
+    var selectedAssetsId by mutableStateOf(0)
+    private var _vehicleImage by mutableStateOf("")
+    val vehicleImage: String
+        get() = _vehicleImage
 
-    val bringIntoViewRequesterMemberName = BringIntoViewRequester()
-    val bringIntoViewRequesterRelationId = BringIntoViewRequester()
-    val bringIntoViewRequesterGender = BringIntoViewRequester()
-    val bringIntoViewRequesterAge = BringIntoViewRequester()
-    val bringIntoViewRequesterEducationId = BringIntoViewRequester()
-    val bringIntoViewRequesterOccupationId = BringIntoViewRequester()
-    val bringIntoViewRequesterMonthlyIncome = BringIntoViewRequester()
-    val bringIntoViewRequesterRemarks = BringIntoViewRequester()
-
-    val focusRequesterMemberName = FocusRequester()
-    val focusRequesterRelationId = FocusRequester()
-
-    val focusRequesterGender = FocusRequester()
-
-    val focusRequesterAge = FocusRequester()
-    val focusRequesterEducationId = FocusRequester()
-    val focusRequesterOccupationId = FocusRequester()
-    val focusRequesterMonthlyIncome = FocusRequester()
-    val focusRequesterRemarks = FocusRequester()
+    val bringIntoViewRequesterAssetsId = BringIntoViewRequester()
+    val bringIntoViewRequesterVehicleNo= BringIntoViewRequester()
 
 
-    suspend fun saveFamilyMember() {
-        val memberGuid = appPreferences.getString(AppSP.FamilyMemberGuid)
-        //val customerGuid = appPreferences.getString(AppSP.customerGuid)
+    val focusRequesterAssestsId = FocusRequester()
+    val focusRequesterVehicleNo = FocusRequester()
+
+
+
+    suspend fun saveMovableAsets() {
+        val assetsGuid = appPreferences.getString(AppSP.MovableAssetsGuid)
         val customerGuid = ensureCustomerGuid(appPreferences)
-        val memberFamilyName = parseNameDynamic(returnStringValue(memberName))
 
-        if (memberGuid.isNullOrEmpty()) {
+        if (assetsGuid.isNullOrEmpty()) {
             val newGuid = generateRandomId()
 
-            val entity = CustomerFamilyMemberDetailsEntity(
-                returnStringValue(customerGuid),
+            val entity = CustomerMovableAssetsEntity(
                 newGuid,
+                customerGuid,
+                selectedAssetsId,
+                vehicleNo,
+                vehicleImage,
                 0,
-                memberFamilyName.firstName,
-                memberFamilyName.middleName,
-                memberFamilyName.lastName,
-                relationId,
-                returnIntegerValue(age),
+                1,
                 0,
-                educationId,
-                0,
-                occupationId,
-                0,
-                gender.toString(),
-                0,
-                returnIntegerValue(monthlyIncome),
-                0,
-                remarks
+
             )
 
-            familyMemberViewModel.insertCustomerFamilyMember(entity)
-            appPreferences.putString(AppSP.FamilyMemberGuid, newGuid)
-
+            movableAssetsViewmodel.insert(entity)
+            appPreferences.putString(AppSP.MovableAssetsGuid, newGuid)
             saveMessage = getString(Res.string.data_saved_successfully)
-            //saveFlag = 1
             showSaveAlert = true
         } else {
-            familyMemberViewModel.updateCustomerFamilyMemberByGuid(
-                memberGuid,
-                memberFamilyName.firstName,
-                memberFamilyName.middleName,
-                memberFamilyName.lastName,
-                relationId,
-                returnIntegerValue(age),
-                gender.toString(),
-                educationId,
-                occupationId
-            )
 
-            saveMessage = getString(Res.string.data_updated_successfully)
-            showSaveAlert = true
         }
     }
 
-    fun loadData() {
-        viewModelScope.launch {
-            val savedGuid = returnStringValue(appPreferences.getString(AppSP.FamilyMemberGuid))
-            if (savedGuid.isNotEmpty()) {
-                val listData = familyMemberViewModel.getCustomerDetailByGuid(savedGuid)
-                if (listData.isNotEmpty()) {
-                    val data = listData[0]
-                    memberName=returnStringValue(data.MFirstName)
-                    gender=returnIntegerValue(data.Gender)
-                    age= returnIntToString(data.Age)
-                    relationId=returnIntegerValue(data.RelationID?.toString())
-                    educationId=returnIntegerValue(data.EducationID?.toString())
-                    occupationId=returnIntegerValue(data.OccupationID?.toString())
-                    remarks=returnStringValue(data.Remarks)
-
-                }
-            }
-        }
-
+    fun setVehicleImage(path: String) {
+        _vehicleImage = path
     }
+
 
     fun saveData() {
         viewModelScope.launch {
-            saveFamilyMember()
+            saveMovableAsets()
             showSaveAlert = true
             saveFlag = 1
 
