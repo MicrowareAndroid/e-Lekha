@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.psc.elekha.database.viewmodel.MSTComboBox_NViewModel
+import com.psc.elekha.database.viewmodel.MSTLoanProductViewModel
 import com.psc.elekha.ui.screen.gtrlist.BranchItem
 import com.psc.elekha.ui.screen.gtrlist.GtrViewModel
 import com.psc.elekha.ui.screen.repayment.RepaymentViewModel
@@ -71,8 +72,8 @@ fun CustomerDetailScreen(
     navController: NavHostController,
 ) {
     val viewModel = koinViewModel<GtrViewModel>()
-    var mstComboViewModel=koinViewModel<MSTComboBox_NViewModel>()
-    val loanRecommendationList by mstComboViewModel.loanRecommendation.collectAsState()
+    var mSTLoanProductViewModel=koinViewModel<MSTLoanProductViewModel>()
+    val loanRecommendationList by mSTLoanProductViewModel.loanRecommendation.collectAsState()
     var selectedScreen by remember { mutableStateOf("New Customer") }
 
     var openCameraCustomer by remember { mutableStateOf(false) }
@@ -86,7 +87,7 @@ fun CustomerDetailScreen(
 
     LaunchedEffect(Unit) {
 
-        mstComboViewModel.loadLookUpValues(lookupTypeFk = 10)
+        mSTLoanProductViewModel.loadLoanAmount()
         viewModel.loadSavedData()
     }
 
@@ -634,8 +635,8 @@ fun CustomerDetailScreen(
                                 onOptionSelected = { viewModel.loanRecommendationID = it },
                                 focusRequester = viewModel.focusRequesterLoanRecommendationID,
                                 bringIntoViewRequester = viewModel.bringIntoViewRequesterLoanRecommendationID,
-                                getOptionId = { it.ID },
-                                getOptionLabel = { it.Value.toString() },
+                                getOptionId = { it.LoanProductID },
+                                getOptionLabel = { it.LoanProduct.toString() },
                                 modifier = Modifier.weight(1f)
                             )
 
