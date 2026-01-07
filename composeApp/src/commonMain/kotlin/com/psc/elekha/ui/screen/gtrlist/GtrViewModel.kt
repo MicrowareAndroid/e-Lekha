@@ -12,6 +12,7 @@ import com.psc.elekha.database.viewmodel.CustomerViewModel
 import com.psc.elekha.database.viewmodel.LoanRepaymentViewModel
 import com.psc.elekha.database.viewmodel.TrainingGroupMemberViewModel
 import com.psc.elekha.database.viewmodel.TrainingGroupViewModel
+import com.psc.elekha.model.GtrRequest
 import com.psc.elekha.model.MasterRequest
 import com.psc.elekha.model.ValidationModelContorl
 import com.psc.elekha.response.GtrResponse
@@ -55,7 +56,7 @@ class GtrViewModel(
     val focusRequesterEBillRemark = FocusRequester()
     val bringIntoViewRequesterEBillRemark = BringIntoViewRequester()
 
-    val focusRequesterHouseVerificationRemark= FocusRequester()
+    val focusRequesterHouseVerificationRemark = FocusRequester()
     val bringIntoViewRequesterHouseVerificationRemark = BringIntoViewRequester()
 
     val focusRequesterLoanRecommendationID = FocusRequester()
@@ -68,12 +69,12 @@ class GtrViewModel(
     private val _downloadState = MutableStateFlow<APiState>(APiState.idle)
     val downloadState: StateFlow<APiState> = _downloadState
 
-    fun getGTRData(username: String, password: String) {
+    fun getGTRData(username: String, password: String, loanOfficerId: String, villageId: Int) {
         viewModelScope.launch {
             _downloadState.value = APiState.loading
 
             try {
-                val request = MasterRequest(username, password)
+                val request = GtrRequest(username, password, loanOfficerId, villageId)
                 val response = apiRepository.getGTRData(request)
 
                 val code = response.status.value

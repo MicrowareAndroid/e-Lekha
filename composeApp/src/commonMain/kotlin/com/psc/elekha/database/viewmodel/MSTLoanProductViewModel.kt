@@ -15,6 +15,9 @@ class MSTLoanProductViewModel(
     private val _loanProductList = MutableStateFlow<List<MSTLoanProductEntity>>(emptyList())
     val loanProductList: StateFlow<List<MSTLoanProductEntity>> = _loanProductList
 
+    private val _loanRecommendation = MutableStateFlow<List<MSTLoanProductEntity>>(emptyList())
+    val loanRecommendation: StateFlow<List<MSTLoanProductEntity>> = _loanRecommendation
+
     private val _newLoanProductList =
         MutableStateFlow<List<MSTLoanProductEntity>>(emptyList())
     val newLoanProductList: StateFlow<List<MSTLoanProductEntity>> = _newLoanProductList
@@ -35,7 +38,7 @@ class MSTLoanProductViewModel(
     fun loadLoanAmount() {
         viewModelScope.launch {
             val result = repository.getLoanAmount()
-            _loanProductList.value = result
+            _loanRecommendation.value = result
         }
     }
 

@@ -2385,7 +2385,8 @@ fun CustomerItemCard(
             .clickable { onCardClick(customer) },
         backgroundColor = loginBg,
         cornerRadius = 12
-    ) {
+    )
+    {
 
         Row(
             modifier = Modifier
@@ -2410,7 +2411,7 @@ fun CustomerItemCard(
                 )
             }
 
-            Spacer(modifier = Modifier.width(12.dp))
+            Spacer(modifier = Modifier.width(Dimens.fivedp))
 
             /* CENTER : Details */
             Column(
@@ -2441,12 +2442,12 @@ fun CustomerItemCard(
                     stringResource(Res.string.select_customer_name),
                     customer.name
                 )
-                Spacer(modifier = Modifier.width(10.dp))
+                Spacer(modifier = Modifier.height(Dimens.fivedp))
                 LabelValueText(
                     stringResource(Res.string.select_customer_mobile),
                     customer.mobile
                 )
-                Spacer(modifier = Modifier.width(10.dp))
+                Spacer(modifier = Modifier.height(Dimens.fivedp))
                 LabelValueText(
                     stringResource(Res.string.select_customer_loan),
                     "Rs ${customer.amount}"

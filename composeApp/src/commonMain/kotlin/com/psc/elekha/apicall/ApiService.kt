@@ -1,6 +1,7 @@
 package com.psc.elekha.apicall
 
 
+import com.psc.elekha.model.GtrRequest
 import com.psc.elekha.model.MasterRequest
 import com.psc.elekha.utils.Config.AUTHENTICATION
 import com.psc.elekha.utils.Config.GTR
@@ -65,11 +66,13 @@ class ApiService(private val client: HttpClient) {
         }
     }
 
-    suspend fun getGTRData(masterRequest: MasterRequest): HttpResponse {
+    suspend fun getGTRData(gtrRequest: GtrRequest): HttpResponse {
         return client.get(GTR) {
             url {
-                parameters.append("pUsername", masterRequest.pUsername)
-                parameters.append("pPassword", masterRequest.pPassword)
+                parameters.append("pUsername", gtrRequest.pUsername)
+                parameters.append("pPassword", gtrRequest.pPassword)
+                parameters.append("sLoanOfficerID", gtrRequest.sLoanOfficerID)
+                parameters.append("iVillageID", gtrRequest.iVillageID.toString())
             }
             contentType(ContentType.Application.Json)
         }

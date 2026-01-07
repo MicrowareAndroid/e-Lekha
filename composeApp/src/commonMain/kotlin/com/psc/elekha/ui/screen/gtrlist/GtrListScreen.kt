@@ -96,10 +96,11 @@ fun GtrListScreen(
             "04/12/24",
             "119(14)",
             "Friday",
-            "06/08/13")
+            "06/08/13"
+        )
     )
 
-    LaunchedEffect(Unit,downloadState) {
+    LaunchedEffect(Unit, downloadState) {
         when (downloadState) {
             is APiState.loading -> {
                 showProgress = true
@@ -271,7 +272,7 @@ fun GtrListScreen(
 
                         Button(
                             onClick = {
-                                viewModel.getGTRData("PSCMNP5", "test124")
+                                viewModel.getGTRData("Bmggr", "9414258269", "", 0)
                             },
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -304,7 +305,7 @@ fun GtrListScreen(
                         modifier = Modifier
                             .weight(1f)
                             .verticalScroll(rememberScrollState())
-                            .padding( bottom = Dimens.fivedp)
+                            .padding(bottom = Dimens.fivedp)
                     ) {
 
                         if (selectedBranch == "All") {
