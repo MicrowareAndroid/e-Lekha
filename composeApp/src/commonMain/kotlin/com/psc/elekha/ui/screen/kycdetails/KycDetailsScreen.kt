@@ -41,6 +41,7 @@ import com.psc.elekha.ui.theme.appleblue
 import com.psc.elekha.ui.theme.lightblues
 import com.psc.elekha.ui.theme.white
 import com.psc.elekha.utils.CameraPicker
+import com.psc.elekha.utils.CommonDivider
 import com.psc.elekha.utils.CommonSaveButton
 import com.psc.elekha.utils.CustomAlertDialog
 import com.psc.elekha.utils.FormFieldCompact
@@ -203,6 +204,7 @@ fun KycDetailsScreen(
                 ReusableTextViewes(
                     text = stringResource(Res.string.customer_kyc)
                 )
+
 
                 Spacer(Modifier.height(12.dp))
 
@@ -376,7 +378,7 @@ fun ElectricityBillForm(viewModel: KycDetailViewModel, ebFrontImage: ImageBitmap
                 .focusRequester(viewModel.focusAccountNumber),
 
             maxLength = 15,
-            placeholder = stringResource(Res.string.type_here),
+
         )
 
         Spacer(Modifier.height(12.dp))
@@ -392,7 +394,7 @@ fun ElectricityBillForm(viewModel: KycDetailViewModel, ebFrontImage: ImageBitmap
             modifier = Modifier
                 .bringIntoViewRequester(viewModel.bringIntoViewKNumber)
                 .focusRequester(viewModel.focusKNumber),
-            placeholder = stringResource(Res.string.type_here),
+
             inputType = KeyboardType.Number
         )
         Spacer(modifier = Modifier.height(10.dp))
@@ -576,7 +578,7 @@ fun VidForm(viewModel: KycDetailViewModel,
             modifier = Modifier
                 .bringIntoViewRequester(viewModel.bringIntoViewNameOnVid)
                 .focusRequester(viewModel.focusNameOnVid),
-            placeholder = stringResource(Res.string.type_here),
+
             maxLength = 20,
         )
         Spacer(modifier = Modifier.height(20.dp))
@@ -717,6 +719,7 @@ fun IdProofSection(viewModel: KycDetailViewModel) {
         modifier = Modifier.fillMaxWidth(),
     ) {
         ReusableTextViewes(text = stringResource(Res.string.gurantor_kyc))
+
         Spacer(Modifier.height(10.dp))
 
         Row(
@@ -931,7 +934,7 @@ fun IdProofVidForm(viewModel: KycDetailViewModel,
             modifier = Modifier
                 .bringIntoViewRequester(viewModel.bringIntoViewGVoterName)
                 .focusRequester(viewModel.focusGVoterName),
-            placeholder = stringResource(Res.string.type_here),
+
             maxLength = 20,
         )
         Spacer(modifier = Modifier.height(20.dp))
