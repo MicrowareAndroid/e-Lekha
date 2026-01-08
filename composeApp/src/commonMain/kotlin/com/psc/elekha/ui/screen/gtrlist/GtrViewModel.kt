@@ -29,6 +29,7 @@ import io.ktor.client.call.body
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import kotlinx.serialization.json.Json
 import org.jetbrains.compose.resources.getString
 
 class GtrViewModel(
@@ -78,9 +79,14 @@ class GtrViewModel(
                 val response = apiRepository.getGTRData(request)
 
                 val code = response.status.value
+                println("GtrRequest res : $response, code : $code")
                 if (code == 200) {
-
                     val body = response.body<GtrResponse>()
+
+                    val json = Json { prettyPrint = true }
+                        .encodeToString(body)
+
+                    println("GtrResponse FULL DATA:\n$json")
                     body.let {
 //                        trainingGroupViewModel.deleteAllTrainingGroup {  }
 //                        trainingGroupMemberViewModel.deleteAllTrainingGroupStatus {  }
@@ -89,9 +95,11 @@ class GtrViewModel(
                         trainingGroupMemberViewModel.insertAllTrainingGroupStatus(it.trainingGroupMemberEntity)
                     }
                     _downloadState.value = APiState.success("GTR data download successfully")
-                } else if (code == 401) {
+                }
+                else if (code == 401) {
                     _downloadState.value = APiState.error(getString(Res.string.something_wentwrong))
-                } else {
+                }
+                else {
                     _downloadState.value = APiState.error(getString(Res.string.something_wentwrong))
                 }
             } catch (e: Exception) {
