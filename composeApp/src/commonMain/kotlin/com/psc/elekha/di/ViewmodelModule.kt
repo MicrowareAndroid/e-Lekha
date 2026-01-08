@@ -144,7 +144,8 @@ val viewmodelModule = module {
             kycStatusViewModel = get(),
             kycStatusConditionViewModel = get(),
             mstLoanProductViewModel = get(),
-            appPreferences = get()
+            appPreferences = get(),
+            imageDetailViewModel = get()
         )
     }
     viewModelOf(::GtrViewModel)

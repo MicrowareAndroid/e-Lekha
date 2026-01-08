@@ -72,8 +72,14 @@ fun BankDetailsScreen(navController: NavController) {
     var passbookImageBitmap by remember { mutableStateOf<ImageBitmap?>(null) }
 
     LaunchedEffect(Unit) {
-
+        viewModel.loadSavedBankData()
+        // Wait for data to load
+        kotlinx.coroutines.delay(500)
+        if (viewModel.passbookImage.isNotEmpty()) {
+            passbookImageBitmap = loadImageFromPath(viewModel.passbookImage)
+        }
     }
+
 
     Box(
         modifier = Modifier
@@ -107,9 +113,7 @@ fun BankDetailsScreen(navController: NavController) {
                     onValueChange = { viewModel.accountName = it},
                     maxLength = 20
                 )
-
                 Spacer(modifier = Modifier.height(8.dp))
-
                 FormFieldCompact(
                     label = stringResource(Res.string.bank_account_number),
                     value = viewModel.accountNumber,
@@ -121,9 +125,7 @@ fun BankDetailsScreen(navController: NavController) {
                     maxLength = 18,
                     inputType = KeyboardType.Number
                 )
-
                 Spacer(modifier = Modifier.height(8.dp))
-
                 FormSpinner(
                     label = stringResource(Res.string.bank_name),
                     options = StaticComboBoxData.bankname.toValueList(),
@@ -131,11 +133,11 @@ fun BankDetailsScreen(navController: NavController) {
                     modifier = Modifier
                         .bringIntoViewRequester(viewModel.bringIntoViewRequesterBankName)
                         .focusRequester(viewModel.focusRequesterBankName),
-                    onOptionSelected = { viewModel.selectedBankname = it}
+                    onOptionSelected = {
+                        viewModel.selectedBankname = it
+                    }
                 )
-
                 Spacer(modifier = Modifier.height(8.dp))
-
                 FormSpinner(
                     label = stringResource(Res.string.branch_name),
                     options = StaticComboBoxData.branchname.toValueList(),
@@ -145,9 +147,7 @@ fun BankDetailsScreen(navController: NavController) {
                         .focusRequester(viewModel.focusRequesterBranchName),
                     onOptionSelected = {viewModel.selectedBranchname = it }
                 )
-
                 Spacer(modifier = Modifier.height(8.dp))
-
                 FormFieldCompact(
                     label = stringResource(Res.string.ifsc_code),
                     value = viewModel.ifscCode,
@@ -159,9 +159,7 @@ fun BankDetailsScreen(navController: NavController) {
                         .focusRequester(viewModel.focusRequesterIfscCode),
                     maxLength = 11
                 )
-
                 Spacer(modifier = Modifier.height(10.dp))
-
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.Center
