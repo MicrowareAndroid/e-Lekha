@@ -109,7 +109,7 @@ fun BankDetailsScreen(navController: NavController) {
                     modifier = Modifier
                         .bringIntoViewRequester(viewModel.bringIntoViewRequesterAccountName)
                         .focusRequester(viewModel.focusRequesterAccountName),
-                    placeholder = stringResource(Res.string.type_here),
+
                     onValueChange = { viewModel.accountName = it},
                     maxLength = 20
                 )
@@ -117,7 +117,7 @@ fun BankDetailsScreen(navController: NavController) {
                 FormFieldCompact(
                     label = stringResource(Res.string.bank_account_number),
                     value = viewModel.accountNumber,
-                    placeholder = stringResource(Res.string.type_here),
+
                     onValueChange = { viewModel.accountNumber = it },
                     modifier = Modifier
                         .bringIntoViewRequester(viewModel.bringIntoViewRequesterAccountNumber)
@@ -152,7 +152,7 @@ fun BankDetailsScreen(navController: NavController) {
                     label = stringResource(Res.string.ifsc_code),
                     value = viewModel.ifscCode,
 
-                    placeholder = stringResource(Res.string.type_here),
+
                     onValueChange = { viewModel.ifscCode = it},
                     modifier = Modifier
                         .bringIntoViewRequester(viewModel.bringIntoViewRequesterIfscCode)

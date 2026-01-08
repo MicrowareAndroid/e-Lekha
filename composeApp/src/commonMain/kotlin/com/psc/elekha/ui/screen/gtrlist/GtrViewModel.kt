@@ -83,8 +83,7 @@ class GtrViewModel(
                 if (code == 200) {
                     val body = response.body<GtrResponse>()
 
-                    val json = Json { prettyPrint = true }
-                        .encodeToString(body)
+                    val json = Json { prettyPrint = true }.encodeToString(body)
 
                     println("GtrResponse FULL DATA:\n$json")
                     body.let {

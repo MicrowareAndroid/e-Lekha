@@ -118,8 +118,8 @@
     <string name="front_image">Front image</string>
     <string name="back_image">Back image</string>
     <string name="image">Image</string>
-    <string name="user_last_loan">Last Loan from PSC </string>
-    <string name="user_psc">PSC Outstaining</string>
+    <string name="user_last_loan">Last Loan from PSC</string>
+    <string name="user_psc">PSC Outstanding</string>
     <string name="user_total">Total Outstanding\nOther MFI(s) </string>
     <string name="user_loan">Loan Purpose</string>
     <string name="user_existing">Existing Income</string>
