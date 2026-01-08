@@ -1,4 +1,5 @@
 package com.psc.elekha.ui.screen.kycdetails
+import KycTabItem
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -20,6 +21,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -92,21 +94,45 @@ fun KycDetailsScreen(
     var otherEbFrontImage by remember { mutableStateOf<ImageBitmap?>(null) }
 // VID usually doesn’t have back image, so you can skip if not needed
 
-    var panBackImage by remember { mutableStateOf<ImageBitmap?>(null) } // optional
-
     val tabs = listOf("Electricity bill", "Aadhaar Card", "Voter ID","Others")
     var viewModel = koinViewModel<KycDetailViewModel>()
-    val coroutineScope = rememberCoroutineScope()
     var aadhaarFrontImage by remember { mutableStateOf<ImageBitmap?>(null) }
     var aadhaarBackImage by remember { mutableStateOf<ImageBitmap?>(null) }
     var vidFrontImage by remember { mutableStateOf<ImageBitmap?>(null) }
-    var panFrontImage by remember { mutableStateOf<ImageBitmap?>(null) }
 
 
-    //gurantor
-    /*    LaunchedEffect(Unit) {
-        viewModel.loadSaveData()
-    }*/
+
+    LaunchedEffect(Unit) {
+        viewModel.loadSavedKycData()
+        kotlinx.coroutines.delay(500)
+
+
+        // Customer KYC - Electricity Bill
+        if (viewModel.ebImagePath.isNotEmpty()) {
+            ebFrontImage = loadImageFromPath(viewModel.ebImagePath)
+        }
+
+        // Customer KYC - Aadhaar Front
+        if (viewModel.aadharnoIdProof.isNotEmpty()) {
+            aadhaarFrontImage = loadImageFromPath(viewModel.aadharnoIdProof)
+        }
+
+        // Customer KYC - Aadhaar Back
+        if (viewModel.adharbackproof.isNotEmpty()) {
+            aadhaarBackImage = loadImageFromPath(viewModel.adharbackproof)
+        }
+
+        // Customer KYC - Voter ID
+        if (viewModel.voternoIdProof.isNotEmpty()) {
+            vidFrontImage = loadImageFromPath(viewModel.voternoIdProof)
+        }
+
+        // Other EB Image (if any)
+        if (viewModel.otherEbImagePath.isNotEmpty()) {
+            otherEbFrontImage = loadImageFromPath(viewModel.otherEbImagePath)
+        }
+
+    }
 
     Box(
         modifier = Modifier
@@ -126,8 +152,9 @@ fun KycDetailsScreen(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 10.dp),
-                    horizontalArrangement = Arrangement.spacedBy(16.dp)
+                        .padding(top = 10.dp)
+                    .horizontalScroll(rememberScrollState()),
+                horizontalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
 
 
@@ -207,31 +234,17 @@ fun KycDetailsScreen(
                 Spacer(Modifier.height(12.dp))
 
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth()
+                    .horizontalScroll(rememberScrollState()),
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
 
                 ) {
                     tabs.forEachIndexed { index, label ->
-                        Box(
-                            modifier = Modifier
-                                .size(width = 120.dp, height = 35.dp)
-                                .background(
-                                    if (selectedTab == index) appleblue else lightblues,
-                                    RoundedCornerShape(20.dp)
-                                )
-                                .padding(horizontal = 12.dp)
-                                .clickable { selectedTab = index },
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text(
-                                text = label,
-                                fontSize = 12.sp,
-                                maxLines = 1,
-                                fontFamily = FontFamily(Font(Res.font.roboto_regular)),
-                                textAlign = TextAlign.Center,
-                                color = if (selectedTab == index) Color.White else Color.Black
-                            )
-                        }
+                        KycTabItem(
+                            text = label,
+                            selected = selectedTab == index,
+                            onClick = { selectedTab = index }
+                        )
                     }
                 }
 
@@ -638,8 +651,10 @@ fun OtherElectricityForm(
 
         FormFieldCompact(
             label = stringResource(Res.string.name_electricity),
-            value = "",
-            onValueChange = { },
+            value = viewModel.gBillName,
+            onValueChange = {
+                viewModel.gBillName=it
+            },
             maxLength = 20,
             placeholder = stringResource(Res.string.type_here)
         )
@@ -648,8 +663,10 @@ fun OtherElectricityForm(
 
         FormFieldCompact(
             label = stringResource(Res.string.electricity_account_no),
-            value = "",
-            onValueChange = { },
+            value = viewModel.gelecricityno,
+            onValueChange = {
+                viewModel.gelecricityno=it
+            },
             maxLength = 15,
             placeholder = stringResource(Res.string.type_here)
         )
@@ -658,8 +675,10 @@ fun OtherElectricityForm(
 
         FormFieldCompact(
             label = stringResource(Res.string.k_number),
-            value = "",
-            onValueChange = {},
+            value = viewModel.gKNumber,
+            onValueChange = {
+                viewModel.gKNumber=it
+            },
             maxLength = 15,
             inputType = KeyboardType.Number,
             placeholder = stringResource(Res.string.type_here)
@@ -713,6 +732,34 @@ fun IdProofSection(viewModel: KycDetailViewModel) {
     var currentCameraTarget by remember { mutableStateOf("") }
     val idProofTabs = listOf("Aadhaar Card", "Voter ID", "Pan Card")
 
+    LaunchedEffect(
+        viewModel.gAadharFrontPath,
+        viewModel.gAadharBackPath,
+        viewModel.gVoterImagePath,
+        viewModel.gPanImagePath
+    ) {
+
+        // Guarantor Aadhaar Front
+        if (viewModel.gAadharFrontPath.isNotEmpty()) {
+            idAadhaarFrontImage = loadImageFromPath(viewModel.gAadharFrontPath)
+        }
+
+        // Guarantor Aadhaar Back
+        if (viewModel.gAadharBackPath.isNotEmpty()) {
+            idAadhaarBackImage = loadImageFromPath(viewModel.gAadharBackPath)
+        }
+
+        // Guarantor Voter ID
+        if (viewModel.gVoterImagePath.isNotEmpty()) {
+            idVidFrontImage = loadImageFromPath(viewModel.gVoterImagePath)
+        }
+
+        // Guarantor PAN
+        if (viewModel.gPanImagePath.isNotEmpty()) {
+            idPanFrontImage = loadImageFromPath(viewModel.gPanImagePath)
+        }
+    }
+
     Column(
         modifier = Modifier.fillMaxWidth(),
     ) {
@@ -721,31 +768,15 @@ fun IdProofSection(viewModel: KycDetailViewModel) {
 
         Row(
             modifier = Modifier
-                .fillMaxWidth()
-                .horizontalScroll(rememberScrollState()),
-            horizontalArrangement = Arrangement.spacedBy(12.dp)
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             idProofTabs.forEachIndexed { index, label ->
-                Box(
-                    modifier = Modifier
-                        .height(40.dp)
-                        .background(
-                            if (selectedProof == index) Color(0xFF0A84FF) else Color(0xFFEAF2FF),
-                            RoundedCornerShape(20.dp)
-                        )
-                        .clickable { selectedProof = index }
-                        .padding(horizontal = 20.dp),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = label,
-                        fontSize = 12.sp,
-                        maxLines = 1,
-                        textAlign = TextAlign.Center,
-                        fontFamily = FontFamily(Font(Res.font.roboto_regular)),
-                        color = if (selectedProof == index) Color.White else Color.Black
-                    )
-                }
+                KycTabItem(
+                    text = label,
+                    selected = selectedProof == index,
+                    onClick = { selectedProof = index }
+                )
             }
         }
 
@@ -785,7 +816,7 @@ fun IdProofSection(viewModel: KycDetailViewModel) {
                     val bitmap = loadImageFromPath(it)
                     when(currentCameraTarget) {
                         "ID_AADHAAR_FRONT" -> { idAadhaarFrontImage = bitmap; viewModel.setGAadhaarFront(it) }
-                        "ID_AADHAAR_BACK" -> { idAadhaarBackImage = bitmap; viewModel.setAadhaarBackImage(it) }
+                        "ID_AADHAAR_BACK" -> { idAadhaarBackImage = bitmap; viewModel.setGAadhaarBack(it) }
                         "ID_VID_FRONT" -> { idVidFrontImage = bitmap; viewModel.setGVoterImage(it) }
                         "ID_PAN_FRONT" -> { idPanFrontImage = bitmap; viewModel.setGPanImage(it) }
                     }
