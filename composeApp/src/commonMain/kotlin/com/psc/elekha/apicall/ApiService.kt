@@ -59,7 +59,7 @@ class ApiService(private val client: HttpClient) {
     suspend fun getDashboardData(userId: String): HttpResponse {
         return client.get(DASHBOARDDATA) {
             url {
-                parameters.append("userId", "1")
+                parameters.append("userId", userId)
             }
             contentType(ContentType.Application.Json)
         }

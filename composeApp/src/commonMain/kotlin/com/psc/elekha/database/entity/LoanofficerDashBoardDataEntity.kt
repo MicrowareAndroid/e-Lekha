@@ -32,6 +32,13 @@ data class LoanofficerDashBoardDataEntity(
     @ColumnInfo(name = "Due") val Due: Double?,
     @ColumnInfo(name = "PastDue") val PastDue: Double?,
     @ColumnInfo(name = "AmountCollected") val AmountCollected: Int?,
-    @ColumnInfo(name = "Customer") val Customer: Int?
+    @ColumnInfo(name = "Customer") val Customer: Int?,
+    @ColumnInfo(name = "Default") val Default: Int?,
+    @ColumnInfo(name = "Registration") val Registration: Int?,
+    @ColumnInfo(name = "CreditEnquiry") val CreditEnquiry: Int?,
+    @ColumnInfo(name = "Arrear_PAR") val Arrear_PAR: Int?,
+    @ColumnInfo(name = "LoanClosed") val LoanClosed: Int?,
+    @ColumnInfo(name = "GTRDone") val GTRDone: Int?,
+    @ColumnInfo(name = "CaseLoad") val CaseLoad: Int?
 
 )

@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.psc.elekha.apicall.APiState
 import com.psc.elekha.apicall.ApiRepository
+import com.psc.elekha.database.repository.UsersRepository
 import com.psc.elekha.database.viewmodel.CustomerStatusViewModel
 import com.psc.elekha.database.viewmodel.KYCDocCategoryViewModel
 import com.psc.elekha.database.viewmodel.KYCDocConfigurationViewModel
@@ -28,6 +29,7 @@ import com.psc.elekha.database.viewmodel.TabletMenuRoleViewModel
 import com.psc.elekha.database.viewmodel.TabletMenuViewModel
 import com.psc.elekha.database.viewmodel.TrainingGroupStatusViewModel
 import com.psc.elekha.database.viewmodel.UserBranchViewModel
+import com.psc.elekha.database.viewmodel.UserContactDetailViewModel
 import com.psc.elekha.database.viewmodel.UsersViewModel
 import com.psc.elekha.model.MasterRequest
 import com.psc.elekha.response.MasterResponse
@@ -69,6 +71,8 @@ class LoginViewModel(
     private val kycStatusViewModel: KYCStatusViewModel,
     private val kycStatusConditionViewModel: KYCStatusConditionViewModel,
     private val appPreferences: AppPreferences,
+    private val userContactDetailViewModel: UserContactDetailViewModel,
+    private val usersRepository: UsersRepository
 ) : ViewModel() {
 
     private val _loginState = MutableStateFlow<APiState>(APiState.idle)
@@ -160,7 +164,9 @@ class LoginViewModel(
                     appPreferences.putString(AppSP.password, password)
                     body.let {
                         usersViewModel.insertAllUsers(it.user)
-                        appPreferences.putString(AppSP.userId, it.user.firstOrNull()?.UserId ?: "")
+                        val matchedUser = it.user.find { it.UserName.equals(username, ignoreCase = true) && it.Password == password }
+                        val userId: String = matchedUser?.UserId?:""
+                        appPreferences.putString(AppSP.userId, userId)
                         tabletMenuViewModel.insertAllTabletMenu(it.tabletMenu)
                         tabletMenuRoleViewModel.insertAllTabletMenuRole(it.tabletMenuRole)
                         mstStateViewModel.insertAllState(it.state)
@@ -184,8 +190,9 @@ class LoginViewModel(
                         kycStatusConditionViewModel.insertAllConditions(it.kycStatusCondition)
                         mstComboBoxNViewModel.insertAllComboBox(it.mstComboBoxN)
                         mstLoanProductViewModel.insertAllLoanProduct(it.mstLoanProduct)
+                        userContactDetailViewModel.insertAllUserContactDetail(it.userContactDetails)
+                        _loginState.value = APiState.success("Login successfully")
                     }
-                    _loginState.value = APiState.success("Login successfully")
 
                 } else if (code == 401) {
                     _loginState.value = APiState.error(getString(Res.string.something_wentwrong))

@@ -118,37 +118,39 @@ fun HomeScreen(
             painterResource(Res.drawable.activecustomer)
         ),
         DashboardItem(
-            "",
+            returnIntToString(dashboardData.firstOrNull()?.Default ?: 0),
             stringResource(Res.string.home_default),
             painterResource(Res.drawable.default)
         ),
         DashboardItem(
-            returnIntToString(dashboardData.firstOrNull()?.RegisteredCustomer ?: 0),
+            returnIntToString(dashboardData.firstOrNull()?.Registration ?: 0),
             stringResource(Res.string.home_registration),
             painterResource(Res.drawable.registration_top)
         ),
         DashboardItem(
-            "", stringResource(Res.string.home_credit), painterResource(
+            returnIntToString(dashboardData.firstOrNull()?.CreditEnquiry ?: 0),
+            stringResource(Res.string.home_credit),
+            painterResource(
                 Res.drawable.credit_enquiry
             )
         ),
         DashboardItem(
-            returnIntToString(dashboardData.firstOrNull()?.CustomerInArrear_ThisMonth ?: 0),
+            returnIntToString(dashboardData.firstOrNull()?.Arrear_PAR ?: 0),
             stringResource(Res.string.home_arrear),
             painterResource(Res.drawable.arrear)
         ),
         DashboardItem(
-            "",
+            returnIntToString(dashboardData.firstOrNull()?.LoanClosed ?: 0),
             stringResource(Res.string.home_closed),
             painterResource(Res.drawable.loan_closed)
         ),
         DashboardItem(
-            returnIntToString(dashboardData.firstOrNull()?.LOGTR ?: 0),
+            returnIntToString(dashboardData.firstOrNull()?.GTRDone ?: 0),
             stringResource(Res.string.home_gtr),
             painterResource(Res.drawable.gtr_done)
         ),
         DashboardItem(
-            returnIntToString(dashboardData.firstOrNull()?.LOCaseLoad ?: 0),
+            returnIntToString(dashboardData.firstOrNull()?.CaseLoad ?: 0),
             stringResource(Res.string.home_case),
             painterResource(Res.drawable.case_load)
         )

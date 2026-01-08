@@ -12,13 +12,19 @@ interface UsersDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAllUsers(usersEntity: List<UsersEntity>)
 
-    @Query("Select * from Users where UserName=:userName and Password=:pwd")
+    @Query("Select * from Users where lower(UserName)=lower(:userName) and Password=:pwd")
     suspend fun getAllUsers(userName: String, pwd: String): List<UsersEntity>
+
+    @Query("Select ContactNumber from UserContactDetails where lower(UserId)=lower(:userID)")
+    suspend fun getUserContact(userID: String): String?
+
+    @Query("Select UserId from Users where lower(UserName)=lower(:userName)")
+    suspend fun getUserID(userName: String): String
 
     @Query("Select Count(*) from Users")
     suspend fun getAllUsersCount(): Int?
 
-    @Query("Select * from Users where UserName=:UserName and Password=:Password and IsUserDisabled=0")
+    @Query("Select * from Users where lower(UserName)=lower(:UserName) and Password=:Password and IsUserDisabled=0")
     suspend fun getUserDetails(UserName: String, Password: String): List<UsersEntity>
 
     @Query("Delete from Users")
