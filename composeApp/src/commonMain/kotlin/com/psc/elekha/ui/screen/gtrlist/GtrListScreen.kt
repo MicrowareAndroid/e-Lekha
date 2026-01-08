@@ -272,7 +272,7 @@ fun GtrListScreen(
 
                         Button(
                             onClick = {
-                                viewModel.getGTRData("Bmggr", "9414258269", "", 0)
+                                viewModel.getGTRData("Bmggr", "9414258269", "623ED612-3764-40E2-88C7-5C1381EC5346", 340)
                             },
                             modifier = Modifier
                                 .fillMaxWidth()
