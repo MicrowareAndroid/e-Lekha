@@ -15,6 +15,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -66,6 +68,7 @@ import com.psc.elekha.utils.ReusableTextViewes
 import com.psc.elekha.utils.ReusableTopBar
 import com.psc.elekha.utils.RouteName
 import com.psc.elekha.utils.loadImageFromPath
+import com.psc.elekha.utils.returnIntToString
 import e_lekha.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.painterResource
@@ -171,7 +174,7 @@ fun RepaymentDialog(
                                 )
                                 Spacer(modifier = Modifier.width(Dimens.fivedp))
                                 ReusableTextViewBlackCard(
-                                    repaymentData.MobileNo ?: "",
+                                    repaymentData.ContactNo ?: "",
                                     fontSize = 13, modifier = Modifier.wrapContentWidth()
                                 )
                                 Spacer(modifier = Modifier.width(Dimens.fivedp))
@@ -179,19 +182,19 @@ fun RepaymentDialog(
                                     onClick = {},
                                     modifier = Modifier
                                         .wrapContentWidth()
-                                        .height(40.dp),
+                                        .height(25.dp),
 
                                     colors = ButtonDefaults.buttonColors(
                                         containerColor = btn_color,
                                         contentColor = Color.Black
                                     ),
-                                    shape = RoundedCornerShape(1.dp)
+                                    shape = RoundedCornerShape(5.dp)
                                 ) {
                                     Icon(
                                         painter = painterResource(Res.drawable.call),
                                         tint = blue,
                                         contentDescription = stringResource(Res.string.front_image),
-                                        modifier = Modifier.size(15.dp)
+                                        modifier = Modifier.size(20.dp)
                                     )
                                 }
                             }
@@ -225,7 +228,8 @@ fun RepaymentDialog(
                                     )
                                     Spacer(modifier = Modifier.width(Dimens.fivedp))
                                     ReusableTextViewBlackCard(
-                                        (repaymentData.Total?.toInt()?.toString() ?: "0"),
+                                        (repaymentData.DisbursementAmount?.toInt()?.toString()
+                                            ?: "0"),
                                         fontSize = 13,
                                         modifier = Modifier.wrapContentWidth()
                                     )
@@ -262,7 +266,7 @@ fun RepaymentDialog(
                                     )
                                     Spacer(modifier = Modifier.width(Dimens.fivedp))
                                     ReusableTextViewBlackCard(
-                                        "",
+                                        (repaymentData.WeekInArrea?.toInt()?.div(4)?.toString() ?: "0"),
                                         fontSize = 13, modifier = Modifier.wrapContentWidth()
                                     )
                                 }
@@ -294,7 +298,7 @@ fun RepaymentDialog(
                                 )
                                 Spacer(modifier = Modifier.width(Dimens.fivedp))
                                 ReusableTextViewBlackCard(
-                                    "",
+                                    returnIntToString(repaymentData.PreClosureAmt ?: 0),
                                     fontSize = 13, modifier = Modifier.wrapContentWidth()
                                 )
                             }
@@ -328,7 +332,7 @@ fun RepaymentDialog(
                                     )
                                     Spacer(modifier = Modifier.width(Dimens.fivedp))
                                     ReusableTextViewBlackCard(
-                                        (repaymentData.WeekInArrear?.toInt()?.toString() ?: "0"),
+                                        (repaymentData.WeekInArrea?.toInt()?.toString() ?: "0"),
                                         fontSize = 13, modifier = Modifier.wrapContentWidth()
                                     )
                                 }
@@ -391,7 +395,7 @@ fun RepaymentDialog(
                     Spacer(modifier = Modifier.height(Dimens.tendp))
                     Column(
                         modifier = Modifier.fillMaxWidth()
-                            .padding(horizontal =Dimens.tendp)
+                            .padding(horizontal = Dimens.tendp)
                     ) {
                         ReusableTextViewes(stringResource(Res.string.payment_details))
                         Spacer(modifier = Modifier.height(Dimens.tendp))

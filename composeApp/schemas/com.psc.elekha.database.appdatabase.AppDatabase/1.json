@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "5efc20500c658f766464db26ada378a0",
+    "identityHash": "a16fd27a234bf91499bc8e262726274f",
     "entities": [
       {
         "tableName": "CustomerStatus",
@@ -2560,7 +2560,7 @@
       },
       {
         "tableName": "LoanRepayment",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`GUID` TEXT NOT NULL, `CenterID` INTEGER, `CustomerID` TEXT, `CustomerName` TEXT, `SpouseName` TEXT, `DisbursementAmount` REAL, `DisbursementDate` TEXT, `GroupName` TEXT, `LW` INTEGER, `LoanOutstandingAsOnDate` REAL, `WeekInArrear` REAL, `PastDue` REAL, `CurrentDue` REAL, `Due` REAL, `Advance` REAL, `Total` REAL, `WorkingDate` TEXT, `EMIDueDate` TEXT, `EMI` REAL, `MaxPayment` REAL, `MandateApproved` INTEGER, `LoanCollectionFrequency` INTEGER, `PaymentType` INTEGER, `NACHStatus` INTEGER, `MobileNo` TEXT, `IsUploaded` INTEGER, `IsEdited` INTEGER, `PaidDate` TEXT, `IsEmiReceived` INTEGER, `LoanPlace` TEXT, `LoanLat` REAL, `LoanLong` REAL, `UTRNumber` TEXT, PRIMARY KEY(`GUID`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`GUID` TEXT NOT NULL, `CenterID` INTEGER, `CustomerID` TEXT, `CustomerName` TEXT, `SpouseName` TEXT, `DisbursementAmount` REAL, `DisbursementDate` TEXT, `GroupName` TEXT, `LW` INTEGER, `LoanOutstandingAsOnDate` REAL, `WeekInArrea` REAL, `PastDue` REAL, `CurrentDue` REAL, `Due` REAL, `Adavance` REAL, `Total` REAL, `WorkingDate` TEXT, `EMIDueDate` TEXT, `EMI` REAL, `MaxPayment` REAL, `MandateApproved` INTEGER, `LoanCollectionFrequency` INTEGER, `PaymentType` INTEGER, `NACHStatus` INTEGER, `ContactNo` TEXT, `IsUploaded` INTEGER, `IsEdited` INTEGER, `PaidDate` TEXT, `IsEmiReceived` INTEGER, `LoanPlace` TEXT, `LoanLat` REAL, `LoanLong` REAL, `UTRNumber` TEXT, `PreClosureAmt` INTEGER, PRIMARY KEY(`GUID`))",
         "fields": [
           {
             "fieldPath": "GUID",
@@ -2614,8 +2614,8 @@
             "affinity": "REAL"
           },
           {
-            "fieldPath": "WeekInArrear",
-            "columnName": "WeekInArrear",
+            "fieldPath": "WeekInArrea",
+            "columnName": "WeekInArrea",
             "affinity": "REAL"
           },
           {
@@ -2634,8 +2634,8 @@
             "affinity": "REAL"
           },
           {
-            "fieldPath": "Advance",
-            "columnName": "Advance",
+            "fieldPath": "Adavance",
+            "columnName": "Adavance",
             "affinity": "REAL"
           },
           {
@@ -2684,8 +2684,8 @@
             "affinity": "INTEGER"
           },
           {
-            "fieldPath": "MobileNo",
-            "columnName": "MobileNo",
+            "fieldPath": "ContactNo",
+            "columnName": "ContactNo",
             "affinity": "TEXT"
           },
           {
@@ -2727,6 +2727,11 @@
             "fieldPath": "UTRNumber",
             "columnName": "UTRNumber",
             "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "PreClosureAmt",
+            "columnName": "PreClosureAmt",
+            "affinity": "INTEGER"
           }
         ],
         "primaryKey": {
@@ -4648,7 +4653,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '5efc20500c658f766464db26ada378a0')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a16fd27a234bf91499bc8e262726274f')"
     ]
   }
 }

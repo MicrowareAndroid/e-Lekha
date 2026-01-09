@@ -108,7 +108,7 @@ fun RepaymentItemCard(
                         )
                         Spacer(modifier = Modifier.width(4.dp))
                         ReusableTextViewBlackCard(
-                            (item.Total?.toInt()?.toString() ?: "0"),
+                            (item.DisbursementAmount?.toInt()?.toString() ?: "0"),
                             fontSize = 13,
                             modifier = Modifier.weight(1f)
                         )

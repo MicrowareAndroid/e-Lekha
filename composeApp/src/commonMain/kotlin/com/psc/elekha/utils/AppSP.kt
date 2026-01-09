@@ -19,5 +19,6 @@ object AppSP {
     var filterCustID="filterCustID"
     var LoanRepaymentGUID="LoanRepaymentGUID"
     var MovableAssetsGuid="MovableAssetsGuid"
+    var DashboardDownloaddate="DashboardDownloaddate"
 
 }
