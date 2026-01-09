@@ -24,6 +24,7 @@ import com.psc.elekha.database.entity.TabletMenuEntity
 import com.psc.elekha.database.entity.TabletMenuRoleEntity
 import com.psc.elekha.database.entity.TrainingGroupStatusEntity
 import com.psc.elekha.database.entity.UserBranchEntity
+import com.psc.elekha.database.entity.UserContactDetailEntity
 import com.psc.elekha.database.entity.UsersEntity
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -109,6 +110,9 @@ data class MasterResponse(
 
     @SerialName("CustomerLoanProduct")
     val mstLoanProduct: List<MSTLoanProductEntity> = emptyList(),
+
+    @SerialName("UserContactDetails")
+    val userContactDetails: List<UserContactDetailEntity> = emptyList()
 
 
 

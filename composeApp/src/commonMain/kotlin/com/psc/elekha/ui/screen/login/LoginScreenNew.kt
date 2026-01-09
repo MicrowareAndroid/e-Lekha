@@ -22,6 +22,8 @@ import com.psc.elekha.apicall.APiState
 import com.psc.elekha.database.viewmodel.UsersViewModel
 import com.psc.elekha.getAppVersion
 import com.psc.elekha.ui.theme.*
+import com.psc.elekha.utils.AppPreferences
+import com.psc.elekha.utils.AppSP
 import com.psc.elekha.utils.CustomAlertDialog
 import com.psc.elekha.utils.PasswordField
 import com.psc.elekha.utils.ProgressDialog
@@ -34,6 +36,7 @@ import e_lekha.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
 
 
@@ -51,7 +54,7 @@ fun LoginScreenNew(navController: NavController) {
     val loginState = viewModel.loginState.collectAsState().value
     val verifyState = viewModel.verifyState.collectAsState().value
     var showDialog by remember { mutableStateOf(false) }
-    val userList by userViewModel.userList.collectAsState()
+    val appPreferences: AppPreferences = koinInject()
 
     LaunchedEffect(loginState) {
         when (loginState) {
@@ -63,7 +66,9 @@ fun LoginScreenNew(navController: NavController) {
             is APiState.success -> {
                 showProgress = false
                 showOtpField = true
-                viewModel.getOTP("9821490996")
+                userViewModel.getUserContact(appPreferences.getString(AppSP.userId)!!) { contact ->
+                    viewModel.getOTP(contact?:"")
+                }
             }
 
             is APiState.error -> {
@@ -112,13 +117,6 @@ fun LoginScreenNew(navController: NavController) {
                 )
             )
     ) {
-        /*Image(
-            painter = painterResource(Res.drawable.background),
-            contentDescription = null,
-            modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.FillBounds
-        )*/
-
         Scaffold(
             modifier = Modifier.fillMaxSize(),
             containerColor = Color.Transparent,
@@ -273,12 +271,17 @@ fun LoginScreenNew(navController: NavController) {
                                                 showDialog = true
                                                 dialogMessage = "Please Enter Username & Password"
                                             } else {
-                                                userViewModel.getUserDetails(username,password)
-                                                if (userList.isNotEmpty()) {
-                                                    showOtpField = true
-                                                    viewModel.getOTP("9821490996")
-                                                } else {
-                                                    viewModel.getAuthentication(username, password)
+                                                userViewModel.getUserDetails(username,password){ userList ->
+                                                    if (userList.isNotEmpty()) {
+                                                        showOtpField = true
+                                                        userViewModel.getUserContact(userList.firstOrNull()?.UserId?:"") { contact ->
+                                                            appPreferences.putString(AppSP.userId,userList.firstOrNull()?.UserId?:"")
+                                                            viewModel.getOTP(contact?:"")
+                                                        }
+                                                    } else {
+                                                        viewModel.getAuthentication(username, password)
+                                                    }
+
                                                 }
                                             }
                                         } else {
@@ -286,7 +289,9 @@ fun LoginScreenNew(navController: NavController) {
                                                 showDialog = true
                                                 dialogMessage = "Please Enter Valid OTP"
                                             } else {
-                                                viewModel.verifyOTP("9821490996", otp)
+                                                userViewModel.getUserContact(appPreferences.getString(AppSP.userId)!!) { contact ->
+                                                    viewModel.verifyOTP(contact?:"", otp)
+                                                }
                                             }
                                         }
                                     },

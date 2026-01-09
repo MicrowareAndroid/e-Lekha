@@ -22,6 +22,13 @@ class UsersRepository(
         return usersDao.getAllUsers(userName,pwd)
     }
 
+    suspend fun getUserContact(userID: String): String? {
+        return usersDao.getUserContact(userID)
+    }
+    suspend fun getUserID(userName: String): String {
+        return usersDao.getUserID(userName)
+    }
+
     // Get total users count
     suspend fun getAllUsersCount(): Int? {
         return usersDao.getAllUsersCount()

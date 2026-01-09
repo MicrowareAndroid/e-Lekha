@@ -118,7 +118,6 @@ val viewmodelModule = module {
     viewModelOf(::MovableAssetsViewModel)
     viewModel {
         LoginViewModel(
-
             mstComboBoxNViewModel = get(),
             apiRepository = get(),
             usersViewModel = get(),
@@ -145,6 +144,8 @@ val viewmodelModule = module {
             kycStatusConditionViewModel = get(),
             mstLoanProductViewModel = get(),
             appPreferences = get(),
+            userContactDetailViewModel = get(),
+            usersRepository = get()
             imageDetailViewModel = get()
         )
     }
