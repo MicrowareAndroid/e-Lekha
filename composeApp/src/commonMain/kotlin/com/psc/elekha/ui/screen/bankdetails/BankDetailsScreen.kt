@@ -1,5 +1,4 @@
 package com.psc.elekha.ui.screen.bankdetails
-
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -33,10 +32,10 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import coil3.Uri
 import com.psc.elekha.ui.theme.blue
 import com.psc.elekha.ui.theme.textview_color
 import com.psc.elekha.utils.CameraPicker
+import com.psc.elekha.utils.CommonDivider
 import com.psc.elekha.utils.CommonSaveButton
 import com.psc.elekha.utils.CustomAlertDialog
 import com.psc.elekha.utils.FormFieldCompact
@@ -55,10 +54,8 @@ import e_lekha.composeapp.generated.resources.camera
 import e_lekha.composeapp.generated.resources.customer_bank_details
 import e_lekha.composeapp.generated.resources.customer_name_in_bank_dairy
 import e_lekha.composeapp.generated.resources.ifsc_code
-import e_lekha.composeapp.generated.resources.next
 import e_lekha.composeapp.generated.resources.passbook_image
 import e_lekha.composeapp.generated.resources.select_customer_submit
-import e_lekha.composeapp.generated.resources.type_here
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
@@ -99,6 +96,9 @@ fun BankDetailsScreen(navController: NavController) {
 
                 ReusableTextViewes(
                     text = stringResource(Res.string.customer_bank_details)
+                )
+                CommonDivider(
+                    modifier = Modifier.fillMaxWidth()
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))

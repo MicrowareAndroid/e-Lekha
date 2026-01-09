@@ -1,5 +1,6 @@
 package com.psc.elekha.utils
 
+import LoanRepaymentUpload
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -172,6 +173,12 @@ import com.psc.elekha.model.NameParts
 import com.psc.elekha.ui.theme.greys
 import com.psc.elekha.ui.theme.homegtrColor
 import com.psc.elekha.ui.theme.homerepaymentColor
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonArray
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonNull
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.JsonPrimitive
 
 @Composable
 fun ReusableTextView(
@@ -3316,3 +3323,27 @@ fun CommonDivider(
         thickness = thickness.dp
     )
 }
+
+fun anyToJsonElement(value: Any?): JsonElement {
+    return when (value) {
+        null -> JsonNull
+        is String -> JsonPrimitive(value)
+        is Number -> JsonPrimitive(value)
+        is Boolean -> JsonPrimitive(value)
+        is Map<*, *> -> JsonObject(value.entries.associate { (k, v) ->
+            k.toString() to anyToJsonElement(v)
+        })
+        is List<*> -> JsonArray(value.map { anyToJsonElement(it) })
+        else -> JsonPrimitive(value.toString())
+    }
+}
+
+suspend fun buildLoanRepaymentJson(mapper: LoanRepaymentUpload): String {
+    val data = mapper.getUploadInsertDataAsMap()
+    val jsonArray = JsonArray(data.map { map ->
+        JsonObject(map.mapValues { (_, value) -> anyToJsonElement(value) })
+    })
+    val rootObject = JsonObject(mapOf("LoanRepayment" to jsonArray))
+    return Json.encodeToString(JsonObject.serializer(), rootObject)
+}
+

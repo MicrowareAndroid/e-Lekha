@@ -1,6 +1,7 @@
 package com.psc.elekha.apicall
 
 
+import com.psc.elekha.database.entity.LoanRepaymentEntity
 import com.psc.elekha.model.GtrRequest
 import com.psc.elekha.model.MasterRequest
 import com.psc.elekha.model.RegistrationUploadRequest
@@ -13,8 +14,8 @@ class ApiRepository(private val apiService: ApiService) {
     suspend fun getMaster(masterRequest: MasterRequest): HttpResponse = apiService.getMaster(masterRequest)
     suspend fun getDashboardData(userId: String): HttpResponse = apiService.getDashboardData(userId)
     suspend fun getLoanRepayment(masterRequest: MasterRequest): HttpResponse = apiService.getLoanRepayment(masterRequest)
-
     suspend fun getGTRData(gtrRequest: GtrRequest): HttpResponse = apiService.getGTRData(gtrRequest)
+    suspend fun uploadLoanRepayment(list: List<LoanRepaymentEntity>): HttpResponse = apiService.uploadLoanRepayment(list)
     suspend fun uploadRegistrationData(registrationRequest: RegistrationUploadRequest): HttpResponse = apiService.uploadRegistration(registrationRequest)
 
 }

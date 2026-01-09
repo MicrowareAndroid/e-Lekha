@@ -1,6 +1,7 @@
 package com.psc.elekha.apicall
 
 
+import com.psc.elekha.database.entity.LoanRepaymentEntity
 import com.psc.elekha.model.GtrRequest
 import com.psc.elekha.model.MasterRequest
 import com.psc.elekha.model.RegistrationUploadRequest
@@ -38,6 +39,7 @@ class ApiService(private val client: HttpClient) {
             contentType(ContentType.Application.Json)
         }
     }
+    
     suspend fun verifyOTP(mobileNo: String,enteredOTP: String): HttpResponse {
         return client.get(VALIDATEOTP) {
             url {
@@ -57,6 +59,7 @@ class ApiService(private val client: HttpClient) {
             contentType(ContentType.Application.Json)
         }
     }
+    
     suspend fun getDashboardData(userId: String): HttpResponse {
         return client.get(DASHBOARDDATA) {
             url {
@@ -86,8 +89,18 @@ class ApiService(private val client: HttpClient) {
             }
             contentType(ContentType.Application.Json)
         }
-    }
 
+    }
+    
+    suspend fun uploadLoanRepayment(
+        list: List<LoanRepaymentEntity>
+    ): HttpResponse
+    {
+        return client.post(LOAN_REPAYMENT) {
+            contentType(ContentType.Application.Json)
+            setBody(list)
+        }
+    }
 
     suspend fun uploadRegistration(
         request: RegistrationUploadRequest
