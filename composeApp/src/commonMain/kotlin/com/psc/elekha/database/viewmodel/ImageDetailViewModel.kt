@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.psc.elekha.database.entity.ImageDetailEntity
 import com.psc.elekha.database.repository.ImageDetailRepository
+import com.psc.elekha.utils.AppPreferences
+import com.psc.elekha.utils.AppSP
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -11,7 +13,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class ImageDetailViewModel(
-    private val repository: ImageDetailRepository
+    private val repository: ImageDetailRepository,
+    val appPreferences: AppPreferences
 ) : ViewModel() {
 
     private val _allImages = MutableStateFlow<List<ImageDetailEntity>>(emptyList())
@@ -70,6 +73,10 @@ class ImageDetailViewModel(
         }
     }
 
+    suspend fun loadImageDetailsOnce(refFieldName: Int): List<ImageDetailEntity>? {
+        return repository.getImageDetail(refFieldName)
+    }
+
     // --------------------------------------------------------
     // LOAD RENAMED IMAGE
     // --------------------------------------------------------
@@ -77,6 +84,10 @@ class ImageDetailViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             _renameImage.value = repository.getRenameImage(refFieldName)
         }
+    }
+
+    suspend fun getRenameImageOnce(refFieldName: Int): String? {
+        return repository.getRenameImage(refFieldName)
     }
 
 
@@ -92,5 +103,9 @@ class ImageDetailViewModel(
             repository.deleteAllImageDetail()
             _allImages.value = emptyList()
         }
+    }
+
+    fun saveImageFieldNameSharePreference(imageName: String) {
+        appPreferences.putString(AppSP.sImageFieldName, imageName)
     }
 }

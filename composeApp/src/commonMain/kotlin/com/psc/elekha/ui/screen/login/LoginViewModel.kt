@@ -202,9 +202,11 @@ class LoginViewModel(
                         kycStatusConditionViewModel.insertAllConditions(it.kycStatusCondition)
                         mstComboBoxNViewModel.insertAllComboBox(it.mstComboBoxN)
                         mstLoanProductViewModel.insertAllLoanProduct(it.mstLoanProduct)
+
+                        imageDetailViewModel.insertAllImageDetail(it.imageDetailEntity)
+
                         userContactDetailViewModel.insertAllUserContactDetail(it.userContactDetails)
                         _loginState.value = APiState.success("Login successfully")
-//                        imageDetailViewModel.insertAllImageDetail(it.imageDetail)
                     }
 
                 } else if (code == 401) {

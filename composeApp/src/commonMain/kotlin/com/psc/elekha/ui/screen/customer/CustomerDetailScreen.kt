@@ -24,29 +24,23 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.psc.elekha.database.viewmodel.ImageDetailViewModel
 import com.psc.elekha.database.viewmodel.MSTComboBox_NViewModel
 import com.psc.elekha.database.viewmodel.MSTLoanProductViewModel
-import com.psc.elekha.ui.screen.gtrlist.BranchItem
+import com.psc.elekha.expectfile.loadImageFromLocalOrServer
+import com.psc.elekha.expectfile.resolveImagePath
 import com.psc.elekha.ui.screen.gtrlist.GtrViewModel
-import com.psc.elekha.ui.screen.repayment.RepaymentViewModel
 import com.psc.elekha.ui.theme.LightSkyBlue
-import com.psc.elekha.ui.theme.LightTeal
-import com.psc.elekha.ui.theme.PrimaryDark
 import com.psc.elekha.ui.theme.appleblue
 import com.psc.elekha.ui.theme.black
 import com.psc.elekha.ui.theme.blue
-import com.psc.elekha.ui.theme.editext_bg_color
-import com.psc.elekha.ui.theme.homedatareportsColor
 import com.psc.elekha.ui.theme.text_fiiled_color
-import com.psc.elekha.ui.theme.toolbar_color
-import com.psc.elekha.ui.theme.white
+import com.psc.elekha.utils.AppSP
 import com.psc.elekha.utils.CameraPicker
-import com.psc.elekha.utils.CommonActionButtons
-import com.psc.elekha.utils.CommonDivider
+import com.psc.elekha.utils.CameraPickerNew
 import com.psc.elekha.utils.CommonSingleButtonsBottomString
 import com.psc.elekha.utils.CustomAlertDialog
 import com.psc.elekha.utils.Dimens
-import com.psc.elekha.utils.FillDynamicSpinner
 import com.psc.elekha.utils.FillDynamicSpinnerespt
 
 import com.psc.elekha.utils.FormFieldCompact
@@ -61,6 +55,7 @@ import com.psc.elekha.utils.ReusableTopBar
 import com.psc.elekha.utils.loadImageFromPath
 
 import e_lekha.composeapp.generated.resources.*
+import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -72,8 +67,11 @@ fun CustomerDetailScreen(
     navController: NavHostController,
 ) {
     val viewModel = koinViewModel<GtrViewModel>()
-    var mSTLoanProductViewModel=koinViewModel<MSTLoanProductViewModel>()
+    val mSTLoanProductViewModel = koinViewModel<MSTLoanProductViewModel>()
+    val mstComboViewModel = koinViewModel<MSTComboBox_NViewModel>()
+    val imageDetailViewModel = koinViewModel<ImageDetailViewModel>()
     val loanRecommendationList by mSTLoanProductViewModel.loanRecommendation.collectAsState()
+    val purposeList by mstComboViewModel.purposeValue.collectAsState()
     var selectedScreen by remember { mutableStateOf("New Customer") }
 
     var openCameraCustomer by remember { mutableStateOf(false) }
@@ -84,11 +82,24 @@ fun CustomerDetailScreen(
     var guarantorImgBitmap by remember { mutableStateOf<ImageBitmap?>(null) }
     var eMeterImgBitmap by remember { mutableStateOf<ImageBitmap?>(null) }
     var houseVerificationImgBitmap by remember { mutableStateOf<ImageBitmap?>(null) }
+    val scope = rememberCoroutineScope()
+
+
+    val customerImageName by remember { derivedStateOf { viewModel.customerImageName } }
 
     LaunchedEffect(Unit) {
 
         mSTLoanProductViewModel.loadLoanAmount()
+        mstComboViewModel.loadLookUpValues(lookupTypeFk = 7)
         viewModel.loadSavedData()
+
+        if (customerImageName.isNotEmpty()) {
+            loadImageFromLocalOrServer(customerImageName) { image ->
+                image?.toImageBitmap()?.let { img ->
+                    customerImgBitmap = img as ImageBitmap
+                }
+            }
+        }
     }
 
     Scaffold(
@@ -274,7 +285,23 @@ fun CustomerDetailScreen(
                                 modifier = Modifier
                                     .size(32.dp)
                                     .clickable {
-                                        openCameraCustomer = true
+                                        /*val imageName = imageDetailViewModel.getRenameImageOnce(1)
+                                        if (imageName != null && imageName.isNotEmpty()) {
+                                            appPreferences.putString(AppSP.sImageFieldName, imageName)
+                                        }
+                                        openCameraCustomer = true*/
+
+                                        scope.launch {
+                                            val imageName =
+                                                imageDetailViewModel.getRenameImageOnce(1)
+
+                                            if (!imageName.isNullOrBlank()) {
+                                                imageDetailViewModel.saveImageFieldNameSharePreference(
+                                                    imageName
+                                                )
+                                                openCameraCustomer = true
+                                            }
+                                        }
                                     }
                             )
                         }
@@ -413,13 +440,16 @@ fun CustomerDetailScreen(
                                 modifier = Modifier.width(120.dp),
                             )
                             Spacer(modifier = Modifier.width(7.dp))
-                            FormFieldCompact(
-                                value = "Business Expansion",
-                                onValueChange = {},
-                                isReadable = true,
-                                isEnable = false,
-                                placeholder = "",
-                                modifier = Modifier.weight(1f)
+                            FillDynamicSpinnerespt(
+                                label = "",
+                                options = purposeList,
+                                selectedOption = viewModel.purposeId,
+                                onOptionSelected = { viewModel.purposeId = it },
+                                focusRequester = viewModel.focusRequesterPurposeId,
+                                bringIntoViewRequester = viewModel.bringIntoViewRequesterPurposeId,
+                                getOptionId = { it.ID },
+                                getOptionLabel = { it.Value.toString() },
+                                modifier = Modifier.fillMaxWidth()
                             )
                         }
                         Spacer(modifier = Modifier.height(Dimens.tendp))
@@ -468,7 +498,7 @@ fun CustomerDetailScreen(
                                 value = "EB12345",
                                 onValueChange = {},
                                 isReadable = true,
-                                isEnable = false,
+                                isEnable = true,
                                 placeholder = "",
                                 modifier = Modifier.weight(1f)
                             )
@@ -711,12 +741,12 @@ fun CustomerDetailScreen(
         }
 
         if (openCameraCustomer) {
-            CameraPicker(
+            CameraPickerNew(
                 openCamera = openCameraCustomer,
-                onImagePicked = { path ->
-                    path?.let {
-                        customerImgBitmap = loadImageFromPath(it)
-                        viewModel.setCustomerImage(it)
+                onImagePicked = { imageName, path ->
+                    if (path != null && imageName != null) {
+                        customerImgBitmap = loadImageFromPath(path)
+                        viewModel.setCustomerImage(imageName, path)
                     }
                     openCameraCustomer = false
                 }
