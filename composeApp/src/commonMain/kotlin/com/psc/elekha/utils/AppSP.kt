@@ -12,11 +12,12 @@ object AppSP {
     var userId = "userId"
     var branchId = "branchId"
 
-    var familymemberGuid="familymemberGuid"
-    var mfiGuid="mfiGuid"
-    var filterVlgID="filterVlgID"
-    var filterCenterID="filterCenterID"
-    var filterCustID="filterCustID"
-    var LoanRepaymentGUID="LoanRepaymentGUID"
+    var familymemberGuid = "familymemberGuid"
+    var mfiGuid = "mfiGuid"
+    var filterVlgID = "filterVlgID"
+    var filterCenterID = "filterCenterID"
+    var filterCustID = "filterCustID"
+    var LoanRepaymentGUID = "LoanRepaymentGUID"
+    var sImageFieldName = "sImageFieldName"
 
 }

@@ -6,24 +6,21 @@ import android.app.Activity
 import android.app.Application
 
 import android.content.pm.PackageManager
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.ContextCompat
 
 import android.content.Context
 import android.content.ContextWrapper
 import android.content.Intent
 import android.database.sqlite.SQLiteDatabase
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
 import android.widget.Toast
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
-import androidx.activity.result.ActivityResultLauncher
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.core.app.ActivityCompat
 import androidx.core.content.FileProvider
 
@@ -32,7 +29,12 @@ import androidx.room.RoomDatabase
 import com.psc.elekha.database.appdatabase.AppDatabase
 import com.psc.elekha.database.appdatabase.dbFileName
 import com.psc.elekha.utils.AppPermission
+import com.psc.elekha.utils.Config
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlinx.coroutines.withContext
 import org.koin.mp.KoinPlatform
 import java.io.File
 import java.io.FileInputStream
@@ -275,6 +277,61 @@ fun shareFile(
     } catch (e: Exception) {
         e.printStackTrace()
         Toast.makeText(context, "Failed to share: ${e.message}", Toast.LENGTH_SHORT).show()
+    }
+}
+
+
+actual fun resolveImagePath(imageName: String): String? {
+    if (imageName.isBlank()) return null
+
+    val context = AndroidContextProvider.context
+    val file = File(context.filesDir, imageName)
+
+    return if (file.exists()) file.absolutePath else null
+}
+
+actual class PlatformImage(val bitmap: ImageBitmap) {
+    actual fun toImageBitmap(): Any? = bitmap
+}
+
+actual fun loadImageFromLocalOrServer(
+    imageName: String,
+    onLoaded: (PlatformImage?) -> Unit
+) {
+    val scope = MainScope()
+    scope.launch {
+        if (imageName.isBlank()) {
+            onLoaded(null)
+            return@launch
+        }
+
+        // Try local storage
+        val localPath = resolveImagePath(imageName)
+        if (localPath != null) {
+            val bitmap = BitmapFactory.decodeFile(localPath).asImageBitmap()
+            onLoaded(PlatformImage(bitmap))
+            return@launch
+        }
+
+        // Download from server
+        try {
+            val url = "${Config.BASE_IMAGE_URL}$imageName"
+            val bytes = withContext(Dispatchers.IO) {
+                java.net.URL(url).readBytes()
+            }
+
+            //Save to internal storage
+            val context = AndroidContextProvider.context
+            val file = File(context.filesDir, imageName)
+            file.outputStream().use { it.write(bytes) }
+
+            // Load bitmap
+            val bitmap = BitmapFactory.decodeFile(file.absolutePath).asImageBitmap()
+            onLoaded(PlatformImage(bitmap))
+        } catch (e: Exception) {
+            e.printStackTrace()
+            onLoaded(null)
+        }
     }
 }
 

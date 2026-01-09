@@ -142,6 +142,7 @@ val viewmodelModule = module {
             kycStatusViewModel = get(),
             kycStatusConditionViewModel = get(),
             mstLoanProductViewModel = get(),
+            imageDetailViewModel = get(),
             appPreferences = get()
         )
     }

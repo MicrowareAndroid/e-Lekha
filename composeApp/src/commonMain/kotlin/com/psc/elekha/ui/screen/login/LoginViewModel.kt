@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.psc.elekha.apicall.APiState
 import com.psc.elekha.apicall.ApiRepository
 import com.psc.elekha.database.viewmodel.CustomerStatusViewModel
+import com.psc.elekha.database.viewmodel.ImageDetailViewModel
 import com.psc.elekha.database.viewmodel.KYCDocCategoryViewModel
 import com.psc.elekha.database.viewmodel.KYCDocConfigurationViewModel
 import com.psc.elekha.database.viewmodel.KYCDocumentViewModel
@@ -68,6 +69,7 @@ class LoginViewModel(
     private val kycDocumentViewModel: KYCDocumentViewModel,
     private val kycStatusViewModel: KYCStatusViewModel,
     private val kycStatusConditionViewModel: KYCStatusConditionViewModel,
+    private val imageDetailViewModel: ImageDetailViewModel,
     private val appPreferences: AppPreferences,
 ) : ViewModel() {
 
@@ -184,6 +186,7 @@ class LoginViewModel(
                         kycStatusConditionViewModel.insertAllConditions(it.kycStatusCondition)
                         mstComboBoxNViewModel.insertAllComboBox(it.mstComboBoxN)
                         mstLoanProductViewModel.insertAllLoanProduct(it.mstLoanProduct)
+                        imageDetailViewModel.insertAllImageDetail(it.imageDetailEntity)
                     }
                     _loginState.value = APiState.success("Login successfully")
 
