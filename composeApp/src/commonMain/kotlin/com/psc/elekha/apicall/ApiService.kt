@@ -1,6 +1,7 @@
 package com.psc.elekha.apicall
 
 
+import com.psc.elekha.database.entity.LoanRepaymentEntity
 import com.psc.elekha.model.GtrRequest
 import com.psc.elekha.model.MasterRequest
 import com.psc.elekha.utils.Config.AUTHENTICATION
@@ -85,7 +86,18 @@ class ApiService(private val client: HttpClient) {
             }
             contentType(ContentType.Application.Json)
         }
+
     }
+    suspend fun uploadLoanRepayment(
+        list: List<LoanRepaymentEntity>
+    ): HttpResponse
+    {
+        return client.post(LOAN_REPAYMENT) {
+            contentType(ContentType.Application.Json)
+            setBody(list)
+        }
+    }
+
 
 
 }

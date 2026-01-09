@@ -1,10 +1,11 @@
 package com.psc.elekha.database.repository
 
+import com.psc.elekha.apicall.ApiRepository
 import com.psc.elekha.database.dao.LoanRepaymentDao
 import com.psc.elekha.database.entity.LoanRepaymentEntity
 
 class LoanRepaymentRepository(
-    private val dao: LoanRepaymentDao
+    private val dao: LoanRepaymentDao,
 ) {
 
     // Insert single loan data_reports
@@ -16,6 +17,7 @@ class LoanRepaymentRepository(
     suspend fun insertAllLoanRepayment(loanRepayments: List<LoanRepaymentEntity>) {
         dao.insertAllLoanRepayment(loanRepayments)
     }
+
 
     // Get all loan repayments
     suspend fun getAllLoanRepayment(

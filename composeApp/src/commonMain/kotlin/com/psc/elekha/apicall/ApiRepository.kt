@@ -1,6 +1,7 @@
 package com.psc.elekha.apicall
 
 
+import com.psc.elekha.database.entity.LoanRepaymentEntity
 import com.psc.elekha.model.GtrRequest
 import com.psc.elekha.model.MasterRequest
 import io.ktor.client.statement.HttpResponse
@@ -14,5 +15,7 @@ class ApiRepository(private val apiService: ApiService) {
     suspend fun getLoanRepayment(masterRequest: MasterRequest): HttpResponse = apiService.getLoanRepayment(masterRequest)
 
     suspend fun getGTRData(gtrRequest: GtrRequest): HttpResponse = apiService.getGTRData(gtrRequest)
+    suspend fun uploadLoanRepayment(list: List<LoanRepaymentEntity>): HttpResponse = apiService.uploadLoanRepayment(list)
+
 
 }
