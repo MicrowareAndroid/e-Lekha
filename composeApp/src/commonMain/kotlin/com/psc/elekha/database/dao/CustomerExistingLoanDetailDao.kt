@@ -82,4 +82,7 @@ interface CustomerExistingLoanDetailDao {
 
     @Query(" SELECT * FROM CustomerExistingLoanDetail WHERE  MFIGUID =:mfiGuid")
     suspend fun getLoanCustomerByGuid(mfiGuid: String): List<CustomerExistingLoanDetailEntity>
+
+    @Query("SELECT * FROM CustomerExistingLoanDetail WHERE IsEdited =1")
+    suspend fun getUploadData(): List<CustomerExistingLoanDetailEntity>
 }

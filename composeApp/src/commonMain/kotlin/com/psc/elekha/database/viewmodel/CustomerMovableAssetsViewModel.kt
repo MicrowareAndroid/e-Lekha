@@ -3,6 +3,7 @@ package com.psc.elekha.database.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.psc.elekha.database.entity.CustomerEntity
+import com.psc.elekha.database.entity.CustomerExistingLoanDetailEntity
 import com.psc.elekha.database.entity.CustomerFamilyMemberDetailsEntity
 import com.psc.elekha.database.entity.CustomerMovableAssetsEntity
 import com.psc.elekha.database.repository.CustomerFamilyMemberDetailsRepository
@@ -64,6 +65,10 @@ class CustomerMovableAssetsViewModel(
                 it.VehicleID != item.VehicleID
             }
         }
+    }
+
+    suspend fun getUploadData():List<CustomerMovableAssetsEntity>{
+        return repository.getUploadData()
     }
 
 

@@ -3,11 +3,14 @@ package com.psc.elekha.database.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.serialization.Serializable
+
+
 
 @Entity(tableName = "CustomerExistingLoanDetail")
 data class CustomerExistingLoanDetailEntity(
     @PrimaryKey @ColumnInfo(name = "MFIGUID") val MFIGUID: String,
-    @ColumnInfo(name = "GUID") val GUID: String?,
+    @ColumnInfo(name = "GUID") val GUID: String,
     @ColumnInfo(name = "ExistingLoanID") val ExistingLoanID: Int?,
     @ColumnInfo(name = "LoanAmount") val LoanAmount: Int?,
     @ColumnInfo(name = "LoanPurposeID") val LoanPurposeID: Int?,
