@@ -36,6 +36,7 @@ import com.psc.elekha.model.MasterRequest
 import com.psc.elekha.response.MasterResponse
 import com.psc.elekha.utils.AppPreferences
 import com.psc.elekha.utils.AppSP
+import com.psc.elekha.utils.NetworkMonitor
 import e_lekha.composeapp.generated.resources.*
 import io.ktor.client.call.body
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -74,7 +75,8 @@ class LoginViewModel(
     private val imageDetailViewModel: ImageDetailViewModel,
     private val appPreferences: AppPreferences,
     private val userContactDetailViewModel: UserContactDetailViewModel,
-    private val usersRepository: UsersRepository
+    private val usersRepository: UsersRepository,
+    private val networkMonitor: NetworkMonitor,
 ) : ViewModel() {
 
     private val _loginState = MutableStateFlow<APiState>(APiState.idle)
@@ -82,15 +84,23 @@ class LoginViewModel(
     val loginState: StateFlow<APiState> = _loginState
     val verifyState: StateFlow<APiState> = _verifyState
 
+    val isNetworkAvailable: StateFlow<Boolean> = networkMonitor.isConnected
+
+
     fun getAuthentication(username: String, password: String) {
         viewModelScope.launch {
-            _loginState.value = APiState.loading
-            try {
-                val request = MasterRequest(username, password)
-                val response = apiRepository.getAuthentication(request)
 
-                val code = response.status.value
-                if (code == 200) {
+            if (!isNetworkAvailable.value) {
+                _loginState.value = APiState.error(getString(Res.string.no_internet))
+                return@launch
+            }
+
+            _loginState.value = APiState.loading
+
+            try {
+                val response = apiRepository.getAuthentication(MasterRequest(username, password))
+
+                if (response.status.value == 200) {
                     val body = response.body<String>()
                     if (body.length > 5) {
                         getMaster(username, password)
@@ -98,14 +108,14 @@ class LoginViewModel(
                         _loginState.value =
                             APiState.error(getString(Res.string.invalid_username_pwd))
                     }
-
-                } else if (code == 401) {
-                    _loginState.value = APiState.error(getString(Res.string.something_wentwrong))
                 } else {
-                    _loginState.value = APiState.error(getString(Res.string.something_wentwrong))
+                    _loginState.value =
+                        APiState.error(getString(Res.string.something_wentwrong))
                 }
+
             } catch (e: Exception) {
-                _loginState.value = APiState.error(e.message ?: "Unknown error")
+                _loginState.value =
+                    APiState.error(e.message ?: "Unknown error")
             }
         }
     }
