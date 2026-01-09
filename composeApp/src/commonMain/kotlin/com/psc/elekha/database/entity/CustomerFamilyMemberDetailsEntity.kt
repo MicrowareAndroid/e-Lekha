@@ -3,6 +3,9 @@ package com.psc.elekha.database.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.serialization.Serializable
+
+
 
 @Entity(tableName = "CustomerFamilyMemberDetails")
 data class CustomerFamilyMemberDetailsEntity(
@@ -23,6 +26,7 @@ data class CustomerFamilyMemberDetailsEntity(
     @ColumnInfo(name = "IsOld") val IsOld: Int?,
     @ColumnInfo(name = "MonthlyIncome") val MonthlyIncome: Int?,
     @ColumnInfo(name = "IsUpload") val IsUpload: Int?,
-    @ColumnInfo(name = "Remarks") val Remarks: String?
+    @ColumnInfo(name = "Remarks") val Remarks: String?,
+    @ColumnInfo(name = "IsEdited") val IsEdited: Int?,
 
 )

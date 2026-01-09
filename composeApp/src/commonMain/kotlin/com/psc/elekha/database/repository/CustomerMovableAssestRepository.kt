@@ -2,6 +2,7 @@ package com.psc.elekha.database.repository
 
 import com.psc.elekha.database.dao.CustomerMovableAssetsDao
 import com.psc.elekha.database.dao.MSTVillageDao
+import com.psc.elekha.database.entity.CustomerExistingLoanDetailEntity
 import com.psc.elekha.database.entity.CustomerFamilyMemberDetailsEntity
 import com.psc.elekha.database.entity.CustomerMovableAssetsEntity
 import com.psc.elekha.database.entity.MSTDistrictEntity
@@ -42,6 +43,10 @@ class CustomerMovableAssestRepository(
         item: CustomerMovableAssetsEntity
     ) {
         dao.deleteMovableAssets(item)
+    }
+
+    suspend fun getUploadData():List<CustomerMovableAssetsEntity>{
+        return dao.getUploadData()
     }
 
 }

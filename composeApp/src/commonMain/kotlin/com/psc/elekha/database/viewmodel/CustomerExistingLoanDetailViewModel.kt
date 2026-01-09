@@ -198,4 +198,8 @@ class CustomerExistingLoanDetailViewModel(
     suspend fun getLoanCustomerDetailGuid(mfiGuid: String): List<CustomerExistingLoanDetailEntity> {
         return repository.getLoanCustomerByGuid(mfiGuid)
     }
+
+    suspend fun getUploadData():List<CustomerExistingLoanDetailEntity>{
+        return repository.getUploadData()
+    }
 }

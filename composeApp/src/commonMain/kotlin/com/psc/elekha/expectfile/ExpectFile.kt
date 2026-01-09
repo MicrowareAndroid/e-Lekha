@@ -29,3 +29,14 @@ expect class DatabaseExporter() {
 
 }
 
+expect fun resolveImagePath(imageName: String): String?
+
+expect class PlatformImage {
+    fun toImageBitmap(): Any?
+}
+
+expect fun loadImageFromLocalOrServer(
+    imageName: String,
+    onLoaded: (PlatformImage?) -> Unit
+)
+

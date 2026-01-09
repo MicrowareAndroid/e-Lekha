@@ -88,7 +88,8 @@ class FamilyMemberViewModel(
                 0,
                 returnIntegerValue(monthlyIncome),
                 0,
-                remarks
+                remarks,
+                1
             )
 
             familyMemberViewModel.insertCustomerFamilyMember(entity)

@@ -8,7 +8,10 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.lifecycle.viewModelScope
 import com.psc.elekha.apicall.APiState
 import com.psc.elekha.apicall.ApiRepository
+import com.psc.elekha.database.entity.ImageTrackingRecordEntity
 import com.psc.elekha.database.viewmodel.CustomerViewModel
+import com.psc.elekha.database.viewmodel.ImageDetailViewModel
+import com.psc.elekha.database.viewmodel.ImageTrackingRecordViewModel
 import com.psc.elekha.database.viewmodel.LoanRepaymentViewModel
 import com.psc.elekha.database.viewmodel.TrainingGroupMemberViewModel
 import com.psc.elekha.database.viewmodel.TrainingGroupViewModel
@@ -37,22 +40,26 @@ class GtrViewModel(
     private val apiRepository: ApiRepository,
     private val trainingGroupViewModel: TrainingGroupViewModel,
     private val trainingGroupMemberViewModel: TrainingGroupMemberViewModel,
-    private val customerViewModel: CustomerViewModel
+    private val customerViewModel: CustomerViewModel,
+    private val imageDetailViewModel: ImageDetailViewModel,
+    private val imageTrackingRecordViewModel: ImageTrackingRecordViewModel
 ) : BaseValidationViewModel() {
 
     private var _customerImage by mutableStateOf("")
+    private var _customerImageName by mutableStateOf("")
+
+    val customerImageName: String get() = _customerImageName
     private var _guarantorImage by mutableStateOf("")
     private var _eMeterImage by mutableStateOf("")
     private var _houseVerificationImage by mutableStateOf("")
-    val customerImage: String get() = _customerImage
-    val guarantorImage: String get() = _guarantorImage
-    val eMeterImage: String get() = _eMeterImage
-    val houseVerificationImage: String get() = _houseVerificationImage
-
+    var purposeId by mutableStateOf(0)
     var eBillRemark by mutableStateOf("")
     var houseVerificationRemark by mutableStateOf("")
     var loanRecommendationID by mutableStateOf(0)
     var loanRecommendationRemark by mutableStateOf("")
+
+    val focusRequesterPurposeId = FocusRequester()
+    val bringIntoViewRequesterPurposeId = BringIntoViewRequester()
 
     val focusRequesterEBillRemark = FocusRequester()
     val bringIntoViewRequesterEBillRemark = BringIntoViewRequester()
@@ -94,11 +101,9 @@ class GtrViewModel(
                         trainingGroupMemberViewModel.insertAllTrainingGroupStatus(it.trainingGroupMemberEntity)
                     }
                     _downloadState.value = APiState.success("GTR data download successfully")
-                }
-                else if (code == 401) {
+                } else if (code == 401) {
                     _downloadState.value = APiState.error(getString(Res.string.something_wentwrong))
-                }
-                else {
+                } else {
                     _downloadState.value = APiState.error(getString(Res.string.something_wentwrong))
                 }
             } catch (e: Exception) {
@@ -107,8 +112,12 @@ class GtrViewModel(
         }
     }
 
-    fun setCustomerImage(path: String) {
+    fun setCustomerImage(imageName: String, path: String) {
+        _customerImageName = imageName
         _customerImage = path
+
+        println("Customer Image Name: $_customerImageName")
+        println("Customer Image Path: $_customerImage")
     }
 
     fun setGuarantorImage(path: String) {
@@ -133,9 +142,12 @@ class GtrViewModel(
 
                     val data = listData[0]
 
+                    _customerImageName = returnStringValue(data.CustomerImage)
+
                     eBillRemark = returnStringValue(data.FirstName)
 
-                    loanRecommendationID = returnIntegerValue(data.MaritalStatusID?.toString())
+                    purposeId = returnIntegerValue(data.LoanPurposeID?.toString())
+                    loanRecommendationID = returnIntegerValue(data.LoanAppliedID?.toString())
                     houseVerificationRemark = returnStringValue(data.ContactNo)
                     loanRecommendationRemark = returnStringValue(data.HusbandFName)
 
@@ -150,6 +162,9 @@ class GtrViewModel(
             val validation = checkValidation()
             if (validation.isValid) {
 //                loanRepaymentViewModel.updateLoanRepaymentData(0.0, "", 0.0, 0.0, "", modeID, "")
+                if (customerImageName.isNotEmpty()) {
+                    saveImage(customerImageName, 1)
+                }
                 saveMessage = getString(Res.string.data_updated_successfully)
                 showSaveAlert = true
                 saveFlag = 1
@@ -160,6 +175,7 @@ class GtrViewModel(
     }
 
     private suspend fun checkValidation(): ValidationModelContorl {
+
 
         return when {
 
@@ -176,6 +192,16 @@ class GtrViewModel(
                 ValidationModelContorl(
                     isValid = false,
                     errorMessage = label
+                )
+            }
+
+            returnIntegerValue(purposeId.toString()) == 0 -> {
+                val label = getString(Res.string.personal_purpose)
+                ValidationModelContorl(
+                    isValid = false,
+                    errorMessage = label,
+                    focusRequester = focusRequesterPurposeId,
+                    bringIntoViewRequester = bringIntoViewRequesterPurposeId
                 )
             }
 
@@ -239,4 +265,43 @@ class GtrViewModel(
 
         }
     }
+
+    suspend fun saveImage(imageName: String, refField: Int) {
+        val sCustomerGUID = returnStringValue(appPreferences.getString(AppSP.customerGuid))
+        val sRefField = returnStringValue(refField.toString())
+
+
+        val imageCount = imageTrackingRecordViewModel.getCountImageTrackingRecord(
+            sRefField,
+            sCustomerGUID
+        )
+
+        if (imageCount != null && imageCount > 0) {
+            imageTrackingRecordViewModel.updateRecord(
+                imageName,
+                1,
+                0,
+                sRefField,
+            )
+        } else {
+            val imageData = imageDetailViewModel.loadImageDetailsOnce(refField)
+            if (imageData != null && imageData.isNotEmpty()) {
+                val rename =
+                    sCustomerGUID + returnStringValue(imageData[0].RenameImage).trim() + ".jpg"
+
+                val imageTrackingRecordEntity = ImageTrackingRecordEntity(
+                    sCustomerGUID,
+                    sRefField,
+                    imageName,
+                    returnStringValue(imageData[0].ImageFieldName).trim(),
+                    rename,
+                    1,
+                    0,
+                    0
+                )
+                imageTrackingRecordViewModel.insertRecord(imageTrackingRecordEntity)
+            }
+        }
+    }
+
 }

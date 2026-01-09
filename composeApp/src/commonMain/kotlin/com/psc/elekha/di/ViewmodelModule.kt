@@ -54,6 +54,7 @@ import com.psc.elekha.ui.screen.home.HomeScreenViewModel
 import com.psc.elekha.ui.screen.kycdetails.KycDetailViewModel
 import com.psc.elekha.ui.screen.login.LoginViewModel
 import com.psc.elekha.ui.screen.personaldetails.PersonalDetailViewModel
+import com.psc.elekha.ui.screen.registrationlist.RegistrationUploadViewModel
 import com.psc.elekha.ui.screen.repayment.RepaymentViewModel
 import org.koin.core.module.dsl.viewModel
 import org.koin.core.module.dsl.viewModelOf
@@ -116,6 +117,7 @@ val viewmodelModule = module {
     viewModelOf(::LoanOfficerDashboardViewModel)
     viewModelOf(::MSTLoanProductViewModel)
     viewModelOf(::MovableAssetsViewModel)
+    viewModelOf(::RegistrationUploadViewModel)
     viewModel {
         LoginViewModel(
             mstComboBoxNViewModel = get(),
@@ -146,7 +148,8 @@ val viewmodelModule = module {
             appPreferences = get(),
             userContactDetailViewModel = get(),
             usersRepository = get(),
-            imageDetailViewModel = get()
+            imageDetailViewModel = get(),
+            networkMonitor=get()
         )
     }
     viewModelOf(::GtrViewModel)

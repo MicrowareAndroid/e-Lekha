@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.psc.elekha.database.entity.AdminDashbordEntity
+import com.psc.elekha.database.entity.CustomerExistingLoanDetailEntity
 import com.psc.elekha.database.entity.CustomerFamilyMemberDetailsEntity
 import com.psc.elekha.database.entity.CustomerMovableAssetsEntity
 
@@ -38,4 +39,7 @@ interface CustomerMovableAssetsDao {
     suspend fun deleteMovableAssets(
         item: CustomerMovableAssetsEntity
     )
+
+    @Query("SELECT * FROM CustomerMovableAssets WHERE IsEdited =1")
+    suspend fun getUploadData(): List<CustomerMovableAssetsEntity>
 }
