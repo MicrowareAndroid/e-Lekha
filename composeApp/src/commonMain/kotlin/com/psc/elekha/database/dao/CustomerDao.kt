@@ -90,6 +90,7 @@ interface CustomerDao {
         CKYC_Aadhar_Name = :CKYC_Aadhar_Name,
         CKYC_UID = :CKYC_UID,
         CKYC_UID_Image = :CKYC_UID_Image,
+        CKYC_UID_Image2=:CKYC_UID_Image2,
         CKYC_ElectricityBill = :CKYC_ElectricityBill,
         CKYC_ElectricityBill_Image = :CKYC_ElectricityBill_Image,
         CKYC_ElectricityBill_Name = :CKYC_ElectricityBill_Name,
@@ -103,6 +104,7 @@ interface CustomerDao {
         GKYC_UID = :GKYC_UID,
         GKYC_UID_Image = :GKYC_UID_Image,
         GKYC_UID_Image2 = :GKYC_UID_Image2,
+        GKYC_ElectricityBill_Name = :GKYC_ElectricityBill_Name,
         GKYC_ElectricityBill = :GKYC_ElectricityBill,
         GKYC_ElectricityBill_Image = :GKYC_ElectricityBill_Image,
         GurantorKElectricNumber = :GurantorKElectricNumber,
@@ -125,6 +127,7 @@ interface CustomerDao {
         CKYC_Aadhar_Name: String?,
         CKYC_UID: String?,
         CKYC_UID_Image: String?,
+        CKYC_UID_Image2: String?,
         CKYC_ElectricityBill: String?,
         CKYC_ElectricityBill_Image: String?,
         CKYC_ElectricityBill_Name: String?,
@@ -136,6 +139,7 @@ interface CustomerDao {
         GKYC_UID: String?,
         GKYC_UID_Image: String?,
         GKYC_UID_Image2: String?,
+        GKYC_ElectricityBill_Name: String?,
         GKYC_ElectricityBill: String?,
         GKYC_ElectricityBill_Image: String?,
         GurantorKElectricNumber: String?,
@@ -238,11 +242,12 @@ interface CustomerDao {
 
         -- Bank Details
         CKYC_Bank = :CKYC_Bank,
+        CustomerBankNameEditable =:CustomerBankNameEditable,
         CKYC_BankAccountNumber = :CKYC_BankAccountNumber,
         CKYC_Bank_Image = :CKYC_Bank_Image,
         CustomerBankIFSCCode = :CustomerBankIFSCCode,
         CKYC_Bank_Branch = :CKYC_Bank_Branch,
-
+        
         -- audit
         IsEdited = 1,
         UpdatedBy = :UpdatedBy,
@@ -253,6 +258,7 @@ interface CustomerDao {
     )
     suspend fun updateBankDetail(
         CKYC_Bank: Int?,
+        CustomerBankNameEditable: String?,
         CKYC_BankAccountNumber: String?,
         CKYC_Bank_Image: String?,
         CustomerBankIFSCCode: String?,
@@ -347,6 +353,14 @@ WHERE GUID = :guid
         updatedOn: String?,
         updatedBy: String?
     )
+
+    @Query("SELECT COUNT(*) FROM Customer WHERE GUID = :customerGuid")
+    suspend fun isCustomerExists(customerGuid: String): Int
+
+    @Query("SELECT * FROM Customer WHERE IsEdited =1")
+    suspend fun getUploadData(): List<CustomerEntity>
+
+
 
 
 }

@@ -1,10 +1,13 @@
 package com.psc.elekha.database.dao
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.psc.elekha.database.entity.AdminDashbordEntity
+import com.psc.elekha.database.entity.CustomerExistingLoanDetailEntity
+import com.psc.elekha.database.entity.CustomerFamilyMemberDetailsEntity
 import com.psc.elekha.database.entity.CustomerMovableAssetsEntity
 
 @Dao
@@ -24,4 +27,19 @@ interface CustomerMovableAssetsDao {
 
     @Query("DELETE FROM CustomerMovableAssets")
     suspend fun deleteAll()
+
+    @Query(" SELECT * FROM CustomerMovableAssets WHERE GUID =:guId")
+    suspend fun getAssetsByGuid(guId: String): List<CustomerMovableAssetsEntity>
+
+
+    @Query("SELECT * FROM CustomerMovableAssets WHERE MAGUID =:guId")
+    suspend fun getAssestsDetailByGuid(guId: String): List<CustomerMovableAssetsEntity>
+
+    @Delete
+    suspend fun deleteMovableAssets(
+        item: CustomerMovableAssetsEntity
+    )
+
+    @Query("SELECT * FROM CustomerMovableAssets WHERE IsEdited =1")
+    suspend fun getUploadData(): List<CustomerMovableAssetsEntity>
 }

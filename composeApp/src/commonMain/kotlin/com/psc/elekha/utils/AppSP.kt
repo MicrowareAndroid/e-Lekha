@@ -20,4 +20,5 @@ object AppSP {
     var LoanRepaymentGUID = "LoanRepaymentGUID"
     var sImageFieldName = "sImageFieldName"
 
+
 }

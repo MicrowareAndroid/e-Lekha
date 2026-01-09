@@ -1,51 +1,19 @@
 package com.psc.elekha.ui.screen.bankdetails
-
 import androidx.compose.foundation.relocation.BringIntoViewRequester
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.focus.FocusRequester
 import androidx.lifecycle.viewModelScope
-import com.psc.elekha.database.entity.CustomerDefaultEntity
-import com.psc.elekha.database.viewmodel.CustomerDefaultViewModel
 import com.psc.elekha.database.viewmodel.CustomerViewModel
-import com.psc.elekha.model.ValidationModelContorl
 import com.psc.elekha.ui.screen.base.BaseValidationViewModel
 import com.psc.elekha.utils.AppPreferences
 import com.psc.elekha.utils.AppSP
 import com.psc.elekha.utils.currentDatetime
-import com.psc.elekha.utils.generateRandomId
-import com.psc.elekha.utils.returnIntegerValue
 import com.psc.elekha.utils.returnStringValue
 import e_lekha.composeapp.generated.resources.Res
 import e_lekha.composeapp.generated.resources.data_saved_successfully
-import e_lekha.composeapp.generated.resources.personal_customer_name
-import e_lekha.composeapp.generated.resources.personal_district
-import e_lekha.composeapp.generated.resources.personal_education
-import e_lekha.composeapp.generated.resources.personal_education_selection
-import e_lekha.composeapp.generated.resources.personal_father
-import e_lekha.composeapp.generated.resources.personal_full_address
-import e_lekha.composeapp.generated.resources.personal_gurantor_mobile
-import e_lekha.composeapp.generated.resources.personal_gurantor_name
-import e_lekha.composeapp.generated.resources.personal_husband_name
-import e_lekha.composeapp.generated.resources.personal_landmark
-import e_lekha.composeapp.generated.resources.personal_marital
-import e_lekha.composeapp.generated.resources.personal_maternal_address
-import e_lekha.composeapp.generated.resources.personal_maternal_mobile
-import e_lekha.composeapp.generated.resources.personal_medical
-import e_lekha.composeapp.generated.resources.personal_mobile_number
-import e_lekha.composeapp.generated.resources.personal_payment_daily
-import e_lekha.composeapp.generated.resources.personal_pincode
-import e_lekha.composeapp.generated.resources.personal_purpose
-import e_lekha.composeapp.generated.resources.personal_relation
-import e_lekha.composeapp.generated.resources.personal_religion
-import e_lekha.composeapp.generated.resources.personal_state
-import e_lekha.composeapp.generated.resources.personal_tehsil
-import e_lekha.composeapp.generated.resources.personal_village
-import e_lekha.composeapp.generated.resources.pls_enter_name_on_account
 import kotlinx.coroutines.launch
-
 import org.jetbrains.compose.resources.getString
 
 class BankDetailViewModel(
@@ -124,25 +92,51 @@ class BankDetailViewModel(
 //   return false
 //  }
 
-  if (passbookImage.isNullOrBlank()) {
-   saveMessage = "Please upload Passbook Image"
-   return false
-  }
+//  if (passbookImage.isNullOrBlank()) {
+//   saveMessage = "Please upload Passbook Image"
+//   return false
+//  }
 
   return true
  }
 
  fun saveData() {
- /* if (!validateBankDetails()) {
+  if (!validateBankDetails()) {
    saveFlag = 0
    showSaveAlert = true
    return
-  }*/
+  }
 
   viewModelScope.launch {
    saveBankDetail()
    saveFlag = 1
    showSaveAlert = true
+  }
+ }
+
+ fun loadSavedBankData() {
+  viewModelScope.launch {
+
+   val savedGuid = returnStringValue(
+    appPreferences.getString(AppSP.customerGuid)
+   )
+
+   if (savedGuid.isEmpty()) return@launch
+
+   val listData =
+    customerViewModel.getCustomerDetailGuid(savedGuid)
+
+   if (listData.isEmpty()) return@launch
+
+   val data = listData[0]
+
+   // -------- Bank Details --------
+   accountName = returnStringValue(data.CustomerBankNameEditable)
+   accountNumber = returnStringValue(data.CKYC_BankAccountNumber)
+   selectedBankname = returnStringValue(data.CKYC_Bank.toString())
+   selectedBranchname = returnStringValue(data.CKYC_Bank_Branch)
+   ifscCode = returnStringValue(data.CustomerBankIFSCCode)
+   _passbookImage = returnStringValue(data.CKYC_Bank_Image)
   }
  }
 
@@ -152,11 +146,12 @@ class BankDetailViewModel(
   customerViewModel.updateBankDetail(
    guid = returnStringValue(guid),
    bankId = selectedBankname.toIntOrNull(),
+   customerBankNameEditable = returnStringValue(accountName),
    accountNo = returnStringValue(accountNumber),
    bankImage = passbookImage,
    ifscCode = returnStringValue(ifscCode),
    branchName = returnStringValue(selectedBranchname),
-   updatedBy = appPreferences.getInt(AppSP.userId),
+   updatedBy = appPreferences.getString(AppSP.userId)?.toIntOrNull() ?: 0,
    updatedOn = currentDatetime()
   )
 

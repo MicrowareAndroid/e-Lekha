@@ -170,6 +170,8 @@ import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.resources.vectorResource
 import com.psc.elekha.model.NameParts
 import com.psc.elekha.ui.theme.greys
+import com.psc.elekha.ui.theme.homegtrColor
+import com.psc.elekha.ui.theme.homerepaymentColor
 
 @Composable
 fun ReusableTextView(
@@ -342,7 +344,7 @@ fun ReusableImageView(
 @Composable
 fun ReusableTopBar(
     title: String,
-    backgroundColor: Color = appleblue,
+    backgroundColor: Color = PrimaryDark,
     titleColor: Color = Color.White,
     navigationIcon: Painter? = null,
     onNavigationClick: (() -> Unit)? = null,
@@ -619,7 +621,7 @@ fun FormFieldCompact(
     maxLength: Int = Int.MAX_VALUE,
     trailingIcon: @Composable (() -> Unit)? = null,
     inputType: KeyboardType = KeyboardType.Text,
-    placeholder: String = stringResource(Res.string.type_here),
+    placeholder: String = ""/*stringResource(Res.string.type_here)*/,
     isEnable: Boolean = true,
     isReadable: Boolean = false,
     labelColor: Color = black,
@@ -629,12 +631,13 @@ fun FormFieldCompact(
     disabledBackgroundColor: Color = formborder,
     maxLines: Int = 1,
     modifier: Modifier = Modifier,
-    placeholderTextSize: Int = 12
+    placeholderTextSize: Int = 12,
+    isRequired: Boolean = false,
 ) {
 
     Column(modifier) {
 
-        if (!label.isNullOrEmpty()) {
+        /*if (!label.isNullOrEmpty()) {
             ReusableTextView(
                 text = label,
                 fontSize = 14,
@@ -642,6 +645,29 @@ fun FormFieldCompact(
                 fontFamily = FontFamily(Font(Res.font.inter_regular))
 
             )
+        }*/
+        if (!label.isNullOrEmpty()) {
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                ReusableTextView(
+                    text = label,
+                    fontSize = 14,
+                    textColor = labelColor,
+                    fontFamily = FontFamily(Font(Res.font.inter_regular))
+                )
+
+                if (isRequired) {
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Text(
+                        text = "*",
+                        color = Color.Red,
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+            }
         }
 
         Spacer(Modifier.height(5.dp))
@@ -1665,7 +1691,8 @@ fun UsernameField(
     onValueChange: (String) -> Unit,
     maxLength: Int = 50
 ) {
-    Column(modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp)) {
+    Column(modifier = Modifier.fillMaxWidth()
+        .padding(bottom = 12.dp)) {
         ReusableTextViews(
             text = label, fontSize = 16,
             fontWeight = FontWeight.Thin,
@@ -1684,7 +1711,8 @@ fun UsernameField(
                 )
                 onValueChange(updated)
             },
-            placeholder = { Text(stringResource(Res.string.enter_here), color = hintColor) },
+            placeholder = { Text(stringResource(Res.string.enter_here),
+                color = hintColor) },
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(3.dp),
             colors = OutlinedTextFieldDefaults.colors(
@@ -2213,7 +2241,7 @@ fun GroupCardUI(
             LabelValueText(
                 label = stringResource(Res.string.gtr_next_meeting),
                 value = item.nextMeeting,
-                highlight = true
+
             )
         }
     }
@@ -2361,7 +2389,8 @@ fun LabelValueText(
         ReusableTextView(
             text = "$label : ",
             textColor = PrimaryDark,
-            fontWeight = FontWeight.SemiBold
+            fontWeight = FontWeight.SemiBold,
+            fontFamily = FontFamily(Font(Res.font.inter_medium))
         )
         ReusableTextView(
             text = value,
@@ -2552,7 +2581,7 @@ fun ReusableTextViewGrayCard(
     modifier: Modifier = Modifier,
     textColor: Color = toolbar_color,
     fontSize: Int = 15,
-    fontWeight: FontWeight = FontWeight.W500,
+    fontWeight: FontWeight = FontWeight.SemiBold,
     fontFamily: FontFamily = FontFamily(Font(Res.font.inter_medium)),
     backgroundColor: Color = Color.Transparent,
     cornerRadius: Dp = 0.dp,
@@ -2595,7 +2624,7 @@ fun ReusableTextViewBlackCard(
     textColor: Color = Color.Black,
     fontSize: Int = 14,
     fontWeight: FontWeight = FontWeight.SemiBold,
-    fontFamily: FontFamily = FontFamily(Font(Res.font.inter_medium)),
+    fontFamily: FontFamily = FontFamily(Font(Res.font.inter_regular)),
     backgroundColor: Color = Color.Transparent,
     cornerRadius: Dp = 0.dp,
     padding: Dp = 0.dp,
@@ -2806,6 +2835,7 @@ fun CustomAlertDialogRegistrationExisting(
                             onSaveClick = {
                                 onRegistration()
                             },
+                            backgroundColor = homerepaymentColor,
                             saveText = stringResource(Res.string.new_registration)
                         )
                     }
@@ -2827,6 +2857,7 @@ fun CustomAlertDialogRegistrationExisting(
                             onSaveClick = {
                                 onExitsing()
                             },
+                            backgroundColor = homegtrColor,
                             saveText = stringResource(Res.string.existing_customer)
                         )
                     }
@@ -3049,7 +3080,7 @@ fun <T : Any> FillDynamicSpinnerespt(
                     text = {
                         ReusableTextView(
                             text = placeholder,
-                            fontSize = 14,
+                            fontSize = 15,
                             textColor = lightBlack
                         )
                     },
@@ -3064,7 +3095,7 @@ fun <T : Any> FillDynamicSpinnerespt(
                         text = {
                             ReusableTextView(
                                 text = getOptionLabel(item),
-                                fontSize = 14,
+                                fontSize = 15,
                                 textColor = textColor
                             )
                         },
@@ -3258,4 +3289,30 @@ fun <T : Any> FillDynamicSpinnerespts(
             }
         }
     }
+}
+
+ fun ensureCustomerGuid(
+    appPreferences: AppPreferences
+): String {
+    var customerGuid = appPreferences.getString(AppSP.customerGuid)
+
+    if (customerGuid.isNullOrEmpty()) {
+        customerGuid = generateRandomId()
+        appPreferences.putString(AppSP.customerGuid, customerGuid)
+    }
+    return customerGuid
+}
+
+@Composable
+fun CommonDivider(
+    modifier: Modifier = Modifier,
+    color: Color = appleblue,
+    thickness: Int = 2
+) {
+    Spacer(modifier = Modifier.height(4.dp))
+    Divider(
+        modifier = modifier,
+        color = color,
+        thickness = thickness.dp
+    )
 }

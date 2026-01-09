@@ -3,6 +3,7 @@ package com.psc.elekha.database.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.psc.elekha.database.entity.CustomerEntity
+import com.psc.elekha.database.entity.CustomerExistingLoanDetailEntity
 import com.psc.elekha.database.entity.CustomerFamilyMemberDetailsEntity
 import com.psc.elekha.database.repository.CustomerFamilyMemberDetailsRepository
 import kotlinx.coroutines.Dispatchers
@@ -73,7 +74,7 @@ class CustomerFamilyMemberDetailsViewModel(
 
 
 
-    fun getCustomerDetailGuid(guId: String) {
+    fun getCustomerByGuid(guId: String) {
         viewModelScope.launch {
             val result = repository.getCustomerByGuid(guId)
             _familyMemebers.value = result
@@ -87,12 +88,14 @@ class CustomerFamilyMemberDetailsViewModel(
     fun deleteFamilyMember(item: CustomerFamilyMemberDetailsEntity) {
         viewModelScope.launch {
             repository.deleteFamilyMember(item)
-
-
             _familyMemebers.value = _familyMemebers.value.filter {
                 it.MemberID != item.MemberID
             }
         }
+    }
+
+    suspend fun getUploadData():List<CustomerFamilyMemberDetailsEntity>{
+        return repository.getUploadData()
     }
 
 }

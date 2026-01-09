@@ -47,12 +47,14 @@ import com.psc.elekha.database.viewmodel.UserContactDetailViewModel
 import com.psc.elekha.database.viewmodel.UserResponseViewModel
 import com.psc.elekha.database.viewmodel.UsersViewModel
 import com.psc.elekha.ui.screen.bankdetails.BankDetailViewModel
+import com.psc.elekha.ui.screen.economicdetails.MovableAssetsViewModel
 import com.psc.elekha.ui.screen.familydetails.FamilyMemberViewModel
 import com.psc.elekha.ui.screen.gtrlist.GtrViewModel
 import com.psc.elekha.ui.screen.home.HomeScreenViewModel
 import com.psc.elekha.ui.screen.kycdetails.KycDetailViewModel
 import com.psc.elekha.ui.screen.login.LoginViewModel
 import com.psc.elekha.ui.screen.personaldetails.PersonalDetailViewModel
+import com.psc.elekha.ui.screen.registrationlist.RegistrationUploadViewModel
 import com.psc.elekha.ui.screen.repayment.RepaymentViewModel
 import org.koin.core.module.dsl.viewModel
 import org.koin.core.module.dsl.viewModelOf
@@ -114,9 +116,10 @@ val viewmodelModule = module {
     viewModelOf(::HomeScreenViewModel)
     viewModelOf(::LoanOfficerDashboardViewModel)
     viewModelOf(::MSTLoanProductViewModel)
+    viewModelOf(::MovableAssetsViewModel)
+    viewModelOf(::RegistrationUploadViewModel)
     viewModel {
         LoginViewModel(
-
             mstComboBoxNViewModel = get(),
             apiRepository = get(),
             usersViewModel = get(),
@@ -142,8 +145,11 @@ val viewmodelModule = module {
             kycStatusViewModel = get(),
             kycStatusConditionViewModel = get(),
             mstLoanProductViewModel = get(),
+            appPreferences = get(),
+            userContactDetailViewModel = get(),
+            usersRepository = get(),
             imageDetailViewModel = get(),
-            appPreferences = get()
+            networkMonitor=get()
         )
     }
     viewModelOf(::GtrViewModel)

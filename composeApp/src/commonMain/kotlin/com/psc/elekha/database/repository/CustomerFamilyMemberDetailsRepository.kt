@@ -65,6 +65,10 @@ class CustomerFamilyMemberDetailsRepository(
         dao.deleteFamilyMember(item)
     }
 
+    suspend fun getUploadData():List<CustomerFamilyMemberDetailsEntity>{
+        return dao.getUploadData()
+    }
+
 
 
 }

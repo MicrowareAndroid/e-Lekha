@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.psc.elekha.apicall.APiState
 import com.psc.elekha.apicall.ApiRepository
+import com.psc.elekha.database.repository.UsersRepository
 import com.psc.elekha.database.viewmodel.CustomerStatusViewModel
 import com.psc.elekha.database.viewmodel.ImageDetailViewModel
 import com.psc.elekha.database.viewmodel.KYCDocCategoryViewModel
@@ -29,11 +30,13 @@ import com.psc.elekha.database.viewmodel.TabletMenuRoleViewModel
 import com.psc.elekha.database.viewmodel.TabletMenuViewModel
 import com.psc.elekha.database.viewmodel.TrainingGroupStatusViewModel
 import com.psc.elekha.database.viewmodel.UserBranchViewModel
+import com.psc.elekha.database.viewmodel.UserContactDetailViewModel
 import com.psc.elekha.database.viewmodel.UsersViewModel
 import com.psc.elekha.model.MasterRequest
 import com.psc.elekha.response.MasterResponse
 import com.psc.elekha.utils.AppPreferences
 import com.psc.elekha.utils.AppSP
+import com.psc.elekha.utils.NetworkMonitor
 import e_lekha.composeapp.generated.resources.*
 import io.ktor.client.call.body
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -71,6 +74,9 @@ class LoginViewModel(
     private val kycStatusConditionViewModel: KYCStatusConditionViewModel,
     private val imageDetailViewModel: ImageDetailViewModel,
     private val appPreferences: AppPreferences,
+    private val userContactDetailViewModel: UserContactDetailViewModel,
+    private val usersRepository: UsersRepository,
+    private val networkMonitor: NetworkMonitor,
 ) : ViewModel() {
 
     private val _loginState = MutableStateFlow<APiState>(APiState.idle)
@@ -78,15 +84,23 @@ class LoginViewModel(
     val loginState: StateFlow<APiState> = _loginState
     val verifyState: StateFlow<APiState> = _verifyState
 
+    val isNetworkAvailable: StateFlow<Boolean> = networkMonitor.isConnected
+
+
     fun getAuthentication(username: String, password: String) {
         viewModelScope.launch {
-            _loginState.value = APiState.loading
-            try {
-                val request = MasterRequest(username, password)
-                val response = apiRepository.getAuthentication(request)
 
-                val code = response.status.value
-                if (code == 200) {
+            if (!isNetworkAvailable.value) {
+                _loginState.value = APiState.error(getString(Res.string.no_internet))
+                return@launch
+            }
+
+            _loginState.value = APiState.loading
+
+            try {
+                val response = apiRepository.getAuthentication(MasterRequest(username, password))
+
+                if (response.status.value == 200) {
                     val body = response.body<String>()
                     if (body.length > 5) {
                         getMaster(username, password)
@@ -94,14 +108,14 @@ class LoginViewModel(
                         _loginState.value =
                             APiState.error(getString(Res.string.invalid_username_pwd))
                     }
-
-                } else if (code == 401) {
-                    _loginState.value = APiState.error(getString(Res.string.something_wentwrong))
                 } else {
-                    _loginState.value = APiState.error(getString(Res.string.something_wentwrong))
+                    _loginState.value =
+                        APiState.error(getString(Res.string.something_wentwrong))
                 }
+
             } catch (e: Exception) {
-                _loginState.value = APiState.error(e.message ?: "Unknown error")
+                _loginState.value =
+                    APiState.error(e.message ?: "Unknown error")
             }
         }
     }
@@ -162,7 +176,9 @@ class LoginViewModel(
                     appPreferences.putString(AppSP.password, password)
                     body.let {
                         usersViewModel.insertAllUsers(it.user)
-                        appPreferences.putString(AppSP.userId, it.user.firstOrNull()?.UserId ?: "")
+                        val matchedUser = it.user.find { it.UserName.equals(username, ignoreCase = true) && it.Password == password }
+                        val userId: String = matchedUser?.UserId?:""
+                        appPreferences.putString(AppSP.userId, userId)
                         tabletMenuViewModel.insertAllTabletMenu(it.tabletMenu)
                         tabletMenuRoleViewModel.insertAllTabletMenuRole(it.tabletMenuRole)
                         mstStateViewModel.insertAllState(it.state)
@@ -186,9 +202,12 @@ class LoginViewModel(
                         kycStatusConditionViewModel.insertAllConditions(it.kycStatusCondition)
                         mstComboBoxNViewModel.insertAllComboBox(it.mstComboBoxN)
                         mstLoanProductViewModel.insertAllLoanProduct(it.mstLoanProduct)
+
                         imageDetailViewModel.insertAllImageDetail(it.imageDetailEntity)
+
+                        userContactDetailViewModel.insertAllUserContactDetail(it.userContactDetails)
+                        _loginState.value = APiState.success("Login successfully")
                     }
-                    _loginState.value = APiState.success("Login successfully")
 
                 } else if (code == 401) {
                     _loginState.value = APiState.error(getString(Res.string.something_wentwrong))

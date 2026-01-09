@@ -89,7 +89,7 @@ fun DrawerContent() {
 
         Column(
             modifier = Modifier
-                .fillMaxSize()
+                .fillMaxWidth()
                 .padding(start = 40.dp)
                 .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.Start
@@ -105,7 +105,7 @@ fun DrawerContent() {
                 // Profile Picture
                 Box(
                     modifier = Modifier
-                        .size(35.dp)
+                        .size(100.dp)
                         .background(Color.White, CircleShape)
                         .border(1.dp, lightgreens, CircleShape),
 
@@ -113,8 +113,7 @@ fun DrawerContent() {
                     Image(
                         painter = painterResource(Res.drawable.profile_picture),
                         contentDescription = "Profile Picture",
-
-                        modifier = Modifier.size(90.dp)
+                        modifier = Modifier.size(200.dp)
                     )
                 }
 

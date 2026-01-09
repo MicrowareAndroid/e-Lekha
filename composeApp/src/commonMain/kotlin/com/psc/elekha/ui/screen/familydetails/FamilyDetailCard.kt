@@ -1,5 +1,6 @@
 package com.psc.elekha.ui.screen.familydetails
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -24,6 +25,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.room.util.splitToIntList
@@ -45,7 +47,10 @@ import e_lekha.composeapp.generated.resources.Res
 import e_lekha.composeapp.generated.resources.delete
 import e_lekha.composeapp.generated.resources.edit
 import e_lekha.composeapp.generated.resources.education
+import e_lekha.composeapp.generated.resources.full_name_of_applicant
 import e_lekha.composeapp.generated.resources.income
+import e_lekha.composeapp.generated.resources.inter_medium
+import e_lekha.composeapp.generated.resources.inter_regular
 import e_lekha.composeapp.generated.resources.marital_status
 import e_lekha.composeapp.generated.resources.mobile_number
 import e_lekha.composeapp.generated.resources.name
@@ -54,6 +59,7 @@ import e_lekha.composeapp.generated.resources.relation
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
@@ -70,14 +76,12 @@ fun FamilyDetailCard(
     val educationList by viewModel.mstQualificationValue.collectAsState()
     val occupationList by viewModel.occupationValue.collectAsState()
 
-    // Load master lists ONCE
     LaunchedEffect(Unit) {
         viewModel.loadLookUpValues(6)
         viewModel.loadLookUpValues(4)
         viewModel.loadLookUpValues(5)
     }
 
-    // ID -> VALUE mapping
     val relationName =
         relationList.firstOrNull { it.ID == familyDetailModel.RelationID }?.Value ?: ""
 
@@ -87,17 +91,14 @@ fun FamilyDetailCard(
     val occupationName =
         occupationList.firstOrNull { it.ID == familyDetailModel.OccupationID }?.Value ?: ""
 
-
-
     Card(
         shape = RoundedCornerShape(12.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+        elevation = CardDefaults.cardElevation(2.dp),
         colors = CardDefaults.cardColors(containerColor = loginBg),
         modifier = Modifier
             .fillMaxWidth()
             .padding(bottom = 8.dp)
     ) {
-
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -105,68 +106,57 @@ fun FamilyDetailCard(
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
 
-            /* ---------- ROW 1 : Name + Delete ---------- */
-
+            // ---------- NAME ----------
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
 
-                Row(
-                    modifier = Modifier.weight(1f),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    ReusableTextViewGrayCard(
-                        "Name:",
-                        fontSize = 12,
-                        modifier = Modifier.width(80.dp)
-                    )
-
-                    ReusableTextViewBlackCard(
-                        returnStringValue(familyDetailModel.MFirstName),
-                        fontSize = 12,
-
-                    )
-                }
-
-                IconButton(onClick = onDelete) {
-                    Icon(
-                        painter = painterResource(Res.drawable.delete),
-                        contentDescription = "Delete",
-                        tint = black
-                    )
-                }
-            }
-
-            /* ---------- ROW 2 : Relation | Education ---------- */
-
-            Row(modifier = Modifier.fillMaxWidth()) {
-
-                FamilyDetailItem(
-                    label = "Relation:",
-                    value = relationName,
+                TextWithLabel(
+                    label = stringResource(Res.string.name),
+                    value = returnStringValue(familyDetailModel.MFirstName),
                     modifier = Modifier.weight(1f)
                 )
 
-                FamilyDetailItem(
-                    label = "Education:",
+                Icon(
+                    painter = painterResource(Res.drawable.delete),
+                    contentDescription = "Delete",
+                    tint = black,
+                    modifier = Modifier
+                        .size(18.dp)
+                        .clickable { onDelete() }
+                )
+            }
+
+            // ---------- ROW 2 ----------
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                TextWithLabel(
+                    label = stringResource(Res.string.relation),
+                    value = relationName,
+                    modifier = Modifier.weight(1f)
+                )
+                TextWithLabel(
+                    label = stringResource(Res.string.education),
                     value = educationName,
                     modifier = Modifier.weight(1f)
                 )
             }
 
-            /* ---------- ROW 3 : Occupation | Income ---------- */
-
-            Row(modifier = Modifier.fillMaxWidth()) {
-
-                FamilyDetailItem(
-                    label = "Occupation:",
+            // ---------- ROW 3 ----------
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                TextWithLabel(
+                    label = stringResource(Res.string.occupation),
                     value = occupationName,
                     modifier = Modifier.weight(1f)
                 )
-
-                FamilyDetailItem(
-                    label = "Income:",
+                TextWithLabel(
+                    label = stringResource(Res.string.income),
                     value = returnStringValue(familyDetailModel.MonthlyIncome.toString()),
                     modifier = Modifier.weight(1f)
                 )
@@ -176,26 +166,24 @@ fun FamilyDetailCard(
 }
 
 @Composable
-fun FamilyDetailItem(
+fun TextWithLabel(
     label: String,
     value: String,
     modifier: Modifier = Modifier
 ) {
     Row(
-        modifier = modifier.padding(end = 6.dp),
-        verticalAlignment = Alignment.Top
+        modifier = modifier,
+        verticalAlignment = Alignment.CenterVertically
     ) {
-
         ReusableTextViewGrayCard(
             label,
-            fontSize = 13,
-            modifier = Modifier.width(75.dp)   // FIXED WIDTH
-        )
+
+            )
+
+        Spacer(modifier = Modifier.width(6.dp))
 
         ReusableTextViewBlackCard(
             value,
-            fontSize = 13,
-
         )
     }
 }

@@ -16,6 +16,11 @@ class UsersViewModel(
 
     private val _userList = MutableStateFlow<List<UsersEntity>>(emptyList())
     val userList: StateFlow<List<UsersEntity>> = _userList
+    private val _userContact = MutableStateFlow<String>("")
+    val userContact: StateFlow<String> = _userContact
+
+    private val _userID = MutableStateFlow<String>("")
+    val userID: StateFlow<String> = _userID
 
     private val _userCount = MutableStateFlow(0)
     val userCount: StateFlow<Int> = _userCount
@@ -24,10 +29,22 @@ class UsersViewModel(
     val userDetails: StateFlow<List<UsersEntity>> = _userDetails
 
     // Load all users
-    fun getUserDetails(userName: String, pwd: String) {
+    fun getUserDetails(userName: String, pwd: String, onResult: (List<UsersEntity>) -> Unit) {
         viewModelScope.launch {
             val result = repository.getAllUsers(userName, pwd)
-            _userList.value = result
+            onResult(result)
+        }
+    }
+    fun getUserContact(userID: String, onResult: (String?) -> Unit) {
+        viewModelScope.launch {
+            val result = repository.getUserContact(userID)
+            onResult(result)
+        }
+    }
+    fun getUserID(userName: String) {
+        viewModelScope.launch {
+            val result = repository.getUserID(userName)
+            _userID.value = result
         }
     }
 

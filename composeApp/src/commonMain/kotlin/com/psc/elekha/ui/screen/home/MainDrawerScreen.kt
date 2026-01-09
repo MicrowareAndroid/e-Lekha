@@ -6,6 +6,7 @@ import androidx.compose.runtime.*
 import kotlinx.coroutines.launch
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 
 import androidx.navigation.NavHostController
@@ -22,12 +23,12 @@ fun MainDrawerScreen(navController: NavHostController) {
 
     ModalNavigationDrawer(
         drawerState = drawerState,
-        scrimColor = Color(0x80000000),
+       // scrimColor = Color(0x80000000),
         drawerContent = {
 
             ModalDrawerSheet(
                 drawerContainerColor = Color.White,
-                modifier = Modifier.fillMaxHeight().width(310.dp)
+                modifier = Modifier.width(270.dp)
 
             ) {
                 DrawerContent()

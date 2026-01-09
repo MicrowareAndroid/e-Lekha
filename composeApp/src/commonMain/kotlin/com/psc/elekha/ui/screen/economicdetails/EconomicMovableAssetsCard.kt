@@ -15,9 +15,14 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.SegmentedButtonDefaults.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.psc.elekha.database.entity.CustomerMovableAssetsEntity
+import com.psc.elekha.database.viewmodel.MSTComboBox_NViewModel
 import com.psc.elekha.model.EconomicMovableAssetsModel
 import com.psc.elekha.ui.theme.black
 import com.psc.elekha.ui.theme.editext_bg_color
@@ -25,18 +30,32 @@ import com.psc.elekha.ui.theme.loginBg
 import com.psc.elekha.ui.theme.repaymentColor
 import com.psc.elekha.utils.ReusableTextViewBlackCard
 import com.psc.elekha.utils.ReusableTextViewGrayCard
+import com.psc.elekha.utils.returnStringValue
 import e_lekha.composeapp.generated.resources.Res
 import e_lekha.composeapp.generated.resources.delete
 import e_lekha.composeapp.generated.resources.movable_assets
 import e_lekha.composeapp.generated.resources.vehicle_no
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun EconomicMovableAssetsCard(
-    economicMovableAssetsModel: EconomicMovableAssetsModel,
+    economicMovableAssetsModel: CustomerMovableAssetsEntity,
     onDelete: () -> Unit
 ) {
+
+    val viewModel = koinViewModel<MSTComboBox_NViewModel>()
+
+    val vehicleList by viewModel.assetVehicle.collectAsState()
+
+    LaunchedEffect(Unit) {
+        viewModel.loadLookUpValues(32)
+
+    }
+    val vehicleName =
+        vehicleList.firstOrNull { it.ID == economicMovableAssetsModel.VehicleID }?.Value ?: ""
+
 
     Card(
         shape = RoundedCornerShape(12.dp),
@@ -51,10 +70,10 @@ fun EconomicMovableAssetsCard(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(10.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+            //verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
 
-            /* -------- Row 1 : Movable Asset + Delete Icon -------- */
+
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -67,14 +86,13 @@ fun EconomicMovableAssetsCard(
                 ) {
                     ReusableTextViewGrayCard(
                         stringResource(Res.string.movable_assets).plus(":"),
-                        modifier = Modifier.width(120.dp)
                     )
 
                     Spacer(modifier = Modifier.width(6.dp))
 
                     ReusableTextViewBlackCard(
-                        economicMovableAssetsModel.type,
-                        modifier = Modifier.weight(1f)
+                        vehicleName,
+
                     )
                 }
 
@@ -92,7 +110,7 @@ fun EconomicMovableAssetsCard(
 
             DetailRowOnlyText(
                 label = stringResource(Res.string.vehicle_no).plus(":"),
-                value = economicMovableAssetsModel.vehicle_no
+                value = returnStringValue(economicMovableAssetsModel.VehicleNo)
             )
         }
     }
@@ -111,16 +129,14 @@ private fun DetailRowOnlyText(
         ReusableTextViewGrayCard(
             label,
 
-            modifier = Modifier.width(120.dp)
         )
 
         Spacer(modifier = Modifier.width(6.dp))
 
         ReusableTextViewBlackCard(
             value,
+            )
 
-            modifier = Modifier.weight(1f)
-        )
     }
 }
 

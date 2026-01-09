@@ -26,14 +26,10 @@ class UserContactDetailViewModel(
         }
     }
 
-    fun insertAllUserContactDetail(
-        users: List<UserContactDetailEntity>,
-        onComplete: (() -> Unit)? = null
+    suspend fun insertAllUserContactDetail(
+        users: List<UserContactDetailEntity>
     ) {
-        viewModelScope.launch(Dispatchers.IO) {
             repository.insertAllUserContactDetail(users)
-            onComplete?.invoke()
-        }
     }
 
 

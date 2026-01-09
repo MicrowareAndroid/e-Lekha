@@ -12,6 +12,7 @@ import com.psc.elekha.model.ValidationModelContorl
 import com.psc.elekha.ui.screen.base.BaseValidationViewModel
 import com.psc.elekha.utils.AppPreferences
 import com.psc.elekha.utils.AppSP
+import com.psc.elekha.utils.ensureCustomerGuid
 import com.psc.elekha.utils.generateRandomId
 import com.psc.elekha.utils.parseNameDynamic
 import com.psc.elekha.utils.returnIntToString
@@ -21,20 +22,6 @@ import e_lekha.composeapp.generated.resources.Res
 import e_lekha.composeapp.generated.resources.data_saved_successfully
 import e_lekha.composeapp.generated.resources.data_updated_successfully
 
-import e_lekha.composeapp.generated.resources.personal_customer_name
-import e_lekha.composeapp.generated.resources.personal_district
-import e_lekha.composeapp.generated.resources.personal_education
-
-import e_lekha.composeapp.generated.resources.personal_marital
-
-import e_lekha.composeapp.generated.resources.personal_purpose
-import e_lekha.composeapp.generated.resources.personal_relation
-import e_lekha.composeapp.generated.resources.personal_religion
-import e_lekha.composeapp.generated.resources.personal_remarks
-import e_lekha.composeapp.generated.resources.personal_state
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.getString
 
@@ -75,8 +62,9 @@ class FamilyMemberViewModel(
 
 
     suspend fun saveFamilyMember() {
-        val memberGuid = appPreferences.getString(AppSP.familymemberGuid)
-        val customerGuid = appPreferences.getString(AppSP.customerGuid)
+        val memberGuid = appPreferences.getString(AppSP.FamilyMemberGuid)
+        //val customerGuid = appPreferences.getString(AppSP.customerGuid)
+        val customerGuid = ensureCustomerGuid(appPreferences)
         val memberFamilyName = parseNameDynamic(returnStringValue(memberName))
 
         if (memberGuid.isNullOrEmpty()) {
@@ -100,11 +88,12 @@ class FamilyMemberViewModel(
                 0,
                 returnIntegerValue(monthlyIncome),
                 0,
-                remarks
+                remarks,
+                1
             )
 
             familyMemberViewModel.insertCustomerFamilyMember(entity)
-            appPreferences.putString(AppSP.familymemberGuid, newGuid)
+            appPreferences.putString(AppSP.FamilyMemberGuid, newGuid)
 
             saveMessage = getString(Res.string.data_saved_successfully)
             //saveFlag = 1
@@ -129,7 +118,7 @@ class FamilyMemberViewModel(
 
     fun loadData() {
         viewModelScope.launch {
-            val savedGuid = returnStringValue(appPreferences.getString(AppSP.familymemberGuid))
+            val savedGuid = returnStringValue(appPreferences.getString(AppSP.FamilyMemberGuid))
             if (savedGuid.isNotEmpty()) {
                 val listData = familyMemberViewModel.getCustomerDetailByGuid(savedGuid)
                 if (listData.isNotEmpty()) {

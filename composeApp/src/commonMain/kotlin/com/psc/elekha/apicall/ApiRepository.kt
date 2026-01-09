@@ -3,6 +3,7 @@ package com.psc.elekha.apicall
 
 import com.psc.elekha.model.GtrRequest
 import com.psc.elekha.model.MasterRequest
+import com.psc.elekha.model.RegistrationUploadRequest
 import io.ktor.client.statement.HttpResponse
 
 class ApiRepository(private val apiService: ApiService) {
@@ -14,5 +15,6 @@ class ApiRepository(private val apiService: ApiService) {
     suspend fun getLoanRepayment(masterRequest: MasterRequest): HttpResponse = apiService.getLoanRepayment(masterRequest)
 
     suspend fun getGTRData(gtrRequest: GtrRequest): HttpResponse = apiService.getGTRData(gtrRequest)
+    suspend fun uploadRegistrationData(registrationRequest: RegistrationUploadRequest): HttpResponse = apiService.uploadRegistration(registrationRequest)
 
 }

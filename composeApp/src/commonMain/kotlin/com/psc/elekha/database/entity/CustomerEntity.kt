@@ -4,6 +4,9 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+
+
+
 @Entity(tableName = "Customer")
 data class CustomerEntity(
     @PrimaryKey @ColumnInfo(name = "GUID") val GUID: String,
@@ -255,6 +258,7 @@ data class CustomerEntity(
     @ColumnInfo(name = "OtherExpense") val OtherExpense: Int?,
     @ColumnInfo(name = "TotalMonthlyExpenditure") val TotalMonthlyExpenditure: Int?,
     @ColumnInfo(name = "TotalAnnualExpenditure") val TotalAnnualExpenditure: Int?,
+
 
 
 )

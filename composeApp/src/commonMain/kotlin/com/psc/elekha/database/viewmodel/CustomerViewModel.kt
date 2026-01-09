@@ -145,6 +145,7 @@ class CustomerViewModel(private val customerRepository: CustomerRepository) : Vi
         GKYC_UID: String?,
         GKYC_UID_Image: String?,
         GKYC_UID_Image2: String?,
+        GKYC_ElectricityBill_Name: String?,
         GKYC_ElectricityBill: String?,
         GKYC_ElectricityBill_Image: String?,
         GurantorKElectricNumber: String?,
@@ -165,6 +166,7 @@ class CustomerViewModel(private val customerRepository: CustomerRepository) : Vi
                 CKYC_Aadhar_Name,
                 CKYC_UID,
                 CKYC_UID_Image,
+                CKYC_UID_Image2,
                 CKYC_ElectricityBill,
                 CKYC_ElectricityBill_Image,
                 CKYC_ElectricityBill_Name,
@@ -177,6 +179,7 @@ class CustomerViewModel(private val customerRepository: CustomerRepository) : Vi
                 GKYC_UID,
                 GKYC_UID_Image,
                 GKYC_UID_Image2,
+                GKYC_ElectricityBill_Name,
                 GKYC_ElectricityBill,
                 GKYC_ElectricityBill_Image,
                 GurantorKElectricNumber,
@@ -211,6 +214,7 @@ class CustomerViewModel(private val customerRepository: CustomerRepository) : Vi
     fun updateBankDetail(
         guid: String,
         bankId: Int?,
+        customerBankNameEditable: String?,
         accountNo: String?,
         bankImage: String?,
         ifscCode: String?,
@@ -221,6 +225,7 @@ class CustomerViewModel(private val customerRepository: CustomerRepository) : Vi
         viewModelScope.launch {
             customerRepository.updateBankDetail(
                 bankId = bankId,
+                customerBankNameEditable= customerBankNameEditable,
                 accountNo = accountNo,
                 bankImage = bankImage,
                 ifscCode = ifscCode,
@@ -316,6 +321,14 @@ class CustomerViewModel(private val customerRepository: CustomerRepository) : Vi
                 updatedBy
             )
         }
+    }
+
+    suspend fun isCustomerAlreadySaved(customerGuid: String): Boolean {
+        return customerRepository.isCustomerAlreadySaved(customerGuid)
+    }
+
+    suspend fun getUploadData():List<CustomerEntity>{
+        return customerRepository.getUploadData()
     }
 }
 

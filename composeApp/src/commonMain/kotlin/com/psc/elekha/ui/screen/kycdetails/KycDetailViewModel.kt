@@ -1,28 +1,19 @@
 package com.psc.elekha.ui.screen.kycdetails
-
 import androidx.compose.foundation.relocation.BringIntoViewRequester
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.focus.FocusRequester
 import androidx.lifecycle.viewModelScope
-import com.psc.elekha.database.entity.CustomerDefaultEntity
-import com.psc.elekha.database.entity.CustomerEntity
-import com.psc.elekha.database.viewmodel.CustomerDefaultViewModel
 import com.psc.elekha.database.viewmodel.CustomerViewModel
-import com.psc.elekha.model.ValidationModelContorl
 import com.psc.elekha.ui.screen.base.BaseValidationViewModel
 import com.psc.elekha.utils.AppPreferences
 import com.psc.elekha.utils.AppSP
 import com.psc.elekha.utils.currentDatetime
-import com.psc.elekha.utils.generateRandomId
-import com.psc.elekha.utils.returnIntegerValue
 import com.psc.elekha.utils.returnStringValue
 import e_lekha.composeapp.generated.resources.Res
 import e_lekha.composeapp.generated.resources.data_saved_successfully
 import kotlinx.coroutines.launch
-
 import org.jetbrains.compose.resources.getString
 
 class KycDetailViewModel(
@@ -32,16 +23,12 @@ class KycDetailViewModel(
 {
     var billName by   mutableStateOf("")
     var accountNumber by mutableStateOf("")
-    var accountNumberIdProof by mutableStateOf("")
     var kNumber by  mutableStateOf("")
-    var kNumberIdProof by  mutableStateOf("")
     var ebImagePath by mutableStateOf("")
     var aadharno by  mutableStateOf("")
     var aadharnoIdProof by  mutableStateOf("")
-
     var adharbackproof by  mutableStateOf("")
     var nameonadhar by  mutableStateOf("")
-    var nameonadharIdProof by  mutableStateOf("")
     var voterno by mutableStateOf("")
     var voternoIdProof by mutableStateOf("")
     var nameonvid by mutableStateOf("")
@@ -51,12 +38,11 @@ class KycDetailViewModel(
     var gAadharBackPath by mutableStateOf("")
     var gAadharName by mutableStateOf("")
 
+    var otherEbImagePath by mutableStateOf("")
+
     // -------- GKYC Electricity --------
     var gBillName by mutableStateOf("")
-    var gAccountNumber by mutableStateOf("")
     var gKNumber by mutableStateOf("")
-    var gadharname by mutableStateOf("")
-    var gadharnumber by mutableStateOf("")
     var gEbImagePath by mutableStateOf("")
     // -------- GKYC Voter --------
     var gVoterNo by mutableStateOf("")
@@ -113,17 +99,75 @@ class KycDetailViewModel(
     val focusNameOnPan = FocusRequester()
 
     fun onNextClick(onSuccess: () -> Unit) {
-       /* if (!validateKyc()) {
+       if (!validateKyc()) {
             saveFlag = 0
             showSaveAlert = true
             return
         }
-*/
+
         viewModelScope.launch {
             updateKycUpdate()
             saveFlag = 1
             showSaveAlert = true
             onSuccess()
+        }
+    }
+
+
+    fun loadSavedKycData() {
+        viewModelScope.launch {
+
+            val savedGuid = returnStringValue(
+                appPreferences.getString(AppSP.customerGuid)
+            )
+
+            if (savedGuid.isEmpty()) return@launch
+
+            val listData =
+                customerViewModel.getCustomerDetailGuid(savedGuid)
+
+            if (listData.isEmpty()) return@launch
+
+            val data = listData[0]
+
+            // -------- CKYC Electricity --------
+            billName = returnStringValue(data.CKYC_ElectricityBill_Name)
+            accountNumber = returnStringValue(data.CKYC_ElectricityBill)
+            kNumber = returnStringValue(data.KElectricNumber)
+            ebImagePath = returnStringValue(data.CKYC_ElectricityBill_Image)
+
+            // -------- CKYC Aadhaar --------
+            aadharno = returnStringValue(data.CKYC_UID)
+            nameonadhar = returnStringValue(data.CKYC_Aadhar_Name)
+            aadharnoIdProof = returnStringValue(data.CKYC_UID_Image)
+            adharbackproof = returnStringValue(data.CKYC_UID_Image2)
+
+            // -------- CKYC Voter --------
+            voterno = returnStringValue(data.CKYC_VoterCard)
+            nameonvid = returnStringValue(data.CKYC_VoterId_Name)
+            voternoIdProof = returnStringValue(data.CKYC_VoterCard_Image)
+
+            // -------- GKYC Aadhaar --------
+            gAadharNo = returnStringValue(data.GKYC_UID)
+            gAadharName = returnStringValue(data.GKYC_Aadhar_Name)
+            gAadharFrontPath = returnStringValue(data.GKYC_UID_Image)
+            gAadharBackPath = returnStringValue(data.GKYC_UID_Image2)
+
+            // -------- GKYC Voter --------
+            gVoterNo = returnStringValue(data.GKYC_VoterCard)
+            gVoterName = returnStringValue(data.GKYC_VoterId_Name)
+            gVoterImagePath = returnStringValue(data.GKYC_VoterCard_Image)
+
+            // -------- GKYC PAN --------
+            gPanNumber = returnStringValue(data.GKYC_PANCard)
+            gPanName = returnStringValue(data.GKYC_Pancard_Name)
+            gPanImagePath = returnStringValue(data.GKYC_PANCard_Image)
+
+            // -------- GKYC Electricity --------
+            gBillName = returnStringValue(data.GKYC_ElectricityBill_Name)
+            gelecricityno = returnStringValue(data.GKYC_ElectricityBill)
+            gKNumber = returnStringValue(data.GurantorKElectricNumber)
+            otherEbImagePath = returnStringValue(data.GKYC_ElectricityBill_Image)
         }
     }
 
@@ -167,8 +211,8 @@ class KycDetailViewModel(
             saveMessage = "Please upload AadharCard Front Image"
             return false
         }
-        if (gAadharBackPath.isBlank()) {
-            saveMessage = "Please upload Guarantor AadharBack Image"
+        if (adharbackproof.isBlank()) {
+            saveMessage = "Please upload Aadhaar Back Image"
             return false
         }
         return true
@@ -201,8 +245,8 @@ class KycDetailViewModel(
             saveMessage = "Please enter Guarantor K Number"
             return false
         }
-        if (gEbImagePath.isBlank()) {
-            saveMessage = "Please upload Guarantor Electriicity Image"
+        if (otherEbImagePath.isBlank()) {
+            saveMessage = "Please upload Guarantor Electricity Image"
             return false
         }
         return true
@@ -284,8 +328,9 @@ class KycDetailViewModel(
             GKYC_UID = gAadharNo,
             GKYC_UID_Image = gAadharFrontPath,
             GKYC_UID_Image2 = gAadharBackPath,
+            GKYC_ElectricityBill_Name = gBillName,
             GKYC_ElectricityBill = gelecricityno,
-            GKYC_ElectricityBill_Image = gEbImagePath,
+            GKYC_ElectricityBill_Image = otherEbImagePath,
             GurantorKElectricNumber = gKNumber,
             GKYC_VoterCard = gVoterNo,
             GKYC_VoterCard_Image = gVoterImagePath,
@@ -318,11 +363,10 @@ class KycDetailViewModel(
     fun setGAadhaarFront(path: String) {
         gAadharFrontPath = path
     }
-
-
-    fun setGEbImage(path: String) {
-        gEbImagePath = path
+    fun setGAadhaarBack(path: String) {
+        gAadharBackPath = path
     }
+
 
     fun setGVoterImage(path: String) {
         gVoterImagePath = path
@@ -330,6 +374,9 @@ class KycDetailViewModel(
 
     fun setGPanImage(path: String) {
         gPanImagePath = path
+    }
+    fun setOtherEbImage(path: String) {
+        otherEbImagePath = path
     }
     fun validateKyc(): Boolean {
         showSaveAlert = false
@@ -353,37 +400,4 @@ class KycDetailViewModel(
             focusRequester.requestFocus()
         }
     }
-
-
-
 }
-
-/* fun loadSaveData(){
-
-  viewModelScope.launch {
-  val saveGuid=returnStringValue(appPreferences.getString(AppSP.customerGuid))
-  customerDefaultViewModel.loadCustomerDefaultGUID(saveGuid)
-  val listData = customerDefaultViewModel.customerDefaultGUIDList.value
-   if(!listData.isNullOrEmpty())
-   {
-    var data=listData[0]
-    billName = returnStringValue(data.CKYC_ElectricityBill_Name)
-    kNumber = returnStringValue(data.KElectricNumber)
-    voterno = returnStringValue(data.CKYC_VoterCard)
-    accountNumber = returnStringValue(data.CKYC_ElectricityBill)
-    panNumber = returnStringValue(data.CKYC_PANCard)
-    nameonvid = returnStringValue(data.CKYC_VoterCard)
-    nameOnPan = returnStringValue(data.CKYC_PANCard)
-
-
-   }
- }
- }*/
-
-/*suspend fun checkValidation(): ValidationModelContorl{
-  return when{
-   return
-
-  }
-}*/
-

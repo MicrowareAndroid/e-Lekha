@@ -22,36 +22,55 @@ import com.psc.elekha.apicall.APiState
 import com.psc.elekha.database.viewmodel.UsersViewModel
 import com.psc.elekha.getAppVersion
 import com.psc.elekha.ui.theme.*
-import com.psc.elekha.utils.CustomAlertDialog
-import com.psc.elekha.utils.PasswordField
-import com.psc.elekha.utils.ProgressDialog
-import com.psc.elekha.utils.ReusableTextView
-import com.psc.elekha.utils.RouteName
-import com.psc.elekha.utils.SimpleOtp
-import com.psc.elekha.utils.UsernameField
+import com.psc.elekha.utils.*
 import e_lekha.composeapp.generated.resources.Res
-import e_lekha.composeapp.generated.resources.*
+import e_lekha.composeapp.generated.resources.address_three_login
+import e_lekha.composeapp.generated.resources.address_two_login
+import e_lekha.composeapp.generated.resources.log_in
+import e_lekha.composeapp.generated.resources.logo
+import e_lekha.composeapp.generated.resources.no_internet
+import e_lekha.composeapp.generated.resources.planned_social_concern
+import e_lekha.composeapp.generated.resources.proceed
+import e_lekha.composeapp.generated.resources.registered_office_address
+import e_lekha.composeapp.generated.resources.send_otp
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
-
 
 @Composable
 fun LoginScreenNew(navController: NavController) {
     val viewModel = koinViewModel<LoginViewModel>()
     val userViewModel = koinViewModel<UsersViewModel>()
+    val appPreferences: AppPreferences = koinInject()
+
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var otp by remember { mutableStateOf("") }
     var showOtpField by remember { mutableStateOf(false) }
-    val versionName = getAppVersion()
     var showProgress by remember { mutableStateOf(false) }
     var dialogMessage by remember { mutableStateOf("") }
+    var showDialog by remember { mutableStateOf(false) }
+    val versionName = getAppVersion()
+
+
     val loginState = viewModel.loginState.collectAsState().value
     val verifyState = viewModel.verifyState.collectAsState().value
-    var showDialog by remember { mutableStateOf(false) }
-    val userList by userViewModel.userList.collectAsState()
+
+
+    val isNetworkAvailable by viewModel.isNetworkAvailable.collectAsState()
+    val noInternetMsg = stringResource(Res.string.no_internet)
+
+    LaunchedEffect(isNetworkAvailable) {
+        if (!isNetworkAvailable) {
+            showDialog = true
+            dialogMessage = noInternetMsg
+        } else if (showDialog && dialogMessage ==noInternetMsg) {
+            showDialog = false
+        }
+    }
+
 
     LaunchedEffect(loginState) {
         when (loginState) {
@@ -59,29 +78,29 @@ fun LoginScreenNew(navController: NavController) {
                 showProgress = true
                 dialogMessage = "Please wait..."
             }
-
             is APiState.success -> {
                 showProgress = false
                 showOtpField = true
-                viewModel.getOTP("9821490996")
+                userViewModel.getUserContact(appPreferences.getString(AppSP.userId)!!) { contact ->
+                    viewModel.getOTP(contact ?: "")
+                }
             }
-
             is APiState.error -> {
                 showProgress = false
                 showDialog = true
                 dialogMessage = loginState.message
             }
-
             else -> {}
         }
     }
+
+
     LaunchedEffect(verifyState) {
         when (verifyState) {
             is APiState.loading -> {
                 showProgress = true
                 dialogMessage = "Validating OTP..."
             }
-
             is APiState.success -> {
                 showProgress = false
                 navController.navigate(RouteName.home) {
@@ -89,13 +108,11 @@ fun LoginScreenNew(navController: NavController) {
                     launchSingleTop = true
                 }
             }
-
             is APiState.error -> {
                 showProgress = false
                 showDialog = true
                 dialogMessage = verifyState.message
             }
-
             else -> {}
         }
     }
@@ -105,19 +122,26 @@ fun LoginScreenNew(navController: NavController) {
             .fillMaxSize()
             .background(
                 brush = Brush.verticalGradient(
-                    colors = listOf(
-                        loginbgGradientTop,
-                        loginbgGradientBottom
-                    )
+                    colors = listOf(loginbgGradientTop, loginbgGradientBottom)
                 )
             )
     ) {
-        /*Image(
-            painter = painterResource(Res.drawable.background),
-            contentDescription = null,
-            modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.FillBounds
-        )*/
+
+        if (!isNetworkAvailable) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(Color.Red)
+                    .padding(8.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = "No Internet Connection",
+                    color = Color.White,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+        }
 
         Scaffold(
             modifier = Modifier.fillMaxSize(),
@@ -130,10 +154,7 @@ fun LoginScreenNew(navController: NavController) {
                         .padding(bottom = 10.dp),
                     contentAlignment = Alignment.Center
                 ) {
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally,
-
-                        ) {
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
                         Text(
                             text = stringResource(Res.string.registered_office_address),
                             style = MaterialTheme.typography.bodyMedium.copy(
@@ -159,32 +180,27 @@ fun LoginScreenNew(navController: NavController) {
             }
         ) { innerPadding ->
 
-
             Column(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(innerPadding)
-                    .padding(horizontal = 16.dp),
+                    .padding(horizontal = 16.dp)
             ) {
 
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center
-
                 ) {
                     Image(
                         painter = painterResource(Res.drawable.logo),
                         contentDescription = "Logo",
-                        modifier = Modifier
-                            .size(150.dp)
+                        modifier = Modifier.size(150.dp)
                     )
                 }
 
-                Spacer(modifier = Modifier.height(10.dp))
                 Box(
-                    modifier = Modifier
-                        .fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth(),
                     contentAlignment = Alignment.Center
                 ) {
                     ReusableTextView(
@@ -194,7 +210,7 @@ fun LoginScreenNew(navController: NavController) {
                         textAlignment = TextAlign.Center
                     )
                 }
-                Spacer(modifier = Modifier.height(10.dp))
+
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -207,7 +223,7 @@ fun LoginScreenNew(navController: NavController) {
                         modifier = Modifier
                             .fillMaxWidth()
                             .wrapContentHeight()
-                            .padding(16.dp)
+                            .padding(14.dp)
                             .border(
                                 width = 2.dp,
                                 color = Color.Transparent,
@@ -223,16 +239,12 @@ fun LoginScreenNew(navController: NavController) {
                                 .fillMaxWidth()
                                 .background(
                                     brush = Brush.verticalGradient(
-                                        colors = listOf(
-                                            loginSmallGradientTop,
-                                            loginSmallGradientBottom
-                                        )
+                                        colors = listOf(loginSmallGradientTop, loginSmallGradientBottom)
                                     ),
                                     shape = RoundedCornerShape(3.dp)
                                 )
                                 .padding(16.dp)
                         ) {
-
 
                             Column(
                                 modifier = Modifier
@@ -245,7 +257,6 @@ fun LoginScreenNew(navController: NavController) {
                                     text = stringResource(Res.string.log_in),
                                     textColor = white,
                                     fontSize = 30
-
                                 )
 
                                 Spacer(modifier = Modifier.height(8.dp))
@@ -269,17 +280,28 @@ fun LoginScreenNew(navController: NavController) {
 
                                 Button(
                                     onClick = {
+
+                                        if (!isNetworkAvailable) {
+                                            showDialog = true
+                                            dialogMessage = "No Internet Connection"
+                                            return@Button
+                                        }
+
                                         if (!showOtpField) {
                                             if (username.isBlank() || password.isBlank()) {
                                                 showDialog = true
                                                 dialogMessage = "Please Enter Username & Password"
                                             } else {
-                                                userViewModel.getUserDetails(username,password)
-                                                if (userList.isNotEmpty()) {
-                                                    showOtpField = true
-                                                    viewModel.getOTP("9821490996")
-                                                } else {
-                                                    viewModel.getAuthentication(username, password)
+                                                userViewModel.getUserDetails(username,password){ userList ->
+                                                    if (userList.isNotEmpty()) {
+                                                        showOtpField = true
+                                                        userViewModel.getUserContact(userList.firstOrNull()?.UserId?:"") { contact ->
+                                                            appPreferences.putString(AppSP.userId,userList.firstOrNull()?.UserId?:"")
+                                                            viewModel.getOTP(contact?:"")
+                                                        }
+                                                    } else {
+                                                        viewModel.getAuthentication(username, password)
+                                                    }
                                                 }
                                             }
                                         } else {
@@ -287,7 +309,9 @@ fun LoginScreenNew(navController: NavController) {
                                                 showDialog = true
                                                 dialogMessage = "Please Enter Valid OTP"
                                             } else {
-                                                viewModel.verifyOTP("9821490996", otp)
+                                                userViewModel.getUserContact(appPreferences.getString(AppSP.userId)!!) { contact ->
+                                                    viewModel.verifyOTP(contact?:"", otp)
+                                                }
                                             }
                                         }
                                     },
@@ -321,7 +345,6 @@ fun LoginScreenNew(navController: NavController) {
             }
         }
 
-
         if (showDialog) {
             CustomAlertDialog(
                 showDialog,
@@ -342,4 +365,3 @@ fun LoginScreenNewPreview() {
         LoginScreenNew(navController = rememberNavController())
     }
 }
-

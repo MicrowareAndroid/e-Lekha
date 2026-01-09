@@ -6,7 +6,10 @@ import com.psc.elekha.database.appdatabase.AppDatabase
 import com.psc.elekha.utils.AppPreferences
 import com.psc.elekha.utils.VersionInfo
 import com.psc.elekha.di.initKoin
+import com.psc.elekha.di.platformModule
+import com.psc.elekha.di.viewmodelModule
 import com.psc.elekha.expectfile.AndroidContextProvider
+import com.psc.elekha.utils.AppContextProvider
 
 
 import org.koin.android.ext.koin.androidContext
@@ -14,6 +17,7 @@ import org.koin.android.ext.koin.androidLogger
 import org.koin.core.component.KoinComponent
 
 class MyApp : Application(), KoinComponent {
+
     companion object {
         lateinit var instance: MyApp
             private set
@@ -28,13 +32,16 @@ class MyApp : Application(), KoinComponent {
         VersionInfo.init(applicationContext)
         appPreferences = AppPreferences(this)
 
-        AndroidContextProvider.context = this
+
+        AppContextProvider.init(this)
 
         initKoin {
             androidLogger()
             androidContext(this@MyApp)
+            modules(
+                viewmodelModule,
+                platformModule
+            )
         }
     }
-
-
 }
