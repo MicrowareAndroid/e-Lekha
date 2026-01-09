@@ -3,6 +3,7 @@ package com.psc.elekha.apicall
 
 import com.psc.elekha.model.GtrRequest
 import com.psc.elekha.model.MasterRequest
+import com.psc.elekha.model.RegistrationUploadRequest
 import com.psc.elekha.utils.Config.AUTHENTICATION
 import com.psc.elekha.utils.Config.DASHBOARDDATA
 import com.psc.elekha.utils.Config.GTR
@@ -84,6 +85,16 @@ class ApiService(private val client: HttpClient) {
                 parameters.append("iVillageID", gtrRequest.iVillageID.toString())
             }
             contentType(ContentType.Application.Json)
+        }
+    }
+
+
+    suspend fun uploadRegistration(
+        request: RegistrationUploadRequest
+    ): HttpResponse {
+        return client.post("") {
+            contentType(ContentType.Application.Json)
+            setBody(request)
         }
     }
 

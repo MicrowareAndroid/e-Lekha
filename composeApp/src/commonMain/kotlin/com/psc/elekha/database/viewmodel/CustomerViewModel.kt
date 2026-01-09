@@ -326,6 +326,10 @@ class CustomerViewModel(private val customerRepository: CustomerRepository) : Vi
     suspend fun isCustomerAlreadySaved(customerGuid: String): Boolean {
         return customerRepository.isCustomerAlreadySaved(customerGuid)
     }
+
+    suspend fun getUploadData():List<CustomerEntity>{
+        return customerRepository.getUploadData()
+    }
 }
 
 

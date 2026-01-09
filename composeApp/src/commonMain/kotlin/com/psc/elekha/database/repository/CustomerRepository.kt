@@ -277,6 +277,10 @@ class CustomerRepository(private val customerDao: CustomerDao) {
         return customerDao.isCustomerExists(customerGuid) > 0
     }
 
+    suspend fun getUploadData():List<CustomerEntity>{
+        return customerDao.getUploadData()
+    }
+
 
 
 

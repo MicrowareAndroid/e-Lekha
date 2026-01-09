@@ -25,6 +25,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.room.util.splitToIntList
@@ -48,6 +49,8 @@ import e_lekha.composeapp.generated.resources.edit
 import e_lekha.composeapp.generated.resources.education
 import e_lekha.composeapp.generated.resources.full_name_of_applicant
 import e_lekha.composeapp.generated.resources.income
+import e_lekha.composeapp.generated.resources.inter_medium
+import e_lekha.composeapp.generated.resources.inter_regular
 import e_lekha.composeapp.generated.resources.marital_status
 import e_lekha.composeapp.generated.resources.mobile_number
 import e_lekha.composeapp.generated.resources.name
@@ -56,6 +59,7 @@ import e_lekha.composeapp.generated.resources.relation
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
@@ -172,17 +176,14 @@ fun TextWithLabel(
         verticalAlignment = Alignment.CenterVertically
     ) {
         ReusableTextViewGrayCard(
-            text = "$label:",
-            fontSize = 12
-        )
+            label,
+
+            )
 
         Spacer(modifier = Modifier.width(6.dp))
 
         ReusableTextViewBlackCard(
-            text = value,
-            fontSize = 12,
-            fontWeight = FontWeight.Medium,
-
+            value,
         )
     }
 }

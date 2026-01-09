@@ -2624,7 +2624,7 @@ fun ReusableTextViewBlackCard(
     textColor: Color = Color.Black,
     fontSize: Int = 14,
     fontWeight: FontWeight = FontWeight.SemiBold,
-    fontFamily: FontFamily = FontFamily(Font(Res.font.inter_medium)),
+    fontFamily: FontFamily = FontFamily(Font(Res.font.inter_regular)),
     backgroundColor: Color = Color.Transparent,
     cornerRadius: Dp = 0.dp,
     padding: Dp = 0.dp,

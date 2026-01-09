@@ -1,6 +1,7 @@
 package com.psc.elekha.database.repository
 
 import com.psc.elekha.database.dao.CustomerExistingLoanDetailDao
+import com.psc.elekha.database.entity.CustomerEntity
 import com.psc.elekha.database.entity.CustomerExistingLoanDetailEntity
 
 class CustomerExistingLoanDetailRepository(
@@ -104,4 +105,9 @@ class CustomerExistingLoanDetailRepository(
     suspend fun getLoanCustomerByGuid(mfiGuid: String): List<CustomerExistingLoanDetailEntity> {
         return customerExistingLoanDetailDao.getLoanCustomerByGuid(mfiGuid)
     }
+
+    suspend fun getUploadData():List<CustomerExistingLoanDetailEntity>{
+        return customerExistingLoanDetailDao.getUploadData()
+    }
+
 }
