@@ -145,7 +145,7 @@ val viewmodelModule = module {
             mstLoanProductViewModel = get(),
             appPreferences = get(),
             userContactDetailViewModel = get(),
-            usersRepository = get()
+            usersRepository = get(),
             imageDetailViewModel = get()
         )
     }
