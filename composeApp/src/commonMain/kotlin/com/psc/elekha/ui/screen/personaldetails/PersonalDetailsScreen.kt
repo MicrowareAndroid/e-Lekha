@@ -253,6 +253,7 @@ fun PersonalDetailsScreen(
                             .focusRequester(viewModel.focusRequesterCustomerName)
                             .bringIntoViewRequester(viewModel.bringIntoViewRequesterCustomerName),
                         maxLength = 30,
+                        isRequired = true
 
 
                         )
