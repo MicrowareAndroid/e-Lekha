@@ -92,6 +92,7 @@ class CustomerRepository(private val customerDao: CustomerDao) {
         CKYC_Aadhar_Name: String?,
         CKYC_UID: String?,
         CKYC_UID_Image: String?,
+        CKYC_UID_Image2: String?,
         CKYC_ElectricityBill: String?,
         CKYC_ElectricityBill_Image: String?,
         CKYC_ElectricityBill_Name: String?,
@@ -105,6 +106,7 @@ class CustomerRepository(private val customerDao: CustomerDao) {
         GKYC_UID: String?,
         GKYC_UID_Image: String?,
         GKYC_UID_Image2: String?,
+        GKYC_ElectricityBill_Name: String?,
         GKYC_ElectricityBill: String?,
         GKYC_ElectricityBill_Image: String?,
         GurantorKElectricNumber: String?,
@@ -124,6 +126,7 @@ class CustomerRepository(private val customerDao: CustomerDao) {
             CKYC_Aadhar_Name,
             CKYC_UID,
             CKYC_UID_Image,
+            CKYC_UID_Image2,
             CKYC_ElectricityBill,
             CKYC_ElectricityBill_Image,
             CKYC_ElectricityBill_Name,
@@ -136,6 +139,7 @@ class CustomerRepository(private val customerDao: CustomerDao) {
             GKYC_UID,
             GKYC_UID_Image,
             GKYC_UID_Image2,
+            GKYC_ElectricityBill_Name,
             GKYC_ElectricityBill,
             GKYC_ElectricityBill_Image,
             GurantorKElectricNumber,
@@ -162,6 +166,7 @@ class CustomerRepository(private val customerDao: CustomerDao) {
 
     suspend fun updateBankDetail(
         bankId: Int?,
+        customerBankNameEditable: String?,
         accountNo: String?,
         bankImage: String?,
         ifscCode: String?,
@@ -172,6 +177,7 @@ class CustomerRepository(private val customerDao: CustomerDao) {
     ) {
         customerDao.updateBankDetail(
             CKYC_Bank = bankId,
+            CustomerBankNameEditable = customerBankNameEditable,
             CKYC_BankAccountNumber = accountNo,
             CKYC_Bank_Image = bankImage,
             CustomerBankIFSCCode = ifscCode,

@@ -7,6 +7,7 @@ import com.psc.elekha.apicall.APiState
 import com.psc.elekha.apicall.ApiRepository
 import com.psc.elekha.database.repository.UsersRepository
 import com.psc.elekha.database.viewmodel.CustomerStatusViewModel
+import com.psc.elekha.database.viewmodel.ImageDetailViewModel
 import com.psc.elekha.database.viewmodel.KYCDocCategoryViewModel
 import com.psc.elekha.database.viewmodel.KYCDocConfigurationViewModel
 import com.psc.elekha.database.viewmodel.KYCDocumentViewModel
@@ -70,6 +71,7 @@ class LoginViewModel(
     private val kycDocumentViewModel: KYCDocumentViewModel,
     private val kycStatusViewModel: KYCStatusViewModel,
     private val kycStatusConditionViewModel: KYCStatusConditionViewModel,
+    private val imageDetailViewModel: ImageDetailViewModel,
     private val appPreferences: AppPreferences,
     private val userContactDetailViewModel: UserContactDetailViewModel,
     private val usersRepository: UsersRepository
@@ -192,6 +194,7 @@ class LoginViewModel(
                         mstLoanProductViewModel.insertAllLoanProduct(it.mstLoanProduct)
                         userContactDetailViewModel.insertAllUserContactDetail(it.userContactDetails)
                         _loginState.value = APiState.success("Login successfully")
+//                        imageDetailViewModel.insertAllImageDetail(it.imageDetail)
                     }
 
                 } else if (code == 401) {

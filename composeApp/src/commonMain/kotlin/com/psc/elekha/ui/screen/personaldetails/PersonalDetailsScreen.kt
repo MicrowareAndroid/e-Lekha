@@ -22,6 +22,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -57,12 +58,14 @@ import com.psc.elekha.model.EconomicMovableAssetsModel
 import com.psc.elekha.model.FamilyDetailModel
 import com.psc.elekha.ui.screen.economicdetails.EconomicMovableAssetsCard
 import com.psc.elekha.ui.screen.familydetails.FamilyDetailCard
+import com.psc.elekha.ui.theme.appleblue
 import com.psc.elekha.ui.theme.black
 import com.psc.elekha.ui.theme.btn_color
 import com.psc.elekha.ui.theme.formborder
 import com.psc.elekha.ui.theme.text_fiiled_color
 import com.psc.elekha.utils.AppPreferences
 import com.psc.elekha.utils.AppSP
+import com.psc.elekha.utils.CommonDivider
 import com.psc.elekha.utils.CommonSaveButton
 import com.psc.elekha.utils.CommonSingleButtonsBottomString
 import com.psc.elekha.utils.CustomAlertDialog
@@ -245,11 +248,12 @@ fun PersonalDetailsScreen(
                         label = stringResource(Res.string.customer_name),
                         value = viewModel.customerName,
                         onValueChange = { viewModel.customerName = it },
-                        placeholder = stringResource(Res.string.type_here),
+
                         modifier = Modifier.weight(1f)
                             .focusRequester(viewModel.focusRequesterCustomerName)
                             .bringIntoViewRequester(viewModel.bringIntoViewRequesterCustomerName),
                         maxLength = 30,
+
 
                         )
 
@@ -366,7 +370,7 @@ fun PersonalDetailsScreen(
                         onValueChange = { mobilenumber ->
                             viewModel.mobileNumber = mobilenumber
                         },
-                        placeholder = stringResource(Res.string.type_here),
+
                         maxLength = 10,
                         modifier = Modifier.fillMaxWidth()
                             .focusRequester(viewModel.focusRequesterMobileNumber)
@@ -390,7 +394,7 @@ fun PersonalDetailsScreen(
                         onValueChange = { gurantorotp ->
                             viewModel.otpNumber = gurantorotp
                         },
-                        placeholder = stringResource(Res.string.type_here),
+
                         modifier = Modifier.weight(2f),
                         inputType = KeyboardType.Number
                     )
@@ -411,7 +415,7 @@ fun PersonalDetailsScreen(
                 FormFieldCompact(
                     label = stringResource(Res.string.husband_name),
                     value = viewModel.husbandName,
-                    placeholder = stringResource(Res.string.type_here),
+
                     onValueChange = { husbandname ->
                         viewModel.husbandName = husbandname
 
@@ -446,7 +450,7 @@ fun PersonalDetailsScreen(
                 FormFieldCompact(
                     label = stringResource(Res.string.guarantor_name),
                     value = viewModel.gurantorName,
-                    placeholder = stringResource(Res.string.type_here),
+
                     onValueChange = { gurantorname ->
                         if (!isChecked) {
                             viewModel.gurantorName = gurantorname
@@ -540,7 +544,7 @@ fun PersonalDetailsScreen(
                         onValueChange = { gurantorotp ->
                             viewModel.guranterOtp = gurantorotp
                         },
-                        placeholder = stringResource(Res.string.type_here),
+
                         modifier = Modifier.weight(2f),
                         inputType = KeyboardType.Number
                     )
@@ -561,7 +565,7 @@ fun PersonalDetailsScreen(
                 FormFieldCompact(
                     label = stringResource(Res.string.your_full_address),
                     value = viewModel.fulladdresss,
-                    placeholder = stringResource(Res.string.type_here),
+
                     onValueChange = { yourfulladdress ->
                         viewModel.fulladdresss = yourfulladdress
                     },
@@ -629,7 +633,7 @@ fun PersonalDetailsScreen(
                             viewModel.tehsilName = tehsill
                         },
                         inputType = KeyboardType.Text,
-                        placeholder = stringResource(Res.string.type_here),
+
                         modifier = Modifier.weight(1f)
                             .focusRequester(viewModel.focusRequesterTehsilName)
                             .bringIntoViewRequester(viewModel.bringIntoViewRequesterTehsilName),
@@ -650,7 +654,7 @@ fun PersonalDetailsScreen(
                         onValueChange = { landmarks ->
                             viewModel.landMark = landmarks
                         },
-                        placeholder = stringResource(Res.string.type_here),
+
                         modifier = Modifier.weight(1f)
                             .focusRequester(viewModel.focusRequesterLandMark)
                             .bringIntoViewRequester(viewModel.bringIntoViewRequesterLandMark),
@@ -664,7 +668,7 @@ fun PersonalDetailsScreen(
                         onValueChange = { pincode ->
                             viewModel.pinCode = pincode
                         },
-                        placeholder = stringResource(Res.string.type_here),
+
                         modifier = Modifier.weight(1f)
                             .focusRequester(viewModel.focusRequesterPinCode)
                             .bringIntoViewRequester(viewModel.bringIntoViewRequesterPinCode),
@@ -677,11 +681,15 @@ fun PersonalDetailsScreen(
                 ReusableTextViewes(
                     text = stringResource(Res.string.maternal_address)
                 )
+                CommonDivider(
+                    modifier = Modifier.fillMaxWidth()
+                )
+
                 Spacer(modifier = Modifier.height(8.dp))
                 FormFieldCompact(
                     label = stringResource(Res.string.address),
                     value = viewModel.maternalAddress,
-                    placeholder = stringResource(Res.string.type_here),
+
                     onValueChange = { maternaladdress ->
                         viewModel.maternalAddress = maternaladdress
                     },
@@ -702,7 +710,7 @@ fun PersonalDetailsScreen(
                         label = stringResource(Res.string.village_name),
                         value = viewModel.villageNames,
                         onValueChange = {viewModel.villageNames=it},
-                        placeholder = stringResource(Res.string.type_here),
+
                         modifier = Modifier.weight(1f)
                             .focusRequester(viewModel.focusRequesterMaternalVillage)
                             .bringIntoViewRequester(viewModel.bringIntoViewRequesterMaternalVillage),
@@ -718,7 +726,7 @@ fun PersonalDetailsScreen(
                         onValueChange = { maternalmbno ->
                             viewModel.maternalMobileNo = maternalmbno
                         },
-                        placeholder = stringResource(Res.string.type_here),
+
                         modifier = Modifier.weight(1f)
                             .focusRequester(viewModel.focusRequesterMaternalMobileNo)
                             .bringIntoViewRequester(viewModel.bringIntoViewRequesterMaternalMobileNo),
@@ -739,7 +747,7 @@ fun PersonalDetailsScreen(
                             viewModel.fatherName = fathername
                         },
                         inputType = KeyboardType.Text,
-                        placeholder = stringResource(Res.string.type_here),
+
                         modifier = Modifier.weight(1f)
                             .focusRequester(viewModel.focusRequesterFatherName)
                             .bringIntoViewRequester(viewModel.bringIntoViewRequesterFatherName),
@@ -761,6 +769,7 @@ fun PersonalDetailsScreen(
 
                 }
                 Spacer(modifier = Modifier.height(8.dp))
+
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(10.dp),
@@ -788,6 +797,10 @@ fun PersonalDetailsScreen(
                         )
                     }
                 }
+                CommonDivider(
+                    modifier = Modifier.fillMaxWidth()
+                )
+
 
                 Spacer(modifier = Modifier.height(12.dp))
                 if (showFamilyDialog) {
@@ -815,6 +828,9 @@ fun PersonalDetailsScreen(
                 Spacer(modifier = Modifier.height(10.dp))
                 ReusableTextViewes(
                     text = stringResource(Res.string.family_econonic_profile)
+                )
+                CommonDivider(
+                    modifier = Modifier.fillMaxWidth()
                 )
                 Spacer(modifier = Modifier.height(20.dp))
 
@@ -854,6 +870,9 @@ fun PersonalDetailsScreen(
                 ReusableTextViewes(
                     text = stringResource(Res.string.your_monthly_expenditure)
                 )
+                CommonDivider(
+                    modifier = Modifier.fillMaxWidth()
+                )
                 Spacer(modifier = Modifier.height(20.dp))
                 Row(
                     modifier = Modifier
@@ -867,7 +886,7 @@ fun PersonalDetailsScreen(
                         onValueChange = { viewModel.dailyExpense=it },
                         inputType = KeyboardType.Number,
                         maxLength = 7,
-                        placeholder = stringResource(Res.string.type_here),
+
 
                         modifier = Modifier.weight(1f)
                             .focusRequester(viewModel.focusRequesterDailyExpense)
@@ -879,7 +898,7 @@ fun PersonalDetailsScreen(
                         label = stringResource(Res.string.education),
                         value = viewModel.educationExpense,
                         onValueChange = { viewModel.educationExpense=it },
-                        placeholder = stringResource(Res.string.type_here),
+
                         inputType = KeyboardType.Number,
                         maxLength = 7,
 
@@ -901,7 +920,7 @@ fun PersonalDetailsScreen(
                         label = stringResource(Res.string.medical),
                         value = viewModel.medicalExpense,
                         onValueChange = { viewModel.medicalExpense = it},
-                        placeholder = stringResource(Res.string.type_here),
+
                         inputType = KeyboardType.Number,
                         maxLength = 7,
 
@@ -915,7 +934,7 @@ fun PersonalDetailsScreen(
                         label = stringResource(Res.string.others),
                         value = viewModel.othersExpense,
                         onValueChange = { viewModel.othersExpense = it},
-                        placeholder = stringResource(Res.string.type_here),
+
                         inputType = KeyboardType.Number,
                         maxLength = 7,
 
@@ -936,7 +955,7 @@ fun PersonalDetailsScreen(
                         label = stringResource(Res.string.total_monthly_expenditure),
                         value = viewModel.totalMonthlyExpense,
                         onValueChange = { viewModel.totalMonthlyExpense = it},
-                        placeholder = stringResource(Res.string.type_here),
+
                         inputType = KeyboardType.Number,
                         maxLength = 7,
                         modifier = Modifier.weight(1f)
@@ -949,7 +968,7 @@ fun PersonalDetailsScreen(
                         label = stringResource(Res.string.annual),
                         value = viewModel.annualExpense,
                         onValueChange = { viewModel.annualExpense = it },
-                        placeholder = stringResource(Res.string.type_here),
+
                         inputType = KeyboardType.Number,
                         maxLength = 7,
                         modifier = Modifier.weight(1f)
@@ -961,6 +980,9 @@ fun PersonalDetailsScreen(
                 Spacer(modifier = Modifier.height(10.dp))
                 ReusableTextViewes(
                     text = stringResource(Res.string.mfi_details)
+                )
+                CommonDivider(
+                    modifier = Modifier.fillMaxWidth()
                 )
                 Spacer(modifier = Modifier.height(10.dp))
                 Row(
@@ -974,7 +996,7 @@ fun PersonalDetailsScreen(
                         label = stringResource(Res.string.mfi_bank_name),
                         value = viewModel.mfiBankExpense,
                         onValueChange = { viewModel.mfiBankExpense = it },
-                        placeholder = stringResource(Res.string.type_here),
+
                         inputType = KeyboardType.Text,
                         modifier = Modifier.weight(1f)
                             .focusRequester(viewModel.focusRequesterMfiBankExpense)
@@ -986,7 +1008,7 @@ fun PersonalDetailsScreen(
                         label = stringResource(Res.string.select_customer_loan),
                         value = viewModel.loanAmountExpense,
                         onValueChange = {viewModel.loanAmountExpense = it},
-                        placeholder = stringResource(Res.string.type_here),
+
                         inputType = KeyboardType.Number,
                         maxLength = 9,
                         modifier = Modifier.weight(1f)
@@ -1006,7 +1028,7 @@ fun PersonalDetailsScreen(
                         label = stringResource(Res.string.outstanding),
                         value = viewModel.outStandingExpense,
                         onValueChange = { viewModel.outStandingExpense = it },
-                        placeholder = stringResource(Res.string.type_here),
+
                         inputType = KeyboardType.Number,
                         maxLength = 9,
                         modifier = Modifier.weight(1f)
@@ -1019,7 +1041,7 @@ fun PersonalDetailsScreen(
                         label = stringResource(Res.string.emi),
                         value = viewModel.emiExpense,
                         onValueChange = { viewModel.emiExpense = it },
-                        placeholder = stringResource(Res.string.type_here),
+
                         inputType = KeyboardType.Number,
                         maxLength = 9,
                         modifier = Modifier.weight(1f)
@@ -1039,7 +1061,7 @@ fun PersonalDetailsScreen(
                         label = stringResource(Res.string.full_name_of_applicant),
                         value = viewModel.fullNameExpense,
                         onValueChange = { viewModel.fullNameExpense = it},
-                        placeholder = stringResource(Res.string.type_here),
+
                         inputType = KeyboardType.Text,
                         modifier = Modifier.weight(1f)
                             .focusRequester(viewModel.focusRequesterFullNameExpense)
@@ -1051,8 +1073,6 @@ fun PersonalDetailsScreen(
                         label = stringResource(Res.string.remarks),
                         value =viewModel.remarksExpense,
                         onValueChange = { viewModel.remarksExpense = it},
-                        placeholder = stringResource(Res.string.type_here),
-
                         modifier = Modifier.weight(1f)
                             .focusRequester(viewModel.focusRequesterRemarksExpense)
                             .bringIntoViewRequester(viewModel.bringIntoViewRequesterRemarksExpense),
@@ -1072,7 +1092,6 @@ fun PersonalDetailsScreen(
                         text = stringResource(Res.string.movable_assets),
                         modifier = Modifier.weight(1f)
                     )
-
 
                     // Right FAB
                     FloatingActionButton(
@@ -1095,7 +1114,11 @@ fun PersonalDetailsScreen(
                             tint = black
                         )
                     }
+
                 }
+                CommonDivider(
+                    modifier = Modifier.fillMaxWidth()
+                )
 
 
 

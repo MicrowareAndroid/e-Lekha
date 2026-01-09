@@ -114,12 +114,39 @@ class BankDetailViewModel(
   }
  }
 
+ fun loadSavedBankData() {
+  viewModelScope.launch {
+
+   val savedGuid = returnStringValue(
+    appPreferences.getString(AppSP.customerGuid)
+   )
+
+   if (savedGuid.isEmpty()) return@launch
+
+   val listData =
+    customerViewModel.getCustomerDetailGuid(savedGuid)
+
+   if (listData.isEmpty()) return@launch
+
+   val data = listData[0]
+
+   // -------- Bank Details --------
+   accountName = returnStringValue(data.CustomerBankNameEditable)
+   accountNumber = returnStringValue(data.CKYC_BankAccountNumber)
+   selectedBankname = returnStringValue(data.CKYC_Bank.toString())
+   selectedBranchname = returnStringValue(data.CKYC_Bank_Branch)
+   ifscCode = returnStringValue(data.CustomerBankIFSCCode)
+   _passbookImage = returnStringValue(data.CKYC_Bank_Image)
+  }
+ }
+
  private suspend fun saveBankDetail() {
   val guid = appPreferences.getString(AppSP.customerGuid)
 
   customerViewModel.updateBankDetail(
    guid = returnStringValue(guid),
    bankId = selectedBankname.toIntOrNull(),
+   customerBankNameEditable = returnStringValue(accountName),
    accountNo = returnStringValue(accountNumber),
    bankImage = passbookImage,
    ifscCode = returnStringValue(ifscCode),

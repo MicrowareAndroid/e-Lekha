@@ -179,7 +179,6 @@ fun LoginScreenNew(navController: NavController) {
                     )
                 }
 
-                Spacer(modifier = Modifier.height(10.dp))
                 Box(
                     modifier = Modifier
                         .fillMaxWidth(),
@@ -192,7 +191,7 @@ fun LoginScreenNew(navController: NavController) {
                         textAlignment = TextAlign.Center
                     )
                 }
-                Spacer(modifier = Modifier.height(10.dp))
+
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -205,7 +204,7 @@ fun LoginScreenNew(navController: NavController) {
                         modifier = Modifier
                             .fillMaxWidth()
                             .wrapContentHeight()
-                            .padding(16.dp)
+                            .padding(14.dp)
                             .border(
                                 width = 2.dp,
                                 color = Color.Transparent,
