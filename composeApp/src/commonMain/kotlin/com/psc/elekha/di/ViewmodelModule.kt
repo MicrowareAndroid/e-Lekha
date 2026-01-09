@@ -146,7 +146,8 @@ val viewmodelModule = module {
             appPreferences = get(),
             userContactDetailViewModel = get(),
             usersRepository = get(),
-            imageDetailViewModel = get()
+            imageDetailViewModel = get(),
+            networkMonitor=get()
         )
     }
     viewModelOf(::GtrViewModel)
