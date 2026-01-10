@@ -24,11 +24,10 @@ import java.io.ByteArrayOutputStream
 import java.io.File
 
 @Composable
-actual fun CameraPicker(
+actual fun CameraPickerNew(
     openCamera: Boolean,
-    onImagePicked: (String?) -> Unit
-)
-{
+    onImagePicked: (imageName: String?, imagePath: String?) -> Unit
+) {
     val context = LocalContext.current
     var photoFile by remember { mutableStateOf<File?>(null) }
 
@@ -40,10 +39,13 @@ actual fun CameraPicker(
                 photoFile?.let { file ->
                     val compressedFile = ImageCompressor.compressToKB(file)
 
-                    onImagePicked(compressedFile.absolutePath)
+                    onImagePicked(
+                        file.nameWithoutExtension,          // imageName
+                        compressedFile.absolutePath          // imagePath
+                    )
                 }
             } else {
-                onImagePicked(null)
+                onImagePicked(null, null)
             }
         }
 
@@ -66,7 +68,7 @@ actual fun CameraPicker(
                     "Camera permission denied",
                     Toast.LENGTH_SHORT
                 ).show()
-                onImagePicked(null)
+                onImagePicked(null, null)
             }
         }
 
@@ -102,7 +104,7 @@ actual fun CameraPicker(
                     Toast.LENGTH_LONG
                 ).show()
                 permissionManager.openAppSettings()
-                onImagePicked(null)
+                onImagePicked(null, null)
             }
         }
     }
@@ -114,8 +116,7 @@ actual fun CameraPicker(
 private fun launchCamera(
     context: Context,
     onReady: (File, Uri) -> Unit
-)
-{
+) {
     val guid = returnStringValue(appPreferences.getString(AppSP.customerGuid))
     val fieldName = returnStringValue(appPreferences.getString(AppSP.sImageFieldName))
 
@@ -127,9 +128,6 @@ private fun launchCamera(
 
     // Image file WITH extension
     val file = File(picDir, "$sImageName.jpg")
-
-    // Save full path if needed globally
-    val sFullImagePath = file.absolutePath
 
 //    val file = File(context.filesDir, "IMG_${System.currentTimeMillis()}.jpg")
 

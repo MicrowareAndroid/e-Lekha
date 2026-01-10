@@ -2,7 +2,8 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "a16fd27a234bf91499bc8e262726274f",
+
+    "identityHash": "d879eabdb2a7a547af1fcb4190a99c2f",
     "entities": [
       {
         "tableName": "CustomerStatus",
@@ -2226,7 +2227,7 @@
       },
       {
         "tableName": "CustomerExistingLoanDetail",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`MFIGUID` TEXT NOT NULL, `GUID` TEXT, `ExistingLoanID` INTEGER, `LoanAmount` INTEGER, `LoanPurposeID` INTEGER, `MFIID` INTEGER, `OutStandingAmount` INTEGER, `IsUpload` INTEGER, `MemberName` TEXT, `EMI` INTEGER, `IsEdited` INTEGER, `IsDeleted` INTEGER, `MFIBankAccountName` TEXT, `Remarks` TEXT, PRIMARY KEY(`MFIGUID`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`MFIGUID` TEXT NOT NULL, `GUID` TEXT NOT NULL, `ExistingLoanID` INTEGER, `LoanAmount` INTEGER, `LoanPurposeID` INTEGER, `MFIID` INTEGER, `OutStandingAmount` INTEGER, `IsUpload` INTEGER, `MemberName` TEXT, `EMI` INTEGER, `IsEdited` INTEGER, `IsDeleted` INTEGER, `MFIBankAccountName` TEXT, `Remarks` TEXT, PRIMARY KEY(`MFIGUID`))",
         "fields": [
           {
             "fieldPath": "MFIGUID",
@@ -2237,7 +2238,8 @@
           {
             "fieldPath": "GUID",
             "columnName": "GUID",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           },
           {
             "fieldPath": "ExistingLoanID",
@@ -2309,7 +2311,7 @@
       },
       {
         "tableName": "CustomerFamilyMemberDetails",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`GUID` TEXT NOT NULL, `MemberGuid` TEXT, `MemberID` INTEGER, `MFirstName` TEXT, `MMiddleName` TEXT, `MLastName` TEXT, `RelationID` INTEGER, `Age` INTEGER, `IsSchooling` INTEGER, `EducationID` INTEGER, `IsEarning` INTEGER, `OccupationID` INTEGER, `MonthlyIncomeID` INTEGER, `Gender` TEXT, `IsOld` INTEGER, `MonthlyIncome` INTEGER, `IsUpload` INTEGER, `Remarks` TEXT, PRIMARY KEY(`GUID`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`GUID` TEXT NOT NULL, `MemberGuid` TEXT, `MemberID` INTEGER, `MFirstName` TEXT, `MMiddleName` TEXT, `MLastName` TEXT, `RelationID` INTEGER, `Age` INTEGER, `IsSchooling` INTEGER, `EducationID` INTEGER, `IsEarning` INTEGER, `OccupationID` INTEGER, `MonthlyIncomeID` INTEGER, `Gender` TEXT, `IsOld` INTEGER, `MonthlyIncome` INTEGER, `IsUpload` INTEGER, `Remarks` TEXT, `IsEdited` INTEGER, PRIMARY KEY(`GUID`))",
         "fields": [
           {
             "fieldPath": "GUID",
@@ -2401,6 +2403,11 @@
             "fieldPath": "Remarks",
             "columnName": "Remarks",
             "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "IsEdited",
+            "columnName": "IsEdited",
+            "affinity": "INTEGER"
           }
         ],
         "primaryKey": {
@@ -4599,7 +4606,7 @@
       },
       {
         "tableName": "CustomerMovableAssets",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`MAGUID` TEXT NOT NULL, `GUID` TEXT, `VehicleID` INTEGER, `VehicleNo` TEXT, `VehicleImageName` TEXT, `IsUpload` INTEGER, `IsEdited` INTEGER, `IsDeleted` INTEGER, PRIMARY KEY(`MAGUID`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`MAGUID` TEXT NOT NULL, `GUID` TEXT NOT NULL, `VehicleID` INTEGER, `VehicleNo` TEXT, `VehicleImageName` TEXT, `IsUpload` INTEGER, `IsEdited` INTEGER, `IsDeleted` INTEGER, PRIMARY KEY(`MAGUID`))",
         "fields": [
           {
             "fieldPath": "MAGUID",
@@ -4610,7 +4617,8 @@
           {
             "fieldPath": "GUID",
             "columnName": "GUID",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           },
           {
             "fieldPath": "VehicleID",
@@ -4653,7 +4661,8 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a16fd27a234bf91499bc8e262726274f')"
+
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd879eabdb2a7a547af1fcb4190a99c2f')"
     ]
   }
 }

@@ -2,6 +2,7 @@ package com.psc.elekha.database.dao
 
 import androidx.room.*
 import com.psc.elekha.database.entity.CustomerEntity
+import com.psc.elekha.database.entity.CustomerExistingLoanDetailEntity
 import com.psc.elekha.database.entity.CustomerFamilyMemberDetailsEntity
 
 @Dao
@@ -55,6 +56,9 @@ interface CustomerFamilyMemberDetailsDao {
     suspend fun deleteFamilyMember(
         item: CustomerFamilyMemberDetailsEntity
     )
+
+    @Query("SELECT * FROM CustomerFamilyMemberDetails WHERE IsEdited =1")
+    suspend fun getUploadData(): List<CustomerFamilyMemberDetailsEntity>
 
 
 

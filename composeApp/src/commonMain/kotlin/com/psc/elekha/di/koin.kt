@@ -10,7 +10,7 @@ fun initKoin(appDeclaration: KoinAppDeclaration = {}) =
         appDeclaration()
         modules(
             networkModule,
-            databaseModule, commonModule,targetModule,repositoryModule,viewmodelModule
+            databaseModule, commonModule,targetModule,repositoryModule,viewmodelModule,platformModule
 
         )
     }

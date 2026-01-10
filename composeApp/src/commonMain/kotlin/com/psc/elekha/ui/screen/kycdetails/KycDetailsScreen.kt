@@ -231,7 +231,9 @@ fun KycDetailsScreen(
                 ReusableTextViewes(
                     text = stringResource(Res.string.customer_kyc)
                 )
-
+                CommonDivider(
+                    modifier = Modifier.fillMaxWidth()
+                )
 
                 Spacer(Modifier.height(12.dp))
 
@@ -375,7 +377,7 @@ fun ElectricityBillForm(viewModel: KycDetailViewModel, ebFrontImage: ImageBitmap
             modifier = Modifier
                 .bringIntoViewRequester(viewModel.bringIntoViewBillName)
                 .focusRequester(viewModel.focusBillName),
-            placeholder = stringResource(Res.string.type_here)
+            isRequired = true
         )
 
         Spacer(Modifier.height(12.dp))
@@ -389,6 +391,7 @@ fun ElectricityBillForm(viewModel: KycDetailViewModel, ebFrontImage: ImageBitmap
             modifier = Modifier
                 .bringIntoViewRequester(viewModel.bringIntoViewAccountNumber)
                 .focusRequester(viewModel.focusAccountNumber),
+            isRequired = true,
 
             maxLength = 15,
 
@@ -408,7 +411,9 @@ fun ElectricityBillForm(viewModel: KycDetailViewModel, ebFrontImage: ImageBitmap
                 .bringIntoViewRequester(viewModel.bringIntoViewKNumber)
                 .focusRequester(viewModel.focusKNumber),
 
-            inputType = KeyboardType.Number
+
+            inputType = KeyboardType.Number,
+                    isRequired = true,
         )
         Spacer(modifier = Modifier.height(10.dp))
     }
@@ -473,9 +478,9 @@ fun AadhaarCardForm(viewModel: KycDetailViewModel,
             modifier = Modifier
                 .bringIntoViewRequester(viewModel.bringIntoViewAadharNo)
                 .focusRequester(viewModel.focusAadharNo),
-            placeholder = stringResource(Res.string.enter_aadhar),
             maxLength = 12,
-            inputType = KeyboardType.Number
+            inputType = KeyboardType.Number,
+            isRequired = true
         )
         Spacer(Modifier.height(12.dp))
         FormFieldCompact(
@@ -487,8 +492,8 @@ fun AadhaarCardForm(viewModel: KycDetailViewModel,
             modifier = Modifier
                 .bringIntoViewRequester(viewModel.bringIntoViewNameOnAadhar)
                 .focusRequester(viewModel.focusNameOnAadhar),
+            isRequired = true,
             maxLength = 20,
-            placeholder = stringResource(Res.string.type_here)
         )
         Spacer(Modifier.height(20.dp))
 
@@ -576,8 +581,6 @@ fun VidForm(viewModel: KycDetailViewModel,
             modifier = Modifier
                 .bringIntoViewRequester(viewModel.bringIntoViewVoterNo)
                 .focusRequester(viewModel.focusVoterNo),
-
-            placeholder = stringResource(Res.string.enter_voter_id),
             maxLength = 16,
         )
         Spacer(modifier = Modifier.height(10.dp))
@@ -591,7 +594,7 @@ fun VidForm(viewModel: KycDetailViewModel,
             modifier = Modifier
                 .bringIntoViewRequester(viewModel.bringIntoViewNameOnVid)
                 .focusRequester(viewModel.focusNameOnVid),
-
+           isRequired = true,
             maxLength = 20,
         )
         Spacer(modifier = Modifier.height(20.dp))
@@ -658,7 +661,7 @@ fun OtherElectricityForm(
                 viewModel.gBillName=it
             },
             maxLength = 20,
-            placeholder = stringResource(Res.string.type_here)
+            isRequired = true
         )
 
         Spacer(Modifier.height(12.dp))
@@ -670,7 +673,7 @@ fun OtherElectricityForm(
                 viewModel.gelecricityno=it
             },
             maxLength = 15,
-            placeholder = stringResource(Res.string.type_here)
+            isRequired = true
         )
 
         Spacer(Modifier.height(12.dp))
@@ -683,7 +686,7 @@ fun OtherElectricityForm(
             },
             maxLength = 15,
             inputType = KeyboardType.Number,
-            placeholder = stringResource(Res.string.type_here)
+            isRequired = true
         )
 
         Spacer(modifier = Modifier.height(10.dp))
@@ -766,6 +769,9 @@ fun IdProofSection(viewModel: KycDetailViewModel) {
         modifier = Modifier.fillMaxWidth(),
     ) {
         ReusableTextViewes(text = stringResource(Res.string.gurantor_kyc))
+        CommonDivider(
+            modifier = Modifier.fillMaxWidth()
+        )
 
         Spacer(Modifier.height(10.dp))
 
@@ -847,9 +853,9 @@ fun IdProofAadhaarCardForm(
             modifier = Modifier
                 .bringIntoViewRequester(viewModel.bringIntoViewGAadharNo)
                 .focusRequester(viewModel.focusGAadharNo),
-            placeholder = stringResource(Res.string.enter_aadhar),
             maxLength = 12,
-            inputType = KeyboardType.Number
+            inputType = KeyboardType.Number,
+            isRequired = true
         )
         Spacer(Modifier.height(12.dp))
         FormFieldCompact(
@@ -861,9 +867,9 @@ fun IdProofAadhaarCardForm(
             modifier = Modifier
                 .bringIntoViewRequester(viewModel.bringIntoViewGAadharName)
                 .focusRequester(viewModel.focusGAadharName),
+            isRequired = true,
 
             maxLength = 20,
-            placeholder = stringResource(Res.string.type_here)
         )
         Spacer(Modifier.height(20.dp))
 
@@ -952,8 +958,8 @@ fun IdProofVidForm(viewModel: KycDetailViewModel,
             modifier = Modifier
                 .bringIntoViewRequester(viewModel.bringIntoViewGVoterNo)
                 .focusRequester(viewModel.focusGVoterNo),
-            placeholder = stringResource(Res.string.enter_voter_id),
             maxLength = 16,
+            isRequired = true
         )
         Spacer(modifier = Modifier.height(10.dp))
         FormFieldCompact(
@@ -967,6 +973,7 @@ fun IdProofVidForm(viewModel: KycDetailViewModel,
                 .focusRequester(viewModel.focusGVoterName),
 
             maxLength = 20,
+            isRequired = true
         )
         Spacer(modifier = Modifier.height(20.dp))
 
@@ -1028,7 +1035,6 @@ fun PanCardForm(viewModel: KycDetailViewModel,
                 .bringIntoViewRequester(viewModel.bringIntoViewgPanNumber)
                 .focusRequester(viewModel.focusgPanNumber),
             maxLength = 12,
-            placeholder = stringResource(Res.string.enter_pan),
         )
         Spacer(Modifier.height(12.dp))
         FormFieldCompact(
@@ -1041,7 +1047,6 @@ fun PanCardForm(viewModel: KycDetailViewModel,
                 .bringIntoViewRequester(viewModel.bringIntoViewNameOnPan)
                 .focusRequester(viewModel.focusNameOnPan),
             maxLength = 20,
-            placeholder = stringResource(Res.string.type_here)
         )
         Spacer(Modifier.height(20.dp))
         // IMAGE BOX

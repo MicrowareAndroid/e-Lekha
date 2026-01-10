@@ -357,6 +357,10 @@ WHERE GUID = :guid
     @Query("SELECT COUNT(*) FROM Customer WHERE GUID = :customerGuid")
     suspend fun isCustomerExists(customerGuid: String): Int
 
+    @Query("SELECT * FROM Customer WHERE IsEdited =1")
+    suspend fun getUploadData(): List<CustomerEntity>
+
+
 
 
 }

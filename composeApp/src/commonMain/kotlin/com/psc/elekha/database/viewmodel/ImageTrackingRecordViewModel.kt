@@ -53,6 +53,10 @@ class ImageTrackingRecordViewModel(
         }
     }
 
+    suspend fun getCountImageTrackingRecord(refFieldName: String, guid: String): Int? {
+        return repository.getCountImageTrackingRecord(refFieldName, guid)
+    }
+
     // -------------------------------
     // Load all edited record count
     // -------------------------------

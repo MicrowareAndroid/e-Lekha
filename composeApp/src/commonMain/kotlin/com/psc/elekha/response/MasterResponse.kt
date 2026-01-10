@@ -2,6 +2,7 @@ package com.psc.elekha.response
 
 
 import com.psc.elekha.database.entity.CustomerStatusEntity
+import com.psc.elekha.database.entity.ImageDetailEntity
 import com.psc.elekha.database.entity.KYCDocCategoryEntity
 import com.psc.elekha.database.entity.KYCDocConfigurationEntity
 import com.psc.elekha.database.entity.KYCDocumentEntity
@@ -111,6 +112,9 @@ data class MasterResponse(
     @SerialName("CustomerLoanProduct")
     val mstLoanProduct: List<MSTLoanProductEntity> = emptyList(),
 
+    @SerialName("Tbl_ImageDetails")
+    val imageDetailEntity: List<ImageDetailEntity> = emptyList(),
+
     @SerialName("UserContactDetails")
     val userContactDetails: List<UserContactDetailEntity> = emptyList()
 
@@ -125,6 +129,8 @@ data class MasterResponse(
    @SerialName("NoName3")
     val noName3: List<Any> = emptyList()*/
 )
+
+
 
 
 

@@ -41,6 +41,7 @@ fun RegistrationListScreen(navController: NavController) {
 
     val viewModel = koinViewModel<CustomerViewModel>()
     var mstComboViewModel=koinViewModel<MSTComboBox_NViewModel>()
+    var uploadViewmodel=koinViewModel<RegistrationUploadViewModel>()
     var showDialog by remember { mutableStateOf(false) }
     val customerList by viewModel.customers.collectAsState()
     val appPreferences: AppPreferences = koinInject()
@@ -124,6 +125,7 @@ fun RegistrationListScreen(navController: NavController) {
                         showDialog = false
                     },
                     onExitsing = {
+                        uploadViewmodel.uploadRegistrationData()
                         navController.navigate(RouteName.registration_tabs)
                         showDialog = false
                     },

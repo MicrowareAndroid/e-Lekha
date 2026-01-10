@@ -20,5 +20,8 @@ object AppSP {
     var LoanRepaymentGUID="LoanRepaymentGUID"
     var MovableAssetsGuid="MovableAssetsGuid"
     var DashboardDownloaddate="DashboardDownloaddate"
+    var familymemberGuid = "familymemberGuid"
+    var sImageFieldName = "sImageFieldName"
+
 
 }
