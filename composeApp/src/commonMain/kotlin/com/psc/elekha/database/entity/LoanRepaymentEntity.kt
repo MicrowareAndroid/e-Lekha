@@ -18,11 +18,11 @@ data class LoanRepaymentEntity(
     @ColumnInfo(name = "GroupName") val GroupName: String? = "",
     @ColumnInfo(name = "LW") val LW: Int? = 0,
     @ColumnInfo(name = "LoanOutstandingAsOnDate") val LoanOutstandingAsOnDate: Double? = 0.0,
-    @ColumnInfo(name = "WeekInArrear") val WeekInArrear: Double? = 0.0,
+    @ColumnInfo(name = "WeekInArrea") val WeekInArrea: Double? = 0.0,
     @ColumnInfo(name = "PastDue") val PastDue: Double? = 0.0,
     @ColumnInfo(name = "CurrentDue") val CurrentDue: Double? = 0.0,
     @ColumnInfo(name = "Due") val Due: Double? = 0.0,
-    @ColumnInfo(name = "Advance") val Advance: Double? = 0.0,
+    @ColumnInfo(name = "Adavance") val Adavance: Double? = 0.0,
     @ColumnInfo(name = "Total") val Total: Double? = 0.0,
     @ColumnInfo(name = "WorkingDate") val WorkingDate: String? = "",
     @ColumnInfo(name = "EMIDueDate") val EMIDueDate: String? = "",
@@ -32,7 +32,7 @@ data class LoanRepaymentEntity(
     @ColumnInfo(name = "LoanCollectionFrequency") val LoanCollectionFrequency: Int? = 0,
     @ColumnInfo(name = "PaymentType") val PaymentType: Int? = 0,
     @ColumnInfo(name = "NACHStatus") val NACHStatus: Int? = 0,
-    @ColumnInfo(name = "MobileNo") val MobileNo: String? = "",
+    @ColumnInfo(name = "ContactNo") val ContactNo: String? = "",
     @ColumnInfo(name = "IsUploaded") val IsUploaded: Int? = 0,
     @ColumnInfo(name = "IsEdited") val IsEdited: Int? = 0,
     @ColumnInfo(name = "PaidDate") val PaidDate: String? = "",
@@ -40,5 +40,6 @@ data class LoanRepaymentEntity(
     @ColumnInfo(name = "LoanPlace") val LoanPlace: String? = "",
     @ColumnInfo(name = "LoanLat") val LoanLat: Double? = 0.0,
     @ColumnInfo(name = "LoanLong") val LoanLong: Double? = 0.0,
-    @ColumnInfo(name = "UTRNumber") val UTRNumber: String? = ""
+    @ColumnInfo(name = "UTRNumber") val UTRNumber: String? = "",
+    @ColumnInfo(name = "PreClosureAmt") val PreClosureAmt: Int? = 0
 )

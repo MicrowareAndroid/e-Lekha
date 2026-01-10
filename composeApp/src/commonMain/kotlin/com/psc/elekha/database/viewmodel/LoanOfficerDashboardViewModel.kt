@@ -12,18 +12,14 @@ class LoanOfficerDashboardViewModel(private val repository: LoanOfficerDashboard
     ViewModel() {
     private val _loDataList = MutableStateFlow<List<LoanofficerDashBoardDataEntity>>(emptyList())
     val loDataList: StateFlow<List<LoanofficerDashBoardDataEntity>> = _loDataList
-    fun getAllLoanOfficerData() {
-        viewModelScope.launch {
-            val result = repository.getAllLoanOfficerData()
-            _loDataList.value = result
-        }
+    suspend fun getAllLoanOfficerData() {
+        val result = repository.getAllLoanOfficerData()
+        _loDataList.value = result
     }
 
-    fun insertAllLoanOfficerData(list: List<LoanofficerDashBoardDataEntity>) {
-        viewModelScope.launch {
-            repository.insertAllLoanOfficerData(list)
-            getAllLoanOfficerData()
-        }
+    suspend fun insertAllLoanOfficerData(list: List<LoanofficerDashBoardDataEntity>) {
+        repository.insertAllLoanOfficerData(list)
+        getAllLoanOfficerData()
     }
 
 }

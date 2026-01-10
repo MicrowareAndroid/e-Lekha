@@ -45,6 +45,7 @@ import com.psc.elekha.utils.ProgressDialog
 import com.psc.elekha.utils.ReusableTextView
 import com.psc.elekha.utils.RouteName
 import com.psc.elekha.utils.TripleIconSlider
+import com.psc.elekha.utils.currentDate
 import com.psc.elekha.utils.returnIntToString
 import e_lekha.composeapp.generated.resources.*
 
@@ -68,7 +69,11 @@ fun HomeScreen(
     val appPreferences: AppPreferences = koinInject()
 
     LaunchedEffect(Unit) {
-        viewModel.getDashboardData(appPreferences.getString(AppSP.userId) ?: "")
+        if (appPreferences.getString(AppSP.DashboardDownloaddate) == currentDate()) {
+            loanOfcviewModel.getAllLoanOfficerData()
+        } else {
+            viewModel.getDashboardData(appPreferences.getString(AppSP.userId) ?: "")
+        }
     }
     LaunchedEffect(dataState) {
         when (dataState) {
@@ -78,6 +83,7 @@ fun HomeScreen(
 
             is APiState.success -> {
                 showProgress = false
+                loanOfcviewModel.getAllLoanOfficerData()
             }
 
             is APiState.error -> {
