@@ -16,11 +16,11 @@ class LoanRepaymentUpload(private val loanList: List<LoanRepaymentEntity>) {
             map["GroupName"] = loan.GroupName
             map["LW"] = loan.LW
             map["LoanOutstandingAsOnDate"] = loan.LoanOutstandingAsOnDate
-            map["WeekInArrear"] = loan.WeekInArrear
+            map["WeekInArrea"] = loan.WeekInArrea
             map["PastDue"] = loan.PastDue
             map["CurrentDue"] = loan.CurrentDue
             map["Due"] = loan.Due
-            map["Advance"] = loan.Advance
+            map["Adavance"] = loan.Adavance
             map["Total"] = loan.Total
             map["WorkingDate"] = loan.WorkingDate
             map["EMIDueDate"] = loan.EMIDueDate
@@ -30,7 +30,7 @@ class LoanRepaymentUpload(private val loanList: List<LoanRepaymentEntity>) {
             map["LoanCollectionFrequency"] = loan.LoanCollectionFrequency
             map["PaymentType"] = loan.PaymentType
             map["NACHStatus"] = loan.NACHStatus
-            map["MobileNo"] = loan.MobileNo
+            map["ContactNo"] = loan.ContactNo
             map["IsUploaded"] = loan.IsUploaded
             map["IsEdited"] = loan.IsEdited
             map["PaidDate"] = loan.PaidDate
