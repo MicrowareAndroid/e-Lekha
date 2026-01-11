@@ -94,7 +94,7 @@ class RepaymentViewModel(
             val data=repository.getLoanRepaymentByGUID(guid)
             _loanRepayment.value= data
             modeID=data.PaymentType!!
-            totalAmt=data.Total!!.toString()
+//            totalAmt=data.Total!!.toString()
             utrNo=data.UTRNumber!!
         }
     }
@@ -106,7 +106,7 @@ class RepaymentViewModel(
         viewModelScope.launch {
             val validation = checkValidation()
             if (validation.isValid) {
-                loanRepaymentViewModel.updateLoanRepaymentData(totalAmt.toDouble(), "", 0.0, 0.0, "", modeID,utrNo, guid)
+                loanRepaymentViewModel.updateLoanRepaymentData("", 0.0, 0.0, "", modeID,utrNo, guid)
                 saveMessage = getString(Res.string.data_updated_successfully)
                 showSaveAlert = true
                 saveFlag = 1
@@ -135,13 +135,13 @@ class RepaymentViewModel(
                 )
             }
 
-            returnStringValue(totalAmt).isBlank() || returnIntegerValue(totalAmt) == 0  -> {
+           /* returnStringValue(totalAmt).isBlank() || returnIntegerValue(totalAmt) == 0  -> {
                 val paymentLabel = getString(Res.string.enter_total_payment)
                 ValidationModelContorl(
                     isValid = false,
                     errorMessage = paymentLabel
                 )
-            }
+            }*/
 
             else -> ValidationModelContorl(isValid = true)
 
@@ -163,7 +163,7 @@ class RepaymentViewModel(
     private suspend fun checkFilterValidation(): ValidationModelContorl {
 
         return when {
-            returnIntegerValue(villageId.toString()) == 0 && returnStringValue(customerID).isBlank() -> {
+            returnIntegerValue(villageId.toString()) == 0 /*&& returnStringValue(customerID).isBlank()*/ -> {
                 val pleasepaymentmode = getString(Res.string.select_vlg_custid)
                 ValidationModelContorl(
                     isValid = false,

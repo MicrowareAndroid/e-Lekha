@@ -31,13 +31,13 @@ class LoanRepaymentViewModel(
     fun loadAllLoanRepayment() {
         viewModelScope.launch(Dispatchers.IO) {
             val centerID = appPreferences.getInt(AppSP.filterCenterID)
-            val custID = appPreferences.getString(AppSP.filterCustID)
+          /*  val custID = appPreferences.getString(AppSP.filterCustID)
             var flag = 0
             if (centerID > 0) {
                 flag = 1
-            }
+            }*/
             _allLoanRepayments.value =
-                repository.getAllLoanRepayment(flag, centerID, custID) ?: emptyList()
+                repository.getAllLoanRepayment(1, 599, "")
         }
     }
 
@@ -73,7 +73,6 @@ class LoanRepaymentViewModel(
 
 
     fun updateLoanRepaymentData(
-        Total: Double,
         PaidDate: String,
         LoanLat: Double,
         LoanLong: Double,
@@ -84,7 +83,6 @@ class LoanRepaymentViewModel(
     ) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.updateLoanRepaymentData(
-                Total,
                 PaidDate,
                 LoanLat,
                 LoanLong,

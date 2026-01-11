@@ -50,7 +50,6 @@ class LoanRepaymentRepository(
 
     // Update loan data_reports data
     suspend fun updateLoanRepaymentData(
-        Total: Double,
         PaidDate: String,
         LoanLat: Double,
         LoanLong: Double,
@@ -59,7 +58,6 @@ class LoanRepaymentRepository(
         GUID: String
     ) {
         dao.updateLoanRepaymentData(
-            Total,
             PaidDate,
             LoanLat,
             LoanLong,
