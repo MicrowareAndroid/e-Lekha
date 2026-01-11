@@ -360,7 +360,31 @@ WHERE GUID = :guid
     @Query("SELECT * FROM Customer WHERE IsEdited =1")
     suspend fun getUploadData(): List<CustomerEntity>
 
+    @Query(
+        """
+    UPDATE Customer SET
+        -- Bank Details
+        CustomerImage = :CustomerImage,
+        HouseHoldAssesment_Image = :HouseHoldAssesment_Image,
+        CKYC_ElectricityBill_Image = :CKYC_ElectricityBill_Image,
+        LoanAppliedID =:LoanAppliedID,
+        -- audit
+        IsEdited = 1,
+        UpdatedBy = :UpdatedBy,
+        UpdatedOn = :UpdatedOn
 
+    WHERE GUID = :GUID
+    """
+    )
+    suspend fun updateGTRDetail(
+        CustomerImage: String?,
+        CKYC_ElectricityBill_Image: String?,
+        HouseHoldAssesment_Image: String?,
+        LoanAppliedID: Int?,
+        UpdatedBy: Int?,
+        UpdatedOn: String?,
+        GUID: String
+    )
 
 
 }

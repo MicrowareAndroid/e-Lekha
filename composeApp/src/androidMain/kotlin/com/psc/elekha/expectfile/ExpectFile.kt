@@ -299,6 +299,7 @@ actual fun loadImageFromLocalOrServer(
     onLoaded: (PlatformImage?) -> Unit
 ) {
     val scope = MainScope()
+
     scope.launch {
         if (imageName.isBlank()) {
             onLoaded(null)
@@ -308,30 +309,29 @@ actual fun loadImageFromLocalOrServer(
         // Try local storage
         val localPath = resolveImagePath(imageName)
         if (localPath != null) {
-            val bitmap = BitmapFactory.decodeFile(localPath).asImageBitmap()
-            onLoaded(PlatformImage(bitmap))
+            val bitmap = BitmapFactory.decodeFile(localPath)?.asImageBitmap()
+            onLoaded(bitmap?.let { PlatformImage(it) })
             return@launch
         }
 
-        // Download from server
+        // Try loading from server (no explicit connectivity check)
         try {
             val url = "${Config.BASE_IMAGE_URL}$imageName"
-            val bytes = withContext(Dispatchers.IO) {
-                java.net.URL(url).readBytes()
+
+            val bitmap = withContext(Dispatchers.IO) {
+                java.net.URL(url).openStream().use {
+                    BitmapFactory.decodeStream(it)
+                }
             }
 
-            //Save to internal storage
-            val context = AndroidContextProvider.context
-            val file = File(context.filesDir, imageName)
-            file.outputStream().use { it.write(bytes) }
-
-            // Load bitmap
-            val bitmap = BitmapFactory.decodeFile(file.absolutePath).asImageBitmap()
-            onLoaded(PlatformImage(bitmap))
+            onLoaded(bitmap?.asImageBitmap()?.let { PlatformImage(it) })
         } catch (e: Exception) {
+            // Offline / timeout / 404 / etc.
             e.printStackTrace()
             onLoaded(null)
         }
     }
 }
+
+
 

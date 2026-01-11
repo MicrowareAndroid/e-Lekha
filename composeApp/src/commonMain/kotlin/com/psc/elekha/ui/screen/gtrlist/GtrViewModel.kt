@@ -23,7 +23,9 @@ import com.psc.elekha.response.LoanRepaymentResponse
 import com.psc.elekha.ui.screen.base.BaseValidationViewModel
 import com.psc.elekha.utils.AppPreferences
 import com.psc.elekha.utils.AppSP
+import com.psc.elekha.utils.NetworkMonitor
 import com.psc.elekha.utils.convertDateFormatDDMMYYYY
+import com.psc.elekha.utils.currentDatetime
 import com.psc.elekha.utils.returnIntToString
 import com.psc.elekha.utils.returnIntegerValue
 import com.psc.elekha.utils.returnStringValue
@@ -42,17 +44,25 @@ class GtrViewModel(
     private val trainingGroupMemberViewModel: TrainingGroupMemberViewModel,
     private val customerViewModel: CustomerViewModel,
     private val imageDetailViewModel: ImageDetailViewModel,
-    private val imageTrackingRecordViewModel: ImageTrackingRecordViewModel
+    private val imageTrackingRecordViewModel: ImageTrackingRecordViewModel,
+    private val networkMonitor: NetworkMonitor
 ) : BaseValidationViewModel() {
 
+    val isNetworkAvailable: StateFlow<Boolean> = networkMonitor.isConnected
     private var _customerImage by mutableStateOf("")
     private var _customerImageName by mutableStateOf("")
 
     val customerImageName: String get() = _customerImageName
-    private var _guarantorImage by mutableStateOf("")
     private var _eMeterImage by mutableStateOf("")
+
+    private var _eMeterImageName by mutableStateOf("")
+
+    val eMeterImageName: String get() = _eMeterImageName
     private var _houseVerificationImage by mutableStateOf("")
-    var purposeId by mutableStateOf(0)
+
+    private var _houseVerificationImageName by mutableStateOf("")
+
+    val houseVerificationImageName: String get() = _houseVerificationImageName
     var eBillRemark by mutableStateOf("")
     var houseVerificationRemark by mutableStateOf("")
     var loanRecommendationID by mutableStateOf(0)
@@ -79,6 +89,10 @@ class GtrViewModel(
 
     fun getGTRData(username: String, password: String, loanOfficerId: String, villageId: Int) {
         viewModelScope.launch {
+            if (!isNetworkAvailable.value) {
+                _downloadState.value = APiState.error(getString(Res.string.no_internet))
+                return@launch
+            }
             _downloadState.value = APiState.loading
 
             try {
@@ -120,16 +134,20 @@ class GtrViewModel(
         println("Customer Image Path: $_customerImage")
     }
 
-    fun setGuarantorImage(path: String) {
-        _guarantorImage = path
-    }
-
-    fun setEMeterImage(path: String) {
+    fun setEMeterImage(imageName: String, path: String) {
+        _eMeterImageName = imageName
         _eMeterImage = path
+
+        println("Meter Image Name: $_eMeterImageName")
+        println("Meter Image Path: $_eMeterImage")
     }
 
-    fun setHouseVerificationImage(path: String) {
+    fun setHouseVerificationImage(imageName: String, path: String) {
+        _houseVerificationImageName = imageName
         _houseVerificationImage = path
+
+        println("House Image Name: $_houseVerificationImageName")
+        println("House Image Path: $_houseVerificationImage")
     }
 
     fun loadSavedData() {
@@ -146,7 +164,6 @@ class GtrViewModel(
 
                     eBillRemark = returnStringValue(data.FirstName)
 
-                    purposeId = returnIntegerValue(data.LoanPurposeID?.toString())
                     loanRecommendationID = returnIntegerValue(data.LoanAppliedID?.toString())
                     houseVerificationRemark = returnStringValue(data.ContactNo)
                     loanRecommendationRemark = returnStringValue(data.HusbandFName)
@@ -161,9 +178,25 @@ class GtrViewModel(
         viewModelScope.launch {
             val validation = checkValidation()
             if (validation.isValid) {
-//                loanRepaymentViewModel.updateLoanRepaymentData(0.0, "", 0.0, 0.0, "", modeID, "")
+                customerViewModel.updateGTRDetail(
+                    customerImageName,
+                    eMeterImageName,
+                    houseVerificationImageName,
+                    loanRecommendationID,
+                    appPreferences.getString(AppSP.userId)?.toIntOrNull() ?: 0,
+                    currentDatetime(),
+                    appPreferences.getString(AppSP.customerGuid)!!
+                )
                 if (customerImageName.isNotEmpty()) {
                     saveImage(customerImageName, 1)
+                }
+
+                if (eMeterImageName.isNotEmpty()) {
+                    saveImage(eMeterImageName, 1)
+                }
+
+                if (houseVerificationImageName.isNotEmpty()) {
+                    saveImage(houseVerificationImageName, 1)
                 }
                 saveMessage = getString(Res.string.data_updated_successfully)
                 showSaveAlert = true
@@ -184,24 +217,6 @@ class GtrViewModel(
                 ValidationModelContorl(
                     isValid = false,
                     errorMessage = label
-                )
-            }
-
-            returnStringValue(_guarantorImage).isBlank() -> {
-                val label = getString(Res.string.click_guarantor_image)
-                ValidationModelContorl(
-                    isValid = false,
-                    errorMessage = label
-                )
-            }
-
-            returnIntegerValue(purposeId.toString()) == 0 -> {
-                val label = getString(Res.string.personal_purpose)
-                ValidationModelContorl(
-                    isValid = false,
-                    errorMessage = label,
-                    focusRequester = focusRequesterPurposeId,
-                    bringIntoViewRequester = bringIntoViewRequesterPurposeId
                 )
             }
 

@@ -330,6 +330,28 @@ class CustomerViewModel(private val customerRepository: CustomerRepository) : Vi
     suspend fun getUploadData():List<CustomerEntity>{
         return customerRepository.getUploadData()
     }
+
+    fun updateGTRDetail(
+        CustomerImage: String?,
+        CKYC_ElectricityBill_Image: String?,
+        HouseHoldAssesment_Image: String?,
+        LoanAppliedID: Int?,
+        UpdatedBy: Int?,
+        UpdatedOn: String?,
+        GUID: String
+    ) {
+        viewModelScope.launch {
+            customerRepository.updateGTRDetail(
+                CustomerImage = CustomerImage,
+                CKYC_ElectricityBill_Image = CKYC_ElectricityBill_Image,
+                HouseHoldAssesment_Image = HouseHoldAssesment_Image,
+                LoanAppliedID = LoanAppliedID,
+                UpdatedBy = UpdatedBy,
+                UpdatedOn = UpdatedOn,
+                GUID = GUID
+            )
+        }
+    }
 }
 
 

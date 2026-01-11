@@ -131,7 +131,7 @@
     <string name="user_loan_any">Loan Recommendation (if any) </string>
     <string name="user_note">Note  </string>
     <string name="user_billno">K73676432776 </string>
-    <string name="user_reduce">You can only reduce the loan amount here, not increase</string>
+    <string name="user_reduce">You can only recommend the loan amount here</string>
     <string name="user_proceed">Save And Proceed</string>
     <string name="user_name_details">User Name Details </string>
     <string name="customer_details">Customer Details</string>

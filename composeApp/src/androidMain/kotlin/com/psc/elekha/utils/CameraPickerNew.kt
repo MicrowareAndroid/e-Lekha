@@ -38,9 +38,10 @@ actual fun CameraPickerNew(
             if (result.resultCode == Activity.RESULT_OK) {
                 photoFile?.let { file ->
                     val compressedFile = ImageCompressor.compressToKB(file)
+                    val imageName = file.nameWithoutExtension
 
                     onImagePicked(
-                        file.nameWithoutExtension,          // imageName
+                        "$imageName.jpg",          // imageName
                         compressedFile.absolutePath          // imagePath
                     )
                 }
