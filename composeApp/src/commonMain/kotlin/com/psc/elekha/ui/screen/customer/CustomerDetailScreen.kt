@@ -86,6 +86,8 @@ fun CustomerDetailScreen(
 
 
     val customerImageName by remember { derivedStateOf { viewModel.customerImageName } }
+    val eMeterImageName by remember { derivedStateOf { viewModel.eMeterImageName } }
+    val houseVerificationImageName by remember { derivedStateOf { viewModel.houseVerificationImageName } }
 
     LaunchedEffect(Unit) {
 
@@ -97,6 +99,22 @@ fun CustomerDetailScreen(
             loadImageFromLocalOrServer(customerImageName) { image ->
                 image?.toImageBitmap()?.let { img ->
                     customerImgBitmap = img as ImageBitmap
+                }
+            }
+        }
+
+        if (eMeterImageName.isNotEmpty()) {
+            loadImageFromLocalOrServer(eMeterImageName) { image ->
+                image?.toImageBitmap()?.let { img ->
+                    eMeterImgBitmap = img as ImageBitmap
+                }
+            }
+        }
+
+        if (houseVerificationImageName.isNotEmpty()) {
+            loadImageFromLocalOrServer(houseVerificationImageName) { image ->
+                image?.toImageBitmap()?.let { img ->
+                    houseVerificationImgBitmap = img as ImageBitmap
                 }
             }
         }
@@ -248,12 +266,11 @@ fun CustomerDetailScreen(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = Dimens.tendp),
-                        horizontalArrangement = Arrangement.SpaceBetween,
+                        horizontalArrangement = Arrangement.Center,
                         verticalAlignment = Alignment.Top
-                    )
-                    {
+                    ) {
 
-                        // -------- LEFT IMAGE + CAMERA --------
+                        // -------- CUSTOMER IMAGE + CAMERA (CENTERED) --------
                         Column(
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
@@ -271,7 +288,6 @@ fun CustomerDetailScreen(
                                         contentDescription = null,
                                         modifier = Modifier.fillMaxSize(),
                                         contentScale = ContentScale.Crop
-
                                     )
                                 }
                             }
@@ -285,60 +301,16 @@ fun CustomerDetailScreen(
                                 modifier = Modifier
                                     .size(32.dp)
                                     .clickable {
-                                        /*val imageName = imageDetailViewModel.getRenameImageOnce(1)
-                                        if (imageName != null && imageName.isNotEmpty()) {
-                                            appPreferences.putString(AppSP.sImageFieldName, imageName)
-                                        }
-                                        openCameraCustomer = true*/
-
                                         scope.launch {
                                             val imageName =
                                                 imageDetailViewModel.getRenameImageOnce(1)
 
                                             if (!imageName.isNullOrBlank()) {
-                                                imageDetailViewModel.saveImageFieldNameSharePreference(
-                                                    imageName
-                                                )
+                                                imageDetailViewModel
+                                                    .saveImageFieldNameSharePreference(imageName)
                                                 openCameraCustomer = true
                                             }
                                         }
-                                    }
-                            )
-                        }
-
-                        // -------- RIGHT IMAGE + CAMERA --------
-                        Column(
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            Box(
-                                modifier = Modifier
-                                    .size(100.dp)
-                                    .background(
-                                        Color(0xFFE8E8E8),
-                                        RoundedCornerShape(Dimens.fivedp)
-                                    )
-                            ) {
-                                guarantorImgBitmap?.let { img ->
-                                    Image(
-                                        bitmap = img,
-                                        contentDescription = null,
-                                        modifier = Modifier.fillMaxSize(),
-                                        contentScale = ContentScale.Crop
-
-                                    )
-                                }
-                            }
-
-                            Spacer(modifier = Modifier.height(Dimens.fivedp))
-
-                            Icon(
-                                painter = painterResource(Res.drawable.camera),
-                                contentDescription = "",
-                                tint = blue,
-                                modifier = Modifier
-                                    .size(32.dp)
-                                    .clickable {
-                                        openCameraGuarantor = true
                                     }
                             )
                         }
@@ -440,16 +412,13 @@ fun CustomerDetailScreen(
                                 modifier = Modifier.width(120.dp),
                             )
                             Spacer(modifier = Modifier.width(7.dp))
-                            FillDynamicSpinnerespt(
-                                label = "",
-                                options = purposeList,
-                                selectedOption = viewModel.purposeId,
-                                onOptionSelected = { viewModel.purposeId = it },
-                                focusRequester = viewModel.focusRequesterPurposeId,
-                                bringIntoViewRequester = viewModel.bringIntoViewRequesterPurposeId,
-                                getOptionId = { it.ID },
-                                getOptionLabel = { it.Value.toString() },
-                                modifier = Modifier.fillMaxWidth()
+                            FormFieldCompact(
+                                value = "Business Expansion",
+                                onValueChange = {},
+                                isReadable = true,
+                                isEnable = false,
+                                placeholder = "",
+                                modifier = Modifier.weight(1f)
                             )
                         }
                         Spacer(modifier = Modifier.height(Dimens.tendp))
@@ -498,7 +467,7 @@ fun CustomerDetailScreen(
                                 value = "EB12345",
                                 onValueChange = {},
                                 isReadable = true,
-                                isEnable = true,
+                                isEnable = false,
                                 placeholder = "",
                                 modifier = Modifier.weight(1f)
                             )
@@ -562,7 +531,18 @@ fun CustomerDetailScreen(
                                     tint = blue,
                                     modifier = Modifier
                                         .size(32.dp)
-                                        .clickable { openCameraEMeter = true }
+                                        .clickable {
+                                            scope.launch {
+                                                val imageName =
+                                                    imageDetailViewModel.getRenameImageOnce(1)
+
+                                                if (!imageName.isNullOrBlank()) {
+                                                    imageDetailViewModel
+                                                        .saveImageFieldNameSharePreference(imageName)
+                                                    openCameraEMeter = true
+                                                }
+                                            }
+                                        }
                                 )
                             }
                         }
@@ -618,7 +598,18 @@ fun CustomerDetailScreen(
                                     tint = blue,
                                     modifier = Modifier
                                         .size(32.dp)
-                                        .clickable { openCameraHouseVerification = true }
+                                        .clickable {
+                                            scope.launch {
+                                                val imageName =
+                                                    imageDetailViewModel.getRenameImageOnce(1)
+
+                                                if (!imageName.isNullOrBlank()) {
+                                                    imageDetailViewModel
+                                                        .saveImageFieldNameSharePreference(imageName)
+                                                    openCameraHouseVerification = true
+                                                }
+                                            }
+                                        }
                                 )
                             }
                         }
@@ -753,26 +744,13 @@ fun CustomerDetailScreen(
             )
         }
 
-        if (openCameraGuarantor) {
-            CameraPicker(
-                openCamera = openCameraGuarantor,
-                onImagePicked = { path ->
-                    path?.let {
-                        guarantorImgBitmap = loadImageFromPath(it)
-                        viewModel.setGuarantorImage(it)
-                    }
-                    openCameraGuarantor = false
-                }
-            )
-        }
-
         if (openCameraEMeter) {
-            CameraPicker(
+            CameraPickerNew(
                 openCamera = openCameraEMeter,
-                onImagePicked = { path ->
-                    path?.let {
-                        eMeterImgBitmap = loadImageFromPath(it)
-                        viewModel.setEMeterImage(it)
+                onImagePicked = { imageName, path ->
+                    if (path != null && imageName != null) {
+                        eMeterImgBitmap = loadImageFromPath(path)
+                        viewModel.setEMeterImage(imageName, path)
                     }
                     openCameraEMeter = false
                 }
@@ -780,12 +758,12 @@ fun CustomerDetailScreen(
         }
 
         if (openCameraHouseVerification) {
-            CameraPicker(
+            CameraPickerNew(
                 openCamera = openCameraHouseVerification,
-                onImagePicked = { path ->
-                    path?.let {
-                        houseVerificationImgBitmap = loadImageFromPath(it)
-                        viewModel.setHouseVerificationImage(it)
+                onImagePicked = { imageName, path ->
+                    if (path != null && imageName != null) {
+                        houseVerificationImgBitmap = loadImageFromPath(path)
+                        viewModel.setHouseVerificationImage(imageName, path)
                     }
                     openCameraHouseVerification = false
                 }

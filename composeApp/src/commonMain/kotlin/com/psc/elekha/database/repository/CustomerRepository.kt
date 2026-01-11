@@ -281,7 +281,25 @@ class CustomerRepository(private val customerDao: CustomerDao) {
         return customerDao.getUploadData()
     }
 
-
+    suspend fun updateGTRDetail(
+        CustomerImage: String?,
+        CKYC_ElectricityBill_Image: String?,
+        HouseHoldAssesment_Image: String?,
+        LoanAppliedID: Int?,
+        UpdatedBy: Int?,
+        UpdatedOn: String?,
+        GUID: String
+    ) {
+        customerDao.updateGTRDetail(
+            CustomerImage = CustomerImage,
+            CKYC_ElectricityBill_Image = CKYC_ElectricityBill_Image,
+            HouseHoldAssesment_Image = HouseHoldAssesment_Image,
+            LoanAppliedID = LoanAppliedID,
+            UpdatedBy = UpdatedBy,
+            UpdatedOn = UpdatedOn,
+            GUID = GUID
+        )
+    }
 
 
 }
