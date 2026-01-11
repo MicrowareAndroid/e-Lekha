@@ -89,8 +89,10 @@ fun LocationFilterScreen(
 
             is APiState.success -> {
                 showProgress = false
-                showDialog = true
-                dialogMessage = downloadState.message
+                navController.navigate(RouteName.replayment_list) {
+                    popUpTo(RouteName.loan_filter_screen) { inclusive = true }
+                    launchSingleTop = true
+                }
             }
 
             is APiState.error -> {
@@ -213,7 +215,7 @@ fun LocationFilterScreen(
                             }
                         }
                     }
-                    Spacer(modifier = Modifier.height(Dimens.tendp))
+                    /*Spacer(modifier = Modifier.height(Dimens.tendp))
                     Button(
                         onClick = {
                             viewModel.getLoanRepayment("PSCMNP5", "test124")
@@ -239,7 +241,7 @@ fun LocationFilterScreen(
                             textColor = black,
                             fontSize = 20
                         )
-                    }
+                    }*/
                     Column(modifier = Modifier.padding(Dimens.sixteendp)) {
                         ReusableTextView(
                             text = stringResource(Res.string.select_customer_filter_details).plus(":"),
@@ -285,7 +287,7 @@ fun LocationFilterScreen(
                             getOptionId = { it.CenterID },
                             getOptionLabel = { it.Center.toString() }
                         )
-                        Spacer(modifier = Modifier.height(Dimens.tendp))
+                        /*Spacer(modifier = Modifier.height(Dimens.tendp))
                         ReusableTextView(
                             text = stringResource(Res.string.select_customer_center_or),
                             fontSize = 16,
@@ -304,7 +306,7 @@ fun LocationFilterScreen(
                             inputType = KeyboardType.Text,
                             modifier = Modifier.focusRequester(viewModel.focusRequesterCustID)
                                 .bringIntoViewRequester(viewModel.bringIntoViewRequesterCustID),
-                        )
+                        )*/
                     }
                     Row(
                         modifier = Modifier.fillMaxWidth().padding(Dimens.sixteendp),
@@ -351,14 +353,15 @@ fun LocationFilterScreen(
                                 viewModel.showSaveAlert = false
                                 appPreferences.putInt(AppSP.filterVlgID, viewModel.villageId)
                                 appPreferences.putInt(AppSP.filterCenterID, viewModel.centerId)
-                                appPreferences.putString(
+                               /* appPreferences.putString(
                                     AppSP.filterCustID,
                                     viewModel.customerID.trim()
-                                )
-                                navController.navigate(RouteName.replayment_list) {
+                                )*/
+                                viewModel.getLoanRepayment("PSCMNP5", "test124")
+                               /* navController.navigate(RouteName.replayment_list) {
                                     popUpTo(RouteName.loan_filter_screen) { inclusive = true }
                                     launchSingleTop = true
-                                }
+                                }*/
                             } else {
                                 CustomAlertDialog(
                                     showDialog = viewModel.showSaveAlert,

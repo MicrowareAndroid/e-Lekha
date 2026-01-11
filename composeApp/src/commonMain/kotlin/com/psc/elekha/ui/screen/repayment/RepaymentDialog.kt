@@ -429,7 +429,7 @@ fun RepaymentDialog(
                             )
                         }
 
-                        Spacer(modifier = Modifier.height(6.dp))
+                       /* Spacer(modifier = Modifier.height(6.dp))
 
                         Column(
                             modifier = Modifier.fillMaxWidth()
@@ -444,7 +444,7 @@ fun RepaymentDialog(
                                 },
                                 inputType = KeyboardType.Number, maxLength = 10
                             )
-                        }
+                        }*/
 
                         Spacer(modifier = Modifier.height(6.dp))
                         Row(
